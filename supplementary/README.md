@@ -11,6 +11,7 @@ Each topic is separated so it can later become a manuscript appendix subsection.
 - `adaptive_agent.md` — Supplementary Theorem S2 and Corollaries S2.1–S2.4: predictive-calibration alignment, posterior-mean self-calibration, robustness bounds, and the mutual-information boundary.
 - `finite_sample_certificate.md` — Corollary S2.5: bounded independent-held-out high-probability certificate for positive outcome/accessibility covariance.
 - `selection_validity.md` — Corollaries S2.6–S2.7: validity after arbitrary independent training and multiplicity-corrected finite candidate selection on the same hold-out sample.
+- `confidence_envelope_certificate.md` — Corollary S2.8: generic composition of any valid simultaneous moment confidence envelope into a covariance lower certificate.
 - `evidence_activation.md` — recognition activated by statistical evidence.
 - `recognition_time.md` — sequential recognition as a stopping time; general early-versus-late ordering deferred.
 - `selectivity_frontier.md` — selectivity versus predictor precision / accessible measure.

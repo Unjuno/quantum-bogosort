@@ -200,6 +200,66 @@ $$
 
 This gives a direct quantitative target for learned agents: a positively ordered score can tolerate calibration error up to the point where the worst-case covariance perturbation exceeds the score/accessibility alignment margin.
 
+### Corollary S2.4: prediction-MSE certificate
+
+The calibration error in S2.3 can be upper-bounded by ordinary prediction mean-squared error. Because:
+
+$$
+e(Y)
+=
+E[U-Y\mid Y],
+$$
+
+conditional Jensen gives:
+
+$$
+E[e(Y)^2]
+\le
+E[(U-Y)^2].
+$$
+
+Since:
+
+$$
+\operatorname{Var}(e(Y))
+\le
+E[e(Y)^2],
+$$
+
+S2.3 implies the observable/conservative bound:
+
+$$
+\boxed{
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+}.
+$$
+
+Therefore:
+
+$$
+\operatorname{Cov}(Y,S)
+>
+\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+$$
+
+is sufficient for positive outcome/accessibility covariance.
+
+The underlying prediction MSE decomposes exactly as:
+
+$$
+E[(U-Y)^2]
+=
+E[\operatorname{Var}(U\mid Y)]
++
+E[e(Y)^2].
+$$
+
+Hence the S2.4 certificate is intentionally conservative: ordinary prediction MSE includes irreducible conditional outcome noise in addition to calibration error. S2.3 is sharper when conditional-mean calibration error can be estimated directly.
+
 ## D — derivation
 
 Because `S=s(Y)` is measurable with respect to `Y`, the tower property gives:
@@ -330,7 +390,7 @@ S_t=s(Y_t)\text{ monotone}
 \operatorname{Cov}(U_T,S_t)\ge0.
 $$
 
-For an approximate learned predictor, Corollary S2.3 quantifies how much conditional-mean calibration error can be tolerated while preserving positive covariance.
+For an approximate learned predictor, S2.3 quantifies calibration-error tolerance. S2.4 supplies a more conservative certificate using only ordinary prediction MSE and `Var(S)`.
 
 E2 provides a classical nonlinear example in which a representationally adequate model learns predictive alignment while a misspecified linear model and random control do not. E3 provides a paired endogenous-policy example in which a learned internal signal remains positively associated with post-policy outcomes.
 
@@ -342,11 +402,12 @@ It does **not** establish:
 
 - that adaptation always learns the true posterior mean;
 - that finite learned models have negligible calibration error;
+- that ordinary prediction MSE is small enough to satisfy S2.4;
 - that mutual information alone is enough;
 - that accessibility is physically determined by the score;
 - that Everettian branch self-location obeys this accessibility map.
 
-The remaining adaptive-learning problem is narrower and empirically meaningful: measure or bound the calibration error of the learned score and compare it with the alignment margin in S2.3.
+The remaining adaptive-learning problem is now directly measurable: compare the score/accessibility covariance margin with either the sharp calibration-error term in S2.3 or the conservative prediction-MSE term in S2.4.
 
 ## ERROR CHECK
 
@@ -356,9 +417,10 @@ The remaining adaptive-learning problem is narrower and empirically meaningful: 
 4. Positive mutual information is deliberately not used as a sufficient condition.
 5. Posterior-mean self-calibration uses only the tower property and the fact that `Y=E[U|B]` is `B`-measurable.
 6. The approximate-calibration bound is one-sided after applying the absolute Cauchy--Schwarz bound; it is sufficient, not necessary, for positivity.
-7. The first-person uplift conclusion additionally requires `0<E[S]<\infty`.
-8. The theorem is interpretation-neutral and does not derive the Everett bridge.
+7. S2.4 uses conditional Jensen and is weaker than S2.3 because prediction MSE includes irreducible conditional variance.
+8. The first-person uplift conclusion additionally requires `0<E[S]<\infty`.
+9. The theorem is interpretation-neutral and does not derive the Everett bridge.
 
 ## Status
 
-**Supplementary Theorem S2 and Corollaries S2.1–S2.3 PROVED. E2/E3 remain classical mechanism demonstrations. Physical accessibility mapping remains OPEN.**
+**Supplementary Theorem S2 and Corollaries S2.1–S2.4 PROVED. E2/E3 remain classical mechanism demonstrations. Physical accessibility mapping remains OPEN.**

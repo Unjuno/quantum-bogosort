@@ -4,42 +4,28 @@
 
 ### Added
 
-- Supplementary Theorem S2 (Predictive-Calibration Alignment):
+- Supplementary Theorem S2 for score-measurable predictive-calibration alignment;
+- Corollary S2.2 for posterior-mean self-calibration;
+- Corollary S2.3 for approximate-calibration covariance robustness;
+- Corollary S2.4 for a conservative population certificate based on ordinary prediction MSE;
+- Corollary S2.5 for a bounded independent-held-out high-probability covariance certificate;
+- simultaneous Hoeffding bounds for empirical `Y`, `S`, `YS`, `S^2`, and squared residuals;
+- an explicit held-out certificate margin `D_L` satisfying
   $$
-  \operatorname{Cov}(U,S)
-  =
-  \operatorname{Cov}(E[U\mid Y],s(Y))
+  P(\operatorname{Cov}(U,S)\ge D_L)\ge1-\delta;
   $$
-  for score-measurable accessibility `S=s(Y)`;
-- sufficient comonotonicity/monotonicity conditions for nonnegative and strict positive outcome-accessibility covariance;
-- Corollary S2.2: posterior-mean self-calibration,
-  $$
-  Y=E[U\mid B]
-  \Longrightarrow
-  E[U\mid Y]=Y;
-  $$
-- Corollary S2.3: a Cauchy--Schwarz robustness bound for approximate conditional-mean calibration;
-- Corollary S2.4: a conservative sufficient covariance certificate based on ordinary prediction MSE,
-  $$
-  \operatorname{Cov}(U,S)
-  \ge
-  \operatorname{Cov}(Y,S)
-  -
-  \sqrt{E[(U-Y)^2]\operatorname{Var}(S)};
-  $$
-- the exact prediction-MSE decomposition into irreducible conditional variance and squared calibration error;
-- a conditional-mean predictive-strength quantity based on `Var(E[U|Y])`;
-- an explicit counterexample showing that positive mutual information alone does not imply positive accessibility covariance;
-- a separate manuscript appendix file containing the S2 proofs and boundary conditions;
-- `docs/s2_adaptive_alignment_audit.md` for theorem-level H/T/D/C/U + ERROR CHECK review.
+- a quantitative first-person lower bound `D_L/B_S` when the finite-sample certificate is positive;
+- consistency of S2.5 when the population S2.4 margin is strictly positive;
+- theorem audits for both the S2 alignment family and the S2.5 finite-sample certificate;
+- an explicit mutual-information counterexample and certificate-failure boundaries.
 
 ### Changed
 
-- the adaptive-agent mechanism is no longer described as a wholly simulation-supported covariance step: E2/E3 support the learning/prediction premise, while S2 proves the covariance consequence once calibration and score-measurable accessibility hold;
-- a true posterior-mean score supplies the S2 calibration premise exactly by the tower property;
-- S2.3 provides the sharper calibration-error certificate, while S2.4 provides a weaker certificate expressible in ordinary held-out prediction MSE;
-- the MSE certificate is explicitly marked conservative because irreducible conditional outcome variance can make it inconclusive even when positive covariance holds;
-- the remaining finite-agent problem is narrowed to finite-sample/generalization control of the certificate quantities;
+- the adaptive-agent mechanism now separates four levels: learned predictive ordering, exact posterior-mean calibration, population robustness, and independent-held-out statistical certification;
+- S2.4 is explicitly marked conservative because ordinary prediction MSE includes irreducible conditional outcome variance;
+- S2.5 explicitly requires independent held-out evaluation or an equivalent conditional-on-training formulation;
+- training/evaluation leakage and post-hoc bound selection are documented as failures of the simple S2.5 coverage guarantee;
+- no sixth core experiment is introduced by the S2 theorem stack;
 - the core five theorem set remains unchanged.
 
 ## v0.2 — Public Review — 2026-08-17

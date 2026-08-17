@@ -1,0 +1,25 @@
+\section{Experiments}
+
+The computational package contains five locked experiment families, each paired with a human-readable experiment card and reproducible Python script.
+
+\subsection{E1: weighting, tails, and stochastic dominance}
+
+E1 verifies the covariance and tail identities, tests monotone-accessibility FOSD across several toy distributions, and includes independence and nonmonotone controls.
+
+\subsection{E2: learned predictive alignment}
+
+E2 uses a nonlinear environment to compare a misspecified linear evaluator, an interaction-capable evaluator, and a random-score control. Positive weighted uplift appears only when the evaluator can recover predictive structure.
+
+\subsection{E3: paired recognition decomposition}
+
+E3 evaluates recognition-off and recognition-on policies on common primitive randomness. The total first-person effect decomposes into ordinary trajectory change and conditioning contribution to floating-point precision. A recognition-label null verifies zero effect when neither trajectory nor accessibility changes.
+
+\subsection{E4: policy--selection interaction}
+
+E4 tests the exact sign identity for fixed accessibility and the generalized targeting plus selector-map-shift decomposition when accessibility changes with policy. Rescue-bad, neutral, and amplify-good controls show that negative interaction is conditional rather than universal.
+
+\subsection{E5: branch-wide recognition structure}
+
+E5 separates marginal recognition prevalence from shared recognition and realized action correlation. Paired execution-strength and environmental-correlation sweeps use common primitive randomness; a shared-versus-independent recognition comparison holds marginal recognition prevalence fixed while changing correlation structure.
+
+\paragraph{Reproducibility.} All five scripts are executed by GitHub Actions. Locked historical summaries and current reproduction outputs are stored in the repository. The experiments are designed as formal-model stress tests and mechanism demonstrations, not empirical tests of Everettian observer selection.

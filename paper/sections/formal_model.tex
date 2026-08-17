@@ -1,0 +1,36 @@
+\section{Formal Model}
+
+Let $(\Omega,\mathcal F,\mu)$ be a base probability space representing primitive branch randomness or histories. Recognition state is $R\in\{0,1\}$ and selects a policy $\pi_R$. The policy induces a trajectory map and an accessibility map,
+\[
+R\longrightarrow \pi_R\longrightarrow (U_R,S_R),
+\]
+where $U_R:\Omega\to\mathbb R$ is trajectory utility and $S_R:\Omega\to[0,\infty)$ is observer-indexed accessibility.
+
+We assume
+\[
+0<\mathbb E_\mu[S_R]<\infty,
+\qquad
+\mathbb E_\mu[|U_R|S_R]<\infty.
+\]
+The first-person measure is
+\[
+\mu_R^{\mathrm{FP}}(A)
+=
+\frac{\mathbb E_\mu[\mathbf 1_A S_R]}{\mathbb E_\mu[S_R]},
+\]
+and first-person value is
+\[
+V_R
+=
+\frac{\mathbb E_\mu[U_RS_R]}{\mathbb E_\mu[S_R]}.
+\]
+
+For paired counterfactual comparisons, the preferred representation uses a common primitive realization $z$ and policy-dependent histories $\omega_R(z)$. This prevents a recognition comparison from being confused with a comparison of unrelated Monte Carlo samples.
+
+Define the normalized covariance contribution
+\[
+Q(U,S)
+=
+\frac{\operatorname{Cov}(U,S)}{\mathbb E[S]}.
+\]
+The formal development distinguishes changes in the trajectory utility map from changes in the accessibility map. In particular, recognition need not merely reweight a fixed set of realized utilities: a changed policy may induce $U_1\neq U_0$ on the same primitive sample space.

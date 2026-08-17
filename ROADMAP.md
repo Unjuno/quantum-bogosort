@@ -63,7 +63,8 @@ The recognition-time note explicitly defers a universal early-versus-late orderi
 - [x] Perform a claim-by-claim consistency audit against `STATUS.md` and `docs/claims_and_assumptions.md`.
 - [x] Integrate figures, captions, and cross-references.
 - [x] Re-run the claim audit after final figure/caption placement.
-- [ ] Final release-pass prose cleanup if CI or public review exposes wording issues.
+- [x] Complete final repository-level v0.2 release audit.
+- [ ] Apply wording corrections that arise during public review.
 
 ## Phase 7 — Everett bridge review
 
@@ -73,19 +74,21 @@ The recognition-time note explicitly defers a universal early-versus-late orderi
 - [x] Add layer-specific falsifiability wording to the manuscript Everett and Limitations sections.
 - [x] Defer a concrete physical derivation or empirical model to post-v0.2 research unless review produces a credible candidate.
 
-## Phase 8 — Public review and release
+## Phase 8 — Public review and later preprint
 
 - [x] Keep GitHub Issues open for proof corrections, counterexamples, prior art, and implementation bugs.
 - [x] Integrate major repository corrections through PRs with CI gates.
-- [ ] Complete final v0.2 manuscript-readiness audit on `main` after this layout PR passes CI.
-- [ ] Cut `v0.2-public-review` if the final audit finds no blocking inconsistency.
-- [ ] Prepare `v1.0-preprint` only after the public-review interval and subsequent revisions stabilize the manuscript for arXiv submission.
+- [x] Complete v0.2 manuscript-readiness and release audit.
+- [x] Synchronize repository metadata to `v0.2-public-review` in the release-audit PR.
+- [ ] Create a formal GitHub Release/tag for `v0.2-public-review` when a release-write interface is available.
+- [ ] Collect public review and revise the repository/manuscript.
+- [ ] Prepare `v1.0-preprint` only after the review interval and subsequent revisions stabilize the manuscript for arXiv submission.
 
 ## Current focus
 
-The default priority is now:
+After the release-audit PR passes CI, the research enters the public-review phase. The default priority becomes:
 
-1. validate the fully illustrated manuscript through CI;
-2. perform the final v0.2 release audit on `main`;
-3. cut `v0.2-public-review` if clean;
-4. collect public review before any v1.0/arXiv step.
+1. collect and triage review comments;
+2. correct proofs, wording, references, or code when justified;
+3. avoid expanding experiments unless review reveals a specific missing test;
+4. prepare `v1.0-preprint` only after the review period and revision pass.

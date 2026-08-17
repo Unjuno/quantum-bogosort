@@ -1,5 +1,27 @@
 # Changelog
 
+## Post-v0.2 development — unreleased
+
+### Added
+
+- Supplementary Theorem S2 (Predictive-Calibration Alignment):
+  $$
+  \operatorname{Cov}(U,S)
+  =
+  \operatorname{Cov}(E[U\mid Y],s(Y))
+  $$
+  for score-measurable accessibility `S=s(Y)`;
+- sufficient comonotonicity/monotonicity conditions for nonnegative and strict positive outcome-accessibility covariance;
+- a conditional-mean predictive-strength quantity based on `Var(E[U|Y])`;
+- an explicit counterexample showing that positive mutual information alone does not imply positive accessibility covariance;
+- a separate manuscript appendix file containing the S2 proof and boundary conditions.
+
+### Changed
+
+- the adaptive-agent mechanism is no longer described as a wholly simulation-supported covariance step: E2/E3 support the learning/calibration premise, while S2 proves the covariance consequence once that premise and score-measurable accessibility hold;
+- the remaining adaptive-learning problem is narrowed to deriving or testing when learning dynamics produce an evaluation score whose conditional expected future outcome is correctly ordered;
+- the core five theorem set remains unchanged.
+
 ## v0.2 — Public Review — 2026-08-17
 
 ### Added

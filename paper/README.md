@@ -1,6 +1,6 @@
 # Manuscript Source
 
-This directory contains the evolving QBS manuscript source for the public-review process.
+This directory contains the evolving QBS manuscript source for public technical review and later preprint preparation.
 
 ## Structure
 
@@ -14,7 +14,7 @@ This directory contains the evolving QBS manuscript source for the public-review
 8. Everett Interpretation
 9. Limitations and Falsifiability
 10. Discussion
-11. Appendix
+11. Appendices
 12. References
 
 ## Writing rule
@@ -24,11 +24,49 @@ Every substantive statement should be identifiable as one of:
 - theorem / proposition,
 - simulation result,
 - model assumption,
+- statistical validation result,
 - Everett bridge assumption,
 - interpretation,
 - open problem.
 
-The manuscript must not state a simulation-supported classical mechanism as an Everettian physical result.
+The manuscript must not state a simulation-supported classical mechanism or a statistical covariance certificate as an Everettian physical result.
+
+## S2 theorem-stack editorial policy
+
+The repository contains a deliberately modular post-v0.2 S2 theorem stack. Repository completeness does **not** imply that every theorem should receive equal prominence in the paper.
+
+The current editorial recommendation is:
+
+### Main-text candidates
+
+- **S2** — predictive conditional-mean alignment;
+- **S2.2** — posterior-mean self-calibration;
+- **S2.11** — exact general-accessibility / residual covariance decomposition;
+- **S2.13** — explained-variance form, if it materially improves interpretation.
+
+### Appendix-first results
+
+- S2.3–S2.4 — calibration/MSE robustness;
+- S2.5–S2.7 — held-out and selection-safe finite-sample validity;
+- S2.8–S2.10 — generic, light-tail, and robust confidence-envelope machinery;
+- S2.12 — worst-case residual-variance certificate.
+
+The rationale and dependency graph are maintained in `../docs/s2_stack_review_map.md`.
+
+A new S2-numbered theorem should not be added by default. New theorem work should be driven by a material modeling gap, a concrete review objection, a genuinely new operational quantity, or a substantial sharpening under motivated assumptions.
+
+## Interpretation boundary
+
+The S2 family concerns probability, prediction, accessibility variables, and statistical certification. It does not derive the physical bridge:
+
+$$
+d\mu^{FP}_\pi(\omega)
+=
+\frac{S_\pi(\omega)}{E[S_\pi]}
+\,d\mu(\omega)
+$$
+
+from Everettian quantum mechanics. The bridge remains a separate assumption and review target.
 
 ## Figures
 
@@ -64,4 +102,4 @@ GitHub Actions performs the same figure-generation and LaTeX/PDF validation auto
 
 ## Current status
 
-The core theorem set, proof appendix, five experiment families, Related Work, Everett bridge limitations, figure placement, and PDF build pipeline are integrated. Remaining pre-v0.2 work is primarily final prose/cross-reference review, release auditing, and any targeted prior-art update justified by review.
+The v0.2 public-review baseline on `main` remains frozen. Post-v0.2 S2 developments are kept in stacked review PRs so proof review, statistical-validity review, and manuscript editorial decisions can be made separately before any later preprint merge.

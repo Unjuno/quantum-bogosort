@@ -1,6 +1,6 @@
 # QBS Research Status
 
-**Snapshot date:** 2026-08-17
+**Snapshot date:** 2026-08-18
 
 This file is the canonical status ledger for the Quantum Bogosort research repository. It distinguishes proved mathematics, simulation-supported mechanisms, interpretation-level assumptions, and open problems.
 
@@ -23,6 +23,7 @@ This file is the canonical status ledger for the Quantum Bogosort research repos
 | S2.6 | Conditional validity after arbitrary independent training | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/selection_validity.md` |
 | S2.7 | Multiplicity-corrected finite candidate selection on one hold-out sample | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/selection_validity.md` |
 | S2.8 | Generic simultaneous-confidence-envelope covariance certificate | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/confidence_envelope_certificate.md` |
+| S2.9 | Light-tail sub-Gaussian/Bernstein instantiation of S2.8 | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/light_tail_certificate.md` |
 | P1 | Costless recognition has nonnegative option value | PROVED | `theory/propositions_boundaries.md` |
 | P2 | Pure reweighting cannot create support | PROVED | `theory/propositions_boundaries.md` |
 
@@ -154,7 +155,46 @@ P\!\left(
 \ge1-\delta.
 $$
 
-Thus Hoeffding, sub-Gaussian, empirical-Bernstein, robust, or sequential methods can enter through their own independently valid simultaneous moment envelopes without changing the QBS covariance-composition proof.
+### S2.9 light-tail instantiation
+
+S2.9 instantiates S2.8 without deterministic boundedness. It assumes two-sided sub-Gaussian sample-mean control for `Y` and `S`, and explicit Bernstein/sub-exponential sample-mean control for:
+
+$$
+YS,
+\qquad
+S^2,
+\qquad
+(U-Y)^2.
+$$
+
+With:
+
+$$
+t_\delta=\log\frac{10}{\delta},
+$$
+
+the five concentration radii form an S2.8 simultaneous envelope with coverage at least:
+
+$$
+1-\delta.
+$$
+
+The resulting certificate:
+
+$$
+D_{\mathrm{LT}}
+$$
+
+satisfies:
+
+$$
+P\!\left(
+\operatorname{Cov}(U,S)\ge D_{\mathrm{LT}}
+\right)
+\ge1-\delta.
+$$
+
+The theorem deliberately treats the product/square Bernstein parameters as explicit inputs. It does not silently infer universal constants from marginal sub-Gaussianity.
 
 ## Sequential extension
 
@@ -174,7 +214,7 @@ Thus Hoeffding, sub-Gaussian, empirical-Bernstein, robust, or sequential methods
 | E4 | Fixed and changing-selector interaction decomposition | REPRODUCIBLE |
 | E5 | Paired branch-map sweeps and shared-recognition comparison | REPRODUCIBLE |
 
-All five experiments are rerun by GitHub Actions. S2–S2.8 do not create a sixth core experiment.
+All five experiments are rerun by GitHub Actions. S2–S2.9 do not create a sixth core experiment.
 
 ## Figure and manuscript state
 
@@ -184,7 +224,7 @@ All five experiments are rerun by GitHub Actions. S2–S2.8 do not create a sixt
 | Six LaTeX PDF figure build products | GENERATED IN CI |
 | Figure placement and captions | INTEGRATED / AUDITED |
 | Manuscript theorem appendix | FULL PROOFS INTEGRATED |
-| Post-v0.2 S2/S2.8 appendices | SEPARATE STACKED REVIEW BRANCHES |
+| Post-v0.2 S2/S2.9 appendices | SEPARATE STACKED REVIEW BRANCHES |
 | LaTeX/PDF build | VALIDATED BY CI ON EACH REVIEW BRANCH WHEN GREEN |
 | Expanded bibliography and critique-side prior art | INTEGRATED |
 | Final v0.2 repository release audit | PASS |
@@ -202,17 +242,18 @@ All five experiments are rerun by GitHub Actions. S2–S2.8 do not create a sixt
 | Arbitrary independent training preserves held-out validity conditional on the trained rule | PROVED (S2.6) |
 | Same-holdout selection among a finite predeclared family is valid with multiplicity correction | PROVED (S2.7) |
 | Any valid simultaneous moment envelope can be composed into a covariance certificate | PROVED (S2.8) |
-| A specific sub-Gaussian/robust/asymptotic interval is valid merely because S2.8 can consume it | NOT CLAIMED |
+| Explicit light-tail concentration controls can instantiate the envelope without deterministic boundedness | PROVED (S2.9) |
+| Marginal sub-Gaussianity alone automatically supplies all product/square constants | NOT CLAIMED |
 | A passed statistical certificate establishes the Everett bridge | NOT CLAIMED |
 | External random generators become objectively lucky | NOT CLAIMED |
 
-## Open problems after S2.8
+## Open problems after S2.9
 
 1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics.
-2. Instantiate S2.8 with explicit sub-Gaussian/sub-exponential concentration under clearly stated tail assumptions.
-3. Instantiate S2.8 with robust finite-moment estimators such as median-of-means and compare conservatism.
+2. Instantiate S2.8 with robust finite-moment estimators such as median-of-means and compare conservatism with S2.9.
+3. Derive convenient sufficient conditions that imply the S2.9 product/square Bernstein parameters from a chosen Orlicz-norm or mgf convention, with constants stated explicitly.
 4. Extend selection validity from finite predeclared candidate families to infinite or data-dependent classes using uniform-convergence, selective-inference, or fresh-sample methods.
-5. Add a held-out diagnostic experiment only if review requires empirical evaluation of the S2.5–S2.8 stack.
+5. Add a held-out diagnostic experiment only if review requires empirical evaluation of the S2.5–S2.9 stack.
 6. Extend S2 beyond score-measurable accessibility by controlling the residual conditional-covariance term.
 7. Continue literature search if review identifies a more specific novelty conflict.
 8. Develop a recognition-time ordering theorem only under explicit pathwise/conditional advantage assumptions.
@@ -221,4 +262,4 @@ All five experiments are rerun by GitHub Actions. S2–S2.8 do not create a sixt
 
 Repository baseline: **v0.2 — Public Review** at merge commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
 
-PR #11 is the base S2 review branch, PR #12 adds S2.4, PR #13 adds S2.5, PR #15 adds S2.6–S2.7, and S2.8 is the next stacked confidence-envelope layer. All remain separately reviewable before any later preprint merge.
+PR #11 is the base S2 review branch, PR #12 adds S2.4, PR #13 adds S2.5, PR #15 adds S2.6–S2.7, PR #16 adds S2.8, and S2.9 is developed as the next stacked light-tail layer. All remain separately reviewable before any later preprint merge.

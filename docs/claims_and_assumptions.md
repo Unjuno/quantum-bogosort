@@ -96,13 +96,56 @@ $$
 
 Strict pairwise comonotonicity on a positive-probability set gives strict positivity. Consequently, the QBS covariance identity yields nonnegative first-person mean uplift under these assumptions.
 
-A useful special case is:
+### S2.2 posterior-mean self-calibration
+
+If an internal information state `B` generates the score:
 
 $$
-S=r(m(Y))
+Y=E[U\mid B],
 $$
 
-with `r` nondecreasing. If `m(Y)` is nonconstant and `r` is strictly increasing on its essential range, covariance is strictly positive.
+then:
+
+$$
+E[U\mid Y]=Y.
+$$
+
+Thus a true posterior-mean score satisfies the S2 conditional-mean calibration premise exactly. For nondecreasing `S=s(Y)`:
+
+$$
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(Y,s(Y))
+\ge0.
+$$
+
+### S2.3 approximate-calibration robustness
+
+Define calibration error:
+
+$$
+e(Y)=E[U\mid Y]-Y.
+$$
+
+Under square integrability:
+
+$$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+$$
+
+Therefore:
+
+$$
+\operatorname{Cov}(Y,S)
+>
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}
+$$
+
+is a sufficient condition for positive outcome-accessibility covariance.
 
 These are probability identities and sufficient conditions conditional on the model definitions. They do not by themselves imply Everettian physics.
 
@@ -111,18 +154,20 @@ These are probability identities and sufficient conditions conditional on the mo
 The repository simulations support the following model-level statements:
 
 1. Monotone outcome-aligned accessibility produces the predicted FOSD direction across several toy base distributions.
-2. A minimal learned agent can generate the conditional-mean ordering required by S2 when its model class can represent the relevant structure.
+2. A minimal learned agent can generate useful predictive ordering when its model class can represent the relevant structure.
 3. Recognition effects can be numerically decomposed into ordinary trajectory changes and first-person conditioning changes on paired primitive randomness.
 4. Adaptive rescue policies can reduce the marginal QBS contribution by rescuing branches that a selector would otherwise downweight.
 5. Shared recognition and shared environmental structure can increase cross-copy action correlation without proportionally changing single-observer FP uplift.
+
+E2/E3 illustrate premise generation for S2; they do not prove that a finite learned score equals the true posterior mean or satisfies the S2.3 robustness inequality.
 
 These are classical simulations of the formal structure, not empirical evidence for Everettian observer selection.
 
 ## Adaptive-learning assumption boundary
 
-S2 proves the implication from an ordered conditional-mean predictor to nonnegative covariance. It does **not** prove that learning or adaptation necessarily creates the required ordering.
+S2 proves the implication from an ordered conditional-mean predictor to nonnegative covariance. S2.2 proves exact calibration for a true posterior-mean score. S2.3 gives a sufficient finite-error bound.
 
-For square-integrable `U`, the relevant mean-predictive strength is:
+For square-integrable `U`, conditional-mean predictive strength is:
 
 $$
 M(U;Y)
@@ -144,13 +189,13 @@ $$
 
 almost surely. In such cases, every accessibility map of the form `S=s(Y)` has zero covariance with `U`.
 
-Therefore the remaining learning problem is to justify, derive, or empirically test the calibration condition:
+The remaining finite-agent problem is therefore quantitative: estimate or bound
 
 $$
-y\mapsto E[U_T\mid Y_t=y]
+\operatorname{Var}(e(Y_t))
 $$
 
-being ordered in the direction used by accessibility.
+and compare it with the score/accessibility alignment margin in S2.3.
 
 ## Model assumptions
 
@@ -169,6 +214,8 @@ $$
 The common-randomness comparison additionally assumes policies can be evaluated on the same primitive sample space.
 
 S2 additionally assumes score-measurable accessibility `S=s(Y)` for its clean projection identity. If accessibility contains residual randomness, the general law of total covariance includes an additional conditional-covariance term.
+
+S2.2 additionally assumes the score is the true conditional expectation under the same probability model used to evaluate `U`. S2.3 assumes square integrability.
 
 ## Everett bridge assumption
 
@@ -224,7 +271,8 @@ The repository does **not** claim that:
 - every recognition-dependent policy is rational or beneficial;
 - positive correlation alone implies FOSD;
 - mutual information alone implies positive accessibility covariance;
-- adaptation automatically produces a calibrated evaluation signal;
+- adaptation automatically learns the true posterior mean;
+- a finite learned score necessarily satisfies the S2.3 robustness inequality;
 - pure reweighting creates outcomes absent from the fixed-policy support;
 - negative policy–QBS interaction means either policy effect is itself negative;
 - the classical simulations prove an Everett interpretation;
@@ -238,6 +286,7 @@ The formal conclusions weaken or fail when their assumptions are violated:
 - outcome/accessibility independence gives zero pure weighting uplift in expectation;
 - nonmonotone conditional accessibility can break FOSD;
 - a score can be statistically informative while having constant conditional outcome mean, defeating the S2 uplift premise;
+- a finite score can fail the S2.3 robustness certificate when calibration error dominates the alignment margin;
 - no change in trajectory or accessibility gives zero recognition effect;
 - zero expected accessibility makes the normalized FP measure undefined;
 - arbitrary-label dependence or inconsistent coarse graining counts against a proposed physical bridge;

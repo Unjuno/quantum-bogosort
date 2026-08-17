@@ -8,17 +8,17 @@ Each topic is separated so it can later become a manuscript appendix subsection.
 - `binary_soft_qbs.md` — minimal favorable/unfavorable weighting model.
 - `repeated_filtering.md` — repeated adverse-trigger weighting and sensitivity identity.
 - `gaussian_model.md` — analytic Gaussian closed form.
-- `adaptive_agent.md` — endogenous predictive correlation from internal world models.
+- `adaptive_agent.md` — Supplementary Theorem S2: predictive-calibration alignment, its proof, strictness condition, and mutual-information counterexample boundary.
 - `evidence_activation.md` — recognition activated by statistical evidence.
 - `recognition_time.md` — sequential recognition as a stopping time; general early-versus-late ordering deferred.
 - `selectivity_frontier.md` — selectivity versus predictor precision / accessible measure.
-- `branch_recognition.md` — recognition prevalence, sharedness, and cross-copy policy coherence.
+- `branch_recognition.md` — Supplementary Theorem S1: recognition prevalence, sharedness, and cross-copy policy coherence.
 
 `research_notes.md` remains as the historical consolidated note. New work should update the topic files first.
 
 Status labels used in these notes:
 
-- **EXACT** — mathematical identity under stated assumptions.
+- **EXACT / PROVED** — mathematical identity or theorem under stated assumptions.
 - **SIMULATION-SUPPORTED** — observed in the repository's toy experiments.
 - **MODEL ASSUMPTION** — definitional modeling choice.
 - **FORMALIZED / DEFERRED** — the mathematical object is defined, while a stronger theorem or experiment is intentionally postponed.

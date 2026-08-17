@@ -1,0 +1,11 @@
+Creative Commons CC0 1.0 Universal (CC0 1.0)
+
+Generated research datasets in this repository are dedicated to the public
+domain under CC0 1.0 Universal unless a file states otherwise.
+
+To the extent possible under law, the rights holder has waived copyright and
+related or neighboring rights in the covered datasets. Attribution is
+appreciated for scientific provenance but is not a condition of CC0.
+
+License deed and legal code:
+https://creativecommons.org/publicdomain/zero/1.0/

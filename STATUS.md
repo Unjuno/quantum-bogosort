@@ -18,10 +18,11 @@ This file is the canonical status ledger for the Quantum Bogosort research repos
 | S2 | Predictive-calibration alignment for score-measurable accessibility | PROVED (SUPPLEMENTARY; POST-v0.2 CANDIDATE) | `supplementary/adaptive_agent.md` |
 | S2.2 | Posterior-mean self-calibration: `Y=E[U|B]` implies `E[U|Y]=Y` | PROVED | `supplementary/adaptive_agent.md` |
 | S2.3 | Approximate-calibration covariance robustness bound | PROVED | `supplementary/adaptive_agent.md` |
+| S2.4 | Prediction-MSE sufficient covariance certificate | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/adaptive_agent.md` |
 | P1 | Costless recognition has nonnegative option value | PROVED | `theory/propositions_boundaries.md` |
 | P2 | Pure reweighting cannot create support | PROVED | `theory/propositions_boundaries.md` |
 
-The core five theorem set remains unchanged. The post-v0.2 development branch adds an isolated proof appendix for S2 and its corollaries so they can be reviewed separately from the v0.2 baseline.
+The core five theorem set remains unchanged. S2 development is kept separate from the v0.2 baseline and S2.4 is further isolated as a stacked extension to the S2 review branch.
 
 ## S2 adaptive-alignment result
 
@@ -91,9 +92,53 @@ $$
 \sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}
 $$
 
-is sufficient for positive covariance. This converts the finite-agent question into a calibration-margin comparison that can be measured in future review-driven experiments.
+is sufficient for positive covariance.
 
-The theorem also records an exact boundary: positive mutual information `I(U;Y)>0` alone is insufficient. General dependence can change conditional variance while leaving `E[U|Y]` constant, in which case every score-measurable accessibility map has zero covariance with `U`.
+### Prediction-MSE certificate
+
+Conditional Jensen gives:
+
+$$
+\operatorname{Var}(e(Y))
+\le
+E[e(Y)^2]
+\le
+E[(U-Y)^2].
+$$
+
+Consequently S2.4 proves:
+
+$$
+\boxed{
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+}.
+$$
+
+Thus:
+
+$$
+\operatorname{Cov}(Y,S)
+>
+\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+$$
+
+is a sufficient positive-covariance certificate based on ordinary prediction MSE. The exact decomposition:
+
+$$
+E[(U-Y)^2]
+=
+E[\operatorname{Var}(U\mid Y)]
++
+E[e(Y)^2]
+$$
+
+shows that S2.4 is conservative relative to S2.3 because it counts irreducible conditional outcome noise. Failure of S2.4 is inconclusive and is not evidence of negative covariance.
+
+The theorem family also records an exact boundary: positive mutual information `I(U;Y)>0` alone is insufficient. General dependence can change conditional variance while leaving `E[U|Y]` constant, in which case every score-measurable accessibility map has zero covariance with `U`.
 
 ## Sequential extension
 
@@ -113,7 +158,7 @@ The theorem also records an exact boundary: positive mutual information `I(U;Y)>
 | E4 | Fixed and changing-selector interaction decomposition | REPRODUCIBLE |
 | E5 | Paired branch-map sweeps and shared-recognition comparison | REPRODUCIBLE |
 
-All five experiments are rerun by GitHub Actions. S2 does not add a sixth core experiment: E2 and E3 remain mechanism demonstrations, while a future calibration diagnostic should be added only if review requires direct estimation of the S2.3 bound.
+All five experiments are rerun by GitHub Actions. S2–S2.4 do not add a sixth core experiment. A future calibration/MSE diagnostic should be added only if review requires direct empirical evaluation of the certificate terms.
 
 ## Figure and manuscript state
 
@@ -143,21 +188,24 @@ All five experiments are rerun by GitHub Actions. S2 does not add a sixth core e
 | Independent empirical falsifiability without a concrete physical `S_pi` | NOT CLAIMED |
 | Ordered conditional-mean prediction plus ordered score-measurable accessibility implies nonnegative covariance | PROVED (S2) |
 | A true posterior-mean score is conditionally mean-calibrated | PROVED (S2.2) |
-| Finite learned models necessarily have small calibration error | NOT CLAIMED |
+| Approximate calibration can be certified by calibration variance | PROVED SUFFICIENT CONDITION (S2.3) |
+| Ordinary prediction MSE gives a conservative sufficient certificate | PROVED SUFFICIENT CONDITION (S2.4) |
+| Finite learned models necessarily satisfy either certificate | NOT CLAIMED |
 | Shared recognition/shared latent structure can increase cross-branch decision correlation | THEOREM UNDER EXPLICIT HIERARCHICAL ASSUMPTIONS + SIMULATION |
 | External random generators become objectively lucky | NOT CLAIMED |
 
-## Open problems after S2
+## Open problems after S2.4
 
 1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics.
-2. Derive learning-theoretic bounds on `Var(e(Y))` for finite adapted agents and compare them with the S2.3 alignment margin.
-3. Extend S2 beyond score-measurable accessibility by controlling the residual conditional-covariance term in the law of total covariance.
-4. Reconstruct a historical secondary experiment only if future review promotes it back into active evidence.
-5. Continue literature search if review identifies a more specific novelty conflict.
-6. Develop a recognition-time ordering theorem only if explicit pathwise/conditional advantage assumptions justify one.
+2. Derive finite-sample/generalization bounds for the calibration or prediction-MSE certificate terms of finite adapted agents.
+3. Add a held-out calibration/MSE diagnostic only if review requires direct empirical evaluation of S2.3/S2.4.
+4. Extend S2 beyond score-measurable accessibility by controlling the residual conditional-covariance term in the law of total covariance.
+5. Reconstruct a historical secondary experiment only if future review promotes it back into active evidence.
+6. Continue literature search if review identifies a more specific novelty conflict.
+7. Develop a recognition-time ordering theorem only if explicit pathwise/conditional advantage assumptions justify one.
 
 ## Release state
 
 Repository baseline: **v0.2 — Public Review** at merge commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
 
-The S2 work is post-v0.2 development and should be reviewed separately from the locked public-review baseline before any later preprint release.
+PR #11 contains S2–S2.3 post-v0.2 development. The S2.4 work is a stacked extension and should be reviewed against PR #11 before either branch is considered for a later preprint merge.

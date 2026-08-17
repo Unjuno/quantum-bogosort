@@ -33,7 +33,8 @@ Policies are compared on common primitive randomness whenever paired counterfact
 | Light-tail envelopes instantiate S2.8 | Exact instantiation | S2.9 | none required | Statistical validation |
 | Median-of-means envelopes instantiate S2.8 | Exact robust instantiation | S2.10 | none required | Statistical validation |
 | General accessibility decomposes into conditional-mean alignment plus residual conditional covariance | Exact extension | S2.11 | future model diagnostics | Agent / observer model |
-| Conditional variances give a sharp universal lower bound on the unknown residual term | Exact lower certificate | S2.12 | future variance diagnostics | Agent / observer model |
+| Conditional variances give a sharp universal lower bound on the residual term | Exact lower certificate | S2.12 | future variance diagnostics | Agent / observer model |
+| Explained-variance fractions and conditional-mean correlation reparameterize the residual certificate | Exact normalized certificate | S2.13 | future predictive diagnostics | Agent / observer model |
 | Shared recognition can create cross-copy decision coherence under hierarchical assumptions | Exact supplementary theorem + simulation | S1 | E5 | Hierarchical branch model |
 | Everett self-location follows the QBS accessibility bridge | Assumption | bridge documents | none establishes it physically | Open physical mapping |
 
@@ -55,9 +56,9 @@ Q(U,S)
 \frac{\operatorname{Cov}(U,S)}{E[S]}.
 $$
 
-## Predictive alignment chain
+## Predictive alignment and statistical chain
 
-For score-measurable accessibility:
+For:
 
 $$
 m(Y)=E[U\mid Y],
@@ -73,35 +74,11 @@ $$
 \operatorname{Cov}(m(Y),s(Y)).
 $$
 
-For:
+S2.2 gives posterior-mean calibration. S2.3–S2.4 give calibration/MSE population bounds. S2.5–S2.10 supply bounded, selection-safe, generic-envelope, light-tail, and MoM finite-sample layers.
 
-$$
-Y=E[U\mid B],
-$$
+## General accessibility and residual structure
 
-S2.2 gives:
-
-$$
-E[U\mid Y]=Y.
-$$
-
-The robustness/certification chain is:
-
-$$
-\text{conditional-mean alignment}
-\to
-\text{calibration-error bound}
-\to
-\text{prediction-MSE bound}
-\to
-\text{generic finite-sample confidence envelopes}.
-$$
-
-S2.5 supplies a bounded Hoeffding route. S2.9 supplies a light-tail route. S2.10 supplies a median-of-means route. S2.8 is their common composition interface.
-
-## General accessibility: S2.11
-
-When accessibility contains residual variation beyond `Y`, define:
+Define:
 
 $$
 m(Y)=E[U\mid Y],
@@ -109,102 +86,124 @@ m(Y)=E[U\mid Y],
 a(Y)=E[S\mid Y].
 $$
 
-Then:
+S2.11 gives:
 
 $$
-\boxed{
 \operatorname{Cov}(U,S)
 =
 \operatorname{Cov}(m(Y),a(Y))
 +
-E[\operatorname{Cov}(U,S\mid Y)]
-}.
+E[\operatorname{Cov}(U,S\mid Y)].
 $$
 
-S2 is the special case:
+S2.12 bounds the unknown residual term by conditional variances:
 
 $$
-S=s(Y)
-\Longrightarrow
-\operatorname{Cov}(U,S\mid Y)=0.
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\sqrt{E[v_U(Y)]E[v_S(Y)]}.
 $$
 
-## Residual-variance control: S2.12
+## Explained-variance form: S2.13
 
-Let:
+Define:
 
 $$
-v_U(Y)=\operatorname{Var}(U\mid Y),
+A_U
+=
+\frac{\operatorname{Var}(m(Y))}{\operatorname{Var}(U)},
 \qquad
-v_S(Y)=\operatorname{Var}(S\mid Y).
+A_S
+=
+\frac{\operatorname{Var}(a(Y))}{\operatorname{Var}(S)}.
 $$
 
-Conditional Cauchy--Schwarz yields:
+When both explained fractions are positive, define:
 
 $$
-\boxed{
+\rho_{ma}
+=
+\operatorname{Corr}(m(Y),a(Y)).
+$$
+
+Then:
+
+$$
 \operatorname{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\sqrt{\operatorname{Var}(U)\operatorname{Var}(S)}
+\left[
+\rho_{ma}\sqrt{A_UA_S}
 -
-E[\sqrt{v_U(Y)v_S(Y)}]
-}.
+\sqrt{(1-A_U)(1-A_S)}
+\right].
 $$
 
-Outer Cauchy--Schwarz gives the simpler certificate:
+Thus:
 
 $$
-\boxed{
-\operatorname{Cov}(U,S)
-\ge
-\operatorname{Cov}(m(Y),a(Y))
--
-\sqrt{E[v_U(Y)]E[v_S(Y)]}
-}.
+\rho_{ma}\sqrt{A_UA_S}
+>
+\sqrt{(1-A_U)(1-A_S)}
 $$
 
-This penalty is universally sharp if residual outcome and accessibility variation can be perfectly conditionally anti-correlated. Any model-specific restriction on residual anti-correlation can therefore only improve the bound.
+is sufficient for positive total covariance.
+
+For:
+
+$$
+\rho_{ma}=1,
+$$
+
+this simplifies to:
+
+$$
+A_U+A_S>1.
+$$
+
+For:
+
+$$
+A_U=A_S=A,
+$$
+
+the sufficient threshold is:
+
+$$
+A>
+\frac{1}{1+\rho_{ma}}.
+$$
+
+This is a worst-case residual certificate, not a necessary condition.
 
 ## What E1–E5 establish
 
-### E1
-
-Tests pure weighting, FOSD, the independence null, and nonmonotone counterexamples.
-
-### E2
-
-Shows a minimal representationally adequate learner can generate predictive ordering while a misspecified learner fails.
-
-### E3
-
-Uses paired primitive randomness to separate ordinary policy trajectory effects from FP conditioning effects.
-
-### E4
-
-Tests the interaction decomposition, including fixed and changing selectors.
-
-### E5
-
-Separates marginal FP uplift from cross-copy recognition/action correlation.
+- **E1:** weighting/FOSD, independence null, nonmonotone counterexample.
+- **E2:** endogenous predictive ordering in a minimal learned agent.
+- **E3:** paired recognition decomposition.
+- **E4:** policy–QBS interaction decomposition.
+- **E5:** marginal FP uplift versus cross-copy coherence.
 
 These are classical simulations of the formal structure, not evidence that the Everett bridge is physically correct.
 
 ## Current unresolved questions
 
-- What physical observer/branch mechanism, if any, induces the Everett accessibility map?
-- How can the S2.12 conditional-variance penalty be estimated or upper-bounded with finite-sample confidence in concrete agent models?
-- Can robust estimators weaken S2.10's higher-moment requirements for squared targets?
-- What explicit Orlicz/mgf assumptions give convenient S2.9 product/square constants?
-- How should certification extend to infinite or certification-data-dependent candidate classes?
-- Under what additional assumptions can recognition time be ordered?
+- What physical mechanism, if any, induces the Everett accessibility map?
+- How can `A_U`, `A_S`, and `rho_ma` be estimated with finite-sample confidence in learned-agent models?
+- Can robust estimators weaken S2.10's higher-moment requirements?
+- What explicit Orlicz/mgf assumptions give convenient S2.9 constants?
+- How should certification extend to infinite/data-dependent candidate classes?
+- Under what assumptions can recognition time be ordered?
 
 ## Failure structure
 
-- independence of outcome and accessibility gives zero pure weighting uplift;
+- independence gives zero pure weighting uplift;
 - nonmonotone conditional accessibility can break FOSD;
-- general statistical dependence without conditional-mean ordering is insufficient for S2;
-- a sufficiently negative S2.11 residual term can overturn conditional-mean alignment;
-- S2.12 quantifies the worst-case residual penalty but can be conservative;
-- statistical certificate failure is inconclusive, not proof of nonpositive covariance;
-- invalid concentration/moment assumptions invalidate the corresponding finite-sample certificate;
-- rejecting the Everett bridge removes the physical interpretation but not the abstract probability identities.
+- dependence without conditional-mean ordering is insufficient for S2;
+- negative residual dependence can overturn score-level alignment;
+- S2.12/S2.13 can be conservative because they use worst-case residual penalties;
+- statistical certificate failure is inconclusive;
+- invalid concentration/moment assumptions invalidate their finite-sample certificate;
+- rejecting the Everett bridge removes the physical interpretation but not the abstract mathematical results.

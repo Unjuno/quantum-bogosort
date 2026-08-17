@@ -2,9 +2,21 @@
 
 **Snapshot date:** 2026-08-18
 
-This file is the canonical status ledger for the Quantum Bogosort research repository. It distinguishes proved mathematics, simulation-supported mechanisms, interpretation-level assumptions, and open problems.
+This is the canonical status ledger for the Quantum Bogosort repository. It separates proved mathematics, statistical validation results, simulation evidence, and the physically open Everett bridge.
 
-## Core mathematical results
+## Release baseline
+
+The public-review baseline remains:
+
+`v0.2 — Public Review`
+
+at merge commit:
+
+`7405f7408f74fa32b16d1cc9f624070cc14624ab`
+
+Post-v0.2 theorem work is intentionally kept in stacked review PRs rather than merged directly into `main`.
+
+## Mathematical results
 
 | ID | Result | Status | Primary source |
 |---|---|---|---|
@@ -13,51 +25,66 @@ This file is the canonical status ledger for the Quantum Bogosort research repos
 | T3 | Monotone Accessibility implies FOSD | PROVED | `theory/theorem_1_3.md` |
 | T4 | Recognition Decomposition | PROVED | `theory/theorem_4_5.md` |
 | T5 | Policy–QBS Interaction Decomposition | PROVED | `theory/theorem_4_5.md` |
-| C5.1 | Adaptive Rescue gives nonpositive interaction under opposite monotonicity | PROVED | `theory/theorem_4_5.md` |
-| S1 | Shared-latent branch-policy coherence under conditional independence | PROVED (SUPPLEMENTARY) | `supplementary/branch_recognition.md` |
+| C5.1 | Adaptive rescue gives nonpositive interaction under opposite monotonicity | PROVED | `theory/theorem_4_5.md` |
+| S1 | Shared-latent branch-policy coherence | PROVED (SUPPLEMENTARY) | `supplementary/branch_recognition.md` |
 | S2 | Predictive-calibration alignment for score-measurable accessibility | PROVED (POST-v0.2 CANDIDATE) | `supplementary/adaptive_agent.md` |
 | S2.2 | Posterior-mean self-calibration | PROVED | `supplementary/adaptive_agent.md` |
 | S2.3 | Approximate-calibration covariance robustness | PROVED | `supplementary/adaptive_agent.md` |
-| S2.4 | Prediction-MSE population certificate | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/adaptive_agent.md` |
-| S2.5 | Bounded finite-sample held-out covariance certificate | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/finite_sample_certificate.md` |
-| S2.6 | Conditional validity after arbitrary independent training | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/selection_validity.md` |
-| S2.7 | Multiplicity-corrected finite candidate selection on one hold-out sample | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/selection_validity.md` |
-| S2.8 | Generic simultaneous-confidence-envelope covariance certificate | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/confidence_envelope_certificate.md` |
-| S2.9 | Light-tail sub-Gaussian/Bernstein instantiation of S2.8 | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/light_tail_certificate.md` |
-| S2.10 | Robust median-of-means instantiation of S2.8 | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/robust_mom_certificate.md` |
+| S2.4 | Prediction-MSE population certificate | PROVED | `supplementary/adaptive_agent.md` |
+| S2.5 | Bounded finite-sample held-out covariance certificate | PROVED | `supplementary/finite_sample_certificate.md` |
+| S2.6 | Validity after arbitrary independent training | PROVED | `supplementary/selection_validity.md` |
+| S2.7 | Multiplicity-corrected finite candidate selection | PROVED | `supplementary/selection_validity.md` |
+| S2.8 | Generic simultaneous-confidence-envelope composition | PROVED | `supplementary/confidence_envelope_certificate.md` |
+| S2.9 | Light-tail sub-Gaussian/Bernstein instantiation | PROVED | `supplementary/light_tail_certificate.md` |
+| S2.10 | Robust median-of-means instantiation | PROVED | `supplementary/robust_mom_certificate.md` |
+| S2.11 | Residual conditional-covariance extension beyond `S=s(Y)` | PROVED | `supplementary/residual_covariance_extension.md` |
 | P1 | Costless recognition has nonnegative option value | PROVED | `theory/propositions_boundaries.md` |
 | P2 | Pure reweighting cannot create support | PROVED | `theory/propositions_boundaries.md` |
 
-The core five theorem set remains unchanged. The S2 theorem family is post-v0.2 development and is isolated in stacked review branches.
+The locked core theorem set remains T1–T5. S1 and S2.* are supplementary developments.
 
-## S2 adaptive-alignment and certification chain
+## S2 alignment chain
 
-S2 proves:
+For score-measurable accessibility:
+
+$$
+S=s(Y),
+$$
+
+S2 gives:
 
 $$
 \operatorname{Cov}(U,S)
 =
-\operatorname{Cov}(E[U\mid Y],s(Y))
+\operatorname{Cov}(E[U\mid Y],s(Y)).
 $$
 
-for score-measurable accessibility `S=s(Y)`. Comonotonic conditional-mean prediction and accessibility imply nonnegative covariance.
-
-S2.2 proves exact posterior-mean self-calibration:
+For a posterior-mean score:
 
 $$
-Y=E[U\mid B]
-\Longrightarrow
+Y=E[U\mid B],
+$$
+
+S2.2 gives:
+
+$$
 E[U\mid Y]=Y.
 $$
 
-S2.3 gives the calibration-error lower bound:
+Approximate calibration gives S2.3:
 
 $$
 \operatorname{Cov}(U,S)
 \ge
 \operatorname{Cov}(Y,S)
 -
-\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)},
+$$
+
+where:
+
+$$
+e(Y)=E[U\mid Y]-Y.
 $$
 
 S2.4 replaces the latent calibration variance with ordinary prediction MSE:
@@ -70,7 +97,9 @@ $$
 \sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
 $$
 
-S2.5 converts this population inequality into a bounded finite-sample held-out lower certificate `D_L` satisfying:
+## Statistical certification layers
+
+S2.5 provides a bounded independent-held-out certificate:
 
 $$
 P\left(
@@ -79,13 +108,9 @@ P\left(
 \ge1-\delta.
 $$
 
-S2.6 shows that arbitrary upstream training can be conditioned on when the final certification sample is independent.
+S2.6 shows that arbitrary upstream training may be conditioned on when the final certification sample is independent. S2.7 extends validity to same-holdout selection among a finite predeclared candidate family after multiplicity correction.
 
-S2.7 shows that same-holdout selection among a finite predeclared candidate family remains valid when candidate certificates are made simultaneous with multiplicity correction.
-
-### S2.8 generic confidence-envelope composition
-
-S2.8 removes Hoeffding from the QBS-specific composition layer. Suppose a statistical procedure supplies a simultaneous event controlling:
+S2.8 makes the QBS composition concentration-method agnostic. It consumes simultaneous confidence bounds for:
 
 $$
 E[Y],
@@ -96,58 +121,10 @@ E[YS],
 \quad
 E[S^2],
 \quad
-E[(U-Y)^2].
+E[(U-Y)^2]
 $$
 
-Let the simultaneous bounds be:
-
-$$
-L_Y\le E[Y]\le U_Y,
-\qquad
-L_S\le E[S]\le U_S,
-$$
-
-$$
-E[YS]\ge L_{YS},
-\qquad
-E[S^2]\le U_{S^2},
-\qquad
-E[(U-Y)^2]\le U_M.
-$$
-
-With:
-
-$$
-L_S^+=\max\{0,L_S\},
-$$
-
-$$
-P_U
-=
-\max\{L_YL_S^+,L_YU_S,U_YL_S^+,U_YU_S\},
-$$
-
-$$
-C_L=L_{YS}-P_U,
-$$
-
-and:
-
-$$
-V_U
-=
-\max\{0,U_{S^2}-(L_S^+)^2\},
-$$
-
-S2.8 defines:
-
-$$
-D_{\mathrm{env}}
-=
-C_L-\sqrt{U_MV_U}
-$$
-
-and proves:
+and composes them into:
 
 $$
 P\!\left(
@@ -156,121 +133,76 @@ P\!\left(
 \ge1-\delta.
 $$
 
-### S2.9 light-tail instantiation
+S2.9 instantiates this interface for unbounded light tails using explicit sub-Gaussian/Bernstein mean controls. S2.10 instantiates it using median-of-means with finite variance bounds on the five S2.8 target variables.
 
-S2.9 instantiates S2.8 without deterministic boundedness. It assumes two-sided sub-Gaussian sample-mean control for `Y` and `S`, and explicit Bernstein/sub-exponential sample-mean control for:
+The S2.10 assumption is stronger than raw-variable finite variance. In particular:
 
 $$
-YS,
+\operatorname{Var}(S^2)<\infty
+$$
+
+requires a finite fourth moment of `S`, while:
+
+$$
+\operatorname{Var}((U-Y)^2)<\infty
+$$
+
+requires a finite fourth moment of the prediction residual.
+
+## S2.11 residual conditional-covariance extension
+
+S2.11 removes the deterministic score-measurability assumption. Define:
+
+$$
+m(Y)=E[U\mid Y],
 \qquad
-S^2,
-\qquad
-(U-Y)^2.
+a(Y)=E[S\mid Y].
 $$
 
-With:
+The exact law of total covariance gives:
 
 $$
-t_\delta=\log\frac{10}{\delta},
-$$
-
-the five concentration radii form an S2.8 simultaneous envelope with coverage at least:
-
-$$
-1-\delta.
-$$
-
-The resulting certificate:
-
-$$
-D_{\mathrm{LT}}
-$$
-
-satisfies:
-
-$$
-P\!\left(
-\operatorname{Cov}(U,S)\ge D_{\mathrm{LT}}
-\right)
-\ge1-\delta.
-$$
-
-The theorem deliberately treats the product/square Bernstein parameters as explicit inputs. It does not silently infer universal constants from marginal sub-Gaussianity.
-
-### S2.10 robust median-of-means instantiation
-
-Define the five S2.8 target variables:
-
-$$
-Z_1=Y,
-\qquad
-Z_2=S,
-\qquad
-Z_3=YS,
-\qquad
-Z_4=S^2,
-\qquad
-Z_5=(U-Y)^2.
-$$
-
-S2.10 assumes:
-
-$$
-\operatorname{Var}(Z_j)\le v_j<\infty,
-\qquad
-j=1,\ldots,5.
-$$
-
-Choose an odd number of blocks `b` with:
-
-$$
-b\ge8\log\frac{5}{\delta}
-$$
-
-and block size:
-
-$$
-m=\left\lfloor\frac{n}{b}\right\rfloor.
-$$
-
-For each target, the median-of-means estimator has radius:
-
-$$
-r_j
+\boxed{
+\operatorname{Cov}(U,S)
 =
-2\sqrt{\frac{v_j}{m}}
+\operatorname{Cov}(m(Y),a(Y))
++
+E[\operatorname{Cov}(U,S\mid Y)]
+}.
 $$
 
-with failure probability at most:
+If the conditional means are comonotone and:
 
 $$
-\frac{\delta}{5}.
+E[\operatorname{Cov}(U,S\mid Y)]
+\ge-\varepsilon,
 $$
 
-A union bound supplies an S2.8 simultaneous envelope, producing a robust certificate:
+then:
 
 $$
-D_{\mathrm{MoM}}
+\boxed{
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))-\varepsilon
+}.
 $$
 
-such that:
+Hence:
 
 $$
-P\!\left(
-\operatorname{Cov}(U,S)\ge D_{\mathrm{MoM}}
-\right)
-\ge1-\delta.
+\operatorname{Cov}(m(Y),a(Y))>\varepsilon
 $$
 
-This robust route does not require exponential tails, but it does require finite variance of the five target variables themselves. In particular, estimating the means of `S^2` and `(U-Y)^2` this way requires fourth-moment-type conditions.
+is sufficient for positive total covariance.
 
-## Sequential extension
+S2 is recovered as the special case in which:
 
-| Item | Status | Source |
-|---|---|---|
-| Recognition time as a stopping time | FORMALIZED | `supplementary/recognition_time.md` |
-| FP value functional for a stopping rule | EXACT BY DEFINITION | `supplementary/recognition_time.md` |
-| Universal early-vs-late recognition ordering | NOT CLAIMED / DEFERRED | `supplementary/recognition_time.md` |
+$$
+S=s(Y),
+$$
+
+so the residual conditional covariance is zero almost surely.
 
 ## Core computational results
 
@@ -282,53 +214,59 @@ This robust route does not require exponential tails, but it does require finite
 | E4 | Fixed and changing-selector interaction decomposition | REPRODUCIBLE |
 | E5 | Paired branch-map sweeps and shared-recognition comparison | REPRODUCIBLE |
 
-All five experiments are rerun by GitHub Actions. S2–S2.10 do not create a sixth core experiment.
+All five core experiments are rerun by GitHub Actions. The S2 theorem stack does not create a sixth core experiment.
 
-## Figure and manuscript state
+## Manuscript and CI state
 
 | Item | Status |
 |---|---|
 | Six GitHub-readable SVG figures | COMMITTED / REGENERATED IN CI |
-| Six LaTeX PDF figure build products | GENERATED IN CI |
-| Figure placement and captions | INTEGRATED / AUDITED |
-| Manuscript theorem appendix | FULL PROOFS INTEGRATED |
-| Post-v0.2 S2/S2.10 appendices | SEPARATE STACKED REVIEW BRANCHES |
-| LaTeX/PDF build | VALIDATED BY CI ON EACH REVIEW BRANCH WHEN GREEN |
-| Expanded bibliography and critique-side prior art | INTEGRATED |
-| Final v0.2 repository release audit | PASS |
+| Six manuscript PDF figures | GENERATED IN CI |
+| T1–T5 proof appendix | INTEGRATED |
+| S2.* supplementary appendices | STACKED REVIEW BRANCHES |
+| Markdown `$$ ... $$` delimiter validation | CI ENFORCED |
+| E1–E5 reproduction | CI ENFORCED |
+| Repository structure validation | CI ENFORCED |
+| Illustrated LaTeX/PDF manuscript build | CI ENFORCED |
+| v0.2 repository audit | PASS |
 
-## Interpretation-level claims
+## Interpretation status
 
 | Claim | Status |
 |---|---|
-| Observer-indexed accessibility can be represented by a nonnegative weight function | MODEL ASSUMPTION |
-| Everett branches admit the QBS accessibility bridge used here | CONDITIONAL BRIDGE ASSUMPTION / PHYSICALLY OPEN |
-| Ordered conditional-mean prediction plus ordered score-measurable accessibility implies nonnegative covariance | PROVED (S2) |
-| A true posterior-mean score is conditionally mean-calibrated | PROVED (S2.2) |
-| Population robustness via calibration error / MSE | PROVED SUFFICIENT CONDITIONS (S2.3/S2.4) |
-| Bounded independent held-out data can certify positive covariance | PROVED SUFFICIENT HIGH-PROBABILITY CONDITION (S2.5) |
-| Arbitrary independent training preserves held-out validity conditional on the trained rule | PROVED (S2.6) |
-| Same-holdout selection among a finite predeclared family is valid with multiplicity correction | PROVED (S2.7) |
-| Any valid simultaneous moment envelope can be composed into a covariance certificate | PROVED (S2.8) |
-| Explicit light-tail concentration controls can instantiate the envelope without deterministic boundedness | PROVED (S2.9) |
-| Median-of-means can instantiate the envelope under finite variances of the five target variables | PROVED (S2.10) |
-| Raw-variable finite variance alone is enough for S2.10 | NOT CLAIMED |
-| A passed statistical certificate establishes the Everett bridge | NOT CLAIMED |
+| Nonnegative accessibility can define an abstract weighted FP measure | MODEL ASSUMPTION / EXACT AFTER DEFINITION |
+| Everett branches obey the proposed QBS accessibility bridge | PHYSICALLY OPEN BRIDGE ASSUMPTION |
+| Ordered conditional-mean prediction can imply positive covariance | PROVED UNDER S2/S2.11 CONDITIONS |
+| Bounded, light-tail, or MoM data can statistically certify the covariance premise | PROVED UNDER THEIR RESPECTIVE ASSUMPTIONS |
+| A passed statistical certificate establishes Everettian observer selection | NOT CLAIMED |
 | External random generators become objectively lucky | NOT CLAIMED |
 
-## Open problems after S2.10
+## Sequential extension
+
+| Item | Status | Source |
+|---|---|---|
+| Recognition time as a stopping time | FORMALIZED | `supplementary/recognition_time.md` |
+| FP value functional for a stopping rule | EXACT BY DEFINITION | `supplementary/recognition_time.md` |
+| Universal early-vs-late recognition ordering | NOT CLAIMED / DEFERRED | `supplementary/recognition_time.md` |
+
+## Open problems after S2.11
 
 1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics.
-2. Derive convenient sufficient conditions that imply the S2.9 product/square Bernstein parameters from a chosen Orlicz-norm or mgf convention, with constants stated explicitly.
-3. Explore robust estimators that weaken the S2.10 fourth-moment-type requirements for `S^2` and `(U-Y)^2`.
-4. Extend selection validity from finite predeclared candidate families to infinite or data-dependent classes using uniform-convergence, selective-inference, or fresh-sample methods.
-5. Add a held-out diagnostic experiment only if review requires empirical evaluation of the S2.5–S2.10 stack.
-6. Extend S2 beyond score-measurable accessibility by controlling the residual conditional-covariance term.
-7. Continue literature search if review identifies a more specific novelty conflict.
-8. Develop a recognition-time ordering theorem only under explicit pathwise/conditional advantage assumptions.
+2. Develop empirical or structural bounds for the S2.11 residual term in specific agent models.
+3. Derive explicit Orlicz/mgf sufficient conditions for the S2.9 product/square Bernstein parameters with convention-specific constants.
+4. Explore robust estimators that weaken S2.10's fourth-moment-type requirements for squared targets.
+5. Extend selection validity to infinite or certification-data-dependent candidate classes.
+6. Add a held-out certificate experiment only if public review requires it.
+7. Continue novelty/prior-art search when review identifies a specific overlap question.
+8. Develop a recognition-time ordering theorem only under explicit pathwise or conditional-advantage assumptions.
 
-## Release state
+## Current stacked review sequence
 
-Repository baseline: **v0.2 — Public Review** at merge commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
-
-PR #11 is the base S2 review branch, PR #12 adds S2.4, PR #13 adds S2.5, PR #15 adds S2.6–S2.7, PR #16 adds S2.8, PR #17 adds S2.9, and S2.10 is developed as the next stacked robust finite-moment layer. All remain separately reviewable before any later preprint merge.
+1. PR #11 — S2 through S2.3.
+2. PR #12 — S2.4 prediction-MSE certificate.
+3. PR #13 — S2.5 bounded finite-sample certificate.
+4. PR #15 — S2.6–S2.7 selection validity.
+5. PR #16 — S2.8 generic confidence-envelope composition.
+6. PR #17 — S2.9 light-tail instantiation.
+7. PR #18 — S2.10 robust median-of-means instantiation.
+8. Current branch — S2.11 residual conditional-covariance extension.

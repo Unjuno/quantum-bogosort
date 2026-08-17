@@ -4,7 +4,7 @@ This document prevents theorem statements, simulation results, statistical valid
 
 ## Exact mathematical claims
 
-### Mean-shift identity
+### Core weighting identities
 
 For integrable outcome `X` and nonnegative accessibility `S` with positive finite mean:
 
@@ -14,8 +14,6 @@ E_{FP}[X]-E[X]
 \frac{\operatorname{Cov}(X,S)}{E[S]}.
 $$
 
-### Tail identity
-
 For threshold `c`:
 
 $$
@@ -23,8 +21,6 @@ P_{FP}(X\ge c)-P(X\ge c)
 =
 \frac{\operatorname{Cov}(\mathbf 1_{\{X\ge c\}},S)}{E[S]}.
 $$
-
-### FOSD condition
 
 If:
 
@@ -38,9 +34,9 @@ $$
 F_{FP}(c)\le F(c)
 $$
 
-for every threshold `c`.
+for every `c`.
 
-### Recognition decomposition
+### Recognition and interaction decompositions
 
 $$
 V_1-V_0
@@ -49,8 +45,6 @@ E[U_1-U_0]
 +
 Q(U_1,S_1)-Q(U_0,S_0).
 $$
-
-### Interaction decomposition
 
 With:
 
@@ -68,14 +62,16 @@ I
 \left[Q(U_1,S_1)-Q(U_1,S_0)\right].
 $$
 
-### S2 predictive-calibration alignment
+## S2 predictive-alignment family
+
+### S2 — score-measurable alignment
 
 Let:
 
 $$
 m(Y)=E[U\mid Y],
 \qquad
-S=s(Y)\ge0.
+S=s(Y).
 $$
 
 Then:
@@ -86,13 +82,9 @@ $$
 \operatorname{Cov}(m(Y),s(Y)).
 $$
 
-If versions of `m(y)` and `s(y)` are both nondecreasing, then:
+Comonotonicity of the conditional mean and accessibility implies nonnegative covariance.
 
-$$
-\operatorname{Cov}(U,S)\ge0.
-$$
-
-### S2.2 posterior-mean self-calibration
+### S2.2 — posterior-mean self-calibration
 
 If:
 
@@ -106,7 +98,7 @@ $$
 E[U\mid Y]=Y.
 $$
 
-### S2.3 approximate-calibration robustness
+### S2.3–S2.4 — robustness certificates
 
 With:
 
@@ -114,7 +106,7 @@ $$
 e(Y)=E[U\mid Y]-Y,
 $$
 
-square integrability gives:
+S2.3 gives:
 
 $$
 \operatorname{Cov}(U,S)
@@ -124,17 +116,7 @@ $$
 \sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
 $$
 
-### S2.4 prediction-MSE certificate
-
-Conditional Jensen gives:
-
-$$
-\operatorname{Var}(e(Y))
-\le
-E[(U-Y)^2],
-$$
-
-and therefore:
+S2.4 gives the conservative prediction-MSE form:
 
 $$
 \operatorname{Cov}(U,S)
@@ -144,273 +126,136 @@ $$
 \sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
 $$
 
-### S2.5 finite-sample held-out certificate
+### S2.5–S2.10 — finite-sample statistical certification
 
-Under independent i.i.d. evaluation and valid boundedness assumptions, S2.5 constructs a lower certificate `D_L` satisfying:
+S2.5 constructs a bounded independent-held-out lower certificate `D_L` satisfying:
 
 $$
-P\left(
+P\!\left(
 \operatorname{Cov}(U,S)\ge D_L
 \right)
 \ge1-\delta.
 $$
 
-### S2.6 validity after arbitrary independent training
+S2.6 proves validity after arbitrary independent upstream training. S2.7 permits same-holdout selection among a finite predeclared candidate family after multiplicity correction.
 
-Let `T` denote the entire random training procedure. Conditional on `T`, if the final certification sample is independent and the trained rule/bounds are valid for fresh draws, then:
-
-$$
-P\!\left(
-C(T)\ge D_L(T)
-\mid T
-\right)
-\ge1-\delta.
-$$
-
-### S2.7 finite candidate post-selection validity
-
-For a finite predeclared candidate family with confidence budgets:
+S2.8 proves that any valid simultaneous confidence envelope for:
 
 $$
-\delta_k>0,
-\qquad
-\sum_{k=1}^K\delta_k\le\delta,
+E[Y],
+\quad
+E[S],
+\quad
+E[YS],
+\quad
+E[S^2],
+\quad
+E[(U-Y)^2]
 $$
 
-simultaneous candidate certificates hold with probability at least:
+can be deterministically composed into a lower covariance certificate.
 
-$$
-1-\delta.
-$$
+S2.9 supplies a light-tail sub-Gaussian/Bernstein instantiation. S2.10 supplies a median-of-means instantiation under finite variance bounds for the five target variables themselves.
 
-Any data-dependent selected index from that predeclared family retains its lower bound.
-
-### S2.8 generic confidence-envelope certificate
-
-Suppose a statistical procedure supplies a simultaneous event of probability at least:
-
-$$
-1-\delta
-$$
-
-on which:
-
-$$
-L_Y\le E[Y]\le U_Y,
-\qquad
-L_S\le E[S]\le U_S,
-$$
-
-$$
-E[YS]\ge L_{YS},
-\qquad
-E[S^2]\le U_{S^2},
-\qquad
-E[(U-Y)^2]\le U_M.
-$$
-
-Define:
-
-$$
-L_S^+=\max\{0,L_S\},
-$$
-
-$$
-P_U
-=
-\max\{L_YL_S^+,L_YU_S,U_YL_S^+,U_YU_S\},
-$$
-
-$$
-C_L=L_{YS}-P_U,
-$$
-
-$$
-V_U
-=
-\max\{0,U_{S^2}-(L_S^+)^2\},
-$$
-
-and:
-
-$$
-D_{\mathrm{env}}
-=
-C_L-\sqrt{U_MV_U}.
-$$
-
-Then:
-
-$$
-P\!\left(
-\operatorname{Cov}(U,S)\ge D_{\mathrm{env}}
-\right)
-\ge1-\delta.
-$$
-
-### S2.9 light-tail instantiation
-
-S2.9 assumes valid sub-Gaussian sample-mean controls for `Y` and `S`, and valid Bernstein/sub-exponential sample-mean controls for:
-
-$$
-YS,
-\qquad
-S^2,
-\qquad
-(U-Y)^2.
-$$
-
-These five controls generate the S2.8 simultaneous event and a light-tail lower margin:
-
-$$
-D_{\mathrm{LT}}
-$$
-
-satisfying:
-
-$$
-P\!\left(
-\operatorname{Cov}(U,S)\ge D_{\mathrm{LT}}
-\right)
-\ge1-\delta.
-$$
-
-### S2.10 robust median-of-means instantiation
-
-Define:
-
-$$
-Z_1=Y,
-\qquad
-Z_2=S,
-\qquad
-Z_3=YS,
-\qquad
-Z_4=S^2,
-\qquad
-Z_5=(U-Y)^2.
-$$
-
-Assume known variance bounds:
-
-$$
-\operatorname{Var}(Z_j)\le v_j<\infty,
-\qquad
-j=1,\ldots,5.
-$$
-
-Choose an odd block count `b` satisfying:
-
-$$
-b\ge8\log\frac{5}{\delta},
-$$
-
-with block size:
-
-$$
-m=\left\lfloor\frac{n}{b}\right\rfloor.
-$$
-
-For each target, the median-of-means estimator has radius:
-
-$$
-r_j
-=
-2\sqrt{\frac{v_j}{m}}
-$$
-
-and failure probability at most:
-
-$$
-\frac{\delta}{5}.
-$$
-
-A union bound gives a simultaneous S2.8 envelope and a robust lower margin:
-
-$$
-D_{\mathrm{MoM}}
-$$
-
-satisfying:
-
-$$
-P\!\left(
-\operatorname{Cov}(U,S)\ge D_{\mathrm{MoM}}
-\right)
-\ge1-\delta.
-$$
-
-S2.10 is a robust finite-moment statistical instantiation, not a physical Everettian claim.
-
-## Simulation-supported claims
-
-The repository simulations support the following model-level statements:
-
-1. Monotone outcome-aligned accessibility produces the predicted FOSD direction across several toy base distributions.
-2. A minimal learned agent can generate useful predictive ordering when its model class can represent the relevant structure.
-3. Recognition effects can be numerically decomposed into ordinary trajectory changes and first-person conditioning changes on paired primitive randomness.
-4. Adaptive rescue policies can reduce the marginal QBS contribution by rescuing branches that a selector would otherwise downweight.
-5. Shared recognition and shared environmental structure can increase cross-copy action correlation without proportionally changing single-observer FP uplift.
-
-E2/E3 illustrate premise generation for S2. They do not establish any finite-sample certificate without a separate evaluation satisfying the corresponding statistical assumptions.
-
-## Adaptive-learning and statistical-validation boundary
-
-S2 proves conditional-mean alignment. S2.2 proves posterior-mean calibration. S2.3/S2.4 provide population robustness certificates. S2.5 provides a bounded held-out certificate. S2.6–S2.7 handle independent training and finite candidate selection. S2.8 separates QBS composition from the concentration method. S2.9 supplies a light-tail instantiation. S2.10 supplies a median-of-means robust finite-moment instantiation.
-
-S2.10 does **not** require only finite variance of the raw variables. It requires finite variance of all five S2.8 target variables. In particular:
+S2.10 does not follow from finite variance of the raw variables alone. In particular:
 
 $$
 \operatorname{Var}(S^2)<\infty
 $$
 
-requires:
-
-$$
-E[S^4]<\infty,
-$$
-
-and:
+requires a finite fourth moment of `S`, and:
 
 $$
 \operatorname{Var}((U-Y)^2)<\infty
 $$
 
-requires:
+requires a finite fourth moment of the prediction residual.
+
+## S2.11 — residual conditional-covariance extension
+
+S2.11 removes the deterministic assumption:
 
 $$
-E[(U-Y)^4]<\infty.
+S=s(Y).
 $$
 
-Likewise:
+Define:
 
 $$
-\operatorname{Var}(YS)<\infty
+m(Y)=E[U\mid Y],
+\qquad
+a(Y)=E[S\mid Y].
 $$
 
-requires:
+Then the law of total covariance gives the exact identity:
 
 $$
-E[Y^2S^2]<\infty.
+\boxed{
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(m(Y),a(Y))
++
+E[\operatorname{Cov}(U,S\mid Y)]
+}.
 $$
 
-Positive mutual information is not sufficient for the S2 covariance premise.
-
-## Model assumptions
-
-The formal model assumes nonnegative measurable accessibility:
+If `m(Y)` and `a(Y)` are comonotone and:
 
 $$
-S_\pi(\omega)\ge0
+E[\operatorname{Cov}(U,S\mid Y)]
+\ge-\varepsilon,
 $$
 
-and normalized FP measure requires:
+then:
 
 $$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))-
+\varepsilon.
+$$
+
+Therefore:
+
+$$
+\operatorname{Cov}(m(Y),a(Y))>\varepsilon
+$$
+
+is sufficient for positive total covariance.
+
+S2 is recovered when `S` is `Y`-measurable, because then:
+
+$$
+\operatorname{Cov}(U,S\mid Y)=0
+$$
+
+almost surely.
+
+## Simulation-supported claims
+
+The repository's classical simulations support the following model-level statements:
+
+1. Monotone outcome-aligned accessibility produces the predicted FOSD direction across several toy distributions.
+2. A representation-capable minimal learner can generate useful predictive ordering while a misspecified learner fails.
+3. Recognition effects can be decomposed on paired primitive randomness into trajectory and conditioning contributions.
+4. Adaptive rescue can make policy and QBS partially substitutive.
+5. Shared recognition/shared latent structure can increase cross-copy action correlation without proportionally changing marginal FP uplift.
+
+These simulations do not establish Everettian physics or automatically satisfy the S2 finite-sample certificate assumptions.
+
+## Model and statistical assumptions
+
+The abstract weighted measure requires:
+
+$$
+S_\pi(\omega)\ge0,
+\qquad
 0<E[S_\pi]<\infty.
 $$
 
-S2 assumes score-measurable accessibility `S=s(Y)`. S2.2 assumes the score is the true conditional expectation under the analyzed probability model. S2.3/S2.4 assume square integrability. S2.5 assumes independent bounded held-out evaluation. S2.6 permits training-dependent rules only with independent certification data. S2.7 assumes a finite predeclared candidate family with multiplicity accounting. S2.8 assumes a valid simultaneous five-moment confidence envelope. S2.9 assumes valid light-tail concentration parameters. S2.10 assumes valid population variance upper bounds for the five target variables and enough observations to form the requested blocks.
+S2 assumes score-measurable accessibility. S2.11 relaxes that assumption but requires the residual conditional-covariance component to be retained explicitly.
+
+S2.5 assumes independent bounded held-out evaluation. S2.6 permits training-dependent rules only with independent certification data. S2.7 assumes a finite predeclared candidate family with multiplicity accounting. S2.8 assumes a valid simultaneous five-moment confidence envelope. S2.9 assumes valid light-tail concentration parameters. S2.10 assumes valid target-variable variance upper bounds and a valid i.i.d. block construction.
 
 ## Everett bridge assumption
 
@@ -423,42 +268,39 @@ d\mu^{FP}_\pi(\omega)
 \,d\mu(\omega).
 $$
 
-The repository does not currently derive this rule from unitary quantum mechanics, decoherence, observer dynamics, or the Born rule.
+The repository does not derive this rule from unitary quantum mechanics, decoherence, observer dynamics, or the Born rule.
 
 ## Non-claims
 
 The repository does **not** claim that:
 
-- an external random-number generator becomes objectively biased toward favorable outcomes;
-- the mathematical weighting identities establish quantum immortality;
-- every recognition-dependent policy is rational or beneficial;
+- an external RNG becomes objectively biased toward favorable outcomes;
+- the weighting identities establish quantum immortality;
+- every recognition-dependent policy is beneficial;
 - positive correlation alone implies FOSD;
 - mutual information alone implies positive accessibility covariance;
 - adaptation automatically learns the true posterior mean;
-- a finite learned score necessarily satisfies any S2 finite-sample certificate;
-- failure of an S2 certificate implies negative covariance;
-- the same sample may be reused arbitrarily for training and certification while preserving nominal confidence;
-- uncorrected best-of-K selection preserves the certificate confidence level;
-- marginal sub-Gaussianity alone fixes all product/square concentration constants needed by S2.9;
+- score-level alignment remains sufficient after removing `S=s(Y)` while ignoring residual dependence;
+- a negative residual conditional covariance can be dropped without affecting the result;
+- a finite learned score necessarily passes an S2 statistical certificate;
+- failure of a sufficient certificate implies negative covariance;
+- uncorrected model search preserves nominal confidence;
+- marginal sub-Gaussianity fixes all S2.9 product/square constants;
 - finite variance of `Y`, `S`, and `U` individually is enough for S2.10;
-- variance bounds estimated from certification data can be plugged into S2.10 without additional accounting;
-- a statistical S2 certificate establishes the Everett accessibility bridge;
-- internal consistency of a weighted measure confirms the Everett bridge.
+- a statistical certificate establishes the Everett accessibility bridge.
 
 ## Falsification / failure conditions
 
-The formal conclusions weaken or fail when their assumptions are violated:
-
 - outcome/accessibility independence gives zero pure weighting uplift in expectation;
 - nonmonotone conditional accessibility can break FOSD;
-- a statistically informative score can still have constant conditional outcome mean, defeating the S2 premise;
-- excessive calibration error can make S2.3 inconclusive;
-- large irreducible conditional variance can make S2.4 inconclusive;
-- a nonpositive finite-sample lower margin is inconclusive;
-- training/evaluation leakage removes the simple S2.5/S2.6 guarantee;
-- uncorrected multiple-candidate search removes the S2.7 family-wise guarantee;
-- invalid or non-simultaneous input intervals invalidate S2.8;
-- invalid light-tail parameters invalidate S2.9;
-- invalid target-variable variance bounds, insufficient blocks, or missing fourth-moment-type conditions invalidate S2.10 as stated;
+- dependence without conditional-mean prediction can defeat S2;
+- a sufficiently negative S2.11 residual term can overturn positive score-level alignment;
+- excessive calibration error or prediction MSE can make S2.3/S2.4 inconclusive;
+- nonpositive finite-sample lower margins are inconclusive;
+- training/evaluation leakage invalidates the simple held-out guarantee;
+- uncorrected multiple-candidate search invalidates S2.7 family-wise coverage;
+- invalid confidence envelopes invalidate S2.8;
+- invalid tail parameters invalidate S2.9;
+- invalid target-variable variance bounds or insufficient MoM blocks invalidate S2.10;
 - zero expected accessibility makes the normalized FP measure undefined;
-- rejecting the Everett bridge removes the physical Everett interpretation while leaving the mathematical and statistical identities intact.
+- rejecting the Everett bridge removes the physical interpretation while leaving the abstract mathematical/statistical results intact.

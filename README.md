@@ -1,6 +1,6 @@
 # Quantum Bogosort (QBS)
 
-**Status:** v0.1 — Public Technical Review
+**Status:** v0.2 — Public Review
 
 Formal theory and reproducible simulations of recognition-activated Quantum Bogosort, including policy-dependent trajectories, observer-indexed accessibility, and cross-branch decision correlations.
 
@@ -12,13 +12,16 @@ For the current state of the research, start with:
 - [`ROADMAP.md`](ROADMAP.md) — public-review and manuscript milestones.
 - [`docs/research_map.md`](docs/research_map.md) — claim-to-proof-to-experiment map.
 - [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md) — theorem / simulation / bridge-assumption separation.
+- [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md) — support, constraint, and rejection criteria for a physical Everett bridge.
+- [`docs/manuscript_claim_audit.md`](docs/manuscript_claim_audit.md) — manuscript claim and figure-caption audit.
+- [`docs/v0.2_release_audit.md`](docs/v0.2_release_audit.md) — final v0.2 public-review release audit.
 - [`docs/notation.md`](docs/notation.md) — shared notation.
 - [`theory/`](theory/) — core theorem statements and proofs.
 - [`experiments/`](experiments/) — E1–E5 cards and reproducible code.
 - [`supplementary/`](supplementary/) — secondary exact results and exploratory mechanisms.
-- [`literature/prior_art.md`](literature/prior_art.md) — working prior-art ledger.
-- [`paper/`](paper/) — evolving manuscript source.
-- [`figures/README.md`](figures/README.md) — publication figure plan.
+- [`literature/`](literature/) — prior-art and novelty-boundary review.
+- [`paper/`](paper/) — illustrated manuscript source.
+- [`figures/README.md`](figures/README.md) — publication figures and provenance.
 - [`CHANGELOG.md`](CHANGELOG.md) — public research-package changes.
 
 ## Core model
@@ -65,7 +68,7 @@ GitHub-rendered theorem notes are indexed at [`theory/core_theorems.md`](theory/
 4. Recognition Decomposition
 5. Policy–QBS Interaction Decomposition
 
-The notes also cover option value, support preservation under pure reweighting, the zero-accessible-measure boundary, counterexamples, and the separate Everett bridge assumption. LaTeX manuscript source remains available at [`theory/core_theorems.tex`](theory/core_theorems.tex).
+The notes also cover option value, support preservation under pure reweighting, the zero-accessible-measure boundary, counterexamples, and the separate Everett bridge assumption. The manuscript appendix contains complete proofs and supplementary derivations. A supplementary hierarchical policy-coherence theorem is in [`supplementary/branch_recognition.md`](supplementary/branch_recognition.md).
 
 ## Experiments
 
@@ -90,7 +93,7 @@ python experiments/exp4_interaction.py
 python experiments/exp5_branch_map.py
 ```
 
-Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/). Secondary and superseded work should be documented under [`experiments/archive/`](experiments/archive/).
+Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/). Secondary and superseded work is documented under [`experiments/archive/`](experiments/archive/), with superseded designs explicitly excluded from current evidence.
 
 ## Supplementary research notes
 
@@ -102,16 +105,19 @@ Secondary results are indexed in [`supplementary/README.md`](supplementary/READM
 - Gaussian closed form,
 - adaptive-agent predictive structure,
 - evidence-driven recognition activation,
+- recognition time as a stopping-time extension,
 - selectivity frontier,
 - branch-wide recognition and policy coherence.
 
-The original consolidated [`supplementary/research_notes.md`](supplementary/research_notes.md) is retained as a historical snapshot.
+The recognition-time note explicitly does **not** claim that earlier recognition is universally better.
 
-## Manuscript and literature
+## Manuscript, figures, and literature
 
-The evolving manuscript is in [`paper/`](paper/). It currently contains an abstract, introduction, related-work section, formal model, theorem summary, adaptive-agent mechanism, experiment section, Everett interpretation, limitations/falsifiability, discussion, appendix scaffold, and initial bibliography.
+The evolving illustrated manuscript is in [`paper/`](paper/). It contains Abstract, Introduction, Related Work, Formal Model, Main Theorems, Adaptive-Agent Mechanism, Experiments, Everett Interpretation, Limitations/Falsifiability, Discussion, a full proof appendix, and bibliography.
 
-The working literature ledger is [`literature/prior_art.md`](literature/prior_art.md). The novelty claim remains provisional until that review is broader.
+Six GitHub-readable SVG figures are committed under `figures/generated/`. LaTeX-ready PDF variants are regenerated from committed data during CI before the manuscript build. Captions explicitly distinguish mathematical schematics, theorem illustrations, and classical toy simulations.
+
+The literature review is in [`literature/`](literature/). It includes supportive and critical Everett probability work, anthropic decision theory, classical change-of-measure context, and direct self-locating policy-optimization prior art. The novelty claim is therefore intentionally narrower than "self-location affects decisions" or "weighted expectations change outcomes."
 
 ## Markdown math convention
 
@@ -119,14 +125,16 @@ Markdown math in this repository uses **double-dollar display blocks only**. Inl
 
 ## Validation
 
-GitHub Actions runs:
+GitHub Actions validates the research package by:
 
-- Python compilation checks,
-- Markdown math-delimiter validation,
-- all five reproduction scripts,
-- manifest reference validation.
-
-The corrected local validation run completed all five experiments in about 12 seconds. E4 identity errors were at floating-point precision. E5 gives exactly zero total effect at `q=0`, and the paired execution-strength decomposition error remains at floating-point precision.
+- compiling experiment, figure, and validation scripts;
+- enforcing the Markdown math-delimiter convention;
+- validating the required research-repository structure;
+- rerunning E1–E5;
+- regenerating SVG and PDF publication figures;
+- validating experiment-manifest references;
+- generating the illustrated manuscript PDF with `latexmk`;
+- verifying and uploading the manuscript PDF as a CI artifact.
 
 ## Everett interpretation
 
@@ -139,15 +147,17 @@ d\mu^{FP}_\pi(\omega)
 \,d\mu(\omega).
 $$
 
-The repository keeps measure-theoretic results, classical simulations, and the Everett physical interpretation distinct.
+The repository keeps measure-theoretic results, classical simulations, observer-model assumptions, and the Everett physical interpretation distinct. A concrete physical bridge must satisfy the structural and empirical criteria documented in [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md).
 
 ## Falsifiability and boundaries
 
 The framework predicts no pure weighting uplift when accessibility is independent of outcome. FOSD need not hold for nonmonotone accessibility. Recognition has no effect if it changes neither trajectory utility nor accessibility. If expected accessibility is zero, the normalized first-person measure is undefined.
 
-## Public technical review
+Falsifiability is layer-specific: theorem assumptions can fail mathematically; an observer model can fail structural consistency; a physical Everett bridge is empirically falsifiable only when a concrete physical accessibility rule makes observational predictions that differ from competing accounts.
 
-Corrections, counterexamples, prior-art pointers, implementation bugs, and challenges to the Everett bridge assumption are welcome through GitHub Issues. The intended sequence is public review, revision, manuscript stabilization, and then arXiv preparation.
+## Public review
+
+Corrections, counterexamples, prior-art pointers, implementation bugs, and challenges to the Everett bridge assumption are welcome through GitHub Issues. The intended sequence is v0.2 public review, revision, manuscript stabilization, and then later arXiv preparation.
 
 ## License
 
@@ -161,4 +171,4 @@ See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. `CITATION.
 
 ## Citation
 
-Citation metadata is provided in [`CITATION.cff`](CITATION.cff). Update it when a manuscript identifier becomes available.
+Citation metadata is provided in [`CITATION.cff`](CITATION.cff). It should be updated again when a manuscript identifier becomes available.

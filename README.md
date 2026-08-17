@@ -4,6 +4,23 @@
 
 Formal theory and reproducible simulations of recognition-activated Quantum Bogosort, including policy-dependent trajectories, observer-indexed accessibility, and cross-branch decision correlations.
 
+## Repository map
+
+For the current state of the research, start with:
+
+- [`STATUS.md`](STATUS.md) — canonical ledger of proved, simulated, assumed, open, and non-claimed results.
+- [`ROADMAP.md`](ROADMAP.md) — public-review and manuscript milestones.
+- [`docs/research_map.md`](docs/research_map.md) — claim-to-proof-to-experiment map.
+- [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md) — theorem / simulation / bridge-assumption separation.
+- [`docs/notation.md`](docs/notation.md) — shared notation.
+- [`theory/`](theory/) — core theorem statements and proofs.
+- [`experiments/`](experiments/) — E1–E5 cards and reproducible code.
+- [`supplementary/`](supplementary/) — secondary exact results and exploratory mechanisms.
+- [`literature/prior_art.md`](literature/prior_art.md) — working prior-art ledger.
+- [`paper/`](paper/) — evolving manuscript source.
+- [`figures/README.md`](figures/README.md) — publication figure plan.
+- [`CHANGELOG.md`](CHANGELOG.md) — public research-package changes.
+
 ## Core model
 
 Recognition may change both policy-dependent trajectories and the accessibility map:
@@ -52,13 +69,13 @@ The notes also cover option value, support preservation under pure reweighting, 
 
 ## Experiments
 
-The locked experiment map is [`experiments/manifest.csv`](experiments/manifest.csv).
+The locked experiment map is [`experiments/manifest.csv`](experiments/manifest.csv). Human-readable H/T/D/C/U cards are also provided:
 
-- **E1:** covariance, tails, FOSD, independence null, and nonmonotone counterexample.
-- **E2:** minimal learned agent and endogenous predictive correlation.
-- **E3:** paired recognition decomposition and recognition-label null.
-- **E4:** fixed-selector interaction identity plus the general selector-map-shift decomposition.
-- **E5:** paired execution-strength and environment-correlation sweeps, plus shared versus branch-independent recognition.
+- [`E1_FOSD.md`](experiments/E1_FOSD.md) — covariance, tails, FOSD, independence null, and nonmonotone counterexample.
+- [`E2_LEARNED_AGENT.md`](experiments/E2_LEARNED_AGENT.md) — minimal learned agent and endogenous predictive correlation.
+- [`E3_RECOGNITION.md`](experiments/E3_RECOGNITION.md) — paired recognition decomposition and recognition-label null.
+- [`E4_INTERACTION.md`](experiments/E4_INTERACTION.md) — fixed-selector interaction identity plus the general selector-map-shift decomposition.
+- [`E5_BRANCH_MAP.md`](experiments/E5_BRANCH_MAP.md) — paired execution-strength and environment-correlation sweeps, plus shared versus branch-independent recognition.
 
 Run all five from the repository root:
 
@@ -73,11 +90,28 @@ python experiments/exp4_interaction.py
 python experiments/exp5_branch_map.py
 ```
 
-Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/).
+Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/). Secondary and superseded work should be documented under [`experiments/archive/`](experiments/archive/).
 
 ## Supplementary research notes
 
-Important results that are not part of the five-experiment core are preserved in [`supplementary/research_notes.md`](supplementary/research_notes.md), including multi-observer normalization, repeated-filter identities, the Gaussian minimal model, evidence-driven recognition activation, selectivity frontiers, and the information-theoretic adaptive-agent interpretation.
+Secondary results are indexed in [`supplementary/README.md`](supplementary/README.md), including:
+
+- multi-observer normalization,
+- binary soft-QBS,
+- repeated-filter identities and accessible-measure decay,
+- Gaussian closed form,
+- adaptive-agent predictive structure,
+- evidence-driven recognition activation,
+- selectivity frontier,
+- branch-wide recognition and policy coherence.
+
+The original consolidated [`supplementary/research_notes.md`](supplementary/research_notes.md) is retained as a historical snapshot.
+
+## Manuscript and literature
+
+The evolving manuscript is in [`paper/`](paper/). It currently contains an abstract, introduction, related-work section, formal model, theorem summary, adaptive-agent mechanism, experiment section, Everett interpretation, limitations/falsifiability, discussion, appendix scaffold, and initial bibliography.
+
+The working literature ledger is [`literature/prior_art.md`](literature/prior_art.md). The novelty claim remains provisional until that review is broader.
 
 ## Markdown math convention
 
@@ -113,7 +147,7 @@ The framework predicts no pure weighting uplift when accessibility is independen
 
 ## Public technical review
 
-Corrections, counterexamples, prior-art pointers, implementation bugs, and challenges to the Everett bridge assumption are welcome through GitHub Issues. The intended sequence is public review, revision, then manuscript and arXiv preparation.
+Corrections, counterexamples, prior-art pointers, implementation bugs, and challenges to the Everett bridge assumption are welcome through GitHub Issues. The intended sequence is public review, revision, manuscript stabilization, and then arXiv preparation.
 
 ## License
 

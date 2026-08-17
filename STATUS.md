@@ -56,6 +56,7 @@ All five experiments are rerun by GitHub Actions.
 | Archived experiment promotion before v0.2 | NOT REQUIRED; NONE USED AS NEW ACTIVE EVIDENCE |
 | Bridge support / constraint / rejection criteria | DOCUMENTED |
 | Post-layout claim consistency audit | PASS |
+| Final v0.2 repository release audit | PASS PENDING THIS PR CI |
 
 ## Interpretation-level claims
 
@@ -79,6 +80,6 @@ All five experiments are rerun by GitHub Actions.
 
 ## Release state
 
-Current public state: **v0.1 — Public Technical Review**.
+Repository snapshot: **v0.2 — Public Review**.
 
-The repository now satisfies the substantive **v0.2 manuscript-readiness** gates. The remaining step is a final release audit on `main` after this layout PR passes CI, followed by creation of the `v0.2-public-review` release if no new inconsistency is found.
+The substantive v0.2 manuscript-readiness gates are complete. `docs/v0.2_release_audit.md` records the final audit. After this release-audit PR passes CI and merges, the repository itself is the v0.2 public-review snapshot. A formal GitHub Release/tag remains a hosting-layer action separate from the scientific audit.

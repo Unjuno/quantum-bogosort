@@ -1,0 +1,132 @@
+\section{Supplementary Corollaries S2.6--S2.7: Selection-Safe Certification}
+
+This appendix formalizes two selection-validity extensions of the finite-sample certificate.
+
+\subsection{S2.6: arbitrary independent training}
+
+Let $T$ denote an arbitrary training random element. Conditional on $T$, suppose a training procedure outputs a predictor/accessibility rule
+\[
+Y_T=f_T(X),
+\qquad
+S_T=s_T(Y_T),
+\]
+and bounds
+\[
+|Y_T|\le B_Y(T),
+\qquad
+0\le S_T\le B_S(T),
+\qquad
+|U-Y_T|\le B_R(T)
+\]
+for fresh population draws, almost surely. Let the certification observations be i.i.d. from the target population and independent of $T$.
+
+For the trained rule, define
+\[
+C(T)=\operatorname{Cov}(U,S_T\mid T),
+\]
+and construct the S2.5 lower certificate $D_L(T)$ at confidence level $\delta$ from the independent certification sample.
+
+\begin{corollary}[Selection validity after independent training]
+Under the assumptions above,
+\[
+P\!\left(C(T)\ge D_L(T)\mid T\right)\ge1-\delta
+\]
+almost surely. Consequently,
+\[
+P\!\left(C(T)\ge D_L(T)\right)\ge1-\delta.
+\]
+\end{corollary}
+
+\begin{proof}
+Fix a realized training state $T=t$. Conditional on $T=t$, the predictor, accessibility rule, and bounds are fixed before the independent certification observations are evaluated. Therefore S2.5 applies conditionally and gives
+\[
+P\!\left(C(t)\ge D_L(t)\mid T=t\right)\ge1-\delta.
+\]
+Taking expectation over $T$ yields
+\[
+P(C(T)\ge D_L(T))
+=
+\mathbb E\!\left[P(C(T)\ge D_L(T)\mid T)\right]
+\ge1-\delta.
+\]
+\end{proof}
+
+Thus the complexity of the upstream learning procedure is not itself a validity problem when the final certification sample remains independent.
+
+\subsection{S2.7: finite candidate selection with family-wise correction}
+
+Suppose a training stage independent of the certification sample produces $K$ candidate rules
+\[
+(Y^{(k)},S^{(k)}),
+\qquad
+k=1,\ldots,K,
+\]
+with candidate definitions and valid bounds fixed before the certification observations are inspected.
+
+For each candidate, let
+\[
+C_k=\operatorname{Cov}(U,S^{(k)}).
+\]
+Apply S2.5 to candidate $k$ at confidence level
+\[
+\delta_k=\frac{\delta}{K}.
+\]
+With equal allocation, the corresponding Hoeffding radius is
+\[
+\tau_{n,\delta,K}
+=
+\sqrt{\frac{\log(10K/\delta)}{2n}}.
+\]
+Let $D_{L,k}$ denote the resulting lower certificate.
+
+\begin{corollary}[Finite-candidate post-selection validity]
+The candidate-specific certificates satisfy
+\[
+P\!\left(
+C_k\ge D_{L,k}
+\text{ for all }k=1,\ldots,K
+\right)
+\ge1-\delta.
+\]
+Hence, for any data-dependent selection rule
+\[
+\widehat k
+\in\{1,\ldots,K\}
+\]
+computed from the certification sample,
+\[
+P\!\left(
+C_{\widehat k}
+\ge
+D_{L,\widehat k}
+\right)
+\ge1-\delta.
+\]
+\end{corollary}
+
+\begin{proof}
+For each fixed $k$, S2.5 gives
+\[
+P(C_k<D_{L,k})\le\frac{\delta}{K}.
+\]
+Therefore the union bound gives
+\[
+P\!\left(\exists k: C_k<D_{L,k}\right)
+\le
+\sum_{k=1}^K\frac{\delta}{K}
+=
+\delta.
+\]
+On the complementary simultaneous-validity event, every candidate lower bound is valid. Any index selected from the certification sample therefore satisfies
+\[
+C_{\widehat k}\ge D_{L,\widehat k}.
+\]
+\end{proof}
+
+The same argument permits unequal allocations $\delta_k=\delta w_k$ for positive weights satisfying $\sum_k w_k\le1$.
+
+\subsection{Boundary of the selection results}
+
+The finite-family result does not justify uncorrected best-of-$K$ reporting. Nor does it cover predictor forms, accessibility rules, clipping bounds, or new candidate definitions invented after observing the certification sample. Those settings require a new independent sample or a more general selective-inference or uniform-convergence argument.
+
+S2.6--S2.7 are statistical-validity results only. They preserve the abstract covariance certificate after realistic training and finite candidate selection; they do not supply a physical Everett accessibility law.

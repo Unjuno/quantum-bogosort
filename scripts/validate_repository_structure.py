@@ -11,6 +11,7 @@ required = [
     "docs/notation.md",
     "docs/claims_and_assumptions.md",
     "docs/everett_bridge_tests.md",
+    "docs/manuscript_claim_audit.md",
     "experiments/E1_FOSD.md",
     "experiments/E2_LEARNED_AGENT.md",
     "experiments/E3_RECOGNITION.md",

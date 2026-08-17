@@ -1,11 +1,13 @@
 Creative Commons CC0 1.0 Universal (CC0 1.0)
 
-Generated research datasets in this repository are dedicated to the public
-domain under CC0 1.0 Universal unless a file states otherwise.
+LICENSING NOTICE
 
-To the extent possible under law, the rights holder has waived copyright and
-related or neighboring rights in the covered datasets. Attribution is
-appreciated for scientific provenance but is not a condition of CC0.
+Generated research datasets in this repository are dedicated under CC0 1.0 Universal unless a file states otherwise.
 
-License deed and legal code:
+Canonical legal code:
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+Human-readable deed:
 https://creativecommons.org/publicdomain/zero/1.0/
+
+SPDX identifier: CC0-1.0

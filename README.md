@@ -4,66 +4,68 @@
 
 Formal theory and reproducible simulations of recognition-activated Quantum Bogosort, including policy-dependent trajectories, observer-indexed accessibility, and cross-branch decision correlations.
 
-## Core idea
+## Core model
 
-Recognition of a QBS rule may change both:
+Recognition may change both policy-dependent trajectories and the accessibility map:
 
-1. the branch-wise trajectory policy, producing a different outcome map \(U_\pi(\omega)\); and
-2. the observer-indexed accessibility map \(S_\pi(\omega)\).
+$$
+R \longrightarrow \pi_R \longrightarrow (U_R,S_R).
+$$
 
-The first-person value is modeled as
+First-person value is modeled as:
 
-\[
-V_{FP}(\pi)=\frac{E_\mu[U_\pi S_\pi]}{E_\mu[S_\pi]}.
-\]
+$$
+V_{FP}(\pi)
+=
+\frac{E_\mu[U_\pi S_\pi]}{E_\mu[S_\pi]}.
+$$
 
-For pre-recognition \(S_0\equiv1\),
+For the baseline with no pre-recognition selector:
 
-\[
-V_{FP}(\pi_1)-V_{FP}(\pi_0)
+$$
+S_0\equiv1,
+$$
+
+so:
+
+$$
+V_1-V_0
 =
 E[U_1-U_0]
 +
 \frac{\operatorname{Cov}(U_1,S_1)}{E[S_1]}.
-\]
+$$
 
-The first term is the causal trajectory/policy effect. The second term is the QBS first-person conditioning effect.
+The first term is the ordinary causal policy/trajectory effect. The second is the first-person conditioning contribution.
 
-## Mathematical status
+## Theory
 
-The core theorem set is in [`theory/core_theorems.md`](theory/core_theorems.md) and [`theory/core_theorems.tex`](theory/core_theorems.tex).
-
-The current theorem set includes:
+GitHub-rendered theorem notes are indexed at [`theory/core_theorems.md`](theory/core_theorems.md):
 
 1. QBS Covariance Identity
 2. Tail Probability Identity
-3. Monotone Accessibility ⇒ First-Order Stochastic Dominance
+3. Monotone Accessibility implies First-Order Stochastic Dominance
 4. Recognition Decomposition
 5. Policy–QBS Interaction Decomposition
 
-Additional propositions cover nonnegative option value of costless recognition, support preservation under pure reweighting, and the \(E[S]=0\) extinction/undefined-measure boundary.
+The notes also cover option value, support preservation under pure reweighting, the zero-accessible-measure boundary, counterexamples, and the separate Everett bridge assumption. LaTeX manuscript source remains available at [`theory/core_theorems.tex`](theory/core_theorems.tex).
 
-## Principal experiments
+## Experiments
 
-The locked experiment manifest is [`experiments/manifest.csv`](experiments/manifest.csv).
+The locked experiment map is [`experiments/manifest.csv`](experiments/manifest.csv).
 
-- **E1 — Pure QBS / FOSD.** Tests covariance, tails, monotone accessibility, and FOSD. Stress tests include \(S\perp U\) and nonmonotone accessibility.
-- **E2 — Minimal learned agent.** Tests whether predictive structure and QBS uplift arise when a small model can represent the relevant world structure, versus misspecified controls.
-- **E3 — Recognition decomposition.** Uses identical primitive branch seeds to separate policy/trajectory effects from QBS conditioning effects. Includes an exact paired recognition-null test.
-- **E4 — Adaptive-policy / QBS interaction.** Tests the covariance sign rule and the generalized \(S_0\neq S_1\) interaction decomposition.
-- **E5 — Cross-branch recognition map.** Tests how shared recognition and shared world structure induce correlated decisions across branch copies.
+- **E1:** covariance, tails, FOSD, independence null, and nonmonotone counterexample.
+- **E2:** minimal learned agent and endogenous predictive correlation.
+- **E3:** paired recognition decomposition and recognition-label null.
+- **E4:** fixed-selector interaction identity plus the general selector-map-shift decomposition.
+- **E5:** paired execution-strength and environment-correlation sweeps, plus shared versus branch-independent recognition.
 
-Reproduction scripts are in [`experiments/`](experiments/). Locked v0.1 result summaries are included in [`data/processed/`](data/processed/); running the scripts writes fresh reproduction outputs to the same directory.
-
-## Reproduction
-
-Python 3.10+ is recommended.
+Run all five from the repository root:
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-
 python experiments/exp1_fosd_and_stress.py
 python experiments/exp2_minimal_agent.py
 python experiments/exp3_recognition_decomposition.py
@@ -71,56 +73,58 @@ python experiments/exp4_interaction.py
 python experiments/exp5_branch_map.py
 ```
 
-All five scripts were re-run successfully before the v0.1 public-review release.
+Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/).
+
+## Supplementary research notes
+
+Important results that are not part of the five-experiment core are preserved in [`supplementary/research_notes.md`](supplementary/research_notes.md), including multi-observer normalization, repeated-filter identities, the Gaussian minimal model, evidence-driven recognition activation, selectivity frontiers, and the information-theoretic adaptive-agent interpretation.
+
+## Markdown math convention
+
+Markdown math in this repository uses **double-dollar display blocks only**. Inline mathematical symbols are written as code spans or moved into display blocks. CI rejects legacy parenthesis/bracket math delimiters and single-dollar math delimiters.
+
+## Validation
+
+GitHub Actions runs:
+
+- Python compilation checks,
+- Markdown math-delimiter validation,
+- all five reproduction scripts,
+- manifest reference validation.
+
+The corrected local validation run completed all five experiments in about 12 seconds. E4 identity errors were at floating-point precision. E5 gives exactly zero total effect at `q=0`, and the paired execution-strength decomposition error remains at floating-point precision.
 
 ## Everett interpretation
 
-The mathematical results do **not** establish an Everett interpretation by themselves.
+The mathematical results do **not** establish an Everett interpretation by themselves. The separate bridge assumption is:
 
-The separate Everett-QBS bridge assumption is
-
-\[
+$$
 d\mu^{FP}_\pi(\omega)
 =
 \frac{S_\pi(\omega)}{E_\mu[S_\pi]}
-d\mu(\omega),
-\]
+\,d\mu(\omega).
+$$
 
-where \(S_\pi\) is interpreted as observer-indexed branch accessibility.
+The repository keeps measure-theoretic results, classical simulations, and the Everett physical interpretation distinct.
 
-The repository intentionally separates:
+## Falsifiability and boundaries
 
-- measure-theoretic results,
-- classical agent simulations, and
-- the Everett physical interpretation.
-
-## Falsifiability / failure modes
-
-The framework predicts no pure QBS uplift when accessibility is independent of outcome. FOSD is not guaranteed when accessibility is nonmonotone in outcome quality. Recognition has no effect if it changes neither trajectory policy nor accessibility. If \(E[S]=0\), the normalized first-person measure is undefined.
-
-Counterexamples and stress tests are included rather than treating these assumptions as automatic.
+The framework predicts no pure weighting uplift when accessibility is independent of outcome. FOSD need not hold for nonmonotone accessibility. Recognition has no effect if it changes neither trajectory utility nor accessibility. If expected accessibility is zero, the normalized first-person measure is undefined.
 
 ## Public technical review
 
-This repository is being released before the manuscript is finalized. Mathematical corrections, counterexamples, prior-art pointers, implementation bugs, and challenges to the Everett bridge assumption are welcome through GitHub Issues.
-
-The intended sequence is:
-
-1. public technical review of v0.1;
-2. approximately two weeks of feedback collection;
-3. revision of proofs, experiments, and literature positioning;
-4. manuscript and arXiv submission preparation.
+Corrections, counterexamples, prior-art pointers, implementation bugs, and challenges to the Everett bridge assumption are welcome through GitHub Issues. The intended sequence is public review, revision, then manuscript and arXiv preparation.
 
 ## License
 
-This repository uses a split license:
+This repository uses file-type split licensing:
 
-- **Source code:** MIT License — see [`LICENSE`](LICENSE).
-- **Manuscript, theoretical notes, documentation, and figures:** Creative Commons Attribution 4.0 International (CC BY 4.0) — see [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt).
-- **Generated research datasets:** Creative Commons CC0 1.0 Universal — see [`LICENSES/CC0-1.0.txt`](LICENSES/CC0-1.0.txt).
+- Source code: **MIT** — [`LICENSE`](LICENSE)
+- Theory, documentation, manuscript text, and figures: **CC BY 4.0** — [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt)
+- Generated research datasets: **CC0 1.0** — [`LICENSES/CC0-1.0.txt`](LICENSES/CC0-1.0.txt)
 
-Unless a file states otherwise, Python source files are MIT-licensed, prose/LaTeX/figures are CC BY 4.0, and generated CSV research outputs are CC0 1.0.
+See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. `CITATION.cff` intentionally does not encode the split licensing as one interchangeable license list.
 
 ## Citation
 
-Citation metadata is provided in [`CITATION.cff`](CITATION.cff). The repository is currently a pre-publication research artifact; citation details should be updated when a manuscript identifier becomes available.
+Citation metadata is provided in [`CITATION.cff`](CITATION.cff). Update it when a manuscript identifier becomes available.

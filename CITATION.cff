@@ -8,7 +8,7 @@ repository-code: "https://github.com/Unjuno/quantum-bogosort"
 url: "https://github.com/Unjuno/quantum-bogosort"
 version: "0.1"
 date-released: "2026-08-17"
-license: MIT
+abstract: "Research repository with file-type split licensing: source code is MIT-licensed; theory, documentation, manuscript text, and figures are CC BY 4.0; generated research datasets are CC0 1.0. See README.md and LICENSES/."
 keywords:
   - quantum foundations
   - Everett interpretation

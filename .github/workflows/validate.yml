@@ -28,7 +28,9 @@ jobs:
           python experiments/exp4_interaction.py
           python experiments/exp5_branch_map.py
       - name: Regenerate publication figures
-        run: python figures/generate_figures.py
+        run: |
+          python figures/generate_figures.py
+          python figures/generate_pdf_figures.py
       - name: Check figure outputs
         run: |
           test -s figures/generated/fig1_framework.svg
@@ -37,6 +39,12 @@ jobs:
           test -s figures/generated/fig4_interaction_sign.svg
           test -s figures/generated/fig5_adaptation_quality.svg
           test -s figures/generated/fig6_branch_coherence.svg
+          test -s figures/generated_pdf/fig1_framework.pdf
+          test -s figures/generated_pdf/fig2_fosd.pdf
+          test -s figures/generated_pdf/fig3_recognition_decomposition.pdf
+          test -s figures/generated_pdf/fig4_interaction_sign.pdf
+          test -s figures/generated_pdf/fig5_adaptation_quality.pdf
+          test -s figures/generated_pdf/fig6_branch_coherence.pdf
       - name: Validate manifest references
         run: python scripts/validate_manifest.py
 
@@ -44,6 +52,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+      - name: Generate manuscript figure PDFs
+        run: python figures/generate_pdf_figures.py
       - name: Install LaTeX toolchain
         run: |
           sudo apt-get update

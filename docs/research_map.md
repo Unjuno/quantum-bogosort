@@ -27,7 +27,9 @@ The base branch randomness is represented on a common sample space so paired cou
 | Policy–QBS interaction sign is controlled by improvement/accessibility covariance | Exact theorem | T5 | E4 | Policy model |
 | Adaptive rescue can make policy and QBS partially substitutive | Exact sufficient condition + simulation | C5.1 | E4 | Agent mechanism |
 | Mean-calibrated predictive scores with monotone score-measurable accessibility imply nonnegative outcome-accessibility covariance | Exact supplementary theorem | S2 | E2/E3 illustrate premises | Agent mechanism |
-| Learning can generate the calibration/order premises used by S2 | Simulation-supported, not guaranteed by theorem | S2 boundary | E2/E3 | Agent-learning mechanism |
+| Posterior-mean scores satisfy conditional-mean calibration exactly | Exact corollary | S2.2 | none required | Agent inference |
+| Approximate calibration preserves positive covariance when alignment margin exceeds the calibration-error bound | Exact sufficient bound | S2.3 | future calibration diagnostics | Agent-learning mechanism |
+| Learning can approximate the calibration premises used by S2 | Simulation-supported, not guaranteed by theorem | S2 boundary | E2/E3 | Agent-learning mechanism |
 | Shared recognition can create cross-copy decision coherence under explicit shared-latent assumptions | Exact supplementary theorem + simulation | S1 | E5 | Hierarchical branch model |
 | Separate observers have separately normalized FP measures | Exact once separate accessibility functions are assumed | supplementary | historical multi-observer simulations | Observer-indexed model |
 | Everett self-location is represented by the QBS accessibility bridge | Assumption | propositions/boundaries | none can establish it physically | Open physical mapping |
@@ -92,7 +94,51 @@ $$
 \operatorname{Cov}(U,S)\ge0.
 $$
 
-Strict pairwise comonotonicity on a positive-probability set gives strict positivity. This converts the directional-calibration premise of the adaptive-agent mechanism into an exact covariance implication.
+Strict pairwise comonotonicity on a positive-probability set gives strict positivity.
+
+### Posterior-mean calibration
+
+If an internal information state `B` generates the score:
+
+$$
+Y=E[U\mid B],
+$$
+
+then the tower property gives:
+
+$$
+E[U\mid Y]=Y.
+$$
+
+Thus a true posterior-mean score automatically satisfies the conditional-mean calibration premise needed by S2. With nondecreasing accessibility `S=s(Y)`, nonnegative covariance follows exactly.
+
+### Approximate-calibration robustness
+
+For a learned score define:
+
+$$
+e(Y)=E[U\mid Y]-Y.
+$$
+
+Under square integrability:
+
+$$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+$$
+
+Hence a sufficient condition for positive covariance is:
+
+$$
+\operatorname{Cov}(Y,S)
+>
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+$$
+
+This turns the adaptive-learning question into a measurable comparison between score/accessibility alignment and conditional-mean calibration error.
 
 The theorem deliberately does **not** use:
 
@@ -126,25 +172,30 @@ Separates marginal FP uplift from cross-copy recognition and action correlation.
 
 ## Remaining adaptive-learning question
 
-S2 closes the step:
+S2 and S2.2 close the exact chain for a true posterior-mean score:
 
 $$
-\text{ordered conditional-mean prediction}
-+
-\text{ordered accessibility}
+B
+\longrightarrow
+Y=E[U\mid B]
+\longrightarrow
+E[U\mid Y]=Y
+\longrightarrow
+S=s(Y)\text{ monotone}
+\longrightarrow
+\operatorname{Cov}(U,S)\ge0.
+$$
+
+The remaining finite-agent problem is now:
+
+$$
+\text{learning dynamics/data}
 \Longrightarrow
-\text{nonnegative covariance}.
+\operatorname{Var}(e(Y))
+\text{ small enough relative to the alignment margin}.
 $$
 
-It does not close the earlier learning step:
-
-$$
-\text{adaptation/data}
-\Longrightarrow
-E[U_T\mid Y_t=y]\text{ is correctly ordered in }y.
-$$
-
-That is now the narrower adaptive-agent research problem.
+This is narrower and directly testable. A future calibration experiment should be added only if review requires an empirical estimate of the S2.3 bound.
 
 ## Main unresolved bridge
 
@@ -166,6 +217,7 @@ The framework has clear failure modes:
 - If accessibility is independent of outcome, pure weighting uplift is zero in expectation.
 - If conditional accessibility is nonmonotone, FOSD can fail.
 - If a predictive signal changes dependence but not the conditional mean, S2 need not produce positive covariance.
+- If calibration error is too large relative to the score/accessibility covariance margin, S2.3 does not certify positive covariance.
 - If recognition changes neither trajectory nor accessibility, recognition effect is zero.
 - If expected accessibility is zero, the normalized FP measure is undefined.
 - If the Everett bridge is rejected, the measure-theoretic identities remain true but their physical interpretation does not follow.

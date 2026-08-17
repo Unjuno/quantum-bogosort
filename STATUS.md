@@ -38,12 +38,13 @@ Post-v0.2 theorem work is intentionally kept in stacked review PRs rather than m
 | S2.9 | Light-tail sub-Gaussian/Bernstein instantiation | PROVED | `supplementary/light_tail_certificate.md` |
 | S2.10 | Robust median-of-means instantiation | PROVED | `supplementary/robust_mom_certificate.md` |
 | S2.11 | Residual conditional-covariance extension beyond `S=s(Y)` | PROVED | `supplementary/residual_covariance_extension.md` |
+| S2.12 | Residual-variance lower certificate | PROVED | `supplementary/residual_variance_certificate.md` |
 | P1 | Costless recognition has nonnegative option value | PROVED | `theory/propositions_boundaries.md` |
 | P2 | Pure reweighting cannot create support | PROVED | `theory/propositions_boundaries.md` |
 
 The locked core theorem set remains T1–T5. S1 and S2.* are supplementary developments.
 
-## S2 alignment chain
+## Predictive-alignment chain
 
 For score-measurable accessibility:
 
@@ -71,87 +72,11 @@ $$
 E[U\mid Y]=Y.
 $$
 
-Approximate calibration gives S2.3:
+S2.3 and S2.4 provide calibration-error and prediction-MSE population lower bounds. S2.5–S2.10 provide bounded, selection-safe, generic-envelope, light-tail, and robust finite-moment certification layers.
 
-$$
-\operatorname{Cov}(U,S)
-\ge
-\operatorname{Cov}(Y,S)
--
-\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)},
-$$
+## General accessibility: S2.11
 
-where:
-
-$$
-e(Y)=E[U\mid Y]-Y.
-$$
-
-S2.4 replaces the latent calibration variance with ordinary prediction MSE:
-
-$$
-\operatorname{Cov}(U,S)
-\ge
-\operatorname{Cov}(Y,S)
--
-\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
-$$
-
-## Statistical certification layers
-
-S2.5 provides a bounded independent-held-out certificate:
-
-$$
-P\left(
-\operatorname{Cov}(U,S)\ge D_L
-\right)
-\ge1-\delta.
-$$
-
-S2.6 shows that arbitrary upstream training may be conditioned on when the final certification sample is independent. S2.7 extends validity to same-holdout selection among a finite predeclared candidate family after multiplicity correction.
-
-S2.8 makes the QBS composition concentration-method agnostic. It consumes simultaneous confidence bounds for:
-
-$$
-E[Y],
-\quad
-E[S],
-\quad
-E[YS],
-\quad
-E[S^2],
-\quad
-E[(U-Y)^2]
-$$
-
-and composes them into:
-
-$$
-P\!\left(
-\operatorname{Cov}(U,S)\ge D_{\mathrm{env}}
-\right)
-\ge1-\delta.
-$$
-
-S2.9 instantiates this interface for unbounded light tails using explicit sub-Gaussian/Bernstein mean controls. S2.10 instantiates it using median-of-means with finite variance bounds on the five S2.8 target variables.
-
-The S2.10 assumption is stronger than raw-variable finite variance. In particular:
-
-$$
-\operatorname{Var}(S^2)<\infty
-$$
-
-requires a finite fourth moment of `S`, while:
-
-$$
-\operatorname{Var}((U-Y)^2)<\infty
-$$
-
-requires a finite fourth moment of the prediction residual.
-
-## S2.11 residual conditional-covariance extension
-
-S2.11 removes the deterministic score-measurability assumption. Define:
+Define:
 
 $$
 m(Y)=E[U\mid Y],
@@ -159,7 +84,7 @@ m(Y)=E[U\mid Y],
 a(Y)=E[S\mid Y].
 $$
 
-The exact law of total covariance gives:
+The law of total covariance gives:
 
 $$
 \boxed{
@@ -171,7 +96,7 @@ E[\operatorname{Cov}(U,S\mid Y)]
 }.
 $$
 
-If the conditional means are comonotone and:
+If:
 
 $$
 E[\operatorname{Cov}(U,S\mid Y)]
@@ -181,28 +106,66 @@ $$
 then:
 
 $$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))-\varepsilon.
+$$
+
+S2 is the zero-residual special case when `S` is `Y`-measurable.
+
+## Residual-variance certificate: S2.12
+
+Let:
+
+$$
+v_U(Y)=\operatorname{Var}(U\mid Y),
+\qquad
+v_S(Y)=\operatorname{Var}(S\mid Y).
+$$
+
+Conditional Cauchy--Schwarz gives the sharp universal residual lower bound:
+
+$$
 \boxed{
 \operatorname{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))-\varepsilon
+\operatorname{Cov}(m(Y),a(Y))
+-
+E[\sqrt{v_U(Y)v_S(Y)}]
 }.
 $$
 
-Hence:
+A coarser but simpler bound is:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))>\varepsilon
+\boxed{
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\sqrt{E[v_U(Y)]E[v_S(Y)]}
+}.
 $$
 
-is sufficient for positive total covariance.
-
-S2 is recovered as the special case in which:
+With residuals:
 
 $$
-S=s(Y),
+\eta=U-m(Y),
+\qquad
+\xi=S-a(Y),
 $$
 
-so the residual conditional covariance is zero almost surely.
+this becomes:
+
+$$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\sqrt{E[\eta^2]E[\xi^2]}.
+$$
+
+The basic penalty is sharp under perfect conditional anti-correlation, so no uniformly tighter lower bound follows from conditional variances alone.
 
 ## Core computational results
 
@@ -236,25 +199,17 @@ All five core experiments are rerun by GitHub Actions. The S2 theorem stack does
 |---|---|
 | Nonnegative accessibility can define an abstract weighted FP measure | MODEL ASSUMPTION / EXACT AFTER DEFINITION |
 | Everett branches obey the proposed QBS accessibility bridge | PHYSICALLY OPEN BRIDGE ASSUMPTION |
-| Ordered conditional-mean prediction can imply positive covariance | PROVED UNDER S2/S2.11 CONDITIONS |
+| Ordered conditional-mean prediction can imply positive covariance | PROVED UNDER S2/S2.11/S2.12 CONDITIONS |
 | Bounded, light-tail, or MoM data can statistically certify the covariance premise | PROVED UNDER THEIR RESPECTIVE ASSUMPTIONS |
 | A passed statistical certificate establishes Everettian observer selection | NOT CLAIMED |
 | External random generators become objectively lucky | NOT CLAIMED |
 
-## Sequential extension
-
-| Item | Status | Source |
-|---|---|---|
-| Recognition time as a stopping time | FORMALIZED | `supplementary/recognition_time.md` |
-| FP value functional for a stopping rule | EXACT BY DEFINITION | `supplementary/recognition_time.md` |
-| Universal early-vs-late recognition ordering | NOT CLAIMED / DEFERRED | `supplementary/recognition_time.md` |
-
-## Open problems after S2.11
+## Open problems after S2.12
 
 1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics.
-2. Develop empirical or structural bounds for the S2.11 residual term in specific agent models.
-3. Derive explicit Orlicz/mgf sufficient conditions for the S2.9 product/square Bernstein parameters with convention-specific constants.
-4. Explore robust estimators that weaken S2.10's fourth-moment-type requirements for squared targets.
+2. Develop estimable finite-sample bounds for the S2.12 conditional-variance penalty in specific agent models.
+3. Derive explicit Orlicz/mgf sufficient conditions for S2.9 product/square Bernstein parameters.
+4. Explore robust estimators that weaken S2.10's fourth-moment-type requirements.
 5. Extend selection validity to infinite or certification-data-dependent candidate classes.
 6. Add a held-out certificate experiment only if public review requires it.
 7. Continue novelty/prior-art search when review identifies a specific overlap question.
@@ -269,4 +224,5 @@ All five core experiments are rerun by GitHub Actions. The S2 theorem stack does
 5. PR #16 — S2.8 generic confidence-envelope composition.
 6. PR #17 — S2.9 light-tail instantiation.
 7. PR #18 — S2.10 robust median-of-means instantiation.
-8. Current branch — S2.11 residual conditional-covariance extension.
+8. PR #19 — S2.11 residual conditional-covariance extension.
+9. Current branch — S2.12 residual-variance certificate.

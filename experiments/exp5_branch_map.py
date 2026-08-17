@@ -1,34 +1,166 @@
-"""E5: Cross-branch recognition map and probabilistic QBS execution."""
-import numpy as np, pandas as pd
+"""E5: Cross-branch recognition, paired q sweeps, and shared recognition.
+
+All q values reuse the same primitive random arrays. This makes the q sweep a
+paired counterfactual experiment rather than an unpaired seed sweep.
+
+Outputs:
+- e5_q_paired_reproduction.csv
+- e5_rho_paired_reproduction.csv
+- e5_shared_vs_independent_recognition.csv
+- e5_shared_recognition_contrasts.csv
+"""
 from pathlib import Path
-OUT=Path(__file__).resolve().parents[1]/"data"/"processed"; OUT.mkdir(parents=True,exist_ok=True)
-K=18000; M=12; alpha=.1
+import numpy as np
+import pandas as pd
+
+OUT = Path(__file__).resolve().parents[1] / "data" / "processed"
+OUT.mkdir(parents=True, exist_ok=True)
+SEED = 20260817
+K = 18_000
+M = 12
+ALPHA = 0.10
+
 
 def sigmoid(x):
-    x=np.clip(x,-40,40); return 1/(1+np.exp(-x))
+    x = np.clip(x, -40, 40)
+    return 1.0 / (1.0 + np.exp(-x))
 
-def avgcorr(A):
-    C=np.corrcoef(A,rowvar=False); i=np.triu_indices_from(C,1)
-    return np.nanmean(C[i])
 
-def run(q,seed=20260817,rho=.6):
-    rng=np.random.default_rng(seed)
-    C=rng.standard_normal((K,1)); E=rng.standard_normal((K,M))
-    B=np.sqrt(rho)*C+np.sqrt(1-rho)*E
-    O=B+.65*rng.standard_normal((K,M))
-    Ubase=-B+.55*rng.standard_normal((K,M))
-    A0=(rng.random((K,M))<.5).astype(float); Aad=(O>0).astype(float)
-    ex=rng.random((K,M))<q; A1=np.where(ex,Aad,A0)
-    U0=Ubase+.85*A0*np.maximum(B,0)-.08*A0
-    U1=Ubase+.85*A1*np.maximum(B,0)-.08*A1
-    Y=-O+.85*A1*np.maximum(O,0)-.08*A1
-    Sfull=alpha+(1-alpha)*sigmoid(2.2*Y)
-    S=1-q*(1-Sfull)
-    u0=U0.ravel(); u1=U1.ravel(); s=S.ravel()
-    pg=u1.mean()-u0.mean()
-    qg=(np.mean(u1*s)-u1.mean()*s.mean())/s.mean()
-    return dict(q=q,decision_corr_increment=avgcorr(A1)-avgcorr(A0),
-                policy_gain=pg,QBS_gain=qg,total_gain=pg+qg)
-rows=[run(float(q),20260817+i) for i,q in enumerate(np.linspace(0,1,11))]
-pd.DataFrame(rows).to_csv(OUT/"e5_branch_map_reproduction.csv",index=False)
+def avg_pair_corr(a):
+    c = np.corrcoef(a, rowvar=False)
+    iu = np.triu_indices_from(c, k=1)
+    return float(np.nanmean(c[iu]))
+
+
+def qbs_term(u, s):
+    es = np.mean(s)
+    return (np.mean(u * s) - np.mean(u) * es) / es
+
+
+rng = np.random.default_rng(SEED)
+common_factor = rng.standard_normal((K, 1))
+local_factor = rng.standard_normal((K, M))
+obs_noise = rng.standard_normal((K, M))
+future_noise = rng.standard_normal((K, M))
+baseline_action_u = rng.random((K, M))
+execution_u = rng.random((K, M))
+recognition_shared_u = rng.random((K, 1))
+recognition_ind_u = rng.random((K, M))
+
+
+def state_from_rho(rho):
+    return np.sqrt(rho) * common_factor + np.sqrt(max(0.0, 1.0 - rho)) * local_factor
+
+
+def components(rho):
+    B = state_from_rho(rho)
+    O = B + 0.65 * obs_noise
+    Ubase = -B + 0.55 * future_noise
+    A0 = (baseline_action_u < 0.5).astype(float)
+    Aad = (O > 0).astype(float)
+    return B, O, Ubase, A0, Aad
+
+
+def utility(Ubase, B, A):
+    return Ubase + 0.85 * A * np.maximum(B, 0) - 0.08 * A
+
+
+B, O, Ubase, A0, Aad = components(0.60)
+U0 = utility(Ubase, B, A0)
+u0 = U0.ravel()
+base_corr = avg_pair_corr(A0)
+
+q_rows = []
+for q in np.linspace(0, 1, 11):
+    execute = execution_u < q
+    A1 = np.where(execute, Aad, A0)
+    U1 = utility(Ubase, B, A1)
+    Y1 = -O + 0.85 * A1 * np.maximum(O, 0) - 0.08 * A1
+    Sfull = ALPHA + (1 - ALPHA) * sigmoid(2.2 * Y1)
+    S1 = 1 - q * (1 - Sfull)
+    u1 = U1.ravel()
+    s1 = S1.ravel()
+    policy_gain = u1.mean() - u0.mean()
+    qbs_gain = qbs_term(u1, s1)
+    total_gain = np.mean(u1 * s1) / np.mean(s1) - u0.mean()
+    q_rows.append({
+        "q": q,
+        "decision_corr_increment": avg_pair_corr(A1) - base_corr,
+        "fraction_policy_changed": np.mean(A1 != A0),
+        "policy_gain": policy_gain,
+        "QBS_gain": qbs_gain,
+        "total_FP_gain": total_gain,
+        "decomposition_error": total_gain - (policy_gain + qbs_gain),
+        "E[S]": np.mean(s1),
+    })
+
+pd.DataFrame(q_rows).to_csv(OUT / "e5_q_paired_reproduction.csv", index=False)
+
+rho_rows = []
+for rho in [0.0, 0.15, 0.35, 0.60, 0.80, 0.95]:
+    B, O, Ubase, A0, Aad = components(rho)
+    U0 = utility(Ubase, B, A0)
+    U1 = utility(Ubase, B, Aad)
+    Y1 = -O + 0.85 * Aad * np.maximum(O, 0) - 0.08 * Aad
+    S1 = ALPHA + (1 - ALPHA) * sigmoid(2.2 * Y1)
+    u0 = U0.ravel()
+    u1 = U1.ravel()
+    s1 = S1.ravel()
+    policy_gain = u1.mean() - u0.mean()
+    qbs_gain = qbs_term(u1, s1)
+    rho_rows.append({
+        "rho_env": rho,
+        "action_corr_baseline": avg_pair_corr(A0),
+        "action_corr_recognition": avg_pair_corr(Aad),
+        "recognition_corr_increment": avg_pair_corr(Aad) - avg_pair_corr(A0),
+        "policy_gain": policy_gain,
+        "QBS_gain": qbs_gain,
+        "total_FP_gain": policy_gain + qbs_gain,
+    })
+
+pd.DataFrame(rho_rows).to_csv(OUT / "e5_rho_paired_reproduction.csv", index=False)
+
+B, O, Ubase, A0, Aad = components(0.60)
+shared_rows = []
+for p in [0.10, 0.25, 0.50, 0.75, 0.90]:
+    R_shared = np.repeat(recognition_shared_u < p, M, axis=1)
+    R_ind = recognition_ind_u < p
+    for mode, Rmap in [
+        ("shared_recognition", R_shared),
+        ("independent_recognition", R_ind),
+    ]:
+        A = np.where(Rmap, Aad, A0)
+        U = utility(Ubase, B, A)
+        Y = -O + 0.85 * A * np.maximum(O, 0) - 0.08 * A
+        Sfull = ALPHA + (1 - ALPHA) * sigmoid(2.2 * Y)
+        S = np.where(Rmap, Sfull, 1.0)
+        u = U.ravel()
+        s = S.ravel()
+        shared_rows.append({
+            "recognition_probability_target": p,
+            "mode": mode,
+            "fraction_recognized": np.mean(Rmap),
+            "action_pair_corr": avg_pair_corr(A),
+            "recognition_pair_corr": avg_pair_corr(Rmap.astype(float)),
+            "global_mean_U": np.mean(u),
+            "FP_mean_U": np.mean(u * s) / np.mean(s),
+            "QBS_conditional_uplift": qbs_term(u, s),
+        })
+
+shared_df = pd.DataFrame(shared_rows)
+shared_df.to_csv(OUT / "e5_shared_vs_independent_recognition.csv", index=False)
+
+contrasts = []
+for p, g in shared_df.groupby("recognition_probability_target"):
+    sh = g[g["mode"] == "shared_recognition"].iloc[0]
+    ind = g[g["mode"] == "independent_recognition"].iloc[0]
+    contrasts.append({
+        "recognition_probability_target": p,
+        "delta_action_pair_corr_shared_minus_ind": sh["action_pair_corr"] - ind["action_pair_corr"],
+        "delta_recognition_pair_corr": sh["recognition_pair_corr"] - ind["recognition_pair_corr"],
+        "delta_QBS_uplift": sh["QBS_conditional_uplift"] - ind["QBS_conditional_uplift"],
+        "delta_FP_mean": sh["FP_mean_U"] - ind["FP_mean_U"],
+    })
+
+pd.DataFrame(contrasts).to_csv(OUT / "e5_shared_recognition_contrasts.csv", index=False)
 print("E5 complete.")

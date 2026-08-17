@@ -7,6 +7,7 @@ required = [
     "STATUS.md", "ROADMAP.md", "CHANGELOG.md",
     "docs/research_map.md", "docs/notation.md", "docs/claims_and_assumptions.md",
     "docs/everett_bridge_tests.md", "docs/manuscript_claim_audit.md", "docs/v0.2_release_audit.md",
+    "docs/s2_stack_review_map.md",
     "docs/s2_adaptive_alignment_audit.md", "docs/s2_finite_sample_certificate_audit.md",
     "docs/s2_selection_validity_audit.md", "docs/s2_confidence_envelope_audit.md",
     "docs/s2_light_tail_certificate_audit.md", "docs/s2_robust_mom_certificate_audit.md",

@@ -1,0 +1,100 @@
+\section{Explained-Variance Alignment Certificate}
+
+This section records Supplementary Theorem S2.13, which rewrites the S2.12 residual penalty using explained-variance fractions.
+
+Assume $U$ and $S$ are square-integrable, $S\ge0$, $0<\mathbb E[S]<\infty$, and both total variances are positive. Let
+\[
+m(Y)=\mathbb E[U\mid Y],
+\qquad
+a(Y)=\mathbb E[S\mid Y].
+\]
+Define
+\[
+A_U=
+\frac{\operatorname{Var}(m(Y))}{\operatorname{Var}(U)},
+\qquad
+A_S=
+\frac{\operatorname{Var}(a(Y))}{\operatorname{Var}(S)}.
+\]
+
+\begin{theorem}[Explained-variance alignment certificate]
+The S2.12 bound can be written as
+\[
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\sqrt{\operatorname{Var}(U)\operatorname{Var}(S)(1-A_U)(1-A_S)}.
+\]
+If $A_UA_S>0$ and
+\[
+\rho_{ma}=\operatorname{Corr}(m(Y),a(Y)),
+\]
+then
+\[
+\operatorname{Cov}(U,S)
+\ge
+\sqrt{\operatorname{Var}(U)\operatorname{Var}(S)}
+\left[
+\rho_{ma}\sqrt{A_UA_S}
+-
+\sqrt{(1-A_U)(1-A_S)}
+\right].
+\]
+Hence
+\[
+\rho_{ma}\sqrt{A_UA_S}
+>
+\sqrt{(1-A_U)(1-A_S)}
+\]
+is sufficient for positive total covariance.
+\end{theorem}
+
+\begin{proof}
+The law of total variance gives
+\[
+\mathbb E[\operatorname{Var}(U\mid Y)]
+=
+\operatorname{Var}(U)-\operatorname{Var}(m(Y))
+=
+\operatorname{Var}(U)(1-A_U),
+\]
+and similarly
+\[
+\mathbb E[\operatorname{Var}(S\mid Y)]
+=
+\operatorname{Var}(S)(1-A_S).
+\]
+Substitution into the coarser S2.12 residual-variance bound gives the first inequality. If $A_UA_S>0$, then
+\[
+\operatorname{Cov}(m(Y),a(Y))
+=
+\rho_{ma}
+\sqrt{A_UA_S\operatorname{Var}(U)\operatorname{Var}(S)},
+\]
+which yields the normalized form after factoring out the positive total standard-deviation product.
+\end{proof}
+
+\paragraph{Perfect conditional-mean alignment.}
+If $\rho_{ma}=1$, the sufficient condition becomes
+\[
+A_UA_S>(1-A_U)(1-A_S),
+\]
+which simplifies exactly to
+\[
+A_U+A_S>1.
+\]
+
+\paragraph{Symmetric explained variance.}
+If $A_U=A_S=A>0$, the condition becomes
+\[
+\rho_{ma}A>1-A,
+\]
+or
+\[
+A>\frac{1}{1+\rho_{ma}}.
+\]
+For $\rho_{ma}=1$, this reduces to $A>1/2$.
+
+\paragraph{Boundary.}
+If $A_U=0$ or $A_S=0$, the normalized conditional-mean correlation may be undefined. The unnormalized theorem remains valid. The certificate is sufficient rather than necessary because S2.12 itself uses a worst-case residual anti-correlation penalty.

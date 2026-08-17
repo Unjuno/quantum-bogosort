@@ -35,6 +35,7 @@ The base branch randomness is represented on a common sample space so paired cou
 | Same-holdout selection among a finite predeclared candidate family is valid with multiplicity correction | Exact simultaneous-validity theorem | S2.7 | no new core experiment required | Statistical validation layer |
 | Any valid simultaneous five-moment envelope composes into a covariance certificate | Exact generic composition theorem | S2.8 | no new core experiment required | Statistical validation layer |
 | Explicit light-tail concentration controls instantiate the generic envelope without deterministic boundedness | Exact light-tail instantiation | S2.9 | no new core experiment required | Statistical validation layer |
+| Median-of-means instantiates the generic envelope under finite variances of the five target variables | Exact robust finite-moment instantiation | S2.10 | no new core experiment required | Statistical validation layer |
 | Learning can approximate the calibration premises used by S2 | Simulation-supported, not guaranteed by theorem | S2 boundary | E2/E3 | Agent-learning mechanism |
 | Shared recognition can create cross-copy decision coherence under explicit shared-latent assumptions | Exact supplementary theorem + simulation | S1 | E5 | Hierarchical branch model |
 | Separate observers have separately normalized FP measures | Exact once separate accessibility functions are assumed | supplementary | historical multi-observer simulations | Observer-indexed model |
@@ -303,7 +304,76 @@ P\!\left(
 \ge1-\delta.
 $$
 
-The theorem intentionally treats product/square concentration parameters as explicit inputs rather than claiming marginal sub-Gaussianity supplies universal constants automatically.
+### Robust median-of-means instantiation
+
+S2.10 defines:
+
+$$
+Z_1=Y,
+\qquad
+Z_2=S,
+\qquad
+Z_3=YS,
+\qquad
+Z_4=S^2,
+\qquad
+Z_5=(U-Y)^2
+$$
+
+and assumes:
+
+$$
+\operatorname{Var}(Z_j)\le v_j<\infty.
+$$
+
+With an odd block count satisfying:
+
+$$
+b\ge8\log\frac{5}{\delta},
+$$
+
+and block size:
+
+$$
+m=\left\lfloor\frac{n}{b}\right\rfloor,
+$$
+
+each median-of-means estimator has radius:
+
+$$
+r_j
+=
+2\sqrt{\frac{v_j}{m}}.
+$$
+
+Chebyshev plus block-level Hoeffding gives per-target failure at most `delta/5`, and the five-target union bound supplies an S2.8 simultaneous envelope. The resulting certificate:
+
+$$
+D_{\mathrm{MoM}}
+$$
+
+satisfies:
+
+$$
+P\!\left(
+\operatorname{Cov}(U,S)\ge D_{\mathrm{MoM}}
+\right)
+\ge1-\delta.
+$$
+
+S2.10 does not require exponential tails. It does, however, require finite variance of the five target variables themselves. Consequently:
+
+$$
+\operatorname{Var}(S^2)<\infty
+$$
+
+and:
+
+$$
+\operatorname{Var}((U-Y)^2)<\infty
+$$
+
+impose fourth-moment-type requirements.
 
 The theorem family deliberately does **not** use:
 
@@ -337,7 +407,7 @@ Separates marginal FP uplift from cross-copy recognition and action correlation.
 
 ## Remaining adaptive/statistical question
 
-S2 through S2.9 now provide the chain:
+S2 through S2.10 now provide the chain:
 
 $$
 \text{conditional-mean alignment}
@@ -350,13 +420,13 @@ $$
 \to
 \text{selection-safe certification}
 \to
-\text{bounded or light-tail instantiations}.
+\text{bounded, light-tail, or robust finite-moment instantiations}.
 $$
 
 The next theorem-level questions are:
 
-- robust finite-moment moment envelopes, such as median-of-means constructions;
 - explicit Orlicz/mgf sufficient conditions yielding the S2.9 product/square Bernstein parameters;
+- robust estimators that weaken the S2.10 fourth-moment-type requirements for squared target variables;
 - infinite or certification-data-dependent candidate classes requiring uniform-convergence or selective-inference methods;
 - general accessibility variables with a nonzero residual conditional-covariance term.
 
@@ -389,6 +459,7 @@ The framework has clear failure modes:
 - If multiple candidates are searched without multiplicity correction, the S2.7 family-wise guarantee does not apply.
 - If a confidence-envelope method is used outside its own assumptions, S2.8 does not repair its coverage.
 - If S2.9 tail parameters are invalid or estimated without accounting, the light-tail coverage claim does not apply.
+- If S2.10 variance bounds are invalid or only raw-variable finite variance is available, the MoM coverage claim does not apply as stated.
 - If recognition changes neither trajectory nor accessibility, recognition effect is zero.
 - If expected accessibility is zero, the normalized FP measure is undefined.
 - If the Everett bridge is rejected, the measure-theoretic identities remain true but their physical interpretation does not follow.

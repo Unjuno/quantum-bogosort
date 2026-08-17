@@ -125,7 +125,15 @@ Thus an independently evaluated sample with
 \[
 D_L>0
 \]
-certifies positive population covariance at confidence at least $1-\delta$. The theorem requires the predictor and accessibility rule to be fixed relative to the held-out sample; reusing training or tuning data requires separate adaptivity accounting.
+certifies positive population covariance at confidence at least $1-\delta$.
+
+Corollary S2.6 formalizes the training/evaluation split: an arbitrarily complex learner may be trained and selected upstream, and the S2.5 guarantee remains valid after conditioning on the entire training procedure provided the final certification sample is independent and the post-training population bounds are valid. Corollary S2.7 further permits choosing among a finite family of candidates on the same held-out sample by constructing simultaneous certificates. With equal family-wise allocation across $K$ predeclared candidates, the Hoeffding radius becomes
+\[
+\tau_{n,\delta,K}
+=
+\sqrt{\frac{\log(10K/\delta)}{2n}},
+\]
+and whichever candidate is selected from the held-out data retains the simultaneous lower-bound guarantee. Uncorrected best-of-$K$ reporting and post-hoc invention of new candidates are not covered.
 
 For square-integrable $U_T$, the quantity
 \[
@@ -143,7 +151,9 @@ The intended causal and validation chain is therefore
 \rightarrow
 \text{population covariance certificate}
 \rightarrow
-\text{independent held-out finite-sample certificate}.
+\text{held-out finite-sample certificate}
+\rightarrow
+\text{selection-safe certification}.
 \]
 
-Experiment E2 tests the minimal version of the predictive mechanism in a nonlinear environment. A misspecified model that cannot represent the relevant interaction fails to produce predictive alignment, while a small interaction-capable model succeeds. E3 supplies a paired endogenous-policy example. These simulations support the premise that learning can generate useful predictive ordering in toy environments; S2--S2.5 prove increasingly operational covariance implications once calibration, score-measurable accessibility, and the stated statistical assumptions are specified. None of these steps establishes a physical Everettian accessibility map.
+Experiment E2 tests the minimal version of the predictive mechanism in a nonlinear environment. A misspecified model that cannot represent the relevant interaction fails to produce predictive alignment, while a small interaction-capable model succeeds. E3 supplies a paired endogenous-policy example. These simulations support the premise that learning can generate useful predictive ordering in toy environments; S2--S2.7 prove increasingly operational covariance implications once calibration, score-measurable accessibility, boundedness, held-out evaluation, and selection accounting are specified. None of these steps establishes a physical Everettian accessibility map.

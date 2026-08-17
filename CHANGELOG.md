@@ -16,35 +16,34 @@
 - Corollary S2.10 instantiating S2.8 with median-of-means under finite variance bounds for the five target variables;
 - Supplementary Theorem S2.11 extending predictive alignment beyond `S=s(Y)` via the exact law of total covariance;
 - Supplementary Theorem S2.12 lower-bounding the S2.11 residual term using conditional variances;
-- S2.12 sharp universal bound
+- Supplementary Theorem S2.13 rewriting the S2.12 residual penalty in explained-variance / correlation-ratio form;
+- S2.13 sufficient condition
   $$
-  \operatorname{Cov}(U,S)
-  \ge
-  \operatorname{Cov}(E[U\mid Y],E[S\mid Y])
-  -E[\sqrt{\operatorname{Var}(U\mid Y)\operatorname{Var}(S\mid Y)}];
+  \rho_{ma}\sqrt{A_UA_S}
+  >
+  \sqrt{(1-A_U)(1-A_S)};
   $$
-- the coarser residual-energy certificate
+- the perfect conditional-mean alignment simplification
   $$
-  \operatorname{Cov}(U,S)
-  \ge
-  \operatorname{Cov}(E[U\mid Y],E[S\mid Y])
-  -\sqrt{E[\operatorname{Var}(U\mid Y)]E[\operatorname{Var}(S\mid Y)]};
+  A_U+A_S>1;
   $$
-- a sharpness example showing equality in the negative conditional Cauchy--Schwarz residual penalty under perfect conditional anti-correlation;
-- bounded, generic-envelope, light-tail, and median-of-means covariance lower margins;
-- theorem audits for S2 through S2.12;
-- explicit mutual-information, certificate-failure, multiple-selection, tail-parameter, target-moment, residual-dependence, and residual-variance boundaries.
+- the symmetric explained-variance threshold
+  $$
+  A>
+  \frac{1}{1+\rho_{ma}};
+  $$
+- sharp residual-variance and explained-variance theorem audits;
+- bounded, generic-envelope, light-tail, median-of-means, residual, and explained-variance covariance lower certificates.
 
 ### Changed
 
 - the adaptive-agent mechanism now separates score-level predictive alignment from residual branch-level outcome/accessibility dependence;
 - S2 is explicitly identified as the zero-residual special case of S2.11 when `S` is `Y`-measurable;
-- S2.12 replaces an abstract residual `epsilon` by a conservative variance-based penalty whenever only unexplained conditional variation is controlled;
-- S2.12 explicitly records that its universal variance penalty is sharp and may therefore be conservative for structured models with limited residual anti-correlation;
-- the statistical certification layer is separated from the QBS covariance-composition layer through S2.8;
-- S2.9 permits unbounded light-tail variables only when all required moment-concentration controls are valid;
-- S2.10 permits robust median-of-means certification only when the five S2.8 target variables have valid finite variance bounds;
-- uncorrected model search, post-hoc candidate invention, invalid tail/variance inputs, and ignored residual dependence are outside the stated guarantees;
+- S2.12 replaces an abstract residual `epsilon` by a conservative variance-based penalty;
+- S2.13 expresses that penalty through explained fractions `A_U`, `A_S` and conditional-mean correlation `rho_ma`;
+- S2.13 explicitly remains a sufficient worst-case certificate rather than a necessary condition;
+- the statistical certification layer remains separated from the QBS covariance-composition layer through S2.8;
+- uncorrected model search, post-hoc candidate invention, invalid tail/variance inputs, and ignored residual dependence remain outside the stated guarantees;
 - no sixth core experiment is introduced by the S2 theorem stack;
 - the core five theorem set remains unchanged.
 
@@ -88,10 +87,6 @@
 - Markdown mathematics uses double-dollar display blocks only.
 - Theorem, simulation, model assumption, Everett bridge assumption, and non-claim are tracked separately.
 - CI reruns E1–E5, regenerates SVG/PDF figures, validates repository structure, and builds the illustrated manuscript PDF.
-
-### Release interpretation
-
-The repository snapshot is ready for public technical review. A formal GitHub Release/tag is a hosting-layer action separate from the scientific/reproducibility snapshot and is not required for the theorem, data, code, or manuscript state to be auditable.
 
 ## v0.1 — Public Technical Review
 

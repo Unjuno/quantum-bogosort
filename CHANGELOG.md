@@ -9,6 +9,9 @@
 - Corollary S2.3 for approximate-calibration covariance robustness;
 - Corollary S2.4 for a conservative population certificate based on ordinary prediction MSE;
 - Corollary S2.5 for a bounded independent-held-out high-probability covariance certificate;
+- Corollary S2.6 proving that arbitrary upstream training preserves S2.5 validity when the final certification sample remains independent;
+- Corollary S2.7 proving multiplicity-corrected same-holdout selection validity for a finite predeclared candidate family;
+- unequal confidence allocation for finite candidate families;
 - simultaneous Hoeffding bounds for empirical `Y`, `S`, `YS`, `S^2`, and squared residuals;
 - an explicit held-out certificate margin `D_L` satisfying
   $$
@@ -16,15 +19,17 @@
   $$
 - a quantitative first-person lower bound `D_L/B_S` when the finite-sample certificate is positive;
 - consistency of S2.5 when the population S2.4 margin is strictly positive;
-- theorem audits for both the S2 alignment family and the S2.5 finite-sample certificate;
-- an explicit mutual-information counterexample and certificate-failure boundaries.
+- theorem audits for the S2 alignment family, S2.5 finite-sample certificate, and S2.6–S2.7 selection validity;
+- explicit mutual-information, certificate-failure, uncorrected best-of-K, and post-hoc candidate-construction boundaries.
 
 ### Changed
 
-- the adaptive-agent mechanism now separates four levels: learned predictive ordering, exact posterior-mean calibration, population robustness, and independent-held-out statistical certification;
+- the adaptive-agent mechanism now separates six levels: learned predictive ordering, exact posterior-mean calibration, population robustness, independent-held-out certification, training-selection validity, and finite-candidate post-selection validity;
 - S2.4 is explicitly marked conservative because ordinary prediction MSE includes irreducible conditional outcome variance;
 - S2.5 explicitly requires independent held-out evaluation or an equivalent conditional-on-training formulation;
-- training/evaluation leakage and post-hoc bound selection are documented as failures of the simple S2.5 coverage guarantee;
+- S2.6 makes that conditional-on-training formulation an explicit theorem;
+- S2.7 permits same-holdout selection only within a finite candidate family whose certificates are simultaneously multiplicity-corrected;
+- uncorrected multiple-candidate search and post-hoc candidate invention are explicitly outside the stated guarantee;
 - no sixth core experiment is introduced by the S2 theorem stack;
 - the core five theorem set remains unchanged.
 

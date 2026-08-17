@@ -8,7 +8,8 @@ Each topic is separated so it can later become a manuscript appendix subsection.
 - `binary_soft_qbs.md` — minimal favorable/unfavorable weighting model.
 - `repeated_filtering.md` — repeated adverse-trigger weighting and sensitivity identity.
 - `gaussian_model.md` — analytic Gaussian closed form.
-- `adaptive_agent.md` — Supplementary Theorem S2: predictive-calibration alignment, its proof, strictness condition, and mutual-information counterexample boundary.
+- `adaptive_agent.md` — Supplementary Theorem S2 and Corollaries S2.1–S2.4: predictive-calibration alignment, posterior-mean self-calibration, robustness bounds, and the mutual-information boundary.
+- `finite_sample_certificate.md` — Corollary S2.5: bounded independent-held-out high-probability certificate for positive outcome/accessibility covariance.
 - `evidence_activation.md` — recognition activated by statistical evidence.
 - `recognition_time.md` — sequential recognition as a stopping time; general early-versus-late ordering deferred.
 - `selectivity_frontier.md` — selectivity versus predictor precision / accessible measure.

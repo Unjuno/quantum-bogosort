@@ -15,31 +15,36 @@
 - Corollary S2.9 instantiating S2.8 for unbounded light-tail data using sub-Gaussian first-moment and Bernstein/sub-exponential product/square controls;
 - Corollary S2.10 instantiating S2.8 with median-of-means under finite variance bounds for the five target variables;
 - Supplementary Theorem S2.11 extending predictive alignment beyond `S=s(Y)` via the exact law of total covariance;
-- S2.11 residual-tolerance bound
+- Supplementary Theorem S2.12 lower-bounding the S2.11 residual term using conditional variances;
+- S2.12 sharp universal bound
   $$
   \operatorname{Cov}(U,S)
   \ge
   \operatorname{Cov}(E[U\mid Y],E[S\mid Y])
-  -\varepsilon
+  -E[\sqrt{\operatorname{Var}(U\mid Y)\operatorname{Var}(S\mid Y)}];
   $$
-  whenever the average conditional residual covariance is at least `-epsilon`;
-- an explicit S2.11 counterexample showing negative residual dependence can overturn score-level alignment;
-- unequal confidence allocation for finite candidate families;
+- the coarser residual-energy certificate
+  $$
+  \operatorname{Cov}(U,S)
+  \ge
+  \operatorname{Cov}(E[U\mid Y],E[S\mid Y])
+  -\sqrt{E[\operatorname{Var}(U\mid Y)]E[\operatorname{Var}(S\mid Y)]};
+  $$
+- a sharpness example showing equality in the negative conditional Cauchy--Schwarz residual penalty under perfect conditional anti-correlation;
 - bounded, generic-envelope, light-tail, and median-of-means covariance lower margins;
-- quantitative first-person lower bounds using a simultaneous upper bound on `E[S]` when a certificate margin is positive;
-- theorem audits for S2 through S2.11;
-- explicit mutual-information, certificate-failure, multiple-selection, tail-parameter, target-moment, and residual-dependence boundaries.
+- theorem audits for S2 through S2.12;
+- explicit mutual-information, certificate-failure, multiple-selection, tail-parameter, target-moment, residual-dependence, and residual-variance boundaries.
 
 ### Changed
 
 - the adaptive-agent mechanism now separates score-level predictive alignment from residual branch-level outcome/accessibility dependence;
 - S2 is explicitly identified as the zero-residual special case of S2.11 when `S` is `Y`-measurable;
+- S2.12 replaces an abstract residual `epsilon` by a conservative variance-based penalty whenever only unexplained conditional variation is controlled;
+- S2.12 explicitly records that its universal variance penalty is sharp and may therefore be conservative for structured models with limited residual anti-correlation;
 - the statistical certification layer is separated from the QBS covariance-composition layer through S2.8;
 - S2.9 permits unbounded light-tail variables only when all required moment-concentration controls are valid;
 - S2.10 permits robust median-of-means certification only when the five S2.8 target variables have valid finite variance bounds;
-- S2.10 records the fourth-moment-type implications needed for squared targets;
-- S2.11 explicitly prevents an overclaim that comonotone conditional means alone are enough once additional accessibility randomness is allowed;
-- uncorrected model search, post-hoc candidate invention, invalid tail/variance inputs, and ignored negative residual dependence are outside the stated guarantees;
+- uncorrected model search, post-hoc candidate invention, invalid tail/variance inputs, and ignored residual dependence are outside the stated guarantees;
 - no sixth core experiment is introduced by the S2 theorem stack;
 - the core five theorem set remains unchanged.
 

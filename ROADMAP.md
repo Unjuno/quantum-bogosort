@@ -92,12 +92,12 @@ This roadmap turns the public repository into the source of truth for the theory
 - [x] Prove S2.8 generic five-moment confidence-envelope composition.
 - [x] Prove S2.9 light-tail sub-Gaussian/Bernstein instantiation.
 - [x] Prove S2.10 robust median-of-means instantiation.
-- [x] Record S2.10's target-variable variance and fourth-moment-type boundaries.
 - [x] Prove S2.11 residual conditional-covariance extension beyond `S=s(Y)`.
-- [x] Record the exact total-covariance decomposition and a counterexample showing score-level alignment can be overturned by negative residual dependence.
-- [ ] Develop estimable bounds or diagnostics for the S2.11 residual term in specific learned-agent models.
+- [x] Prove S2.12 residual-variance certificate using conditional Cauchy--Schwarz.
+- [x] Prove sharpness of the universal S2.12 residual penalty under perfect conditional anti-correlation.
+- [ ] Develop finite-sample estimators/confidence envelopes for the S2.12 conditional-variance penalty in concrete agent models.
 - [ ] Derive explicit Orlicz/mgf sufficient conditions for the S2.9 Bernstein parameters with convention-specific constants.
-- [ ] Explore robust estimators that weaken S2.10's fourth-moment-type requirements for squared target variables.
+- [ ] Explore robust estimators that weaken S2.10's fourth-moment-type requirements for squared targets.
 - [ ] Extend finite-candidate selection validity to infinite or certification-data-dependent classes.
 - [ ] Add a held-out certificate experiment only if review requires direct empirical evaluation.
 
@@ -114,6 +114,7 @@ Current stack:
 5. PR #16 — S2.8 generic confidence-envelope composition.
 6. PR #17 — S2.9 light-tail sub-Gaussian/Bernstein instantiation.
 7. PR #18 — S2.10 robust median-of-means instantiation.
-8. Current branch — S2.11 residual conditional-covariance extension.
+8. PR #19 — S2.11 residual conditional-covariance extension.
+9. Current branch — S2.12 residual-variance certificate.
 
-Next priority is to determine when the S2.11 residual term can be signed or bounded from observable/model-level quantities without reintroducing the deterministic `S=s(Y)` assumption. Another toy experiment is not added by default.
+Next priority is a finite-sample/statistically observable version of the S2.12 residual-variance penalty, not another toy experiment by default.

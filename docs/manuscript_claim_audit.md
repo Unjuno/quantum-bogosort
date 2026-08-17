@@ -66,8 +66,13 @@ The manuscript must not use the following as standalone novelty claims:
 - change of measure;
 - the elementary covariance identity by itself;
 - observer selection in general;
-- self-locating uncertainty in general;
-- Everettian decision theory in general.
+- self-locating uncertainty or de se belief in general;
+- Everettian decision theory in general;
+- decision theory in anthropic or agent-copy settings;
+- using self-locating beliefs to alter action recommendations;
+- ex ante policy optimization in problems with simulated or multiple copies.
+
+The last three boundaries are especially important after the targeted prior-art review of Armstrong, Conitzer, and Cooper--Oesterheld--Conitzer.
 
 The current candidate novelty package is instead:
 
@@ -97,7 +102,8 @@ Before cutting v0.2, re-run this audit after:
 3. S1 requires explicit shared-latent/conditional-independence assumptions; it is not an unconditional theorem that recognition creates correlation.
 4. The stopping-time formalization does not establish timing monotonicity.
 5. The physical Everett bridge remains conditional even though structural test criteria are now specified.
+6. Direct anthropic-policy prior art narrows novelty; it does not invalidate the current exact decompositions.
 
 ## Current audit result
 
-**NO LOAD-BEARING MANUSCRIPT CLAIM WAS FOUND TO EXCEED ITS CURRENT REPOSITORY STATUS.**
+**NO LOAD-BEARING MANUSCRIPT CLAIM WAS FOUND TO EXCEED ITS CURRENT REPOSITORY STATUS AFTER THE TARGETED PRIOR-ART UPDATE.**

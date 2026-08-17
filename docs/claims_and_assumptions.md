@@ -1,6 +1,6 @@
 # Claims, Assumptions, and Non-Claims
 
-This document prevents theorem statements, simulation results, and Everett interpretation claims from being conflated.
+This document prevents theorem statements, simulation results, statistical validation results, and Everett interpretation claims from being conflated.
 
 ## Exact mathematical claims
 
@@ -162,21 +162,7 @@ $$
 |U-Y|\le B_R.
 $$
 
-S2.5 constructs simultaneous Hoeffding lower/upper bounds for:
-
-- `Cov(Y,S)`;
-- `E[(U-Y)^2]`;
-- `Var(S)`.
-
-With:
-
-$$
-\tau_{n,\delta}
-=
-\sqrt{\frac{\log(10/\delta)}{2n}},
-$$
-
-it defines a data-dependent certificate margin:
+S2.5 constructs a data-dependent lower certificate:
 
 $$
 D_L
@@ -207,7 +193,82 @@ E_{FP}[U]-E[U]
 \frac{D_L}{B_S}>0.
 $$
 
-S2.5 is a statistical validation theorem, not a new Everettian claim.
+### S2.6 validity after arbitrary independent training
+
+Let `T` denote the entire random training procedure. Conditional on `T`, suppose the trained predictor/accessibility rule and valid population bounds are fixed before an independent certification sample is evaluated.
+
+For the realized trained rule define:
+
+$$
+C(T)=\operatorname{Cov}(U,S_T\mid T).
+$$
+
+Then the S2.5 certificate satisfies:
+
+$$
+P\!\left(
+C(T)\ge D_L(T)
+\mid T
+\right)
+\ge1-\delta
+$$
+
+almost surely, and therefore:
+
+$$
+P\!\left(
+C(T)\ge D_L(T)
+\right)
+\ge1-\delta.
+$$
+
+This permits arbitrarily complex upstream training provided the final certification sample remains independent and the post-training bounds are valid for fresh draws.
+
+### S2.7 finite candidate post-selection validity
+
+Suppose `K` candidate rules are fixed before the certification sample is inspected. Apply S2.5 to candidate `k` using:
+
+$$
+\delta_k=\frac{\delta}{K}.
+$$
+
+Then:
+
+$$
+P\!\left(
+C_k\ge D_{L,k}
+\text{ for every }k=1,\ldots,K
+\right)
+\ge1-\delta.
+$$
+
+Therefore for any data-dependent selected index:
+
+$$
+\widehat k
+=\widehat k(\text{certification sample}),
+$$
+
+we have:
+
+$$
+P\!\left(
+C_{\widehat k}\ge D_{L,\widehat k}
+\right)
+\ge1-\delta.
+$$
+
+Equal allocation changes the S2.5 Hoeffding radius to:
+
+$$
+\tau_{n,\delta,K}
+=
+\sqrt{\frac{\log(10K/\delta)}{2n}}.
+$$
+
+Unequal predeclared confidence allocation is also valid when the candidate error budgets sum to at most `delta`.
+
+These are probability/statistical validity results conditional on the model definitions. They do not by themselves imply Everettian physics.
 
 ## Simulation-supported claims
 
@@ -219,11 +280,11 @@ The repository simulations support the following model-level statements:
 4. Adaptive rescue policies can reduce the marginal QBS contribution by rescuing branches that a selector would otherwise downweight.
 5. Shared recognition and shared environmental structure can increase cross-copy action correlation without proportionally changing single-observer FP uplift.
 
-E2/E3 illustrate premise generation for S2. They do not establish the finite-sample S2.5 certificate without a separately held-out evaluation satisfying its assumptions.
+E2/E3 illustrate premise generation for S2. They do not establish the finite-sample or selection-safe certificates without separately held-out evaluation satisfying the corresponding assumptions.
 
 ## Adaptive-learning and statistical-validation boundary
 
-S2 proves the conditional-mean alignment implication. S2.2 proves exact posterior-mean calibration. S2.3 and S2.4 provide population robustness certificates. S2.5 supplies a bounded independent-held-out confidence certificate.
+S2 proves the conditional-mean alignment implication. S2.2 proves exact posterior-mean calibration. S2.3 and S2.4 provide population robustness certificates. S2.5 supplies a bounded independent-held-out confidence certificate. S2.6 proves that arbitrary independent training can be conditioned away for certification. S2.7 permits same-holdout selection among a finite predeclared candidate family after multiplicity correction.
 
 Positive mutual information is not sufficient. There exist distributions with:
 
@@ -239,7 +300,7 @@ $$
 
 so every accessibility map `S=s(Y)` has zero covariance with `U`.
 
-For S2.5, the predictor/accessibility rule and the bounds must be fixed relative to the held-out sample. Reusing the same data for training, tuning, selection, and certification requires separate adaptivity accounting.
+S2.7 does not license unrestricted reuse of the certification sample. A finite candidate family must be fixed before certification observations are inspected, unless another valid selective-inference or uniform-convergence argument is supplied.
 
 ## Model assumptions
 
@@ -257,7 +318,7 @@ $$
 
 The common-randomness comparison assumes policies can be evaluated on the same primitive sample space.
 
-S2 assumes score-measurable accessibility `S=s(Y)`. S2.2 assumes the score is the true conditional expectation under the analyzed probability model. S2.3/S2.4 assume square integrability. S2.5 additionally assumes i.i.d. independent held-out evaluation and known finite bounds on the score, accessibility, and prediction residual.
+S2 assumes score-measurable accessibility `S=s(Y)`. S2.2 assumes the score is the true conditional expectation under the analyzed probability model. S2.3/S2.4 assume square integrability. S2.5 additionally assumes i.i.d. independent held-out evaluation and known finite bounds on the score, accessibility, and prediction residual. S2.6 permits training-dependent rules and bounds only when the certification sample is independent and those bounds are valid for fresh draws. S2.7 additionally assumes a finite candidate family and confidence allocation fixed before the certification sample is inspected.
 
 ## Everett bridge assumption
 
@@ -290,14 +351,16 @@ The repository does **not** claim that:
 - positive correlation alone implies FOSD;
 - mutual information alone implies positive accessibility covariance;
 - adaptation automatically learns the true posterior mean;
-- a finite learned score necessarily satisfies S2.3, S2.4, or S2.5;
+- a finite learned score necessarily satisfies S2.3–S2.7;
 - failure of an S2 certificate implies negative covariance;
-- the same sample may be reused arbitrarily for training and certification while preserving the S2.5 confidence level;
+- the same sample may be reused arbitrarily for training and certification while preserving nominal confidence;
+- uncorrected best-of-K selection preserves the S2.5 confidence level;
+- predictor/accessibility candidates may be invented after inspecting certification data without additional statistical accounting;
 - low prediction MSE is necessary for positive covariance;
 - pure reweighting creates outcomes absent from the fixed-policy support;
 - negative policy–QBS interaction means either policy effect is itself negative;
 - the classical simulations prove an Everett interpretation;
-- a statistical S2.5 certificate establishes the Everett accessibility bridge;
+- a statistical S2 certificate establishes the Everett accessibility bridge;
 - internal consistency of a weighted measure confirms the Everett bridge.
 
 ## Falsification / failure conditions
@@ -310,7 +373,9 @@ The formal conclusions weaken or fail when their assumptions are violated:
 - a finite score can fail the S2.3 robustness certificate when calibration error dominates the alignment margin;
 - large irreducible conditional variance can make S2.4 inconclusive even when actual covariance is positive;
 - `D_L<=0` makes S2.5 inconclusive at the selected confidence level;
-- training/evaluation leakage or invalid post-hoc bounds remove the stated S2.5 coverage guarantee;
+- training/evaluation leakage or invalid post-hoc bounds remove the simple S2.5/S2.6 coverage guarantee;
+- uncorrected multiple-candidate search removes the S2.7 family-wise guarantee;
+- post-hoc candidate creation is outside the finite-family S2.7 theorem;
 - no change in trajectory or accessibility gives zero recognition effect;
 - zero expected accessibility makes the normalized FP measure undefined;
 - rejecting the Everett bridge removes the physical Everett interpretation while leaving the measure-theoretic and statistical identities intact.

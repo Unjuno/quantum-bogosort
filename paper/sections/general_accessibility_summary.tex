@@ -1,0 +1,79 @@
+\section{General Accessibility Beyond Score-Measurability}
+
+The clean S2 result assumes that accessibility is a deterministic function of the predictive score. That assumption is useful for isolating the basic mechanism, but it is stronger than necessary. Let
+\[
+m(Y)=\mathbb E[U\mid Y],
+\qquad
+a(Y)=\mathbb E[S\mid Y].
+\]
+For a general nonnegative accessibility variable $S$, the exact law of total covariance gives
+\[
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(m(Y),a(Y))
++
+\mathbb E[\operatorname{Cov}(U,S\mid Y)].
+\]
+Thus general accessibility has two conceptually distinct components: alignment of conditional expected outcome with conditional expected accessibility, and residual outcome--accessibility dependence not explained by the score.
+
+This decomposition prevents an overstatement of the original score-measurable theorem. Comonotone conditional means alone are not sufficient if the residual conditional covariance is strongly negative. Conversely, if the residual term is nonnegative or is bounded below in magnitude, positive score-level alignment can survive additional accessibility randomness.
+
+A conservative model-independent lower bound follows from conditional Cauchy--Schwarz. Writing
+\[
+v_U(Y)=\operatorname{Var}(U\mid Y),
+\qquad
+v_S(Y)=\operatorname{Var}(S\mid Y),
+\]
+we obtain
+\[
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\sqrt{
+\mathbb E[v_U(Y)]
+\mathbb E[v_S(Y)]
+}.
+\]
+The Appendix proves that this worst-case residual penalty is sharp without additional structure.
+
+For interpretation, define the fractions of total outcome and accessibility variance explained by their conditional means,
+\[
+A_U
+=
+\frac{\operatorname{Var}(m(Y))}{\operatorname{Var}(U)},
+\qquad
+A_S
+=
+\frac{\operatorname{Var}(a(Y))}{\operatorname{Var}(S)}.
+\]
+When both are positive, define
+\[
+\rho_{ma}
+=
+\operatorname{Corr}(m(Y),a(Y)).
+\]
+The residual-variance certificate can then be written as
+\[
+\operatorname{Cov}(U,S)
+\ge
+\sqrt{\operatorname{Var}(U)\operatorname{Var}(S)}
+\left[
+\rho_{ma}\sqrt{A_UA_S}
+-
+\sqrt{(1-A_U)(1-A_S)}
+\right].
+\]
+Hence the sufficient condition
+\[
+\rho_{ma}\sqrt{A_UA_S}
+>
+\sqrt{(1-A_U)(1-A_S)}
+\]
+guarantees positive outcome--accessibility covariance. Under perfectly aligned conditional means, $\rho_{ma}=1$, this simplifies to
+\[
+A_U+A_S>1.
+\]
+These inequalities are deliberately one-sided: they use a worst-case residual anti-correlation bound, so failure of the condition is inconclusive rather than evidence of nonpositive covariance.
+
+The general-accessibility extension remains interpretation-neutral. It identifies what an observer/accessibility model would need to control, but it does not derive the accessibility variable or its residual dependence from Everettian quantum dynamics.

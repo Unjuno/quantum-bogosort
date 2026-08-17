@@ -31,6 +31,8 @@ The base branch randomness is represented on a common sample space so paired cou
 | Approximate calibration preserves positive covariance when alignment margin exceeds the calibration-error bound | Exact sufficient bound | S2.3 | future calibration diagnostics | Agent-learning mechanism |
 | Ordinary prediction MSE gives a conservative population sufficient certificate | Exact sufficient bound | S2.4 | future held-out prediction diagnostics | Agent-learning mechanism |
 | Bounded independent held-out samples give a high-probability covariance certificate | Exact finite-sample theorem | S2.5 | no new core experiment required | Statistical validation layer |
+| Arbitrary independent training preserves the held-out certificate conditional on the realized trained rule | Exact conditional-validity theorem | S2.6 | no new core experiment required | Statistical validation layer |
+| Same-holdout selection among a finite predeclared candidate family is valid with multiplicity correction | Exact simultaneous-validity theorem | S2.7 | no new core experiment required | Statistical validation layer |
 | Learning can approximate the calibration premises used by S2 | Simulation-supported, not guaranteed by theorem | S2 boundary | E2/E3 | Agent-learning mechanism |
 | Shared recognition can create cross-copy decision coherence under explicit shared-latent assumptions | Exact supplementary theorem + simulation | S1 | E5 | Hierarchical branch model |
 | Separate observers have separately normalized FP measures | Exact once separate accessibility functions are assumed | supplementary | historical multi-observer simulations | Observer-indexed model |
@@ -72,7 +74,7 @@ E[U_1-U_0]
 \frac{\operatorname{Cov}(U_1,S_1)}{E[S_1]}.
 $$
 
-## Adaptive alignment theorem map
+## Adaptive alignment and certification map
 
 Let:
 
@@ -82,7 +84,7 @@ m(Y)=E[U\mid Y],
 S=s(Y).
 $$
 
-Supplementary Theorem S2 proves:
+S2 proves:
 
 $$
 \operatorname{Cov}(U,S)
@@ -90,39 +92,35 @@ $$
 \operatorname{Cov}(m(Y),s(Y)).
 $$
 
-If `m` and `s` are comonotone, in particular if both are nondecreasing functions of a scalar score `Y`, then:
+If `m` and `s` are comonotone, then:
 
 $$
 \operatorname{Cov}(U,S)\ge0.
 $$
 
-Strict pairwise comonotonicity on a positive-probability set gives strict positivity.
-
 ### Posterior-mean calibration
 
-If an internal information state `B` generates the score:
+If:
 
 $$
 Y=E[U\mid B],
 $$
 
-then the tower property gives:
+then:
 
 $$
 E[U\mid Y]=Y.
 $$
 
-Thus a true posterior-mean score automatically satisfies the conditional-mean calibration premise needed by S2. With nondecreasing accessibility `S=s(Y)`, nonnegative covariance follows exactly.
+### Calibration-error robustness
 
-### Approximate-calibration robustness
-
-For a learned score define:
+For:
 
 $$
-e(Y)=E[U\mid Y]-Y.
+e(Y)=E[U\mid Y]-Y,
 $$
 
-Under square integrability:
+S2.3 gives:
 
 $$
 \operatorname{Cov}(U,S)
@@ -134,17 +132,15 @@ $$
 
 ### Prediction-MSE population certificate
 
-Conditional Jensen gives:
+S2.4 uses:
 
 $$
 \operatorname{Var}(e(Y))
 \le
-E[e(Y)^2]
-\le
-E[(U-Y)^2].
+E[(U-Y)^2]
 $$
 
-Therefore S2.4 gives:
+so that:
 
 $$
 \operatorname{Cov}(U,S)
@@ -154,31 +150,9 @@ $$
 \sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
 $$
 
-The exact decomposition:
-
-$$
-E[(U-Y)^2]
-=
-E[\operatorname{Var}(U\mid Y)]
-+
-E[e(Y)^2]
-$$
-
-shows why S2.4 is conservative.
-
 ### Finite-sample held-out certificate
 
-S2.5 assumes a fixed predictor/accessibility map, an independent i.i.d. evaluation sample, and bounds:
-
-$$
-|Y|\le B_Y,
-\qquad
-0\le S\le B_S,
-\qquad
-|U-Y|\le B_R.
-$$
-
-Using simultaneous Hoeffding bounds for `Y`, `S`, `YS`, `S^2`, and squared prediction error, it constructs a data-dependent margin:
+S2.5 assumes independent i.i.d. evaluation and valid bounds on `Y`, `S`, and `U-Y`. It constructs:
 
 $$
 D_L
@@ -195,23 +169,56 @@ P\left(
 \ge1-\delta.
 $$
 
-Thus an independent held-out result:
+Thus:
 
 $$
 D_L>0
 $$
 
-certifies positive population covariance at confidence at least `1-delta`. Under T1, the same event gives:
+certifies positive population covariance at confidence at least `1-delta`.
+
+### Training-selection validity
+
+S2.6 conditions on the entire random training state `T`. If the final certification sample is independent of training, then:
 
 $$
-E_{FP}[U]-E[U]
-\ge
-\frac{D_L}{B_S}>0.
+P\!\left(
+C(T)\ge D_L(T)
+\mid T
+\right)
+\ge1-\delta.
 $$
 
-This is a statistical validation layer, not a new physical or Everettian claim.
+This makes the certificate compatible with arbitrary upstream training complexity.
 
-The theorem deliberately does **not** use:
+### Finite candidate post-selection validity
+
+For `K` candidates fixed before the certification sample is inspected, S2.7 applies candidate-level error budget:
+
+$$
+\delta_k=\frac{\delta}{K}.
+$$
+
+Then all candidate lower bounds hold simultaneously with probability at least `1-delta`, so any data-dependent selected index `widehat k` satisfies:
+
+$$
+P\!\left(
+C_{\widehat k}\ge D_{L,\widehat k}
+\right)
+\ge1-\delta.
+$$
+
+Equal allocation changes the radius to:
+
+$$
+\tau_{n,\delta,K}
+=
+\sqrt{\frac{\log(10K/\delta)}{2n}}.
+$$
+
+This permits same-holdout model/accessibility selection within a finite predeclared family, but does not permit unrestricted post-hoc candidate invention.
+
+The theorem family deliberately does **not** use:
 
 $$
 I(U;Y)>0
@@ -227,7 +234,7 @@ Shows that aligned accessibility changes conditional means and tails, verifies t
 
 ### E2
 
-Shows that positive alignment need not be inserted as an external correlation parameter: a small model that can represent the relevant nonlinear structure can learn a predictive score, while a misspecified model fails. S2 now proves the covariance consequence once the learned score is conditionally mean-calibrated and accessibility respects its ordering.
+Shows that positive alignment need not be inserted as an external correlation parameter: a small model that can represent the relevant nonlinear structure can learn a predictive score, while a misspecified model fails. S2 proves the covariance consequence once the learned score is conditionally mean-calibrated and accessibility respects its ordering.
 
 ### E3
 
@@ -241,9 +248,9 @@ Tests both the fixed-selector interaction identity and the more general selector
 
 Separates marginal FP uplift from cross-copy recognition and action correlation. Sharedness and marginal prevalence are treated as distinct variables.
 
-## Remaining adaptive-learning question
+## Remaining adaptive/statistical question
 
-S2 through S2.5 now provide the chain:
+S2 through S2.7 now provide the chain:
 
 $$
 \text{conditional-mean alignment}
@@ -252,10 +259,18 @@ $$
 \to
 \text{MSE population certificate}
 \to
-\text{finite held-out certificate}.
+\text{finite held-out certificate}
+\to
+\text{selection-safe certification}.
 $$
 
-The next theorem-level question is finite-sample/generalization control when the variables are unbounded or when the evaluation procedure includes data-dependent model/accessibility selection. A new experiment should be added only if public review requires direct evaluation of these certificates on a learned-agent dataset.
+The next theorem-level questions are:
+
+- unbounded/sub-Gaussian/sub-exponential or robust-mean finite-sample control;
+- infinite or certification-data-dependent candidate classes requiring uniform-convergence or selective-inference methods;
+- general accessibility variables with a nonzero residual conditional-covariance term.
+
+A new experiment should be added only if public review requires direct evaluation of these certificates on a learned-agent dataset.
 
 ## Main unresolved bridge
 
@@ -280,7 +295,9 @@ The framework has clear failure modes:
 - If calibration error is too large relative to the score/accessibility covariance margin, S2.3 does not certify positive covariance.
 - If prediction MSE is too large for S2.4, the conservative certificate is inconclusive; this does not imply negative covariance.
 - If a held-out sample yields `D_L<=0`, S2.5 is inconclusive at the selected confidence level.
-- If the same data are reused for training/tuning and certification without adaptivity correction, the S2.5 confidence guarantee does not apply.
+- If the final certification sample is not independent of training, the simple S2.6 proof does not apply.
+- If multiple candidates are searched without multiplicity correction, the S2.7 family-wise guarantee does not apply.
+- If candidates are invented after inspecting certification data, the finite predeclared-family theorem does not apply.
 - If recognition changes neither trajectory nor accessibility, recognition effect is zero.
 - If expected accessibility is zero, the normalized FP measure is undefined.
 - If the Everett bridge is rejected, the measure-theoretic identities remain true but their physical interpretation does not follow.

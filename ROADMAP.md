@@ -93,11 +93,13 @@ This roadmap turns the public repository into the source of truth for the theory
 - [x] Prove S2.6: arbitrary independent training preserves S2.5 coverage conditional on the realized trained rule.
 - [x] Prove S2.7: finite predeclared same-holdout candidate selection is valid under simultaneous multiplicity-corrected certificates.
 - [x] Add unequal confidence allocation for finite candidate families.
-- [x] Record uncorrected best-of-K and post-hoc candidate-construction failure boundaries.
-- [x] Record the mutual-information counterexample and one-sided certificate boundaries.
-- [ ] Extend the finite-sample certificate to unbounded/sub-Gaussian/sub-exponential or robust-mean settings.
+- [x] Prove S2.8: any valid simultaneous five-moment confidence envelope can be composed into a covariance lower certificate.
+- [x] Prove S2.9: a light-tail sub-Gaussian/Bernstein instantiation of S2.8 without deterministic boundedness.
+- [x] Record why product/square tail controls must be explicit rather than silently inferred from marginal sub-Gaussianity.
+- [ ] Derive a robust finite-moment instantiation of S2.8 using median-of-means or another finite-variance method.
+- [ ] Derive explicit Orlicz/mgf sufficient conditions for the S2.9 Bernstein parameters with convention-specific constants.
 - [ ] Extend selection validity from finite predeclared candidate families to infinite or certification-data-dependent classes using uniform convergence, selective inference, or fresh-sample methods.
-- [ ] Add a held-out calibration/MSE experiment only if review requires direct empirical evaluation of the S2.5–S2.7 stack.
+- [ ] Add a held-out calibration/MSE experiment only if review requires direct empirical evaluation of the S2.5–S2.9 stack.
 - [ ] Extend S2 beyond score-measurable accessibility by bounding or signing the residual conditional-covariance term.
 
 ## Current focus
@@ -109,6 +111,8 @@ Current stack:
 1. PR #11 — S2 through S2.3;
 2. PR #12 — S2.4 prediction-MSE population certificate;
 3. PR #13 — S2.5 finite-sample held-out certificate;
-4. selection-validity branch — S2.6–S2.7 training and finite-candidate selection validity.
+4. PR #15 — S2.6–S2.7 training and finite-candidate selection validity;
+5. PR #16 — S2.8 generic confidence-envelope composition;
+6. current light-tail branch — S2.9 sub-Gaussian/Bernstein instantiation.
 
-Next default theorem priority is an unbounded/sub-Gaussian extension. An infinite/data-dependent candidate-class extension is the parallel statistical priority. Neither requires another toy experiment by default.
+Next default theorem priority is a robust finite-moment instantiation of S2.8. Another toy experiment is not added by default.

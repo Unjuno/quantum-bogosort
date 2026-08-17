@@ -1,6 +1,6 @@
 # Extended Prior-Art Review
 
-This note expands the initial literature ledger with explicit criticism of Everettian probability programs, alternative many-world probability constructions, and the classical weighted-measure literature relevant to the mathematics of QBS.
+This note expands the initial literature ledger with explicit criticism of Everettian probability programs, alternative many-world probability constructions, classical weighted-measure mathematics, and direct work connecting self-locating beliefs to policy choice.
 
 ## Everett probability: criticism and boundary conditions
 
@@ -52,9 +52,37 @@ Importance sampling and related change-of-measure methods routinely represent ex
 
 **QBS relevance:** the generic fact that weighted expectations differ from unweighted expectations, and the use of normalized nonnegative weights, are not themselves novel. The covariance identity in QBS should be presented as a transparent mathematical identity within a larger recognition-dependent decision framework, not as a new theory of weighted probability.
 
+## Direct overlap: self-location and policy optimization
+
+### Cooper, Oesterheld, and Conitzer (2024)
+
+**Source:** Emery Cooper, Caspar Oesterheld, and Vincent Conitzer, "Can CDT rationalise the ex ante optimal policy via modified anthropics?", arXiv:2411.04462.
+
+This work studies Newcomb-like problems in which self-locating beliefs, including beliefs about being in simulations of the agent, can change the action recommended by causal decision theory. It characterizes conditions under which modified anthropic/self-locating beliefs recover policies that are optimal from an ex ante policy-optimization perspective.
+
+**Why this is close to QBS:** it explicitly links self-locating structure to policy selection rather than treating self-location as passive belief only. This weakens any novelty claim based merely on "self-location affects decisions" or "copy structure can support policy-level optimization."
+
+**Remaining QBS distinction:** the present project centers on a recognition variable that causally changes the policy map, jointly changes trajectory utility and an observer-indexed accessibility map, and yields exact decomposition of trajectory, conditioning, and interaction terms. It also separately studies realized cross-branch action correlation. Those structural components, rather than the generic link between anthropics and policy, must carry any novelty claim.
+
+### Conitzer (2017)
+
+**Source:** Vincent Conitzer, "Can rational choice guide us to correct de se beliefs?", arXiv:1705.06332.
+
+Conitzer studies whether decision-theoretic behavior can adjudicate self-locating beliefs in Sleeping-Beauty-style settings and cautions that apparently unreasonable actions can arise for reasons other than the underlying de se probabilities.
+
+**QBS relevance:** this reinforces the need to separate an accessibility/self-location rule from the policy technology and utility structure. A policy outcome cannot by itself validate the self-location measure used to evaluate it.
+
+### Armstrong (2011)
+
+**Source:** Stuart Armstrong, "Anthropic decision theory," arXiv:1110.6437.
+
+Anthropic decision theory addresses action choice directly in self-locating problems and shows that relationships among copies/agents and their objectives matter for the resulting decisions.
+
+**QBS relevance:** this is another reason not to claim novelty for applying decision theory to anthropic copies. QBS must instead be positioned by its recognition-dependent trajectory/accessibility decomposition and branch-coherence analysis.
+
 ## Consequence for novelty claims
 
-The literature review supports a narrower novelty hypothesis:
+After the targeted overlap search, the novelty hypothesis should be stated more narrowly:
 
 1. recognition is treated as a causal variable that changes policy;
 2. policy changes branch-wise trajectory utility and may also change accessibility;
@@ -64,12 +92,23 @@ The literature review supports a narrower novelty hypothesis:
 6. marginal first-person uplift is separated from branch-wide policy coherence;
 7. shared-latent branch-policy coherence has an explicit supplementary theorem under hierarchical assumptions.
 
-The project should **not** claim novelty for weighted conditional expectation, observer selection in general, self-locating uncertainty, Everettian decision theory, or branch-sensitive probability measures by themselves.
+The project should **not** claim novelty for:
+
+- weighted conditional expectation;
+- self-locating probability or de se belief;
+- observer selection in general;
+- decision theory in anthropic/copy settings;
+- using self-locating beliefs to alter action recommendations;
+- ex ante policy optimization in problems with agent copies;
+- Everettian decision theory or branch-sensitive probability measures by themselves.
 
 ## Remaining search directions
 
-- work combining endogenous policy changes with anthropic/self-locating weights;
-- functional or updateless decision theories applied to multiple copies;
-- causal-decision formulations with selection-biased or observer-indexed measures;
-- recent work on centered worlds and self-locating probabilities after 2021;
-- physical observer-selection mechanisms that could support or rule out a QBS-style accessibility bridge.
+The highest-value remaining search is now narrower:
+
+- work where an agent's recognition or information state causally changes both policy and a self-location/selection rule;
+- work deriving an observer-indexed selection measure endogenously from adaptive policy or observer persistence;
+- direct decompositions separating ordinary causal policy effects from self-location-weighting effects;
+- causal-decision formulations where the weighting map itself changes with policy.
+
+These are more specific than a general search for anthropic decision theory, which already has substantial prior art.

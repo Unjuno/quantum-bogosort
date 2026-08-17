@@ -11,25 +11,31 @@
 - Corollary S2.5 for a bounded independent-held-out high-probability covariance certificate;
 - Corollary S2.6 proving that arbitrary upstream training preserves S2.5 validity when the final certification sample remains independent;
 - Corollary S2.7 proving multiplicity-corrected same-holdout selection validity for a finite predeclared candidate family;
+- Corollary S2.8 composing any valid simultaneous five-moment confidence envelope into a covariance lower certificate;
+- Corollary S2.9 instantiating S2.8 for unbounded light-tail data using sub-Gaussian first-moment and Bernstein/sub-exponential product/square controls;
 - unequal confidence allocation for finite candidate families;
 - simultaneous Hoeffding bounds for empirical `Y`, `S`, `YS`, `S^2`, and squared residuals;
 - an explicit held-out certificate margin `D_L` satisfying
   $$
   P(\operatorname{Cov}(U,S)\ge D_L)\ge1-\delta;
   $$
-- a quantitative first-person lower bound `D_L/B_S` when the finite-sample certificate is positive;
+- a generic envelope margin `D_env` and light-tail margin `D_LT` with the same one-sided covariance guarantee;
+- quantitative first-person lower bounds using a simultaneous upper bound on `E[S]` when a certificate margin is positive;
 - consistency of S2.5 when the population S2.4 margin is strictly positive;
-- theorem audits for the S2 alignment family, S2.5 finite-sample certificate, and S2.6–S2.7 selection validity;
-- explicit mutual-information, certificate-failure, uncorrected best-of-K, and post-hoc candidate-construction boundaries.
+- theorem audits for the S2 alignment family, S2.5 finite-sample certificate, S2.6–S2.7 selection validity, S2.8 generic envelope composition, and S2.9 light-tail instantiation;
+- explicit mutual-information, certificate-failure, uncorrected best-of-K, post-hoc candidate-construction, and tail-parameter-estimation boundaries.
 
 ### Changed
 
-- the adaptive-agent mechanism now separates six levels: learned predictive ordering, exact posterior-mean calibration, population robustness, independent-held-out certification, training-selection validity, and finite-candidate post-selection validity;
+- the adaptive-agent mechanism now separates the QBS composition theorem from the statistical concentration method used to estimate its required moments;
 - S2.4 is explicitly marked conservative because ordinary prediction MSE includes irreducible conditional outcome variance;
 - S2.5 explicitly requires independent held-out evaluation or an equivalent conditional-on-training formulation;
 - S2.6 makes that conditional-on-training formulation an explicit theorem;
 - S2.7 permits same-holdout selection only within a finite candidate family whose certificates are simultaneously multiplicity-corrected;
-- uncorrected multiple-candidate search and post-hoc candidate invention are explicitly outside the stated guarantee;
+- S2.8 makes Hoeffding only one possible statistical instantiation of a generic confidence-envelope interface;
+- S2.9 permits unbounded light-tail variables when the required five concentration controls are valid;
+- product and square tail constants are treated as explicit inputs rather than silently inferred from marginal sub-Gaussianity;
+- uncorrected multiple-candidate search, post-hoc candidate invention, and unaccounted tail-parameter estimation are explicitly outside the stated guarantees;
 - no sixth core experiment is introduced by the S2 theorem stack;
 - the core five theorem set remains unchanged.
 

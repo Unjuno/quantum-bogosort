@@ -29,6 +29,7 @@ The base branch randomness is represented on a common sample space so paired cou
 | Mean-calibrated predictive scores with monotone score-measurable accessibility imply nonnegative outcome-accessibility covariance | Exact supplementary theorem | S2 | E2/E3 illustrate premises | Agent mechanism |
 | Posterior-mean scores satisfy conditional-mean calibration exactly | Exact corollary | S2.2 | none required | Agent inference |
 | Approximate calibration preserves positive covariance when alignment margin exceeds the calibration-error bound | Exact sufficient bound | S2.3 | future calibration diagnostics | Agent-learning mechanism |
+| Ordinary prediction MSE gives a conservative observable sufficient certificate | Exact sufficient bound | S2.4 | future held-out prediction diagnostics | Agent-learning mechanism |
 | Learning can approximate the calibration premises used by S2 | Simulation-supported, not guaranteed by theorem | S2 boundary | E2/E3 | Agent-learning mechanism |
 | Shared recognition can create cross-copy decision coherence under explicit shared-latent assumptions | Exact supplementary theorem + simulation | S1 | E5 | Hierarchical branch model |
 | Separate observers have separately normalized FP measures | Exact once separate accessibility functions are assumed | supplementary | historical multi-observer simulations | Observer-indexed model |
@@ -138,7 +139,57 @@ $$
 \sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
 $$
 
-This turns the adaptive-learning question into a measurable comparison between score/accessibility alignment and conditional-mean calibration error.
+### Prediction-MSE certificate
+
+Since:
+
+$$
+e(Y)=E[U-Y\mid Y],
+$$
+
+conditional Jensen gives:
+
+$$
+\operatorname{Var}(e(Y))
+\le
+E[e(Y)^2]
+\le
+E[(U-Y)^2].
+$$
+
+Therefore S2.4 gives the conservative certificate:
+
+$$
+\boxed{
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+}.
+$$
+
+Thus:
+
+$$
+\operatorname{Cov}(Y,S)
+>
+\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+$$
+
+is sufficient for positive covariance using quantities estimable from held-out prediction data and the known accessibility rule.
+
+The exact decomposition:
+
+$$
+E[(U-Y)^2]
+=
+E[\operatorname{Var}(U\mid Y)]
++
+E[e(Y)^2]
+$$
+
+shows why S2.4 is weaker than S2.3: ordinary MSE includes irreducible conditional outcome noise. Failure of S2.4 to certify positivity is therefore inconclusive.
 
 The theorem deliberately does **not** use:
 
@@ -186,16 +237,9 @@ S=s(Y)\text{ monotone}
 \operatorname{Cov}(U,S)\ge0.
 $$
 
-The remaining finite-agent problem is now:
+For a finite learned predictor, S2.3 supplies the sharper calibration certificate and S2.4 supplies a conservative MSE certificate. The next learning-theoretic question is to derive finite-sample/generalization bounds that make either certificate hold with controlled probability.
 
-$$
-\text{learning dynamics/data}
-\Longrightarrow
-\operatorname{Var}(e(Y))
-\text{ small enough relative to the alignment margin}.
-$$
-
-This is narrower and directly testable. A future calibration experiment should be added only if review requires an empirical estimate of the S2.3 bound.
+A new experiment should be added only if review requires an empirical held-out estimate of these certificate terms.
 
 ## Main unresolved bridge
 
@@ -218,6 +262,7 @@ The framework has clear failure modes:
 - If conditional accessibility is nonmonotone, FOSD can fail.
 - If a predictive signal changes dependence but not the conditional mean, S2 need not produce positive covariance.
 - If calibration error is too large relative to the score/accessibility covariance margin, S2.3 does not certify positive covariance.
+- If prediction MSE is too large for S2.4, the conservative certificate is inconclusive; this does not imply negative covariance.
 - If recognition changes neither trajectory nor accessibility, recognition effect is zero.
 - If expected accessibility is zero, the normalized FP measure is undefined.
 - If the Everett bridge is rejected, the measure-theoretic identities remain true but their physical interpretation does not follow.

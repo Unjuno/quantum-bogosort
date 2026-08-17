@@ -32,7 +32,8 @@ Policies are compared on common primitive randomness whenever paired counterfact
 | Any valid five-moment simultaneous envelope composes into a certificate | Exact composition theorem | S2.8 | none required | Statistical validation |
 | Light-tail envelopes instantiate S2.8 | Exact instantiation | S2.9 | none required | Statistical validation |
 | Median-of-means envelopes instantiate S2.8 | Exact robust instantiation | S2.10 | none required | Statistical validation |
-| Accessibility need not be deterministic in the score if residual dependence is retained explicitly | Exact extension | S2.11 | future model diagnostics | Agent / observer model |
+| General accessibility decomposes into conditional-mean alignment plus residual conditional covariance | Exact extension | S2.11 | future model diagnostics | Agent / observer model |
+| Conditional variances give a sharp universal lower bound on the unknown residual term | Exact lower certificate | S2.12 | future variance diagnostics | Agent / observer model |
 | Shared recognition can create cross-copy decision coherence under hierarchical assumptions | Exact supplementary theorem + simulation | S1 | E5 | Hierarchical branch model |
 | Everett self-location follows the QBS accessibility bridge | Assumption | bridge documents | none establishes it physically | Open physical mapping |
 
@@ -84,7 +85,7 @@ $$
 E[U\mid Y]=Y.
 $$
 
-The robustness chain is:
+The robustness/certification chain is:
 
 $$
 \text{conditional-mean alignment}
@@ -93,14 +94,14 @@ $$
 \to
 \text{prediction-MSE bound}
 \to
-\text{finite-sample confidence envelopes}.
+\text{generic finite-sample confidence envelopes}.
 $$
 
-S2.5 supplies the bounded Hoeffding route. S2.9 supplies a light-tail route. S2.10 supplies a median-of-means route. S2.8 is the common composition interface.
+S2.5 supplies a bounded Hoeffding route. S2.9 supplies a light-tail route. S2.10 supplies a median-of-means route. S2.8 is their common composition interface.
 
-## S2.11 general-accessibility map
+## General accessibility: S2.11
 
-When accessibility has residual randomness beyond `Y`, define:
+When accessibility contains residual variation beyond `Y`, define:
 
 $$
 m(Y)=E[U\mid Y],
@@ -120,30 +121,49 @@ E[\operatorname{Cov}(U,S\mid Y)]
 }.
 $$
 
-If `m(Y)` and `a(Y)` are comonotone and:
-
-$$
-E[\operatorname{Cov}(U,S\mid Y)]
-\ge-\varepsilon,
-$$
-
-then:
-
-$$
-\operatorname{Cov}(U,S)
-\ge
-\operatorname{Cov}(m(Y),a(Y))-\varepsilon.
-$$
-
-Thus score-level alignment survives additional accessibility randomness whenever its margin exceeds the negative residual dependence.
-
-S2 is the zero-residual special case:
+S2 is the special case:
 
 $$
 S=s(Y)
 \Longrightarrow
 \operatorname{Cov}(U,S\mid Y)=0.
 $$
+
+## Residual-variance control: S2.12
+
+Let:
+
+$$
+v_U(Y)=\operatorname{Var}(U\mid Y),
+\qquad
+v_S(Y)=\operatorname{Var}(S\mid Y).
+$$
+
+Conditional Cauchy--Schwarz yields:
+
+$$
+\boxed{
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+E[\sqrt{v_U(Y)v_S(Y)}]
+}.
+$$
+
+Outer Cauchy--Schwarz gives the simpler certificate:
+
+$$
+\boxed{
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\sqrt{E[v_U(Y)]E[v_S(Y)]}
+}.
+$$
+
+This penalty is universally sharp if residual outcome and accessibility variation can be perfectly conditionally anti-correlated. Any model-specific restriction on residual anti-correlation can therefore only improve the bound.
 
 ## What E1–E5 establish
 
@@ -172,7 +192,7 @@ These are classical simulations of the formal structure, not evidence that the E
 ## Current unresolved questions
 
 - What physical observer/branch mechanism, if any, induces the Everett accessibility map?
-- In concrete learned-agent models, what signs or bounds the S2.11 residual term?
+- How can the S2.12 conditional-variance penalty be estimated or upper-bounded with finite-sample confidence in concrete agent models?
 - Can robust estimators weaken S2.10's higher-moment requirements for squared targets?
 - What explicit Orlicz/mgf assumptions give convenient S2.9 product/square constants?
 - How should certification extend to infinite or certification-data-dependent candidate classes?
@@ -184,6 +204,7 @@ These are classical simulations of the formal structure, not evidence that the E
 - nonmonotone conditional accessibility can break FOSD;
 - general statistical dependence without conditional-mean ordering is insufficient for S2;
 - a sufficiently negative S2.11 residual term can overturn conditional-mean alignment;
+- S2.12 quantifies the worst-case residual penalty but can be conservative;
 - statistical certificate failure is inconclusive, not proof of nonpositive covariance;
 - invalid concentration/moment assumptions invalidate the corresponding finite-sample certificate;
 - rejecting the Everett bridge removes the physical interpretation but not the abstract probability identities.

@@ -70,6 +70,42 @@ Hence a sufficient robustness condition is
 \]
 This turns approximate calibration into a quantitative, falsifiable agent-model condition rather than a qualitative appeal to adaptation.
 
+The calibration-error term can itself be bounded by ordinary prediction mean-squared error. Since
+\[
+e(Y_t)=\mathbb E[U_T-Y_t\mid Y_t],
+\]
+conditional Jensen implies
+\[
+\operatorname{Var}(e(Y_t))
+\le
+\mathbb E[e(Y_t)^2]
+\le
+\mathbb E[(U_T-Y_t)^2].
+\]
+Therefore the more conservative but directly observable certificate is
+\[
+\operatorname{Cov}(U_T,S_t)
+\ge
+\operatorname{Cov}(Y_t,S_t)
+-
+\sqrt{\mathbb E[(U_T-Y_t)^2]\operatorname{Var}(S_t)}.
+\]
+Accordingly,
+\[
+\operatorname{Cov}(Y_t,S_t)
+>
+\sqrt{\mathbb E[(U_T-Y_t)^2]\operatorname{Var}(S_t)}
+\]
+is sufficient for positive outcome--accessibility covariance. The bound is conservative because prediction MSE decomposes as
+\[
+\mathbb E[(U_T-Y_t)^2]
+=
+\mathbb E[\operatorname{Var}(U_T\mid Y_t)]
++
+\mathbb E[e(Y_t)^2],
+\]
+so irreducible conditional outcome noise is counted together with calibration error.
+
 For square-integrable $U_T$, the quantity
 \[
 M(U_T;Y_t)

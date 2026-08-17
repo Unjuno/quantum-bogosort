@@ -15,10 +15,39 @@ This file is the canonical status ledger for the Quantum Bogosort research repos
 | T5 | Policy–QBS Interaction Decomposition | PROVED | `theory/theorem_4_5.md` |
 | C5.1 | Adaptive Rescue gives nonpositive interaction under opposite monotonicity | PROVED | `theory/theorem_4_5.md` |
 | S1 | Shared-latent branch-policy coherence under conditional independence | PROVED (SUPPLEMENTARY) | `supplementary/branch_recognition.md` |
+| S2 | Predictive-calibration alignment for score-measurable accessibility | PROVED (SUPPLEMENTARY; POST-v0.2 CANDIDATE) | `supplementary/adaptive_agent.md` |
 | P1 | Costless recognition has nonnegative option value | PROVED | `theory/propositions_boundaries.md` |
 | P2 | Pure reweighting cannot create support | PROVED | `theory/propositions_boundaries.md` |
 
-The manuscript appendix contains complete proofs of T1–T5, strict/equality conditions for FOSD, adaptive rescue, support preservation, the repeated-filter derivative identity, the Gaussian closed form, and multi-observer normalization.
+The manuscript appendix contains complete proofs of T1–T5 and the established supplementary derivations. The post-v0.2 development branch adds an isolated proof appendix for S2 so it can be reviewed without changing the core five theorem set.
+
+## S2 adaptive-alignment result
+
+Let:
+
+$$
+m(Y)=E[U\mid Y],
+\qquad
+S=s(Y).
+$$
+
+S2 proves the exact projection identity:
+
+$$
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(m(Y),s(Y)).
+$$
+
+If `m` and `s` are comonotone, including the scalar case where both are nondecreasing in `Y`, then:
+
+$$
+\operatorname{Cov}(U,S)\ge0.
+$$
+
+Strict pairwise comonotonicity with positive probability gives strict positivity. Combined with T1, this yields nonnegative or strict first-person mean uplift under the weighted-measure model.
+
+The theorem also records an exact boundary: positive mutual information `I(U;Y)>0` alone is insufficient. General dependence can change conditional variance while leaving `E[U|Y]` constant, in which case every score-measurable accessibility map has zero covariance with `U`.
 
 ## Sequential extension
 
@@ -38,7 +67,7 @@ The manuscript appendix contains complete proofs of T1–T5, strict/equality con
 | E4 | Fixed and changing-selector interaction decomposition | REPRODUCIBLE |
 | E5 | Paired branch-map sweeps and shared-recognition comparison | REPRODUCIBLE |
 
-All five experiments are rerun by GitHub Actions.
+All five experiments are rerun by GitHub Actions. S2 does not add a sixth core experiment: E2 and E3 remain the mechanism demonstrations for the theorem's calibration premise.
 
 ## Figure and manuscript state
 
@@ -56,7 +85,7 @@ All five experiments are rerun by GitHub Actions.
 | Archived experiment promotion before v0.2 | NOT REQUIRED; NONE USED AS NEW ACTIVE EVIDENCE |
 | Bridge support / constraint / rejection criteria | DOCUMENTED |
 | Post-layout claim consistency audit | PASS |
-| Final v0.2 repository release audit | PASS PENDING THIS PR CI |
+| Final v0.2 repository release audit | PASS |
 
 ## Interpretation-level claims
 
@@ -66,20 +95,22 @@ All five experiments are rerun by GitHub Actions.
 | Everett branches admit the QBS accessibility bridge used here | CONDITIONAL BRIDGE ASSUMPTION / PHYSICALLY OPEN |
 | Structural tests for a candidate physical bridge | SPECIFIED |
 | Independent empirical falsifiability without a concrete physical `S_pi` | NOT CLAIMED |
-| Adapted agents can generate outcome-aligned accessibility signals endogenously | SIMULATION-SUPPORTED MECHANISM |
+| Ordered conditional-mean prediction plus ordered score-measurable accessibility implies nonnegative covariance | PROVED (S2) |
+| Adaptation necessarily generates that ordering | NOT CLAIMED; E2/E3 SIMULATION-SUPPORTED IN TOY MODELS |
 | Shared recognition/shared latent structure can increase cross-branch decision correlation | THEOREM UNDER EXPLICIT HIERARCHICAL ASSUMPTIONS + SIMULATION |
 | External random generators become objectively lucky | NOT CLAIMED |
 
-## Open problems after v0.2
+## Open problems after S2
 
 1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics.
-2. Strengthen the adaptive-agent information-theoretic mechanism into a theorem with explicit sufficient conditions linking predictive information to positive accessibility covariance.
-3. Reconstruct a historical secondary experiment only if future review promotes it back into active evidence.
-4. Continue literature search if review identifies a more specific novelty conflict.
-5. Develop a recognition-time ordering theorem only if explicit pathwise/conditional advantage assumptions justify one.
+2. Derive learning-theoretic sufficient conditions under which adaptation makes `E[U_T|Y_t=y]` correctly ordered in `y`; S2 now proves the subsequent covariance step.
+3. Extend S2 to accessibility with residual randomness by controlling the conditional-covariance term in the law of total covariance.
+4. Reconstruct a historical secondary experiment only if future review promotes it back into active evidence.
+5. Continue literature search if review identifies a more specific novelty conflict.
+6. Develop a recognition-time ordering theorem only if explicit pathwise/conditional advantage assumptions justify one.
 
 ## Release state
 
-Repository snapshot: **v0.2 — Public Review**.
+Repository baseline: **v0.2 — Public Review** at merge commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
 
-The substantive v0.2 manuscript-readiness gates are complete. `docs/v0.2_release_audit.md` records the final audit. After this release-audit PR passes CI and merges, the repository itself is the v0.2 public-review snapshot. A formal GitHub Release/tag remains a hosting-layer action separate from the scientific audit.
+The S2 work is post-v0.2 development and should be reviewed separately from the locked public-review baseline before any later preprint release.

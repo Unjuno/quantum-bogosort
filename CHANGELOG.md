@@ -19,6 +19,15 @@
   E[U\mid Y]=Y;
   $$
 - Corollary S2.3: a Cauchy--Schwarz robustness bound for approximate conditional-mean calibration;
+- Corollary S2.4: a conservative sufficient covariance certificate based on ordinary prediction MSE,
+  $$
+  \operatorname{Cov}(U,S)
+  \ge
+  \operatorname{Cov}(Y,S)
+  -
+  \sqrt{E[(U-Y)^2]\operatorname{Var}(S)};
+  $$
+- the exact prediction-MSE decomposition into irreducible conditional variance and squared calibration error;
 - a conditional-mean predictive-strength quantity based on `Var(E[U|Y])`;
 - an explicit counterexample showing that positive mutual information alone does not imply positive accessibility covariance;
 - a separate manuscript appendix file containing the S2 proofs and boundary conditions;
@@ -27,8 +36,10 @@
 ### Changed
 
 - the adaptive-agent mechanism is no longer described as a wholly simulation-supported covariance step: E2/E3 support the learning/prediction premise, while S2 proves the covariance consequence once calibration and score-measurable accessibility hold;
-- a true posterior-mean score now supplies the S2 calibration premise exactly by the tower property;
-- the remaining finite-agent problem is narrowed to bounding conditional-mean calibration error and comparing it with the S2.3 score/accessibility alignment margin;
+- a true posterior-mean score supplies the S2 calibration premise exactly by the tower property;
+- S2.3 provides the sharper calibration-error certificate, while S2.4 provides a weaker certificate expressible in ordinary held-out prediction MSE;
+- the MSE certificate is explicitly marked conservative because irreducible conditional outcome variance can make it inconclusive even when positive covariance holds;
+- the remaining finite-agent problem is narrowed to finite-sample/generalization control of the certificate quantities;
 - the core five theorem set remains unchanged.
 
 ## v0.2 — Public Review — 2026-08-17

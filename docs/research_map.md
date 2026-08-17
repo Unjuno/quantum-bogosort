@@ -33,6 +33,8 @@ The base branch randomness is represented on a common sample space so paired cou
 | Bounded independent held-out samples give a high-probability covariance certificate | Exact finite-sample theorem | S2.5 | no new core experiment required | Statistical validation layer |
 | Arbitrary independent training preserves the held-out certificate conditional on the realized trained rule | Exact conditional-validity theorem | S2.6 | no new core experiment required | Statistical validation layer |
 | Same-holdout selection among a finite predeclared candidate family is valid with multiplicity correction | Exact simultaneous-validity theorem | S2.7 | no new core experiment required | Statistical validation layer |
+| Any valid simultaneous five-moment envelope composes into a covariance certificate | Exact generic composition theorem | S2.8 | no new core experiment required | Statistical validation layer |
+| Explicit light-tail concentration controls instantiate the generic envelope without deterministic boundedness | Exact light-tail instantiation | S2.9 | no new core experiment required | Statistical validation layer |
 | Learning can approximate the calibration premises used by S2 | Simulation-supported, not guaranteed by theorem | S2 boundary | E2/E3 | Agent-learning mechanism |
 | Shared recognition can create cross-copy decision coherence under explicit shared-latent assumptions | Exact supplementary theorem + simulation | S1 | E5 | Hierarchical branch model |
 | Separate observers have separately normalized FP measures | Exact once separate accessibility functions are assumed | supplementary | historical multi-observer simulations | Observer-indexed model |
@@ -169,14 +171,6 @@ P\left(
 \ge1-\delta.
 $$
 
-Thus:
-
-$$
-D_L>0
-$$
-
-certifies positive population covariance at confidence at least `1-delta`.
-
 ### Training-selection validity
 
 S2.6 conditions on the entire random training state `T`. If the final certification sample is independent of training, then:
@@ -189,34 +183,127 @@ C(T)\ge D_L(T)
 \ge1-\delta.
 $$
 
-This makes the certificate compatible with arbitrary upstream training complexity.
-
 ### Finite candidate post-selection validity
 
-For `K` candidates fixed before the certification sample is inspected, S2.7 applies candidate-level error budget:
+For `K` candidates fixed before the certification sample is inspected, S2.7 applies candidate-level error budgets satisfying:
 
 $$
-\delta_k=\frac{\delta}{K}.
+\sum_{k=1}^K\delta_k\le\delta.
 $$
 
-Then all candidate lower bounds hold simultaneously with probability at least `1-delta`, so any data-dependent selected index `widehat k` satisfies:
+Then all candidate lower bounds hold simultaneously with probability at least `1-delta`, so any data-dependent selected index from that predeclared family retains its own lower bound.
+
+### Generic confidence-envelope composition
+
+S2.8 requires only a simultaneous event controlling:
+
+$$
+E[Y],
+\quad
+E[S],
+\quad
+E[YS],
+\quad
+E[S^2],
+\quad
+E[(U-Y)^2].
+$$
+
+Given valid simultaneous bounds:
+
+$$
+L_Y\le E[Y]\le U_Y,
+\qquad
+L_S\le E[S]\le U_S,
+$$
+
+$$
+E[YS]\ge L_{YS},
+\qquad
+E[S^2]\le U_{S^2},
+\qquad
+E[(U-Y)^2]\le U_M,
+$$
+
+it forms:
+
+$$
+L_S^+=\max\{0,L_S\},
+$$
+
+$$
+P_U
+=
+\max\{L_YL_S^+,L_YU_S,U_YL_S^+,U_YU_S\},
+$$
+
+$$
+C_L=L_{YS}-P_U,
+$$
+
+$$
+V_U
+=
+\max\{0,U_{S^2}-(L_S^+)^2\},
+$$
+
+and:
+
+$$
+D_{\mathrm{env}}
+=
+C_L-\sqrt{U_MV_U}.
+$$
+
+Then:
 
 $$
 P\!\left(
-C_{\widehat k}\ge D_{L,\widehat k}
+\operatorname{Cov}(U,S)\ge D_{\mathrm{env}}
 \right)
 \ge1-\delta.
 $$
 
-Equal allocation changes the radius to:
+### Light-tail instantiation
+
+S2.9 supplies one concrete unbounded-data envelope. It assumes sub-Gaussian sample-mean control for `Y` and `S`, plus explicit Bernstein/sub-exponential sample-mean controls for:
 
 $$
-\tau_{n,\delta,K}
-=
-\sqrt{\frac{\log(10K/\delta)}{2n}}.
+YS,
+\qquad
+S^2,
+\qquad
+(U-Y)^2.
 $$
 
-This permits same-holdout model/accessibility selection within a finite predeclared family, but does not permit unrestricted post-hoc candidate invention.
+With:
+
+$$
+t_\delta=\log\frac{10}{\delta},
+$$
+
+a union bound over the five two-sided concentration events gives an S2.8 simultaneous envelope with probability at least:
+
+$$
+1-\delta.
+$$
+
+The resulting certificate:
+
+$$
+D_{\mathrm{LT}}
+$$
+
+satisfies:
+
+$$
+P\!\left(
+\operatorname{Cov}(U,S)\ge D_{\mathrm{LT}}
+\right)
+\ge1-\delta.
+$$
+
+The theorem intentionally treats product/square concentration parameters as explicit inputs rather than claiming marginal sub-Gaussianity supplies universal constants automatically.
 
 The theorem family deliberately does **not** use:
 
@@ -250,7 +337,7 @@ Separates marginal FP uplift from cross-copy recognition and action correlation.
 
 ## Remaining adaptive/statistical question
 
-S2 through S2.7 now provide the chain:
+S2 through S2.9 now provide the chain:
 
 $$
 \text{conditional-mean alignment}
@@ -259,14 +346,17 @@ $$
 \to
 \text{MSE population certificate}
 \to
-\text{finite held-out certificate}
+\text{generic finite-sample envelopes}
 \to
-\text{selection-safe certification}.
+\text{selection-safe certification}
+\to
+\text{bounded or light-tail instantiations}.
 $$
 
 The next theorem-level questions are:
 
-- unbounded/sub-Gaussian/sub-exponential or robust-mean finite-sample control;
+- robust finite-moment moment envelopes, such as median-of-means constructions;
+- explicit Orlicz/mgf sufficient conditions yielding the S2.9 product/square Bernstein parameters;
 - infinite or certification-data-dependent candidate classes requiring uniform-convergence or selective-inference methods;
 - general accessibility variables with a nonzero residual conditional-covariance term.
 
@@ -294,10 +384,11 @@ The framework has clear failure modes:
 - If a predictive signal changes dependence but not the conditional mean, S2 need not produce positive covariance.
 - If calibration error is too large relative to the score/accessibility covariance margin, S2.3 does not certify positive covariance.
 - If prediction MSE is too large for S2.4, the conservative certificate is inconclusive; this does not imply negative covariance.
-- If a held-out sample yields `D_L<=0`, S2.5 is inconclusive at the selected confidence level.
+- If a finite-sample lower margin is nonpositive, the corresponding S2 certificate is inconclusive at the selected confidence level.
 - If the final certification sample is not independent of training, the simple S2.6 proof does not apply.
 - If multiple candidates are searched without multiplicity correction, the S2.7 family-wise guarantee does not apply.
-- If candidates are invented after inspecting certification data, the finite predeclared-family theorem does not apply.
+- If a confidence-envelope method is used outside its own assumptions, S2.8 does not repair its coverage.
+- If S2.9 tail parameters are invalid or estimated without accounting, the light-tail coverage claim does not apply.
 - If recognition changes neither trajectory nor accessibility, recognition effect is zero.
 - If expected accessibility is zero, the normalized FP measure is undefined.
 - If the Everett bridge is rejected, the measure-theoretic identities remain true but their physical interpretation does not follow.

@@ -70,19 +70,87 @@ I
 \left[Q(U_1,S_1)-Q(U_1,S_0)\right].
 $$
 
-These are probability identities conditional on the model definitions. They do not by themselves imply Everettian physics.
+### S2 predictive-calibration alignment
+
+Let:
+
+$$
+m(Y)=E[U\mid Y],
+\qquad
+S=s(Y)\ge0.
+$$
+
+When accessibility is measurable with respect to the score `Y` and the relevant moments are finite:
+
+$$
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(m(Y),s(Y)).
+$$
+
+If versions of `m(y)` and `s(y)` are both nondecreasing, then:
+
+$$
+\operatorname{Cov}(U,S)\ge0.
+$$
+
+Strict pairwise comonotonicity on a positive-probability set gives strict positivity. Consequently, the QBS covariance identity yields nonnegative first-person mean uplift under these assumptions.
+
+A useful special case is:
+
+$$
+S=r(m(Y))
+$$
+
+with `r` nondecreasing. If `m(Y)` is nonconstant and `r` is strictly increasing on its essential range, covariance is strictly positive.
+
+These are probability identities and sufficient conditions conditional on the model definitions. They do not by themselves imply Everettian physics.
 
 ## Simulation-supported claims
 
 The repository simulations support the following model-level statements:
 
 1. Monotone outcome-aligned accessibility produces the predicted FOSD direction across several toy base distributions.
-2. A minimal learned agent can generate predictive outcome/accessibility alignment when its model class can represent the relevant structure.
+2. A minimal learned agent can generate the conditional-mean ordering required by S2 when its model class can represent the relevant structure.
 3. Recognition effects can be numerically decomposed into ordinary trajectory changes and first-person conditioning changes on paired primitive randomness.
 4. Adaptive rescue policies can reduce the marginal QBS contribution by rescuing branches that a selector would otherwise downweight.
 5. Shared recognition and shared environmental structure can increase cross-copy action correlation without proportionally changing single-observer FP uplift.
 
 These are classical simulations of the formal structure, not empirical evidence for Everettian observer selection.
+
+## Adaptive-learning assumption boundary
+
+S2 proves the implication from an ordered conditional-mean predictor to nonnegative covariance. It does **not** prove that learning or adaptation necessarily creates the required ordering.
+
+For square-integrable `U`, the relevant mean-predictive strength is:
+
+$$
+M(U;Y)
+=
+\operatorname{Var}(E[U\mid Y]).
+$$
+
+Positive mutual information is not a substitute for this directional condition. There exist distributions with:
+
+$$
+I(U;Y)>0
+$$
+
+but:
+
+$$
+E[U\mid Y]=E[U]
+$$
+
+almost surely. In such cases, every accessibility map of the form `S=s(Y)` has zero covariance with `U`.
+
+Therefore the remaining learning problem is to justify, derive, or empirically test the calibration condition:
+
+$$
+y\mapsto E[U_T\mid Y_t=y]
+$$
+
+being ordered in the direction used by accessibility.
 
 ## Model assumptions
 
@@ -99,6 +167,8 @@ $$
 $$
 
 The common-randomness comparison additionally assumes policies can be evaluated on the same primitive sample space.
+
+S2 additionally assumes score-measurable accessibility `S=s(Y)` for its clean projection identity. If accessibility contains residual randomness, the general law of total covariance includes an additional conditional-covariance term.
 
 ## Everett bridge assumption
 
@@ -153,6 +223,8 @@ The repository does **not** claim that:
 - the mathematical weighting identities establish quantum immortality;
 - every recognition-dependent policy is rational or beneficial;
 - positive correlation alone implies FOSD;
+- mutual information alone implies positive accessibility covariance;
+- adaptation automatically produces a calibrated evaluation signal;
 - pure reweighting creates outcomes absent from the fixed-policy support;
 - negative policy–QBS interaction means either policy effect is itself negative;
 - the classical simulations prove an Everett interpretation;
@@ -165,6 +237,7 @@ The formal conclusions weaken or fail when their assumptions are violated:
 
 - outcome/accessibility independence gives zero pure weighting uplift in expectation;
 - nonmonotone conditional accessibility can break FOSD;
+- a score can be statistically informative while having constant conditional outcome mean, defeating the S2 uplift premise;
 - no change in trajectory or accessibility gives zero recognition effect;
 - zero expected accessibility makes the normalized FP measure undefined;
 - arbitrary-label dependence or inconsistent coarse graining counts against a proposed physical bridge;

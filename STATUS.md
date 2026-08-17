@@ -44,13 +44,18 @@ All five experiments are rerun by GitHub Actions.
 
 | Item | Status |
 |---|---|
-| Six publication-oriented SVG figures | COMMITTED / REGENERATED IN CI |
+| Six GitHub-readable SVG figures | COMMITTED / REGENERATED IN CI |
+| Six LaTeX PDF figure build products | GENERATED IN CI |
 | Figure provenance and source-data mapping | DOCUMENTED |
+| Figure placement, captions, and cross-references | INTEGRATED / AUDITED |
 | Manuscript theorem appendix | FULL PROOFS INTEGRATED |
 | LaTeX/PDF build | VALIDATED BY CI |
 | Expanded bibliography and critique-side prior art | INTEGRATED |
+| Direct anthropic-policy prior-art overlap | REVIEWED / INTEGRATED |
 | Historical experiment archive ledger | DOCUMENTED |
+| Archived experiment promotion before v0.2 | NOT REQUIRED; NONE USED AS NEW ACTIVE EVIDENCE |
 | Bridge support / constraint / rejection criteria | DOCUMENTED |
+| Post-layout claim consistency audit | PASS |
 
 ## Interpretation-level claims
 
@@ -64,17 +69,16 @@ All five experiments are rerun by GitHub Actions.
 | Shared recognition/shared latent structure can increase cross-branch decision correlation | THEOREM UNDER EXPLICIT HIERARCHICAL ASSUMPTIONS + SIMULATION |
 | External random generators become objectively lucky | NOT CLAIMED |
 
-## Open problems
+## Open problems after v0.2
 
-1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics; the current bridge-test framework now states what such a proposal must satisfy.
+1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics.
 2. Strengthen the adaptive-agent information-theoretic mechanism into a theorem with explicit sufficient conditions linking predictive information to positive accessibility covariance.
-3. Reconstruct any historical secondary experiment that is promoted from archive status back into active manuscript evidence.
-4. Continue targeted literature search for direct prior art combining endogenous policy change with self-locating or observer-indexed weighting.
-5. Integrate the committed SVG figures into the final manuscript layout and finish caption/cross-reference review.
-6. Develop a recognition-time ordering theorem only if explicit pathwise/conditional advantage assumptions justify one; otherwise keep it as a post-v0.2 extension.
+3. Reconstruct a historical secondary experiment only if future review promotes it back into active evidence.
+4. Continue literature search if review identifies a more specific novelty conflict.
+5. Develop a recognition-time ordering theorem only if explicit pathwise/conditional advantage assumptions justify one.
 
 ## Release state
 
 Current public state: **v0.1 — Public Technical Review**.
 
-The repository is close to **v0.2 — manuscript-ready review package**. Remaining release gates are final manuscript layout/caption review, claim-by-claim consistency audit, targeted novelty search, and a decision on whether any archived experiment must be reconstructed before the v0.2 tag.
+The repository now satisfies the substantive **v0.2 manuscript-readiness** gates. The remaining step is a final release audit on `main` after this layout PR passes CI, followed by creation of the `v0.2-public-review` release if no new inconsistency is found.

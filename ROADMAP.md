@@ -30,7 +30,7 @@ The recognition-time note explicitly defers a universal early-versus-late orderi
 - [x] Create H/T/D/C/U + ERROR CHECK cards for E1–E5.
 - [x] Add historical experiment archive policy.
 - [x] Add an archive index classifying prior work as CORE, APPENDIX CANDIDATE, SUPERSEDED, or HISTORICAL LOCAL ARTIFACT.
-- [ ] Reconstruct archived experiments only if they are promoted back into active manuscript evidence.
+- [x] Decide v0.2 archive scope: no archived experiment is promoted as new active evidence, so reconstruction is not a release requirement.
 
 ## Phase 4 — Literature and novelty
 
@@ -38,7 +38,8 @@ The recognition-time note explicitly defers a universal early-versus-late orderi
 - [x] Add criticism-side Everett probability literature.
 - [x] Add alternative many-world probability constructions and weighted-measure context.
 - [x] Narrow novelty claims so normalized weighting and the covariance identity are not treated as the central novelty.
-- [ ] Continue targeted search for direct prior art combining endogenous policy change with self-locating or observer-indexed weighting.
+- [x] Perform targeted direct-overlap search; integrate Armstrong, Conitzer, and Cooper--Oesterheld--Conitzer into the novelty boundary.
+- [ ] Continue literature search after v0.2 only if review identifies a more specific overlap question.
 
 ## Phase 5 — Figures
 
@@ -48,8 +49,9 @@ The recognition-time note explicitly defers a universal early-versus-late orderi
 - [x] Interaction-sign figure.
 - [x] Adaptation quality / total-effect figure.
 - [x] Branch-coherence versus marginal FP figure.
-- [x] Commit deterministic figure generator and provenance documentation.
-- [ ] Final manuscript caption/layout review and optional PDF/EPS publication variants.
+- [x] Commit deterministic SVG figure generator and provenance documentation.
+- [x] Add PDF figure generation for LaTeX.
+- [x] Place figures in the manuscript with audited captions and cross-references.
 
 ## Phase 6 — Manuscript
 
@@ -59,8 +61,9 @@ The recognition-time note explicitly defers a universal early-versus-late orderi
 - [x] Add strict/equality conditions and supplementary derivations.
 - [x] Add GitHub Actions LaTeX/PDF build and artifact upload.
 - [x] Perform a claim-by-claim consistency audit against `STATUS.md` and `docs/claims_and_assumptions.md`.
-- [ ] Finalize prose, figure placement, captions, and cross-references.
-- [ ] Re-run the claim audit after final layout/prose changes.
+- [x] Integrate figures, captions, and cross-references.
+- [x] Re-run the claim audit after final figure/caption placement.
+- [ ] Final release-pass prose cleanup if CI or public review exposes wording issues.
 
 ## Phase 7 — Everett bridge review
 
@@ -68,21 +71,21 @@ The recognition-time note explicitly defers a universal early-versus-late orderi
 - [x] Review the bridge against both supportive and critical Everett probability literature.
 - [x] Specify structural support, constraint, and rejection criteria in `docs/everett_bridge_tests.md`.
 - [x] Add layer-specific falsifiability wording to the manuscript Everett and Limitations sections.
-- [ ] Pursue a concrete physical derivation or empirical model only as post-v0.2 research unless review produces a credible candidate.
+- [x] Defer a concrete physical derivation or empirical model to post-v0.2 research unless review produces a credible candidate.
 
 ## Phase 8 — Public review and release
 
 - [x] Keep GitHub Issues open for proof corrections, counterexamples, prior art, and implementation bugs.
 - [x] Integrate major repository corrections through PRs with CI gates.
-- [ ] Complete final v0.2 manuscript-readiness audit after figure placement and targeted novelty search.
-- [ ] Cut `v0.2-public-review` when the remaining layout/search/audit gates are satisfied.
-- [ ] Prepare `v1.0-preprint` only after references, claims, and manuscript are stable enough for arXiv submission.
+- [ ] Complete final v0.2 manuscript-readiness audit on `main` after this layout PR passes CI.
+- [ ] Cut `v0.2-public-review` if the final audit finds no blocking inconsistency.
+- [ ] Prepare `v1.0-preprint` only after the public-review interval and subsequent revisions stabilize the manuscript for arXiv submission.
 
 ## Current focus
 
-The project is no longer in the experiment-expansion phase. The default priority is now:
+The default priority is now:
 
-1. final manuscript prose, figure integration, captions, and cross-references;
-2. targeted prior-art search for direct endogenous-policy/self-location overlap;
-3. final v0.2 release audit;
-4. only then any new theorem or experiment justified by review feedback.
+1. validate the fully illustrated manuscript through CI;
+2. perform the final v0.2 release audit on `main`;
+3. cut `v0.2-public-review` if clean;
+4. collect public review before any v1.0/arXiv step.

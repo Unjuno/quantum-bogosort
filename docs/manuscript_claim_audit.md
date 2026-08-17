@@ -48,7 +48,7 @@ The strongest physical language is explicitly conditioned on the Everett bridge.
 
 ## Everett / limitations audit
 
-The manuscript now distinguishes:
+The manuscript distinguishes:
 
 1. abstract weighted-measure mathematics;
 2. an observer-model bridge;
@@ -86,14 +86,28 @@ The current candidate novelty package is instead:
 
 **Result:** PASS in current Abstract, Related Work, and Discussion wording.
 
+## Figure and caption audit
+
+The six manuscript figures were reviewed after placement.
+
+- Figure 1 is explicitly labeled a mathematical/model schematic and not a literal branch diagram.
+- Figure 2 is explicitly labeled a deterministic theorem illustration and not empirical Everett data.
+- Figures 3--6 are explicitly labeled classical toy simulations or numerical illustrations.
+- Figure 5 states that the observed substitution pattern is not a universal law.
+- Figure 6 explicitly distinguishes cross-copy coherence from marginal first-person uplift.
+
+No caption upgrades a simulation into a physical Everett result or presents a theorem illustration as data.
+
+**Result:** PASS.
+
 ## Remaining audit-sensitive edits
 
-Before cutting v0.2, re-run this audit after:
+Re-run this audit if any of the following occurs before release:
 
-- final figure captions and placement;
-- any substantial Abstract or Introduction rewrite;
-- any new claim added in response to public review;
-- any change in the Everett bridge language.
+- substantial Abstract or Introduction rewrite;
+- new claim added in response to public review;
+- material change in the Everett bridge language;
+- replacement of a toy figure with a new empirical/physical claim.
 
 ## ERROR CHECK
 
@@ -103,7 +117,8 @@ Before cutting v0.2, re-run this audit after:
 4. The stopping-time formalization does not establish timing monotonicity.
 5. The physical Everett bridge remains conditional even though structural test criteria are now specified.
 6. Direct anthropic-policy prior art narrows novelty; it does not invalidate the current exact decompositions.
+7. Manuscript figure placement does not change the evidence status of the underlying results.
 
 ## Current audit result
 
-**NO LOAD-BEARING MANUSCRIPT CLAIM WAS FOUND TO EXCEED ITS CURRENT REPOSITORY STATUS AFTER THE TARGETED PRIOR-ART UPDATE.**
+**NO LOAD-BEARING MANUSCRIPT CLAIM OR FIGURE CAPTION WAS FOUND TO EXCEED ITS CURRENT REPOSITORY STATUS AFTER THE TARGETED PRIOR-ART AND LAYOUT UPDATES.**

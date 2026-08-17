@@ -98,7 +98,7 @@ $$
 E[U\mid Y]=Y.
 $$
 
-### S2.3–S2.4 — robustness certificates
+### S2.3–S2.4 — population robustness
 
 With:
 
@@ -116,7 +116,7 @@ $$
 \sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
 $$
 
-S2.4 gives the conservative prediction-MSE form:
+S2.4 gives:
 
 $$
 \operatorname{Cov}(U,S)
@@ -128,7 +128,7 @@ $$
 
 ### S2.5–S2.10 — finite-sample statistical certification
 
-S2.5 constructs a bounded independent-held-out lower certificate `D_L` satisfying:
+S2.5 constructs a bounded held-out lower certificate `D_L` with:
 
 $$
 P\!\left(
@@ -139,7 +139,7 @@ $$
 
 S2.6 proves validity after arbitrary independent upstream training. S2.7 permits same-holdout selection among a finite predeclared candidate family after multiplicity correction.
 
-S2.8 proves that any valid simultaneous confidence envelope for:
+S2.8 composes any valid simultaneous confidence envelope for:
 
 $$
 E[Y],
@@ -153,31 +153,9 @@ E[S^2],
 E[(U-Y)^2]
 $$
 
-can be deterministically composed into a lower covariance certificate.
-
-S2.9 supplies a light-tail sub-Gaussian/Bernstein instantiation. S2.10 supplies a median-of-means instantiation under finite variance bounds for the five target variables themselves.
-
-S2.10 does not follow from finite variance of the raw variables alone. In particular:
-
-$$
-\operatorname{Var}(S^2)<\infty
-$$
-
-requires a finite fourth moment of `S`, and:
-
-$$
-\operatorname{Var}((U-Y)^2)<\infty
-$$
-
-requires a finite fourth moment of the prediction residual.
+into a covariance lower certificate. S2.9 supplies a light-tail instantiation; S2.10 supplies a median-of-means instantiation.
 
 ## S2.11 — residual conditional-covariance extension
-
-S2.11 removes the deterministic assumption:
-
-$$
-S=s(Y).
-$$
 
 Define:
 
@@ -187,7 +165,7 @@ m(Y)=E[U\mid Y],
 a(Y)=E[S\mid Y].
 $$
 
-Then the law of total covariance gives the exact identity:
+Then:
 
 $$
 \boxed{
@@ -199,14 +177,7 @@ E[\operatorname{Cov}(U,S\mid Y)]
 }.
 $$
 
-If `m(Y)` and `a(Y)` are comonotone and:
-
-$$
-E[\operatorname{Cov}(U,S\mid Y)]
-\ge-\varepsilon,
-$$
-
-then:
+If the residual term is at least `-epsilon`, then:
 
 $$
 \operatorname{Cov}(U,S)
@@ -215,21 +186,70 @@ $$
 \varepsilon.
 $$
 
+S2 is recovered when `S` is `Y`-measurable.
+
+## S2.12 — residual-variance certificate
+
+Assume `U` and `S` are square-integrable and define:
+
+$$
+v_U(Y)=\operatorname{Var}(U\mid Y),
+\qquad
+v_S(Y)=\operatorname{Var}(S\mid Y).
+$$
+
+Conditional Cauchy--Schwarz gives:
+
+$$
+\operatorname{Cov}(U,S\mid Y)
+\ge
+-
+\sqrt{v_U(Y)v_S(Y)}.
+$$
+
 Therefore:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))>\varepsilon
+\boxed{
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+E[\sqrt{v_U(Y)v_S(Y)}]
+}.
 $$
 
-is sufficient for positive total covariance.
-
-S2 is recovered when `S` is `Y`-measurable, because then:
+A simpler but weaker bound is:
 
 $$
-\operatorname{Cov}(U,S\mid Y)=0
+\boxed{
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\sqrt{E[v_U(Y)]E[v_S(Y)]}
+}.
 $$
 
-almost surely.
+With residuals:
+
+$$
+\eta=U-m(Y),
+\qquad
+\xi=S-a(Y),
+$$
+
+this becomes:
+
+$$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\sqrt{E[\eta^2]E[\xi^2]}.
+$$
+
+The basic S2.12 penalty is sharp under perfect conditional anti-correlation. No uniformly tighter universal lower bound follows from conditional variances alone.
 
 ## Simulation-supported claims
 
@@ -241,7 +261,7 @@ The repository's classical simulations support the following model-level stateme
 4. Adaptive rescue can make policy and QBS partially substitutive.
 5. Shared recognition/shared latent structure can increase cross-copy action correlation without proportionally changing marginal FP uplift.
 
-These simulations do not establish Everettian physics or automatically satisfy the S2 finite-sample certificate assumptions.
+These simulations do not establish Everettian physics or automatically satisfy the S2 finite-sample assumptions.
 
 ## Model and statistical assumptions
 
@@ -253,9 +273,9 @@ S_\pi(\omega)\ge0,
 0<E[S_\pi]<\infty.
 $$
 
-S2 assumes score-measurable accessibility. S2.11 relaxes that assumption but requires the residual conditional-covariance component to be retained explicitly.
+S2 assumes score-measurable accessibility. S2.11 relaxes that assumption while retaining residual dependence explicitly. S2.12 assumes square integrability and replaces the unknown residual covariance by a worst-case conditional-variance penalty.
 
-S2.5 assumes independent bounded held-out evaluation. S2.6 permits training-dependent rules only with independent certification data. S2.7 assumes a finite predeclared candidate family with multiplicity accounting. S2.8 assumes a valid simultaneous five-moment confidence envelope. S2.9 assumes valid light-tail concentration parameters. S2.10 assumes valid target-variable variance upper bounds and a valid i.i.d. block construction.
+S2.5 assumes independent bounded held-out evaluation. S2.6 permits training-dependent rules only with independent certification data. S2.7 assumes a finite predeclared candidate family with multiplicity accounting. S2.8 assumes a valid simultaneous five-moment confidence envelope. S2.9 assumes valid light-tail concentration parameters. S2.10 assumes valid target-variable variance bounds and an i.i.d. block construction.
 
 ## Everett bridge assumption
 
@@ -281,7 +301,8 @@ The repository does **not** claim that:
 - mutual information alone implies positive accessibility covariance;
 - adaptation automatically learns the true posterior mean;
 - score-level alignment remains sufficient after removing `S=s(Y)` while ignoring residual dependence;
-- a negative residual conditional covariance can be dropped without affecting the result;
+- residual dependence is actually maximally negative merely because S2.12 allows that worst case;
+- the S2.12 variance penalty is always tight for a concrete model;
 - a finite learned score necessarily passes an S2 statistical certificate;
 - failure of a sufficient certificate implies negative covariance;
 - uncorrected model search preserves nominal confidence;
@@ -295,6 +316,7 @@ The repository does **not** claim that:
 - nonmonotone conditional accessibility can break FOSD;
 - dependence without conditional-mean prediction can defeat S2;
 - a sufficiently negative S2.11 residual term can overturn positive score-level alignment;
+- S2.12 may be inconclusive when unexplained residual variances are large;
 - excessive calibration error or prediction MSE can make S2.3/S2.4 inconclusive;
 - nonpositive finite-sample lower margins are inconclusive;
 - training/evaluation leakage invalidates the simple held-out guarantee;

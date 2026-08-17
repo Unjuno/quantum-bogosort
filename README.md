@@ -53,7 +53,7 @@ The locked experiment manifest is [`experiments/manifest.csv`](experiments/manif
 - **E4 — Adaptive-policy / QBS interaction.** Tests the covariance sign rule and the generalized \(S_0\neq S_1\) interaction decomposition.
 - **E5 — Cross-branch recognition map.** Tests how shared recognition and shared world structure induce correlated decisions across branch copies.
 
-Reproduction scripts are in [`experiments/`](experiments/). Locked outputs and reproduction outputs are in [`data/processed/`](data/processed/).
+Reproduction scripts are in [`experiments/`](experiments/). Locked v0.1 result summaries are included in [`data/processed/`](data/processed/); running the scripts writes fresh reproduction outputs to the same directory.
 
 ## Reproduction
 

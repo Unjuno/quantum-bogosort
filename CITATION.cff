@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the repository and the eventual manuscript when available."
+title: "Quantum Bogosort: Formal Theory and Reproducible Simulations"
+type: software
+authors:
+  - family-names: "Unjuno"
+repository-code: "https://github.com/Unjuno/quantum-bogosort"
+url: "https://github.com/Unjuno/quantum-bogosort"
+version: "0.1"
+date-released: "2026-08-17"
+license: MIT
+keywords:
+  - quantum foundations
+  - Everett interpretation
+  - decision theory
+  - self-locating uncertainty
+  - observer selection
+  - reproducible research

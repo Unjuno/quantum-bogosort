@@ -1,0 +1,154 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Cov}{\operatorname{Cov}}
+
+\begin{document}
+\title{Quantum Bogosort: Core Theorem Set v0.1}
+\author{}
+\date{}
+\maketitle
+
+\section{Setup}
+Let $(\Omega,\mathcal F,\mu)$ be a probability space. For a policy $\pi$, let
+$U_\pi:\Omega\to\mathbb R$ be trajectory utility and
+$S_\pi:\Omega\to[0,\infty)$ be observer-indexed accessibility.
+Assume
+\[
+0<\E_\mu[S_\pi]<\infty,\qquad \E_\mu[|U_\pi|S_\pi]<\infty.
+\]
+Define
+\[
+\mu^{FP}_\pi(A)=\frac{\E_\mu[\mathbf 1_A S_\pi]}{\E_\mu[S_\pi]}.
+\]
+
+\begin{theorem}[QBS Covariance Identity]
+For any $X$ with $\E[|X|S]<\infty$,
+\[
+\E_{FP}[X]-\E[X]=\frac{\Cov(X,S)}{\E[S]}.
+\]
+\end{theorem}
+\begin{proof}
+Since $\E_{FP}[X]=\E[XS]/\E[S]$ and
+$\E[XS]=\E[X]\E[S]+\Cov(X,S)$, substitution gives the result.
+\end{proof}
+
+\begin{theorem}[Tail Probability Identity]
+For every $c\in\mathbb R$,
+\[
+P_{FP}(X\ge c)-P(X\ge c)
+=
+\frac{\Cov(\mathbf 1_{\{X\ge c\}},S)}{\E[S]}.
+\]
+\end{theorem}
+\begin{proof}
+Apply Theorem 1 to $\mathbf 1_{\{X\ge c\}}$.
+\end{proof}
+
+\begin{theorem}[Monotone Accessibility Implies FOSD]
+Let $g(X)=\E[S\mid X]$, with $g$ nondecreasing on the support of $X$.
+Then
+\[
+F_{FP}(c)\le F(c)\quad\forall c\in\mathbb R.
+\]
+\end{theorem}
+\begin{proof}
+Let $f_c(x)=\mathbf1_{\{x\le c\}}$. Then
+\[
+F_{FP}(c)-F(c)=\frac{\Cov(f_c(X),S)}{\E[S]}
+=\frac{\Cov(f_c(X),g(X))}{\E[S]}.
+\]
+For an independent copy $X'$,
+\[
+2\Cov(f_c(X),g(X))
+=
+\E[(f_c(X)-f_c(X'))(g(X)-g(X'))].
+\]
+Because $f_c$ is nonincreasing and $g$ is nondecreasing, the integrand is
+nonpositive almost surely. Hence the covariance is nonpositive.
+\end{proof}
+
+\begin{theorem}[Recognition Decomposition]
+Let recognition $R\in\{0,1\}$ induce $(U_R,S_R)$, and define
+\[
+V_R=\frac{\E[U_RS_R]}{\E[S_R]},\qquad
+Q(U,S)=\frac{\Cov(U,S)}{\E[S]}.
+\]
+Then
+\[
+V_1-V_0=\E[U_1-U_0]+Q(U_1,S_1)-Q(U_0,S_0).
+\]
+If $S_0\equiv1$,
+\[
+V_1-V_0=\E[U_1-U_0]+\frac{\Cov(U_1,S_1)}{\E[S_1]}.
+\]
+\end{theorem}
+\begin{proof}
+Apply Theorem 1 separately to $R=0$ and $R=1$ and subtract.
+\end{proof}
+
+\begin{theorem}[Policy--QBS Interaction Decomposition]
+Let $D=U_1-U_0$ and
+\[
+I=Q(U_1,S_1)-Q(U_0,S_0).
+\]
+Then
+\[
+I=
+\frac{\Cov(D,S_0)}{\E[S_0]}
++
+\left[Q(U_1,S_1)-Q(U_1,S_0)\right].
+\]
+If $S_1=S_0=S$, then
+\[
+I=\frac{\Cov(D,S)}{\E[S]}.
+\]
+\end{theorem}
+\begin{proof}
+Add and subtract $Q(U_1,S_0)$, then use linearity of covariance in the first argument.
+\end{proof}
+
+\begin{corollary}[Adaptive Rescue]
+If $D=d(B)$ with $d$ nondecreasing and $S=s(B)$ with $s$ nonincreasing, then
+$\Cov(D,S)\le0$. Under a fixed selector, $I\le0$.
+\end{corollary}
+\begin{proof}
+For an independent copy $B'$,
+\[
+2\Cov(d(B),s(B))
+=
+\E[(d(B)-d(B'))(s(B)-s(B'))]\le0.
+\]
+\end{proof}
+
+\begin{proposition}[Costless Recognition Has Nonnegative Option Value]
+If $\Pi_0\subseteq\Pi_1$ and both policy sets are evaluated by the same value
+functional $V$, then
+\[
+\sup_{\pi\in\Pi_1}V(\pi)\ge\sup_{\pi\in\Pi_0}V(\pi).
+\]
+\end{proposition}
+
+\begin{proposition}[Pure Reweighting Cannot Create Support]
+For fixed policy $\pi$, $\mu^{FP}_\pi\ll\mu$. Hence $\mu(A)=0$ implies
+$\mu^{FP}_\pi(A)=0$.
+\end{proposition}
+
+\section{Boundary}
+If $\E[S]=0$, the normalized first-person measure is undefined.
+
+\section{Everett-QBS Bridge Assumption}
+The physical interpretation requires the additional hypothesis
+\[
+d\mu^{FP}_\pi(\omega)
+=
+\frac{S_\pi(\omega)}{\E_\mu[S_\pi]}d\mu(\omega),
+\]
+with $S_\pi$ interpreted as observer-indexed accessibility. The mathematical
+theorems above do not themselves establish this physical identification.
+
+\end{document}

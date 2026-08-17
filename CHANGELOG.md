@@ -12,14 +12,23 @@
   $$
   for score-measurable accessibility `S=s(Y)`;
 - sufficient comonotonicity/monotonicity conditions for nonnegative and strict positive outcome-accessibility covariance;
+- Corollary S2.2: posterior-mean self-calibration,
+  $$
+  Y=E[U\mid B]
+  \Longrightarrow
+  E[U\mid Y]=Y;
+  $$
+- Corollary S2.3: a Cauchy--Schwarz robustness bound for approximate conditional-mean calibration;
 - a conditional-mean predictive-strength quantity based on `Var(E[U|Y])`;
 - an explicit counterexample showing that positive mutual information alone does not imply positive accessibility covariance;
-- a separate manuscript appendix file containing the S2 proof and boundary conditions.
+- a separate manuscript appendix file containing the S2 proofs and boundary conditions;
+- `docs/s2_adaptive_alignment_audit.md` for theorem-level H/T/D/C/U + ERROR CHECK review.
 
 ### Changed
 
-- the adaptive-agent mechanism is no longer described as a wholly simulation-supported covariance step: E2/E3 support the learning/calibration premise, while S2 proves the covariance consequence once that premise and score-measurable accessibility hold;
-- the remaining adaptive-learning problem is narrowed to deriving or testing when learning dynamics produce an evaluation score whose conditional expected future outcome is correctly ordered;
+- the adaptive-agent mechanism is no longer described as a wholly simulation-supported covariance step: E2/E3 support the learning/prediction premise, while S2 proves the covariance consequence once calibration and score-measurable accessibility hold;
+- a true posterior-mean score now supplies the S2 calibration premise exactly by the tower property;
+- the remaining finite-agent problem is narrowed to bounding conditional-mean calibration error and comparing it with the S2.3 score/accessibility alignment margin;
 - the core five theorem set remains unchanged.
 
 ## v0.2 — Public Review — 2026-08-17

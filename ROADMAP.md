@@ -90,10 +90,14 @@ This roadmap turns the public repository into the source of truth for the theory
 - [x] Prove S2.5, a bounded i.i.d. independent-held-out high-probability certificate using simultaneous Hoeffding bounds.
 - [x] Derive the quantitative first-person lower bound `D_L/B_S` when the finite-sample certificate is positive.
 - [x] Prove consistency of S2.5 when the population S2.4 margin is strictly positive.
+- [x] Prove S2.6: arbitrary independent training preserves S2.5 coverage conditional on the realized trained rule.
+- [x] Prove S2.7: finite predeclared same-holdout candidate selection is valid under simultaneous multiplicity-corrected certificates.
+- [x] Add unequal confidence allocation for finite candidate families.
+- [x] Record uncorrected best-of-K and post-hoc candidate-construction failure boundaries.
 - [x] Record the mutual-information counterexample and one-sided certificate boundaries.
 - [ ] Extend the finite-sample certificate to unbounded/sub-Gaussian/sub-exponential or robust-mean settings.
-- [ ] Handle model/accessibility selection that is adaptive to the certification data.
-- [ ] Add a held-out calibration/MSE experiment only if review requires direct empirical evaluation of S2.5.
+- [ ] Extend selection validity from finite predeclared candidate families to infinite or certification-data-dependent classes using uniform convergence, selective inference, or fresh-sample methods.
+- [ ] Add a held-out calibration/MSE experiment only if review requires direct empirical evaluation of the S2.5–S2.7 stack.
 - [ ] Extend S2 beyond score-measurable accessibility by bounding or signing the residual conditional-covariance term.
 
 ## Current focus
@@ -104,6 +108,7 @@ Current stack:
 
 1. PR #11 — S2 through S2.3;
 2. PR #12 — S2.4 prediction-MSE population certificate;
-3. S2.5 branch — finite-sample held-out certificate.
+3. PR #13 — S2.5 finite-sample held-out certificate;
+4. selection-validity branch — S2.6–S2.7 training and finite-candidate selection validity.
 
-Next theoretical priority after S2.5 review is an unbounded/sub-Gaussian extension or adaptive-data-selection correction, not another toy experiment by default.
+Next default theorem priority is an unbounded/sub-Gaussian extension. An infinite/data-dependent candidate-class extension is the parallel statistical priority. Neither requires another toy experiment by default.

@@ -13,6 +13,7 @@ required = [
     "docs/everett_bridge_tests.md",
     "docs/manuscript_claim_audit.md",
     "docs/v0.2_release_audit.md",
+    "docs/s2_adaptive_alignment_audit.md",
     "experiments/E1_FOSD.md",
     "experiments/E2_LEARNED_AGENT.md",
     "experiments/E3_RECOGNITION.md",

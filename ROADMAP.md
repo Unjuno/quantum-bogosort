@@ -96,10 +96,12 @@ This roadmap turns the public repository into the source of truth for the theory
 - [x] Prove S2.8: any valid simultaneous five-moment confidence envelope can be composed into a covariance lower certificate.
 - [x] Prove S2.9: a light-tail sub-Gaussian/Bernstein instantiation of S2.8 without deterministic boundedness.
 - [x] Record why product/square tail controls must be explicit rather than silently inferred from marginal sub-Gaussianity.
-- [ ] Derive a robust finite-moment instantiation of S2.8 using median-of-means or another finite-variance method.
+- [x] Prove S2.10: a robust median-of-means instantiation of S2.8 using finite variance bounds for the five target variables.
+- [x] Record the fourth-moment-type implications needed for `S^2`, `(U-Y)^2`, and `YS` in the S2.10 variance assumptions.
 - [ ] Derive explicit Orlicz/mgf sufficient conditions for the S2.9 Bernstein parameters with convention-specific constants.
+- [ ] Explore robust estimators that weaken the S2.10 fourth-moment-type requirements for squared target variables.
 - [ ] Extend selection validity from finite predeclared candidate families to infinite or certification-data-dependent classes using uniform convergence, selective inference, or fresh-sample methods.
-- [ ] Add a held-out calibration/MSE experiment only if review requires direct empirical evaluation of the S2.5–S2.9 stack.
+- [ ] Add a held-out calibration/MSE experiment only if review requires direct empirical evaluation of the S2.5–S2.10 stack.
 - [ ] Extend S2 beyond score-measurable accessibility by bounding or signing the residual conditional-covariance term.
 
 ## Current focus
@@ -113,6 +115,7 @@ Current stack:
 3. PR #13 — S2.5 finite-sample held-out certificate;
 4. PR #15 — S2.6–S2.7 training and finite-candidate selection validity;
 5. PR #16 — S2.8 generic confidence-envelope composition;
-6. current light-tail branch — S2.9 sub-Gaussian/Bernstein instantiation.
+6. PR #17 — S2.9 light-tail sub-Gaussian/Bernstein instantiation;
+7. current robust branch — S2.10 median-of-means finite-moment instantiation.
 
-Next default theorem priority is a robust finite-moment instantiation of S2.8. Another toy experiment is not added by default.
+Next default theorem priority is the residual conditional-covariance extension beyond score-measurable accessibility, followed by explicit Orlicz/mgf constants for S2.9 if review needs them. Another toy experiment is not added by default.

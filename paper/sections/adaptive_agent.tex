@@ -68,7 +68,6 @@ Hence a sufficient robustness condition is
 >
 \sqrt{\operatorname{Var}(e(Y_t))\operatorname{Var}(S_t)}.
 \]
-This turns approximate calibration into a quantitative, falsifiable agent-model condition rather than a qualitative appeal to adaptation.
 
 The calibration-error term can itself be bounded by ordinary prediction mean-squared error. Since
 \[
@@ -82,7 +81,7 @@ conditional Jensen implies
 \le
 \mathbb E[(U_T-Y_t)^2].
 \]
-Therefore the more conservative but directly observable certificate is
+Therefore
 \[
 \operatorname{Cov}(U_T,S_t)
 \ge
@@ -90,50 +89,44 @@ Therefore the more conservative but directly observable certificate is
 -
 \sqrt{\mathbb E[(U_T-Y_t)^2]\operatorname{Var}(S_t)}.
 \]
-Accordingly,
-\[
-\operatorname{Cov}(Y_t,S_t)
->
-\sqrt{\mathbb E[(U_T-Y_t)^2]\operatorname{Var}(S_t)}
-\]
-is sufficient for positive outcome--accessibility covariance. The bound is conservative because prediction MSE decomposes as
-\[
-\mathbb E[(U_T-Y_t)^2]
-=
-\mathbb E[\operatorname{Var}(U_T\mid Y_t)]
-+
-\mathbb E[e(Y_t)^2],
-\]
-so irreducible conditional outcome noise is counted together with calibration error.
+This S2.4 population certificate is conservative because prediction MSE also includes irreducible conditional outcome variance.
 
-The same population condition can be certified from independent held-out data. Corollary S2.5 assumes known bounds
+Corollary S2.5 converts the population inequality into a bounded independent-held-out certificate. Corollary S2.6 shows that arbitrary upstream training is compatible with this guarantee when the final certification sample is independent. Corollary S2.7 permits same-holdout selection among a finite predeclared candidate family after multiplicity correction.
+
+Corollary S2.8 then separates the QBS covariance-composition step from any particular concentration inequality. It requires only a simultaneous confidence envelope for
 \[
-|Y_t|\le B_Y,
-\qquad
-0\le S_t\le B_S,
-\qquad
-|U_T-Y_t|\le B_R,
+\mathbb E[Y_t],
+\quad
+\mathbb E[S_t],
+\quad
+\mathbb E[Y_tS_t],
+\quad
+\mathbb E[S_t^2],
+\quad
+\mathbb E[(U_T-Y_t)^2].
 \]
-and applies simultaneous Hoeffding bounds to the empirical moments of $Y_t$, $S_t$, $Y_tS_t$, $S_t^2$, and $(U_T-Y_t)^2$. It constructs a lower confidence bound $D_L$ satisfying
+Any statistical method that validly supplies those five simultaneous moment bounds can be inserted without changing the QBS covariance proof.
+
+Corollary S2.9 supplies one unbounded light-tail instantiation. It uses sub-Gaussian sample-mean control for $Y_t$ and $S_t$ and explicit Bernstein/sub-exponential sample-mean controls for
+\[
+Y_tS_t,
+\qquad
+S_t^2,
+\qquad
+(U_T-Y_t)^2.
+\]
+With
+\[
+t_\delta=\log\frac{10}{\delta},
+\]
+the five concentration events form a simultaneous S2.8 envelope with probability at least $1-\delta$. The resulting lower margin $D_{\rm LT}$ therefore satisfies
 \[
 P\!\left(
-\operatorname{Cov}(U_T,S_t)\ge D_L
+\operatorname{Cov}(U_T,S_t)\ge D_{\rm LT}
 \right)
 \ge1-\delta.
 \]
-Thus an independently evaluated sample with
-\[
-D_L>0
-\]
-certifies positive population covariance at confidence at least $1-\delta$.
-
-Corollary S2.6 formalizes the training/evaluation split: an arbitrarily complex learner may be trained and selected upstream, and the S2.5 guarantee remains valid after conditioning on the entire training procedure provided the final certification sample is independent and the post-training population bounds are valid. Corollary S2.7 further permits choosing among a finite family of candidates on the same held-out sample by constructing simultaneous certificates. With equal family-wise allocation across $K$ predeclared candidates, the Hoeffding radius becomes
-\[
-\tau_{n,\delta,K}
-=
-\sqrt{\frac{\log(10K/\delta)}{2n}},
-\]
-and whichever candidate is selected from the held-out data retains the simultaneous lower-bound guarantee. Uncorrected best-of-$K$ reporting and post-hoc invention of new candidates are not covered.
+This permits unbounded light-tail validation without silently assuming universal product or square constants from marginal sub-Gaussianity.
 
 For square-integrable $U_T$, the quantity
 \[
@@ -141,7 +134,7 @@ M(U_T;Y_t)
 =
 \operatorname{Var}(\mathbb E[U_T\mid Y_t])
 \]
-measures conditional-mean predictive strength. It is the relevant nondegeneracy quantity for this theorem. Positive mutual information $I(U_T;Y_t)>0$ is weaker: dependence can occur entirely through conditional variance while $\mathbb E[U_T\mid Y_t]$ remains constant, in which case every score-measurable accessibility map has zero covariance with $U_T$.
+measures conditional-mean predictive strength. Positive mutual information $I(U_T;Y_t)>0$ is weaker: dependence can occur entirely through conditional variance while $\mathbb E[U_T\mid Y_t]$ remains constant, in which case every score-measurable accessibility map has zero covariance with $U_T$.
 
 The intended causal and validation chain is therefore
 \[
@@ -151,9 +144,9 @@ The intended causal and validation chain is therefore
 \rightarrow
 \text{population covariance certificate}
 \rightarrow
-\text{held-out finite-sample certificate}
+\text{finite-sample moment envelopes}
 \rightarrow
-\text{selection-safe certification}.
+\text{selection-safe statistical certification}.
 \]
 
-Experiment E2 tests the minimal version of the predictive mechanism in a nonlinear environment. A misspecified model that cannot represent the relevant interaction fails to produce predictive alignment, while a small interaction-capable model succeeds. E3 supplies a paired endogenous-policy example. These simulations support the premise that learning can generate useful predictive ordering in toy environments; S2--S2.7 prove increasingly operational covariance implications once calibration, score-measurable accessibility, boundedness, held-out evaluation, and selection accounting are specified. None of these steps establishes a physical Everettian accessibility map.
+Experiment E2 tests the minimal version of the predictive mechanism in a nonlinear environment. A misspecified model that cannot represent the relevant interaction fails to produce predictive alignment, while a small interaction-capable model succeeds. E3 supplies a paired endogenous-policy example. These simulations support premise generation in toy environments; S2--S2.9 provide the mathematical and statistical implications once the stated calibration, accessibility, concentration, held-out-evaluation, and selection conditions are specified. None of these steps establishes a physical Everettian accessibility map.

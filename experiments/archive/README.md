@@ -1,6 +1,8 @@
 # Exploratory Experiment Archive
 
-The five experiments E1–E5 are the locked core. Earlier or secondary studies should be documented here rather than silently discarded.
+The five experiments E1–E5 are the locked core. Earlier or secondary studies are documented here rather than silently discarded.
+
+The detailed historical ledger is [`INDEX.md`](INDEX.md). It classifies prior work as **CORE**, **APPENDIX CANDIDATE**, **SUPERSEDED**, or **HISTORICAL LOCAL ARTIFACT** and records known output filenames and reconstruction requirements.
 
 ## Archive categories
 
@@ -23,5 +25,7 @@ An archived experiment should record:
 - output file names;
 - whether the result was retained, superseded, or rejected;
 - the reason for supersession when applicable.
+
+An archived result is not promoted back into the manuscript until a committed reproduction script or exact derivation exists.
 
 The archive is intended to make the path to the final model auditable. Superseded experiments must not be cited as current evidence without clearly stating their status.

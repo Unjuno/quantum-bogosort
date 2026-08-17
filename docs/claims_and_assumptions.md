@@ -147,6 +147,54 @@ $$
 
 is a sufficient condition for positive outcome-accessibility covariance.
 
+### S2.4 prediction-MSE certificate
+
+Because:
+
+$$
+e(Y)=E[U-Y\mid Y],
+$$
+
+conditional Jensen and the variance bound give:
+
+$$
+\operatorname{Var}(e(Y))
+\le
+E[e(Y)^2]
+\le
+E[(U-Y)^2].
+$$
+
+Therefore:
+
+$$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
+$$
+
+Hence:
+
+$$
+\operatorname{Cov}(Y,S)
+>
+\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+$$
+
+is a sufficient condition for positive covariance using ordinary prediction MSE. The exact decomposition:
+
+$$
+E[(U-Y)^2]
+=
+E[\operatorname{Var}(U\mid Y)]
++
+E[e(Y)^2]
+$$
+
+shows that this certificate is conservative because prediction MSE includes irreducible conditional outcome variance.
+
 These are probability identities and sufficient conditions conditional on the model definitions. They do not by themselves imply Everettian physics.
 
 ## Simulation-supported claims
@@ -159,13 +207,13 @@ The repository simulations support the following model-level statements:
 4. Adaptive rescue policies can reduce the marginal QBS contribution by rescuing branches that a selector would otherwise downweight.
 5. Shared recognition and shared environmental structure can increase cross-copy action correlation without proportionally changing single-observer FP uplift.
 
-E2/E3 illustrate premise generation for S2; they do not prove that a finite learned score equals the true posterior mean or satisfies the S2.3 robustness inequality.
+E2/E3 illustrate premise generation for S2; they do not prove that a finite learned score equals the true posterior mean or satisfies the S2.3/S2.4 sufficient certificates.
 
 These are classical simulations of the formal structure, not empirical evidence for Everettian observer selection.
 
 ## Adaptive-learning assumption boundary
 
-S2 proves the implication from an ordered conditional-mean predictor to nonnegative covariance. S2.2 proves exact calibration for a true posterior-mean score. S2.3 gives a sufficient finite-error bound.
+S2 proves the implication from an ordered conditional-mean predictor to nonnegative covariance. S2.2 proves exact calibration for a true posterior-mean score. S2.3 gives a sharper calibration-error certificate; S2.4 gives a weaker but more directly observable prediction-MSE certificate.
 
 For square-integrable `U`, conditional-mean predictive strength is:
 
@@ -189,13 +237,7 @@ $$
 
 almost surely. In such cases, every accessibility map of the form `S=s(Y)` has zero covariance with `U`.
 
-The remaining finite-agent problem is therefore quantitative: estimate or bound
-
-$$
-\operatorname{Var}(e(Y_t))
-$$
-
-and compare it with the score/accessibility alignment margin in S2.3.
+The remaining finite-agent problem is quantitative: derive or estimate either the calibration term in S2.3 or the prediction-MSE term in S2.4 and compare it with the score/accessibility alignment margin.
 
 ## Model assumptions
 
@@ -215,7 +257,7 @@ The common-randomness comparison additionally assumes policies can be evaluated 
 
 S2 additionally assumes score-measurable accessibility `S=s(Y)` for its clean projection identity. If accessibility contains residual randomness, the general law of total covariance includes an additional conditional-covariance term.
 
-S2.2 additionally assumes the score is the true conditional expectation under the same probability model used to evaluate `U`. S2.3 assumes square integrability.
+S2.2 additionally assumes the score is the true conditional expectation under the same probability model used to evaluate `U`. S2.3 and S2.4 assume square integrability.
 
 ## Everett bridge assumption
 
@@ -272,7 +314,9 @@ The repository does **not** claim that:
 - positive correlation alone implies FOSD;
 - mutual information alone implies positive accessibility covariance;
 - adaptation automatically learns the true posterior mean;
-- a finite learned score necessarily satisfies the S2.3 robustness inequality;
+- a finite learned score necessarily satisfies the S2.3 or S2.4 certificate;
+- failure of the S2.4 MSE certificate implies negative covariance;
+- low prediction MSE is necessary for positive covariance;
 - pure reweighting creates outcomes absent from the fixed-policy support;
 - negative policy–QBS interaction means either policy effect is itself negative;
 - the classical simulations prove an Everett interpretation;
@@ -287,6 +331,7 @@ The formal conclusions weaken or fail when their assumptions are violated:
 - nonmonotone conditional accessibility can break FOSD;
 - a score can be statistically informative while having constant conditional outcome mean, defeating the S2 uplift premise;
 - a finite score can fail the S2.3 robustness certificate when calibration error dominates the alignment margin;
+- large irreducible conditional variance can make S2.4 inconclusive even when the sharper S2/S2.3 logic supports positive covariance;
 - no change in trajectory or accessibility gives zero recognition effect;
 - zero expected accessibility makes the normalized FP measure undefined;
 - arbitrary-label dependence or inconsistent coarse graining counts against a proposed physical bridge;

@@ -34,6 +34,7 @@ required = [
     "paper/references.bib",
     "figures/README.md",
     "figures/generate_figures.py",
+    "figures/generate_pdf_figures.py",
     "figures/generated/fig1_framework.svg",
     "figures/generated/fig2_fosd.svg",
     "figures/generated/fig3_recognition_decomposition.svg",

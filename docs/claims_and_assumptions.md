@@ -94,11 +94,11 @@ $$
 \operatorname{Cov}(U,S)\ge0.
 $$
 
-Strict pairwise comonotonicity on a positive-probability set gives strict positivity. Consequently, the QBS covariance identity yields nonnegative first-person mean uplift under these assumptions.
+Strict pairwise comonotonicity on a positive-probability set gives strict positivity.
 
 ### S2.2 posterior-mean self-calibration
 
-If an internal information state `B` generates the score:
+If:
 
 $$
 Y=E[U\mid B],
@@ -110,24 +110,15 @@ $$
 E[U\mid Y]=Y.
 $$
 
-Thus a true posterior-mean score satisfies the S2 conditional-mean calibration premise exactly. For nondecreasing `S=s(Y)`:
-
-$$
-\operatorname{Cov}(U,S)
-=
-\operatorname{Cov}(Y,s(Y))
-\ge0.
-$$
-
 ### S2.3 approximate-calibration robustness
 
-Define calibration error:
+With:
 
 $$
-e(Y)=E[U\mid Y]-Y.
+e(Y)=E[U\mid Y]-Y,
 $$
 
-Under square integrability:
+square integrability gives:
 
 $$
 \operatorname{Cov}(U,S)
@@ -137,35 +128,19 @@ $$
 \sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
 $$
 
-Therefore:
-
-$$
-\operatorname{Cov}(Y,S)
->
-\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}
-$$
-
-is a sufficient condition for positive outcome-accessibility covariance.
-
 ### S2.4 prediction-MSE certificate
 
-Because:
-
-$$
-e(Y)=E[U-Y\mid Y],
-$$
-
-conditional Jensen and the variance bound give:
+Conditional Jensen gives:
 
 $$
 \operatorname{Var}(e(Y))
 \le
 E[e(Y)^2]
 \le
-E[(U-Y)^2].
+E[(U-Y)^2],
 $$
 
-Therefore:
+and therefore:
 
 $$
 \operatorname{Cov}(U,S)
@@ -175,27 +150,64 @@ $$
 \sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
 $$
 
-Hence:
+### S2.5 finite-sample held-out certificate
+
+Let a fixed predictor/accessibility rule be evaluated on an independent i.i.d. sample and assume known bounds:
 
 $$
-\operatorname{Cov}(Y,S)
->
-\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+|Y|\le B_Y,
+\qquad
+0\le S\le B_S,
+\qquad
+|U-Y|\le B_R.
 $$
 
-is a sufficient condition for positive covariance using ordinary prediction MSE. The exact decomposition:
+S2.5 constructs simultaneous Hoeffding lower/upper bounds for:
+
+- `Cov(Y,S)`;
+- `E[(U-Y)^2]`;
+- `Var(S)`.
+
+With:
 
 $$
-E[(U-Y)^2]
+\tau_{n,\delta}
 =
-E[\operatorname{Var}(U\mid Y)]
-+
-E[e(Y)^2]
+\sqrt{\frac{\log(10/\delta)}{2n}},
 $$
 
-shows that this certificate is conservative because prediction MSE includes irreducible conditional outcome variance.
+it defines a data-dependent certificate margin:
 
-These are probability identities and sufficient conditions conditional on the model definitions. They do not by themselves imply Everettian physics.
+$$
+D_L
+=
+C_L-\sqrt{M_UV_U}
+$$
+
+such that:
+
+$$
+P\left(
+\operatorname{Cov}(U,S)\ge D_L
+\right)
+\ge1-\delta.
+$$
+
+Thus:
+
+$$
+D_L>0
+$$
+
+is a sufficient held-out certificate for positive population covariance at confidence at least `1-delta`. Under T1 and `E[S]<=B_S`, the same event gives:
+
+$$
+E_{FP}[U]-E[U]
+\ge
+\frac{D_L}{B_S}>0.
+$$
+
+S2.5 is a statistical validation theorem, not a new Everettian claim.
 
 ## Simulation-supported claims
 
@@ -207,57 +219,45 @@ The repository simulations support the following model-level statements:
 4. Adaptive rescue policies can reduce the marginal QBS contribution by rescuing branches that a selector would otherwise downweight.
 5. Shared recognition and shared environmental structure can increase cross-copy action correlation without proportionally changing single-observer FP uplift.
 
-E2/E3 illustrate premise generation for S2; they do not prove that a finite learned score equals the true posterior mean or satisfies the S2.3/S2.4 sufficient certificates.
+E2/E3 illustrate premise generation for S2. They do not establish the finite-sample S2.5 certificate without a separately held-out evaluation satisfying its assumptions.
 
-These are classical simulations of the formal structure, not empirical evidence for Everettian observer selection.
+## Adaptive-learning and statistical-validation boundary
 
-## Adaptive-learning assumption boundary
+S2 proves the conditional-mean alignment implication. S2.2 proves exact posterior-mean calibration. S2.3 and S2.4 provide population robustness certificates. S2.5 supplies a bounded independent-held-out confidence certificate.
 
-S2 proves the implication from an ordered conditional-mean predictor to nonnegative covariance. S2.2 proves exact calibration for a true posterior-mean score. S2.3 gives a sharper calibration-error certificate; S2.4 gives a weaker but more directly observable prediction-MSE certificate.
-
-For square-integrable `U`, conditional-mean predictive strength is:
-
-$$
-M(U;Y)
-=
-\operatorname{Var}(E[U\mid Y]).
-$$
-
-Positive mutual information is not a substitute for this directional condition. There exist distributions with:
+Positive mutual information is not sufficient. There exist distributions with:
 
 $$
 I(U;Y)>0
 $$
 
-but:
+but constant:
 
 $$
-E[U\mid Y]=E[U]
+E[U\mid Y],
 $$
 
-almost surely. In such cases, every accessibility map of the form `S=s(Y)` has zero covariance with `U`.
+so every accessibility map `S=s(Y)` has zero covariance with `U`.
 
-The remaining finite-agent problem is quantitative: derive or estimate either the calibration term in S2.3 or the prediction-MSE term in S2.4 and compare it with the score/accessibility alignment margin.
+For S2.5, the predictor/accessibility rule and the bounds must be fixed relative to the held-out sample. Reusing the same data for training, tuning, selection, and certification requires separate adaptivity accounting.
 
 ## Model assumptions
 
-The formal model assumes that policy-dependent accessibility can be represented by a nonnegative measurable weight:
+The formal model assumes nonnegative measurable accessibility:
 
 $$
-S_\pi(\omega)\ge0.
+S_\pi(\omega)\ge0
 $$
 
-The normalized FP measure requires:
+and normalized FP measure requires:
 
 $$
 0<E[S_\pi]<\infty.
 $$
 
-The common-randomness comparison additionally assumes policies can be evaluated on the same primitive sample space.
+The common-randomness comparison assumes policies can be evaluated on the same primitive sample space.
 
-S2 additionally assumes score-measurable accessibility `S=s(Y)` for its clean projection identity. If accessibility contains residual randomness, the general law of total covariance includes an additional conditional-covariance term.
-
-S2.2 additionally assumes the score is the true conditional expectation under the same probability model used to evaluate `U`. S2.3 and S2.4 assume square integrability.
+S2 assumes score-measurable accessibility `S=s(Y)`. S2.2 assumes the score is the true conditional expectation under the analyzed probability model. S2.3/S2.4 assume square integrability. S2.5 additionally assumes i.i.d. independent held-out evaluation and known finite bounds on the score, accessibility, and prediction residual.
 
 ## Everett bridge assumption
 
@@ -280,30 +280,6 @@ The detailed bridge criteria are in `docs/everett_bridge_tests.md`.
 - **Observer-model bridge:** requires an independent account of why observer persistence or self-location induces `S_pi`.
 - **Physical Everett bridge:** additionally requires a defensible relation to branch amplitude, decoherence, Born-rule probability, and operational quantum predictions.
 
-The current project is not claiming the third level as established.
-
-### Structural constraints on a candidate physical bridge
-
-A candidate should satisfy:
-
-- nonnegativity and finite positive normalization;
-- absolute continuity with respect to the stated base measure;
-- invariance under physically equivalent relabeling or redundant branch bookkeeping;
-- consistent aggregation under coarse graining;
-- sequentially coherent observer conditioning;
-- compatibility with no-signaling and established operational quantum statistics unless explicit new physics is proposed;
-- independence from post-hoc utility fitting.
-
-### Layer-specific falsifiability
-
-The phrase "falsifiable QBS" is too coarse unless a layer is named.
-
-- theorem assumptions can fail mathematically;
-- a proposed observer model can fail structural consistency tests;
-- a physical Everett bridge is empirically falsifiable only if a concrete physical `S_pi` generates observational predictions that differ from competing physical accounts.
-
-If all operational predictions remain identical to standard Everettian quantum mechanics, the bridge may be interpretively underdetermined rather than independently empirically testable.
-
 ## Non-claims
 
 The repository does **not** claim that:
@@ -314,14 +290,15 @@ The repository does **not** claim that:
 - positive correlation alone implies FOSD;
 - mutual information alone implies positive accessibility covariance;
 - adaptation automatically learns the true posterior mean;
-- a finite learned score necessarily satisfies the S2.3 or S2.4 certificate;
-- failure of the S2.4 MSE certificate implies negative covariance;
+- a finite learned score necessarily satisfies S2.3, S2.4, or S2.5;
+- failure of an S2 certificate implies negative covariance;
+- the same sample may be reused arbitrarily for training and certification while preserving the S2.5 confidence level;
 - low prediction MSE is necessary for positive covariance;
 - pure reweighting creates outcomes absent from the fixed-policy support;
 - negative policy–QBS interaction means either policy effect is itself negative;
 - the classical simulations prove an Everett interpretation;
-- internal consistency of a weighted measure confirms the Everett bridge;
-- a utility-favoring accessibility function is physical merely because it produces favorable first-person statistics.
+- a statistical S2.5 certificate establishes the Everett accessibility bridge;
+- internal consistency of a weighted measure confirms the Everett bridge.
 
 ## Falsification / failure conditions
 
@@ -331,9 +308,9 @@ The formal conclusions weaken or fail when their assumptions are violated:
 - nonmonotone conditional accessibility can break FOSD;
 - a score can be statistically informative while having constant conditional outcome mean, defeating the S2 uplift premise;
 - a finite score can fail the S2.3 robustness certificate when calibration error dominates the alignment margin;
-- large irreducible conditional variance can make S2.4 inconclusive even when the sharper S2/S2.3 logic supports positive covariance;
+- large irreducible conditional variance can make S2.4 inconclusive even when actual covariance is positive;
+- `D_L<=0` makes S2.5 inconclusive at the selected confidence level;
+- training/evaluation leakage or invalid post-hoc bounds remove the stated S2.5 coverage guarantee;
 - no change in trajectory or accessibility gives zero recognition effect;
 - zero expected accessibility makes the normalized FP measure undefined;
-- arbitrary-label dependence or inconsistent coarse graining counts against a proposed physical bridge;
-- operational predictions conflicting with established quantum statistics count empirically against a concrete physical accessibility model;
-- rejecting the Everett bridge removes the physical Everett interpretation while leaving the measure-theoretic identities intact.
+- rejecting the Everett bridge removes the physical Everett interpretation while leaving the measure-theoretic and statistical identities intact.

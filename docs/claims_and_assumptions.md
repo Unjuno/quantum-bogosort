@@ -111,7 +111,39 @@ d\mu^{FP}_\pi(\omega)
 \,d\mu(\omega).
 $$
 
-The repository does not currently derive this rule from unitary quantum mechanics, decoherence, or the Born rule. Establishing, replacing, or rejecting this bridge is a central open problem.
+The repository does not currently derive this rule from unitary quantum mechanics, decoherence, observer dynamics, or the Born rule. Establishing, replacing, or rejecting this bridge remains a physical open problem.
+
+The detailed bridge criteria are in `docs/everett_bridge_tests.md`.
+
+### Bridge status levels
+
+- **Abstract change of measure:** exact once `S_pi` is specified.
+- **Observer-model bridge:** requires an independent account of why observer persistence or self-location induces `S_pi`.
+- **Physical Everett bridge:** additionally requires a defensible relation to branch amplitude, decoherence, Born-rule probability, and operational quantum predictions.
+
+The current project is not claiming the third level as established.
+
+### Structural constraints on a candidate physical bridge
+
+A candidate should satisfy:
+
+- nonnegativity and finite positive normalization;
+- absolute continuity with respect to the stated base measure;
+- invariance under physically equivalent relabeling or redundant branch bookkeeping;
+- consistent aggregation under coarse graining;
+- sequentially coherent observer conditioning;
+- compatibility with no-signaling and established operational quantum statistics unless explicit new physics is proposed;
+- independence from post-hoc utility fitting.
+
+### Layer-specific falsifiability
+
+The phrase "falsifiable QBS" is too coarse unless a layer is named.
+
+- theorem assumptions can fail mathematically;
+- a proposed observer model can fail structural consistency tests;
+- a physical Everett bridge is empirically falsifiable only if a concrete physical `S_pi` generates observational predictions that differ from competing physical accounts.
+
+If all operational predictions remain identical to standard Everettian quantum mechanics, the bridge may be interpretively underdetermined rather than independently empirically testable.
 
 ## Non-claims
 
@@ -123,7 +155,9 @@ The repository does **not** claim that:
 - positive correlation alone implies FOSD;
 - pure reweighting creates outcomes absent from the fixed-policy support;
 - negative policy–QBS interaction means either policy effect is itself negative;
-- the classical simulations prove an Everett interpretation.
+- the classical simulations prove an Everett interpretation;
+- internal consistency of a weighted measure confirms the Everett bridge;
+- a utility-favoring accessibility function is physical merely because it produces favorable first-person statistics.
 
 ## Falsification / failure conditions
 
@@ -133,4 +167,6 @@ The formal conclusions weaken or fail when their assumptions are violated:
 - nonmonotone conditional accessibility can break FOSD;
 - no change in trajectory or accessibility gives zero recognition effect;
 - zero expected accessibility makes the normalized FP measure undefined;
+- arbitrary-label dependence or inconsistent coarse graining counts against a proposed physical bridge;
+- operational predictions conflicting with established quantum statistics count empirically against a concrete physical accessibility model;
 - rejecting the Everett bridge removes the physical Everett interpretation while leaving the measure-theoretic identities intact.

@@ -18,7 +18,15 @@ This file is the canonical status ledger for the Quantum Bogosort research repos
 | P1 | Costless recognition has nonnegative option value | PROVED | `theory/propositions_boundaries.md` |
 | P2 | Pure reweighting cannot create support | PROVED | `theory/propositions_boundaries.md` |
 
-The manuscript appendix now contains complete proofs of T1--T5, strict/equality conditions for FOSD, the adaptive-rescue result, support preservation, the repeated-filter derivative identity, the Gaussian closed form, and multi-observer normalization.
+The manuscript appendix contains complete proofs of T1–T5, strict/equality conditions for FOSD, adaptive rescue, support preservation, the repeated-filter derivative identity, the Gaussian closed form, and multi-observer normalization.
+
+## Sequential extension
+
+| Item | Status | Source |
+|---|---|---|
+| Recognition time as a stopping time | FORMALIZED | `supplementary/recognition_time.md` |
+| FP value functional for a stopping rule | EXACT BY DEFINITION | `supplementary/recognition_time.md` |
+| Universal early-vs-late recognition ordering | NOT CLAIMED / DEFERRED | `supplementary/recognition_time.md` |
 
 ## Core computational results
 
@@ -39,8 +47,9 @@ All five experiments are rerun by GitHub Actions.
 | Six publication-oriented SVG figures | COMMITTED / REGENERATED IN CI |
 | Figure provenance and source-data mapping | DOCUMENTED |
 | Manuscript theorem appendix | FULL PROOFS INTEGRATED |
-| LaTeX/PDF build | VALIDATED BY CI WHEN THIS BRANCH MERGES |
+| LaTeX/PDF build | VALIDATED BY CI |
 | Expanded bibliography and critique-side prior art | INTEGRATED |
+| Historical experiment archive ledger | DOCUMENTED |
 
 ## Interpretation-level claims
 
@@ -55,14 +64,14 @@ All five experiments are rerun by GitHub Actions.
 ## Open problems
 
 1. Give a physically motivated Everett derivation or rejection criterion for the accessibility bridge.
-2. Formalize recognition time as a stopping time and separate early-recognition causal effects from observer weighting, or explicitly defer this extension from v0.2.
-3. Strengthen the adaptive-agent information-theoretic mechanism into a theorem with explicit sufficient conditions linking predictive information to positive accessibility covariance.
-4. Archive/document the remaining historical secondary experiments that are currently represented only by old CSVs or consolidated notes.
-5. Continue literature search for direct prior art combining endogenous policy change with self-locating or observer-indexed weighting.
-6. Integrate the committed SVG figures into the final manuscript layout or produce publication-format PDF equivalents after caption review.
+2. Strengthen the adaptive-agent information-theoretic mechanism into a theorem with explicit sufficient conditions linking predictive information to positive accessibility covariance.
+3. Reconstruct any historical secondary experiment that is promoted from archive status back into active manuscript evidence.
+4. Continue literature search for direct prior art combining endogenous policy change with self-locating or observer-indexed weighting.
+5. Integrate the committed SVG figures into the final manuscript layout or produce publication-format PDF equivalents after caption review.
+6. Develop a recognition-time ordering theorem only if explicit pathwise/conditional advantage assumptions justify one; otherwise keep it as a post-v0.2 extension.
 
 ## Release state
 
 Current public state: **v0.1 — Public Technical Review**.
 
-The next intended milestone is **v0.2 — manuscript-ready review package** after the remaining archive, stopping-time/defer decision, bridge review, and manuscript-layout tasks are complete.
+The repository is now close to **v0.2 — manuscript-ready review package**. Remaining release gates are final manuscript layout/caption review, bridge-assumption review, and a decision on whether any archived experiment must be reconstructed before the v0.2 tag.

@@ -22,6 +22,7 @@ required = [
     "supplementary/gaussian_model.md",
     "supplementary/adaptive_agent.md",
     "supplementary/evidence_activation.md",
+    "supplementary/recognition_time.md",
     "supplementary/selectivity_frontier.md",
     "supplementary/branch_recognition.md",
     "literature/prior_art.md",

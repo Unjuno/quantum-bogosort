@@ -10,6 +10,7 @@ Each topic is separated so it can later become a manuscript appendix subsection.
 - `gaussian_model.md` — analytic Gaussian closed form.
 - `adaptive_agent.md` — endogenous predictive correlation from internal world models.
 - `evidence_activation.md` — recognition activated by statistical evidence.
+- `recognition_time.md` — sequential recognition as a stopping time; general early-versus-late ordering deferred.
 - `selectivity_frontier.md` — selectivity versus predictor precision / accessible measure.
 - `branch_recognition.md` — recognition prevalence, sharedness, and cross-copy policy coherence.
 
@@ -20,4 +21,5 @@ Status labels used in these notes:
 - **EXACT** — mathematical identity under stated assumptions.
 - **SIMULATION-SUPPORTED** — observed in the repository's toy experiments.
 - **MODEL ASSUMPTION** — definitional modeling choice.
+- **FORMALIZED / DEFERRED** — the mathematical object is defined, while a stronger theorem or experiment is intentionally postponed.
 - **OPEN** — unresolved theoretical or physical question.

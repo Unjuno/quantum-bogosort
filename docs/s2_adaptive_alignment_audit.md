@@ -167,6 +167,78 @@ is sufficient for positive outcome/accessibility covariance.
 
 **Audit:** PASS under square integrability.
 
+### Corollary S2.4 — prediction-MSE certificate
+
+The S2.3 calibration variance may be difficult to estimate directly. Since:
+
+$$
+e(Y)=E[U-Y\mid Y],
+$$
+
+conditional Jensen gives:
+
+$$
+E[e(Y)^2]
+\le
+E[(U-Y)^2].
+$$
+
+Also:
+
+$$
+\operatorname{Var}(e(Y))
+\le
+E[e(Y)^2].
+$$
+
+Substituting into S2.3 yields:
+
+$$
+\boxed{
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+}.
+$$
+
+Therefore:
+
+$$
+\operatorname{Cov}(Y,S)
+>
+\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+$$
+
+is sufficient for strict positive outcome/accessibility covariance.
+
+**Audit:** PASS under square integrability.
+
+The prediction MSE decomposes exactly as:
+
+$$
+E[(U-Y)^2]
+=
+E[\operatorname{Var}(U\mid Y)]
++
+E[e(Y)^2].
+$$
+
+To verify this, write:
+
+$$
+U-Y
+=
+(U-E[U\mid Y])+e(Y).
+$$
+
+The cross term has conditional expectation zero given `Y`, so the squared-error expectation separates into conditional variance plus squared calibration error.
+
+**Audit:** PASS.
+
+This decomposition establishes the key boundary: S2.4 is conservative relative to S2.3 because standard prediction MSE includes irreducible conditional outcome variance.
+
 ## D — assumptions checked
 
 The base theorem uses:
@@ -178,11 +250,11 @@ The base theorem uses:
 5. comonotonicity of `m(Y)` and `s(Y)` for the sign result;
 6. a positive-probability strict-order event for strict positivity.
 
-The posterior-mean corollary additionally assumes the displayed score really is the conditional expectation under the analyzed probability model. The approximate-calibration corollary assumes square integrability of the relevant quantities.
+The posterior-mean corollary additionally assumes the displayed score really is the conditional expectation under the analyzed probability model. S2.3 and S2.4 assume square integrability of the relevant quantities.
 
 The projection identity does **not** require scalar monotonicity; scalar monotonicity is only one easy sufficient condition for comonotonicity.
 
-## C — counterexample boundary
+## C — counterexample and certificate boundaries
 
 ### Mutual information alone
 
@@ -218,6 +290,28 @@ $$
 
 **Audit:** PASS; this blocks an overstrong information-theoretic claim.
 
+### S2.4 can fail to certify a true positive covariance
+
+Suppose the score is perfectly calibrated, so:
+
+$$
+e(Y)=0,
+$$
+
+but the future outcome has large irreducible conditional variance. Then S2.2/S2.3 may certify positive covariance from score ordering while:
+
+$$
+E[(U-Y)^2]
+=
+E[\operatorname{Var}(U\mid Y)]
+$$
+
+is large enough that the S2.4 inequality does not certify positivity.
+
+Therefore failure of the MSE certificate means only that this **sufficient lower bound is inconclusive**; it does not imply zero or negative covariance.
+
+**Audit:** PASS.
+
 ### Accessibility with residual randomness
 
 For general `S` not measurable with respect to `Y`:
@@ -241,23 +335,19 @@ S2 strengthens the adaptive-agent layer in a narrow way:
 - **before S2:** E2/E3 showed that toy learned agents can generate outcome/accessibility alignment;
 - **S2:** once a learned score orders conditional expected outcome and accessibility respects that ordering, the covariance implication is exact;
 - **S2.2:** a true posterior-mean score is exactly conditionally mean-calibrated;
-- **S2.3:** approximate calibration admits a quantitative worst-case covariance-error bound.
+- **S2.3:** approximate calibration admits a quantitative worst-case covariance-error bound;
+- **S2.4:** ordinary prediction MSE gives a weaker but directly estimable sufficient certificate.
 
 These results do not establish:
 
 - that adaptation automatically learns the true posterior mean;
 - that a finite trained model has sufficiently small calibration error;
+- that low prediction MSE is necessary for positive covariance;
 - that mutual information is sufficient;
 - that accessibility should be a function of the learned score;
 - that the accessibility map has an Everettian physical interpretation.
 
-The remaining agent-learning question is now quantitative:
-
-$$
-\text{learning dynamics}
-\Longrightarrow
-\operatorname{Var}(e(Y_t))\text{ small enough relative to the alignment margin}.
-$$
+The remaining finite-agent question is directly testable: estimate either the sharp conditional-mean calibration term or the conservative prediction-MSE term and compare it with the score/accessibility alignment margin.
 
 ## ERROR CHECK
 
@@ -266,11 +356,14 @@ $$
 3. The sign proof uses the same independent-copy covariance identity already used in T3 and C5.1.
 4. Strictness is not inferred merely from nonconstant `Y`; the ordered quantities themselves must vary together.
 5. Posterior-mean self-calibration is exact only for `Y=E[U|B]` under the same analyzed probability model.
-6. The calibration-error inequality is a sufficient lower bound obtained by worst-case sign; it is not necessary for positivity.
-7. The theorem is supplementary and does not alter the locked core five.
-8. No new simulation is needed to establish the theorem; E2/E3 only illustrate premise generation.
-9. The Everett bridge remains logically separate.
+6. The S2.3 calibration-error inequality is a sufficient lower bound obtained by worst-case sign; it is not necessary for positivity.
+7. S2.4 uses conditional Jensen and is weaker than S2.3 because prediction MSE includes irreducible conditional variance.
+8. Failure of the S2.4 certificate is inconclusive and must not be interpreted as evidence of negative covariance.
+9. S2.3 and S2.4 require square integrability.
+10. The theorem is supplementary and does not alter the locked core five.
+11. No new simulation is needed to establish the theorem; E2/E3 only illustrate premise generation.
+12. The Everett bridge remains logically separate.
 
 ## Audit conclusion
 
-**S2 AND COROLLARIES S2.1–S2.3 ARE MATHEMATICALLY SOUND UNDER THEIR STATED MEASURABILITY, INTEGRABILITY, CALIBRATION, AND COMONOTONICITY ASSUMPTIONS.**
+**S2 AND COROLLARIES S2.1–S2.4 ARE MATHEMATICALLY SOUND UNDER THEIR STATED MEASURABILITY, INTEGRABILITY, CALIBRATION, AND COMONOTONICITY ASSUMPTIONS. S2.4 IS A CONSERVATIVE SUFFICIENT CERTIFICATE, NOT A NECESSARY CONDITION.**

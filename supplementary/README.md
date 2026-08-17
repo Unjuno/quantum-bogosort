@@ -16,6 +16,7 @@ Each topic is separated so it can later become a manuscript appendix subsection.
 - `robust_mom_certificate.md` — Corollary S2.10: median-of-means instantiation under finite variance bounds for the five S2.8 target variables.
 - `residual_covariance_extension.md` — Supplementary Theorem S2.11: extension beyond score-measurable accessibility using total covariance and an explicit residual conditional-covariance term.
 - `residual_variance_certificate.md` — Supplementary Theorem S2.12: conservative residual lower bounds from conditional variances, including a sharp Cauchy--Schwarz penalty.
+- `explained_variance_certificate.md` — Supplementary Theorem S2.13: explained-variance / correlation-ratio form of the S2.12 residual certificate.
 - `evidence_activation.md` — recognition activated by statistical evidence.
 - `recognition_time.md` — sequential recognition as a stopping time; general early-versus-late ordering deferred.
 - `selectivity_frontier.md` — selectivity versus predictor precision / accessible measure.

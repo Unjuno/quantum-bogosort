@@ -24,6 +24,7 @@ This file is the canonical status ledger for the Quantum Bogosort research repos
 | S2.7 | Multiplicity-corrected finite candidate selection on one hold-out sample | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/selection_validity.md` |
 | S2.8 | Generic simultaneous-confidence-envelope covariance certificate | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/confidence_envelope_certificate.md` |
 | S2.9 | Light-tail sub-Gaussian/Bernstein instantiation of S2.8 | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/light_tail_certificate.md` |
+| S2.10 | Robust median-of-means instantiation of S2.8 | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/robust_mom_certificate.md` |
 | P1 | Costless recognition has nonnegative option value | PROVED | `theory/propositions_boundaries.md` |
 | P2 | Pure reweighting cannot create support | PROVED | `theory/propositions_boundaries.md` |
 
@@ -196,6 +197,73 @@ $$
 
 The theorem deliberately treats the product/square Bernstein parameters as explicit inputs. It does not silently infer universal constants from marginal sub-Gaussianity.
 
+### S2.10 robust median-of-means instantiation
+
+Define the five S2.8 target variables:
+
+$$
+Z_1=Y,
+\qquad
+Z_2=S,
+\qquad
+Z_3=YS,
+\qquad
+Z_4=S^2,
+\qquad
+Z_5=(U-Y)^2.
+$$
+
+S2.10 assumes:
+
+$$
+\operatorname{Var}(Z_j)\le v_j<\infty,
+\qquad
+j=1,\ldots,5.
+$$
+
+Choose an odd number of blocks `b` with:
+
+$$
+b\ge8\log\frac{5}{\delta}
+$$
+
+and block size:
+
+$$
+m=\left\lfloor\frac{n}{b}\right\rfloor.
+$$
+
+For each target, the median-of-means estimator has radius:
+
+$$
+r_j
+=
+2\sqrt{\frac{v_j}{m}}
+$$
+
+with failure probability at most:
+
+$$
+\frac{\delta}{5}.
+$$
+
+A union bound supplies an S2.8 simultaneous envelope, producing a robust certificate:
+
+$$
+D_{\mathrm{MoM}}
+$$
+
+such that:
+
+$$
+P\!\left(
+\operatorname{Cov}(U,S)\ge D_{\mathrm{MoM}}
+\right)
+\ge1-\delta.
+$$
+
+This robust route does not require exponential tails, but it does require finite variance of the five target variables themselves. In particular, estimating the means of `S^2` and `(U-Y)^2` this way requires fourth-moment-type conditions.
+
 ## Sequential extension
 
 | Item | Status | Source |
@@ -214,7 +282,7 @@ The theorem deliberately treats the product/square Bernstein parameters as expli
 | E4 | Fixed and changing-selector interaction decomposition | REPRODUCIBLE |
 | E5 | Paired branch-map sweeps and shared-recognition comparison | REPRODUCIBLE |
 
-All five experiments are rerun by GitHub Actions. S2–S2.9 do not create a sixth core experiment.
+All five experiments are rerun by GitHub Actions. S2–S2.10 do not create a sixth core experiment.
 
 ## Figure and manuscript state
 
@@ -224,7 +292,7 @@ All five experiments are rerun by GitHub Actions. S2–S2.9 do not create a sixt
 | Six LaTeX PDF figure build products | GENERATED IN CI |
 | Figure placement and captions | INTEGRATED / AUDITED |
 | Manuscript theorem appendix | FULL PROOFS INTEGRATED |
-| Post-v0.2 S2/S2.9 appendices | SEPARATE STACKED REVIEW BRANCHES |
+| Post-v0.2 S2/S2.10 appendices | SEPARATE STACKED REVIEW BRANCHES |
 | LaTeX/PDF build | VALIDATED BY CI ON EACH REVIEW BRANCH WHEN GREEN |
 | Expanded bibliography and critique-side prior art | INTEGRATED |
 | Final v0.2 repository release audit | PASS |
@@ -243,17 +311,18 @@ All five experiments are rerun by GitHub Actions. S2–S2.9 do not create a sixt
 | Same-holdout selection among a finite predeclared family is valid with multiplicity correction | PROVED (S2.7) |
 | Any valid simultaneous moment envelope can be composed into a covariance certificate | PROVED (S2.8) |
 | Explicit light-tail concentration controls can instantiate the envelope without deterministic boundedness | PROVED (S2.9) |
-| Marginal sub-Gaussianity alone automatically supplies all product/square constants | NOT CLAIMED |
+| Median-of-means can instantiate the envelope under finite variances of the five target variables | PROVED (S2.10) |
+| Raw-variable finite variance alone is enough for S2.10 | NOT CLAIMED |
 | A passed statistical certificate establishes the Everett bridge | NOT CLAIMED |
 | External random generators become objectively lucky | NOT CLAIMED |
 
-## Open problems after S2.9
+## Open problems after S2.10
 
 1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics.
-2. Instantiate S2.8 with robust finite-moment estimators such as median-of-means and compare conservatism with S2.9.
-3. Derive convenient sufficient conditions that imply the S2.9 product/square Bernstein parameters from a chosen Orlicz-norm or mgf convention, with constants stated explicitly.
+2. Derive convenient sufficient conditions that imply the S2.9 product/square Bernstein parameters from a chosen Orlicz-norm or mgf convention, with constants stated explicitly.
+3. Explore robust estimators that weaken the S2.10 fourth-moment-type requirements for `S^2` and `(U-Y)^2`.
 4. Extend selection validity from finite predeclared candidate families to infinite or data-dependent classes using uniform-convergence, selective-inference, or fresh-sample methods.
-5. Add a held-out diagnostic experiment only if review requires empirical evaluation of the S2.5–S2.9 stack.
+5. Add a held-out diagnostic experiment only if review requires empirical evaluation of the S2.5–S2.10 stack.
 6. Extend S2 beyond score-measurable accessibility by controlling the residual conditional-covariance term.
 7. Continue literature search if review identifies a more specific novelty conflict.
 8. Develop a recognition-time ordering theorem only under explicit pathwise/conditional advantage assumptions.
@@ -262,4 +331,4 @@ All five experiments are rerun by GitHub Actions. S2–S2.9 do not create a sixt
 
 Repository baseline: **v0.2 — Public Review** at merge commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
 
-PR #11 is the base S2 review branch, PR #12 adds S2.4, PR #13 adds S2.5, PR #15 adds S2.6–S2.7, PR #16 adds S2.8, and S2.9 is developed as the next stacked light-tail layer. All remain separately reviewable before any later preprint merge.
+PR #11 is the base S2 review branch, PR #12 adds S2.4, PR #13 adds S2.5, PR #15 adds S2.6–S2.7, PR #16 adds S2.8, PR #17 adds S2.9, and S2.10 is developed as the next stacked robust finite-moment layer. All remain separately reviewable before any later preprint merge.

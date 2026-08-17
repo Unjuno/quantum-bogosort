@@ -20,12 +20,14 @@ This file is the canonical status ledger for the Quantum Bogosort research repos
 | S2.3 | Approximate-calibration covariance robustness | PROVED | `supplementary/adaptive_agent.md` |
 | S2.4 | Prediction-MSE population certificate | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/adaptive_agent.md` |
 | S2.5 | Bounded finite-sample held-out covariance certificate | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/finite_sample_certificate.md` |
+| S2.6 | Conditional validity after arbitrary independent training | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/selection_validity.md` |
+| S2.7 | Multiplicity-corrected finite candidate selection on one hold-out sample | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/selection_validity.md` |
 | P1 | Costless recognition has nonnegative option value | PROVED | `theory/propositions_boundaries.md` |
 | P2 | Pure reweighting cannot create support | PROVED | `theory/propositions_boundaries.md` |
 
 The core five theorem set remains unchanged. The S2 theorem family is post-v0.2 development and is isolated in stacked review branches.
 
-## S2 adaptive-alignment chain
+## S2 adaptive-alignment and certification chain
 
 S2 proves:
 
@@ -65,37 +67,7 @@ $$
 \sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
 $$
 
-The MSE decomposition:
-
-$$
-E[(U-Y)^2]
-=
-E[\operatorname{Var}(U\mid Y)]
-+
-E[e(Y)^2]
-$$
-
-shows why S2.4 is conservative.
-
-### S2.5 finite-sample certificate
-
-Assume a fixed predictor/accessibility rule is evaluated on independent i.i.d. held-out observations with known bounds:
-
-$$
-|Y|\le B_Y,
-\qquad
-0\le S\le B_S,
-\qquad
-|U-Y|\le B_R.
-$$
-
-S2.5 uses simultaneous Hoeffding bounds for empirical `Y`, `S`, `YS`, `S^2`, and squared residuals to construct:
-
-$$
-D_L=C_L-\sqrt{M_UV_U}
-$$
-
-such that:
+S2.5 turns the population inequality into a bounded finite-sample held-out certificate. Under known bounds and independent i.i.d. evaluation, it constructs `D_L` satisfying:
 
 $$
 P\left(
@@ -110,15 +82,49 @@ $$
 D_L>0
 $$
 
-certifies positive population covariance with confidence at least `1-delta`. Under T1:
+certifies positive population covariance with confidence at least `1-delta`.
+
+### S2.6 training-selection validity
+
+Let `T` denote an arbitrary training random element. If the final certification sample is independent of `T`, then conditional on the realized trained rule S2.5 remains valid:
 
 $$
-E_{FP}[U]-E[U]
-\ge
-\frac{D_L}{B_S}>0.
+P\!\left(
+C(T)\ge D_L(T)
+\mid T
+\right)
+\ge1-\delta.
 $$
 
-The guarantee requires independent held-out evaluation or an equivalent conditional-on-training formulation. Training/tuning leakage or post-hoc choice of the population bounds invalidates the simple stated coverage.
+Hence arbitrary upstream training, hyperparameter search, or representation learning is compatible with the certificate provided the final certification sample remains independent and the post-training bounds are valid for fresh population draws.
+
+### S2.7 finite candidate post-selection validity
+
+If `K` candidate rules are fixed before the certification sample is inspected, apply S2.5 with per-candidate error budget:
+
+$$
+\delta_k=\frac{\delta}{K}.
+$$
+
+Then:
+
+$$
+P\!\left(
+C_k\ge D_{L,k}
+\text{ for every }k
+\right)
+\ge1-\delta.
+$$
+
+Consequently, any candidate index selected from the same held-out observations retains the corresponding valid lower bound. Equal allocation changes the Hoeffding radius to:
+
+$$
+\tau_{n,\delta,K}
+=
+\sqrt{\frac{\log(10K/\delta)}{2n}}.
+$$
+
+Uncorrected best-of-`K` reporting and post-hoc invention of new candidates are not covered.
 
 ## Sequential extension
 
@@ -138,7 +144,7 @@ The guarantee requires independent held-out evaluation or an equivalent conditio
 | E4 | Fixed and changing-selector interaction decomposition | REPRODUCIBLE |
 | E5 | Paired branch-map sweeps and shared-recognition comparison | REPRODUCIBLE |
 
-All five experiments are rerun by GitHub Actions. S2–S2.5 do not create a sixth core experiment. A new held-out diagnostic should be added only if review requires empirical evaluation of the certificate.
+All five experiments are rerun by GitHub Actions. S2–S2.7 do not create a sixth core experiment. A new held-out diagnostic should be added only if review requires empirical evaluation of the certificate stack.
 
 ## Figure and manuscript state
 
@@ -149,7 +155,7 @@ All five experiments are rerun by GitHub Actions. S2–S2.5 do not create a sixt
 | Figure provenance and source-data mapping | DOCUMENTED |
 | Figure placement, captions, and cross-references | INTEGRATED / AUDITED |
 | Manuscript theorem appendix | FULL PROOFS INTEGRATED |
-| Post-v0.2 S2/S2.5 appendices | SEPARATE REVIEW BRANCHES |
+| Post-v0.2 S2/S2.7 appendices | SEPARATE STACKED REVIEW BRANCHES |
 | LaTeX/PDF build | VALIDATED BY CI ON EACH REVIEW BRANCH WHEN GREEN |
 | Expanded bibliography and critique-side prior art | INTEGRATED |
 | Final v0.2 repository release audit | PASS |
@@ -164,16 +170,18 @@ All five experiments are rerun by GitHub Actions. S2–S2.5 do not create a sixt
 | A true posterior-mean score is conditionally mean-calibrated | PROVED (S2.2) |
 | Population robustness via calibration error / MSE | PROVED SUFFICIENT CONDITIONS (S2.3/S2.4) |
 | Bounded independent held-out data can certify positive covariance | PROVED SUFFICIENT HIGH-PROBABILITY CONDITION (S2.5) |
+| Arbitrary independent training preserves S2.5 validity conditional on the trained rule | PROVED (S2.6) |
+| Same-holdout selection among a finite predeclared candidate family is valid with multiplicity correction | PROVED (S2.7) |
 | Finite learned models necessarily pass the certificate | NOT CLAIMED |
 | A passed statistical certificate establishes the Everett bridge | NOT CLAIMED |
 | External random generators become objectively lucky | NOT CLAIMED |
 
-## Open problems after S2.5
+## Open problems after S2.7
 
 1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics.
 2. Extend S2.5 to unbounded/sub-Gaussian/sub-exponential or robust-mean settings.
-3. Handle adaptive model/accessibility selection without requiring a completely independent fixed-model hold-out.
-4. Add a held-out diagnostic experiment only if review requires direct empirical evaluation of S2.5.
+3. Extend selection validity from finite predeclared candidate families to infinite or data-dependent classes using uniform-convergence, selective-inference, or fresh-sample methods.
+4. Add a held-out diagnostic experiment only if review requires direct empirical evaluation of the S2.5–S2.7 certificate stack.
 5. Extend S2 beyond score-measurable accessibility by controlling the residual conditional-covariance term.
 6. Continue literature search if review identifies a more specific novelty conflict.
 7. Develop a recognition-time ordering theorem only under explicit pathwise/conditional advantage assumptions.
@@ -182,4 +190,4 @@ All five experiments are rerun by GitHub Actions. S2–S2.5 do not create a sixt
 
 Repository baseline: **v0.2 — Public Review** at merge commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
 
-PR #11 is the base S2 review branch. PR #12 adds S2.4 on top of PR #11. S2.5 is developed as the next stacked layer and should remain separately reviewable before any later preprint merge.
+PR #11 is the base S2 review branch. PR #12 adds S2.4. PR #13 adds S2.5. S2.6–S2.7 are developed as the next stacked selection-validity layer and remain separately reviewable before any later preprint merge.

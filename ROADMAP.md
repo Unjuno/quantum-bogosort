@@ -114,19 +114,32 @@ $$
 \sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
 $$
 
+- [x] Derive the conservative prediction-MSE certificate:
+
+$$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
+$$
+
+- [x] Prove the MSE decomposition separating irreducible conditional variance from squared calibration error.
 - [x] Record the counterexample showing that positive mutual information alone is insufficient.
 - [x] Integrate S2 and its corollaries into a separate manuscript appendix while keeping the core five fixed.
-- [ ] Derive learning-theoretic upper bounds on `Var(e(Y))` for finite adapted agents.
-- [ ] Add a calibration diagnostic experiment only if review requires direct estimation of the S2.3 margin.
+- [ ] Derive finite-sample/generalization bounds making S2.3 or S2.4 hold with controlled probability for finite learned agents.
+- [ ] Add a held-out calibration/MSE diagnostic experiment only if review requires direct estimation of the certificate terms.
 - [ ] Extend S2 beyond score-measurable accessibility by bounding or signing the residual conditional-covariance term.
 
 ## Current focus
 
 The v0.2 public-review baseline remains fixed at merge commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`. Post-v0.2 work should remain separately reviewable.
 
+PR #11 contains the base S2 theorem family through S2.3. S2.4 is intentionally developed as a stacked branch/PR so the conservative MSE certificate can be reviewed separately.
+
 Current theoretical priority:
 
-1. review S2, posterior-mean self-calibration, and the approximate-error bound;
-2. derive finite-model learning bounds for calibration error;
-3. only then consider a new experiment if the bound requires a missing falsification test;
+1. review the S2.4 MSE certificate and its conservatism boundary;
+2. derive finite-sample/generalization bounds for the certificate quantities;
+3. only then add a new experiment if review requires a missing held-out calibration test;
 4. preserve the Everett bridge as a separate physical question.

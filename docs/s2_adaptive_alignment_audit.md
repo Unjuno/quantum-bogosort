@@ -99,9 +99,77 @@ Thus S2 supplies a sufficient condition for nonnegative or strict first-person m
 
 **Audit:** PASS conditional on the existing weighted-measure model.
 
+### Corollary S2.2 — posterior-mean self-calibration
+
+If an internal information state `B` generates the score:
+
+$$
+Y=E[U\mid B],
+$$
+
+then `Y` is `B`-measurable and the tower property gives:
+
+$$
+E[U\mid Y]
+=
+E[E[U\mid B]\mid Y]
+=E[Y\mid Y]
+=Y.
+$$
+
+Hence a true posterior-mean score satisfies the S2 conditional-mean calibration premise exactly.
+
+**Audit:** PASS.
+
+### Corollary S2.3 — approximate-calibration robustness
+
+Define:
+
+$$
+e(Y)=E[U\mid Y]-Y.
+$$
+
+Then:
+
+$$
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(Y,S)+\operatorname{Cov}(e(Y),S).
+$$
+
+Cauchy--Schwarz gives:
+
+$$
+|\operatorname{Cov}(e(Y),S)|
+\le
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+$$
+
+Therefore:
+
+$$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+$$
+
+The strict inequality:
+
+$$
+\operatorname{Cov}(Y,S)
+>
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}
+$$
+
+is sufficient for positive outcome/accessibility covariance.
+
+**Audit:** PASS under square integrability.
+
 ## D — assumptions checked
 
-The theorem uses:
+The base theorem uses:
 
 1. `U` integrable;
 2. `S=s(Y)` nonnegative and score-measurable;
@@ -109,6 +177,8 @@ The theorem uses:
 4. `E[|U|S]<∞`;
 5. comonotonicity of `m(Y)` and `s(Y)` for the sign result;
 6. a positive-probability strict-order event for strict positivity.
+
+The posterior-mean corollary additionally assumes the displayed score really is the conditional expectation under the analyzed probability model. The approximate-calibration corollary assumes square integrability of the relevant quantities.
 
 The projection identity does **not** require scalar monotonicity; scalar monotonicity is only one easy sufficient condition for comonotonicity.
 
@@ -169,21 +239,24 @@ S2 controls only the first term unless score-measurability sets the second term 
 S2 strengthens the adaptive-agent layer in a narrow way:
 
 - **before S2:** E2/E3 showed that toy learned agents can generate outcome/accessibility alignment;
-- **after S2:** once a learned score orders conditional expected outcome and accessibility respects that ordering, the covariance implication is exact.
+- **S2:** once a learned score orders conditional expected outcome and accessibility respects that ordering, the covariance implication is exact;
+- **S2.2:** a true posterior-mean score is exactly conditionally mean-calibrated;
+- **S2.3:** approximate calibration admits a quantitative worst-case covariance-error bound.
 
-S2 does not establish:
+These results do not establish:
 
-- that adaptation automatically gives calibration;
+- that adaptation automatically learns the true posterior mean;
+- that a finite trained model has sufficiently small calibration error;
 - that mutual information is sufficient;
 - that accessibility should be a function of the learned score;
 - that the accessibility map has an Everettian physical interpretation.
 
-The remaining agent-learning question is upstream of S2:
+The remaining agent-learning question is now quantitative:
 
 $$
 \text{learning dynamics}
 \Longrightarrow
-E[U_T\mid Y_t=y]\text{ monotone in }y.
+\operatorname{Var}(e(Y_t))\text{ small enough relative to the alignment margin}.
 $$
 
 ## ERROR CHECK
@@ -192,10 +265,12 @@ $$
 2. No appeal to mutual information is used in the proof.
 3. The sign proof uses the same independent-copy covariance identity already used in T3 and C5.1.
 4. Strictness is not inferred merely from nonconstant `Y`; the ordered quantities themselves must vary together.
-5. The theorem is supplementary and does not alter the locked core five.
-6. No new simulation is needed to establish the theorem; E2/E3 only illustrate premise generation.
-7. The Everett bridge remains logically separate.
+5. Posterior-mean self-calibration is exact only for `Y=E[U|B]` under the same analyzed probability model.
+6. The calibration-error inequality is a sufficient lower bound obtained by worst-case sign; it is not necessary for positivity.
+7. The theorem is supplementary and does not alter the locked core five.
+8. No new simulation is needed to establish the theorem; E2/E3 only illustrate premise generation.
+9. The Everett bridge remains logically separate.
 
 ## Audit conclusion
 
-**S2 IS MATHEMATICALLY SOUND UNDER THE STATED SCORE-MEASURABILITY, INTEGRABILITY, AND COMONOTONICITY ASSUMPTIONS.**
+**S2 AND COROLLARIES S2.1–S2.3 ARE MATHEMATICALLY SOUND UNDER THEIR STATED MEASURABILITY, INTEGRABILITY, CALIBRATION, AND COMONOTONICITY ASSUMPTIONS.**

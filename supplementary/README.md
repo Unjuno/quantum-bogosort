@@ -12,6 +12,7 @@ Each topic is separated so it can later become a manuscript appendix subsection.
 - `finite_sample_certificate.md` — Corollary S2.5: bounded independent-held-out high-probability certificate for positive outcome/accessibility covariance.
 - `selection_validity.md` — Corollaries S2.6–S2.7: validity after arbitrary independent training and multiplicity-corrected finite candidate selection on the same hold-out sample.
 - `confidence_envelope_certificate.md` — Corollary S2.8: generic composition of any valid simultaneous moment confidence envelope into a covariance lower certificate.
+- `light_tail_certificate.md` — Corollary S2.9: unbounded light-tail instantiation using sub-Gaussian first-moment control and Bernstein/sub-exponential control for product and square moments.
 - `evidence_activation.md` — recognition activated by statistical evidence.
 - `recognition_time.md` — sequential recognition as a stopping time; general early-versus-late ordering deferred.
 - `selectivity_frontier.md` — selectivity versus predictor precision / accessible measure.

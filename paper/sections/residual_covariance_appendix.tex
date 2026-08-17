@@ -1,0 +1,97 @@
+\section{Residual Conditional-Covariance Extension}
+
+This section records Supplementary Theorem S2.11, which removes the deterministic score-measurability requirement $S=s(Y)$.
+
+Let $U$ and $S$ be integrable random variables with $S\ge0$, $0<\mathbb E[S]<\infty$, and sufficient product integrability for the covariances below. Let $Y$ be any conditioning signal and define
+\[
+m(Y)=\mathbb E[U\mid Y],
+\qquad
+a(Y)=\mathbb E[S\mid Y].
+\]
+
+\begin{theorem}[Residual conditional-covariance alignment]
+The exact decomposition is
+\[
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(m(Y),a(Y))
++
+\mathbb E[\operatorname{Cov}(U,S\mid Y)].
+\]
+If $m(Y)$ and $a(Y)$ are comonotone, then
+\[
+\operatorname{Cov}(m(Y),a(Y))\ge0.
+\]
+If, for some $\varepsilon\ge0$,
+\[
+\mathbb E[\operatorname{Cov}(U,S\mid Y)]
+\ge-\varepsilon,
+\]
+then
+\[
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))-\varepsilon.
+\]
+Consequently,
+\[
+\operatorname{Cov}(m(Y),a(Y))>\varepsilon
+\]
+is sufficient for $\operatorname{Cov}(U,S)>0$.
+\end{theorem}
+
+\begin{proof}
+The first identity is the law of total covariance. For an independent copy $Y'$,
+\[
+2\operatorname{Cov}(m(Y),a(Y))
+=
+\mathbb E\!\left[
+(m(Y)-m(Y'))(a(Y)-a(Y'))
+\right].
+\]
+Comonotonicity makes the integrand nonnegative almost surely, proving the sign of the conditional-mean covariance. The residual lower bound then gives the stated total lower bound by direct addition.
+\end{proof}
+
+\begin{corollary}[Nonnegative residual dependence]
+If
+\[
+\mathbb E[\operatorname{Cov}(U,S\mid Y)]\ge0
+\]
+and $m(Y)$ and $a(Y)$ are comonotone, then
+\[
+\operatorname{Cov}(U,S)\ge0.
+\]
+Strict positivity follows if either component is strictly positive.
+\end{corollary}
+
+\paragraph{Residual representation.}
+Define
+\[
+\eta=U-m(Y),
+\qquad
+\xi=S-a(Y).
+\]
+Then
+\[
+\mathbb E[\eta\mid Y]=0,
+\qquad
+\mathbb E[\xi\mid Y]=0,
+\]
+and
+\[
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(m(Y),a(Y))
++
+\mathbb E[\eta\xi],
+\]
+where
+\[
+\mathbb E[\eta\xi]
+=
+\mathbb E[\operatorname{Cov}(U,S\mid Y)].
+\]
+Thus S2 is recovered as the special case in which $S$ is $Y$-measurable and the residual accessibility variable $\xi$ vanishes.
+
+\paragraph{Boundary.}
+Comonotone conditional means are not sufficient if the residual term is strongly negative. A constant $Y$ with centered residuals satisfying $\xi=-\eta$ gives zero conditional-mean covariance and negative total covariance after adding a sufficiently large constant to $S$ to preserve nonnegativity. Hence the residual term cannot be omitted once score-measurability is relaxed.

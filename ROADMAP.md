@@ -23,8 +23,6 @@ This roadmap turns the public repository into the source of truth for the theory
 - [x] Selectivity frontier.
 - [x] Branch-wide recognition and policy coherence.
 
-The recognition-time note explicitly defers a universal early-versus-late ordering theorem beyond v0.2 unless stronger causal/information assumptions are introduced.
-
 ## Phase 3 — Experiment cards and archive
 
 - [x] Create H/T/D/C/U + ERROR CHECK cards for E1–E5.
@@ -62,7 +60,6 @@ The recognition-time note explicitly defers a universal early-versus-late orderi
 - [x] Add GitHub Actions LaTeX/PDF build and artifact upload.
 - [x] Perform a claim-by-claim consistency audit against `STATUS.md` and `docs/claims_and_assumptions.md`.
 - [x] Integrate figures, captions, and cross-references.
-- [x] Re-run the claim audit after final figure/caption placement.
 - [x] Complete final repository-level v0.2 release audit.
 - [ ] Apply wording corrections that arise during public review.
 
@@ -79,7 +76,6 @@ The recognition-time note explicitly defers a universal early-versus-late orderi
 - [x] Keep GitHub Issues open for proof corrections, counterexamples, prior art, and implementation bugs.
 - [x] Integrate major repository corrections through PRs with CI gates.
 - [x] Complete v0.2 manuscript-readiness and release audit.
-- [x] Synchronize repository metadata to `v0.2-public-review` in the release-audit PR.
 - [ ] Create a formal GitHub Release/tag for `v0.2-public-review` when a release-write interface is available.
 - [ ] Collect public review and revise the repository/manuscript.
 - [ ] Prepare `v1.0-preprint` only after the review interval and subsequent revisions stabilize the manuscript for arXiv submission.
@@ -87,59 +83,27 @@ The recognition-time note explicitly defers a universal early-versus-late orderi
 ## Post-v0.2 theorem development
 
 - [x] Prove Supplementary Theorem S2: score-measurable predictive-calibration alignment.
-- [x] Prove the exact projection identity:
-
-$$
-\operatorname{Cov}(U,S)
-=
-\operatorname{Cov}(E[U\mid Y],s(Y)).
-$$
-
-- [x] Give monotone/comonotone sufficient conditions for nonnegative and strict covariance.
-- [x] Prove posterior-mean self-calibration:
-
-$$
-Y=E[U\mid B]
-\Longrightarrow
-E[U\mid Y]=Y.
-$$
-
-- [x] Derive the approximate-calibration robustness bound:
-
-$$
-\operatorname{Cov}(U,S)
-\ge
-\operatorname{Cov}(Y,S)
--
-\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
-$$
-
-- [x] Derive the conservative prediction-MSE certificate:
-
-$$
-\operatorname{Cov}(U,S)
-\ge
-\operatorname{Cov}(Y,S)
--
-\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
-$$
-
+- [x] Prove posterior-mean self-calibration.
+- [x] Derive the S2.3 approximate-calibration robustness bound.
+- [x] Derive the S2.4 conservative prediction-MSE population certificate.
 - [x] Prove the MSE decomposition separating irreducible conditional variance from squared calibration error.
-- [x] Record the counterexample showing that positive mutual information alone is insufficient.
-- [x] Integrate S2 and its corollaries into a separate manuscript appendix while keeping the core five fixed.
-- [ ] Derive finite-sample/generalization bounds making S2.3 or S2.4 hold with controlled probability for finite learned agents.
-- [ ] Add a held-out calibration/MSE diagnostic experiment only if review requires direct estimation of the certificate terms.
+- [x] Prove S2.5, a bounded i.i.d. independent-held-out high-probability certificate using simultaneous Hoeffding bounds.
+- [x] Derive the quantitative first-person lower bound `D_L/B_S` when the finite-sample certificate is positive.
+- [x] Prove consistency of S2.5 when the population S2.4 margin is strictly positive.
+- [x] Record the mutual-information counterexample and one-sided certificate boundaries.
+- [ ] Extend the finite-sample certificate to unbounded/sub-Gaussian/sub-exponential or robust-mean settings.
+- [ ] Handle model/accessibility selection that is adaptive to the certification data.
+- [ ] Add a held-out calibration/MSE experiment only if review requires direct empirical evaluation of S2.5.
 - [ ] Extend S2 beyond score-measurable accessibility by bounding or signing the residual conditional-covariance term.
 
 ## Current focus
 
-The v0.2 public-review baseline remains fixed at merge commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`. Post-v0.2 work should remain separately reviewable.
+The v0.2 public-review baseline remains fixed at merge commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`. Post-v0.2 work remains separately reviewable through stacked PRs.
 
-PR #11 contains the base S2 theorem family through S2.3. S2.4 is intentionally developed as a stacked branch/PR so the conservative MSE certificate can be reviewed separately.
+Current stack:
 
-Current theoretical priority:
+1. PR #11 — S2 through S2.3;
+2. PR #12 — S2.4 prediction-MSE population certificate;
+3. S2.5 branch — finite-sample held-out certificate.
 
-1. review the S2.4 MSE certificate and its conservatism boundary;
-2. derive finite-sample/generalization bounds for the certificate quantities;
-3. only then add a new experiment if review requires a missing held-out calibration test;
-4. preserve the Everett bridge as a separate physical question.
+Next theoretical priority after S2.5 review is an unbounded/sub-Gaussian extension or adaptive-data-selection correction, not another toy experiment by default.

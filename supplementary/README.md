@@ -15,6 +15,7 @@ Each topic is separated so it can later become a manuscript appendix subsection.
 - `light_tail_certificate.md` — Corollary S2.9: unbounded light-tail instantiation using sub-Gaussian first-moment control and Bernstein/sub-exponential control for product and square moments.
 - `robust_mom_certificate.md` — Corollary S2.10: median-of-means instantiation under finite variance bounds for the five S2.8 target variables.
 - `residual_covariance_extension.md` — Supplementary Theorem S2.11: extension beyond score-measurable accessibility using total covariance and an explicit residual conditional-covariance term.
+- `residual_variance_certificate.md` — Supplementary Theorem S2.12: conservative residual lower bounds from conditional variances, including a sharp Cauchy--Schwarz penalty.
 - `evidence_activation.md` — recognition activated by statistical evidence.
 - `recognition_time.md` — sequential recognition as a stopping time; general early-versus-late ordering deferred.
 - `selectivity_frontier.md` — selectivity versus predictor precision / accessible measure.

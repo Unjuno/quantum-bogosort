@@ -178,6 +178,54 @@ Cauchy--Schwarz gives
 Taking the worst-case negative sign for the calibration-error term gives the stated lower bound.
 \end{proof}
 
+\begin{corollary}[Prediction-MSE certificate]
+Under the square-integrability assumptions of the preceding corollary,
+\[
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{\mathbb E[(U-Y)^2]\operatorname{Var}(S)}.
+\]
+Therefore
+\[
+\operatorname{Cov}(Y,S)
+>
+\sqrt{\mathbb E[(U-Y)^2]\operatorname{Var}(S)}
+\]
+is sufficient for strict positive outcome--accessibility covariance.
+\end{corollary}
+
+\begin{proof}
+Since
+\[
+e(Y)=\mathbb E[U-Y\mid Y],
+\]
+conditional Jensen yields
+\[
+\mathbb E[e(Y)^2]
+\le
+\mathbb E[(U-Y)^2].
+\]
+Also,
+\[
+\operatorname{Var}(e(Y))
+\le
+\mathbb E[e(Y)^2].
+\]
+Substituting this upper bound into the approximate-calibration robustness inequality proves the result.
+\end{proof}
+
+The prediction MSE admits the exact conditional-variance decomposition
+\[
+\mathbb E[(U-Y)^2]
+=
+\mathbb E[\operatorname{Var}(U\mid Y)]
++
+\mathbb E[e(Y)^2].
+\]
+Thus the prediction-MSE certificate is conservative: ordinary MSE includes irreducible conditional outcome variance in addition to calibration error. The previous calibration-error bound is sharper when $e(Y)$ can be estimated directly.
+
 For square-integrable $U$, define conditional-mean predictive strength by
 \[
 M(U;Y)
@@ -232,4 +280,4 @@ The score-measurability assumption is material. For a more general accessibility
 \]
 S2 sets the conditional-covariance term to zero because $S=s(Y)$. If accessibility contains additional randomness that remains conditionally correlated with the future outcome, that residual term must be analyzed separately.
 
-The theorem and corollaries are sufficient-condition results about an abstract accessibility map. Posterior-mean self-calibration is exact only when the score equals the true conditional expectation under the model being analyzed; an approximate learned predictor is covered only through the calibration-error bound. None of these results derives Everettian observer self-location from quantum dynamics.
+The theorem and corollaries are sufficient-condition results about an abstract accessibility map. Posterior-mean self-calibration is exact only when the score equals the true conditional expectation under the model being analyzed; an approximate learned predictor is covered through the calibration-error and prediction-MSE bounds. None of these results derives Everettian observer self-location from quantum dynamics.

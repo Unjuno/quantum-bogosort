@@ -36,34 +36,84 @@ $$
 \operatorname{Corr}(A_i,A_j).
 $$
 
-## Law-of-total-covariance direction
+## Supplementary Theorem S1 — Shared-latent policy coherence
 
-If descendant actions depend on a shared latent recognition/policy parameter `Theta_R`, then:
+Let `Theta` be a shared latent variable inherited by descendant copies. Let descendant actions `A_i` and `A_j` have finite second moments. Then the law of total covariance gives:
 
 $$
 \operatorname{Cov}(A_i,A_j)
 =
-\operatorname{Cov}(E[A_i\mid\Theta_R],E[A_j\mid\Theta_R])
+\operatorname{Cov}(E[A_i\mid\Theta],E[A_j\mid\Theta])
 +
-E[\operatorname{Cov}(A_i,A_j\mid\Theta_R)].
+E[\operatorname{Cov}(A_i,A_j\mid\Theta)].
 $$
 
-Under conditional independence of descendant local signals given the shared parameter, the second term can vanish. In a symmetric setting:
+Assume descendant actions are conditionally independent given `Theta`:
+
+$$
+\operatorname{Cov}(A_i,A_j\mid\Theta)=0
+$$
+
+almost surely. Then:
 
 $$
 \operatorname{Cov}(A_i,A_j)
 =
-\operatorname{Var}(m(\Theta_R))
-\ge0,
+\operatorname{Cov}(m_i(\Theta),m_j(\Theta)),
 $$
 
 where:
 
 $$
-m(\theta)
-=
-E[A\mid\Theta_R=\theta].
+m_i(\theta)=E[A_i\mid\Theta=\theta].
 $$
+
+For conditionally symmetric descendants with:
+
+$$
+m_i(\theta)=m_j(\theta)=m(\theta),
+$$
+
+we obtain:
+
+$$
+\boxed{
+\operatorname{Cov}(A_i,A_j)
+=
+\operatorname{Var}(m(\Theta))
+\ge0
+}.
+$$
+
+The inequality is strict exactly when `m(Theta)` is nonconstant with positive variance.
+
+### Proof
+
+The first identity is the law of total covariance. Conditional independence removes the conditional covariance term. Under symmetry, the remaining covariance is the covariance of `m(Theta)` with itself, which is its variance.
+
+## Consequence: a shared policy map is not enough
+
+If `Theta` is degenerate, then:
+
+$$
+\operatorname{Var}(m(\Theta))=0.
+$$
+
+Therefore a fixed deterministic policy map shared by all descendants does **not** by itself imply positive realized Pearson action correlation when descendant local signals are conditionally independent. Positive cross-copy covariance requires shared variation in recognition/policy parameters, shared environment/history, residual conditional dependence, or some combination of these.
+
+## General hierarchical form
+
+For a richer shared history variable `H`, no conditional-independence assumption is required:
+
+$$
+\operatorname{Cov}(A_i,A_j)
+=
+\operatorname{Cov}(E[A_i\mid H],E[A_j\mid H])
++
+E[\operatorname{Cov}(A_i,A_j\mid H)].
+$$
+
+The first term measures covariance induced by shared hierarchical state. The second measures remaining within-hierarchy dependence. This decomposition is the appropriate theoretical object for interpreting E5.
 
 ## Simulation result
 
@@ -74,17 +124,16 @@ E5 shows two distinct effects:
 
 ## Important distinction
 
-A shared deterministic policy map does not by itself guarantee positive Pearson action correlation when branch-local states are independent. The theory therefore distinguishes:
+The theory therefore separates:
 
 - shared causal policy-map shift,
 - shared recognition variation,
 - shared environmental/history variation,
-- realized action correlation.
+- realized action correlation,
+- single-observer first-person uplift.
 
-## Open theorem direction
-
-A formal recognition-induced policy-coherence theorem should state explicit hierarchical assumptions under which shared recognition produces nonnegative descendant action covariance, and should separately characterize cases where policy-map coherence exists without realized action correlation.
+These are not interchangeable quantities.
 
 ## Status
 
-**Law-of-total-covariance identity EXACT. Hierarchical recognition mechanism SIMULATION-SUPPORTED. General policy-coherence theorem OPEN.**
+**Supplementary Theorem S1 PROVED under explicit hierarchical assumptions. E5 provides a classical simulation illustration. Everett mapping remains conditional on the separate bridge assumption.**

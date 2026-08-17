@@ -1,0 +1,151 @@
+\section{Supplementary Theorem S2: Predictive-Calibration Alignment}
+
+This section formalizes the adaptive-agent alignment mechanism used in the main text. Let $U$ be an integrable future outcome, let $Y$ be a scalar evaluation signal, and define the conditional-mean predictor
+\[
+m(Y)=\mathbb E[U\mid Y].
+\]
+Let accessibility be score-measurable,
+\[
+S=s(Y)\ge0,
+\]
+with
+\[
+0<\mathbb E[S]<\infty,
+\qquad
+\mathbb E[|U|S]<\infty.
+\]
+
+\begin{theorem}[Predictive-calibration alignment]
+Under the assumptions above,
+\[
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(m(Y),s(Y)).
+\]
+If versions of $m(y)$ and $s(y)$ are both nondecreasing on the support of $Y$, then
+\[
+\operatorname{Cov}(U,S)\ge0.
+\]
+Let $Y'$ be an independent copy of $Y$. The inequality is strict whenever
+\[
+P\!\left(
+[m(Y)-m(Y')][s(Y)-s(Y')]>0
+\right)>0.
+\]
+\end{theorem}
+
+\begin{proof}
+Since $S=s(Y)$ is measurable with respect to $Y$, the tower property gives
+\[
+\mathbb E[US]
+=
+\mathbb E\!\left[\mathbb E[U\mid Y]S\right]
+=
+\mathbb E[m(Y)s(Y)].
+\]
+Also,
+\[
+\mathbb E[U]
+=
+\mathbb E[m(Y)].
+\]
+Therefore
+\[
+\operatorname{Cov}(U,S)
+=
+\mathbb E[m(Y)s(Y)]
+-
+\mathbb E[m(Y)]\mathbb E[s(Y)]
+=
+\operatorname{Cov}(m(Y),s(Y)).
+\]
+
+Now let $Y'$ be an independent copy of $Y$. The independent-copy covariance identity yields
+\[
+2\operatorname{Cov}(m(Y),s(Y))
+=
+\mathbb E\!\left[
+(m(Y)-m(Y'))(s(Y)-s(Y'))
+\right].
+\]
+If $m$ and $s$ are both nondecreasing, the integrand is nonnegative almost surely, proving the nonnegative covariance result. If the product is strictly positive with positive probability, the expectation and hence the covariance are strictly positive.
+\end{proof}
+
+Combining this theorem with the QBS covariance identity gives
+\[
+\mathbb E_{\mathrm{FP}}[U]-\mathbb E[U]
+=
+\frac{\operatorname{Cov}(U,S)}{\mathbb E[S]}
+\ge0.
+\]
+
+\begin{corollary}[Accessibility monotone in predicted value]
+Suppose
+\[
+S=r(m(Y))
+\]
+for a nondecreasing measurable function $r$. Then
+\[
+\operatorname{Cov}(U,S)\ge0.
+\]
+If $m(Y)$ is nonconstant with positive probability and $r$ is strictly increasing on the essential range of $m(Y)$, then
+\[
+\operatorname{Cov}(U,S)>0.
+\]
+\end{corollary}
+
+For square-integrable $U$, define conditional-mean predictive strength by
+\[
+M(U;Y)
+=
+\operatorname{Var}(\mathbb E[U\mid Y]).
+\]
+When $\operatorname{Var}(U)>0$, the normalized correlation ratio is
+\[
+\eta^2(U\mid Y)
+=
+\frac{M(U;Y)}{\operatorname{Var}(U)}.
+\]
+Positive $M(U;Y)$ supplies the nondegeneracy needed for strict uplift when accessibility is a strictly increasing function of predicted conditional value.
+
+\subsection{Why mutual information is insufficient}
+
+Mutual information detects general dependence, including dependence that changes conditional variance without changing the conditional mean. It therefore does not by itself imply the covariance required by the QBS mean-shift identity.
+
+Let
+\[
+P(Y=0)=P(Y=1)=\frac12.
+\]
+Conditional on $Y=0$, let $U$ equal $+1$ or $-1$ with equal probability. Conditional on $Y=1$, let $U$ equal $+2$ or $-2$ with equal probability. Then $|U|$ determines $Y$, so
+\[
+I(U;Y)>0.
+\]
+However,
+\[
+\mathbb E[U\mid Y=0]
+=
+\mathbb E[U\mid Y=1]
+=0.
+\]
+Thus $m(Y)=0$ almost surely. For every score-measurable accessibility function $S=s(Y)$,
+\[
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(m(Y),s(Y))
+=0.
+\]
+Hence positive mutual information is not a sufficient condition for positive first-person mean uplift.
+
+\subsection{Boundary of S2}
+
+The score-measurability assumption is material. For a more general accessibility variable $S$, the law of total covariance gives
+\[
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(\mathbb E[U\mid Y],\mathbb E[S\mid Y])
++
+\mathbb E[\operatorname{Cov}(U,S\mid Y)].
+\]
+S2 sets the conditional-covariance term to zero because $S=s(Y)$. If accessibility contains additional randomness that remains conditionally correlated with the future outcome, that residual term must be analyzed separately.
+
+The theorem is a sufficient-condition result about an abstract accessibility map. It does not prove that learning dynamics produce monotone calibration or that Everettian observer self-location is represented by $S=s(Y)$.

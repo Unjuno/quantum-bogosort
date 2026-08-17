@@ -28,6 +28,48 @@ S_t=r(m(Y_t))
 \]
 for a nondecreasing function $r$. If the predicted conditional mean is nonconstant and $r$ is strictly increasing on its essential range, the covariance is strictly positive.
 
+There is also an exact self-calibration case. If the agent's score is its posterior-mean forecast from internal information $B_t$,
+\[
+Y_t=\mathbb E[U_T\mid B_t],
+\]
+then the tower property gives
+\[
+\mathbb E[U_T\mid Y_t]
+=
+\mathbb E[\mathbb E[U_T\mid B_t]\mid Y_t]
+=
+Y_t.
+\]
+Thus the directional-calibration premise of S2 is automatic for a true posterior-mean score. Any nondecreasing accessibility function $s(Y_t)$ then gives nonnegative covariance, with strict positivity when the score is nonconstant and the accessibility map is strictly increasing on its essential range.
+
+For a learned score that is only approximately calibrated, let
+\[
+e(Y_t)=\mathbb E[U_T\mid Y_t]-Y_t.
+\]
+Under square integrability,
+\[
+\operatorname{Cov}(U_T,S_t)
+=
+\operatorname{Cov}(Y_t,S_t)
++
+\operatorname{Cov}(e(Y_t),S_t),
+\]
+and Cauchy--Schwarz yields
+\[
+\operatorname{Cov}(U_T,S_t)
+\ge
+\operatorname{Cov}(Y_t,S_t)
+-
+\sqrt{\operatorname{Var}(e(Y_t))\operatorname{Var}(S_t)}.
+\]
+Hence a sufficient robustness condition is
+\[
+\operatorname{Cov}(Y_t,S_t)
+>
+\sqrt{\operatorname{Var}(e(Y_t))\operatorname{Var}(S_t)}.
+\]
+This turns approximate calibration into a quantitative, falsifiable agent-model condition rather than a qualitative appeal to adaptation.
+
 For square-integrable $U_T$, the quantity
 \[
 M(U_T;Y_t)
@@ -38,13 +80,13 @@ measures conditional-mean predictive strength. It is the relevant nondegeneracy 
 
 The intended causal chain is therefore
 \[
-\text{adaptation}
+\text{adaptation / inference}
 \rightarrow
-\text{predictive internal model}
+\text{posterior-mean or approximately calibrated score}
 \rightarrow
-\text{ordered conditional-mean signal}
+\text{ordered conditional-mean prediction}
 \rightarrow
 \text{outcome-aligned accessibility}.
 \]
 
-Experiment E2 tests the minimal version of this mechanism in a nonlinear environment. A misspecified model that cannot represent the relevant interaction fails to produce predictive alignment, while a small interaction-capable model succeeds. E3 supplies a paired endogenous-policy example. These simulations support the premise that learning can generate the required ordering in toy environments; S2 proves the covariance implication once that ordering and score-measurable accessibility are given. Neither step establishes a physical Everettian accessibility map.
+Experiment E2 tests the minimal version of this mechanism in a nonlinear environment. A misspecified model that cannot represent the relevant interaction fails to produce predictive alignment, while a small interaction-capable model succeeds. E3 supplies a paired endogenous-policy example. These simulations support the premise that learning can generate useful predictive ordering in toy environments; S2 and its corollaries prove the covariance implication once calibration and score-measurable accessibility are specified. Neither step establishes a physical Everettian accessibility map.

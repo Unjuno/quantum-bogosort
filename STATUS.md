@@ -50,28 +50,31 @@ All five experiments are rerun by GitHub Actions.
 | LaTeX/PDF build | VALIDATED BY CI |
 | Expanded bibliography and critique-side prior art | INTEGRATED |
 | Historical experiment archive ledger | DOCUMENTED |
+| Bridge support / constraint / rejection criteria | DOCUMENTED |
 
 ## Interpretation-level claims
 
 | Claim | Status |
 |---|---|
 | Observer-indexed accessibility can be represented by a nonnegative weight function | MODEL ASSUMPTION |
-| Everett branches admit the QBS accessibility bridge used here | BRIDGE ASSUMPTION / OPEN |
+| Everett branches admit the QBS accessibility bridge used here | CONDITIONAL BRIDGE ASSUMPTION / PHYSICALLY OPEN |
+| Structural tests for a candidate physical bridge | SPECIFIED |
+| Independent empirical falsifiability without a concrete physical `S_pi` | NOT CLAIMED |
 | Adapted agents can generate outcome-aligned accessibility signals endogenously | SIMULATION-SUPPORTED MECHANISM |
 | Shared recognition/shared latent structure can increase cross-branch decision correlation | THEOREM UNDER EXPLICIT HIERARCHICAL ASSUMPTIONS + SIMULATION |
 | External random generators become objectively lucky | NOT CLAIMED |
 
 ## Open problems
 
-1. Give a physically motivated Everett derivation or rejection criterion for the accessibility bridge.
+1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics; the current bridge-test framework now states what such a proposal must satisfy.
 2. Strengthen the adaptive-agent information-theoretic mechanism into a theorem with explicit sufficient conditions linking predictive information to positive accessibility covariance.
 3. Reconstruct any historical secondary experiment that is promoted from archive status back into active manuscript evidence.
-4. Continue literature search for direct prior art combining endogenous policy change with self-locating or observer-indexed weighting.
-5. Integrate the committed SVG figures into the final manuscript layout or produce publication-format PDF equivalents after caption review.
+4. Continue targeted literature search for direct prior art combining endogenous policy change with self-locating or observer-indexed weighting.
+5. Integrate the committed SVG figures into the final manuscript layout and finish caption/cross-reference review.
 6. Develop a recognition-time ordering theorem only if explicit pathwise/conditional advantage assumptions justify one; otherwise keep it as a post-v0.2 extension.
 
 ## Release state
 
 Current public state: **v0.1 — Public Technical Review**.
 
-The repository is now close to **v0.2 — manuscript-ready review package**. Remaining release gates are final manuscript layout/caption review, bridge-assumption review, and a decision on whether any archived experiment must be reconstructed before the v0.2 tag.
+The repository is close to **v0.2 — manuscript-ready review package**. Remaining release gates are final manuscript layout/caption review, claim-by-claim consistency audit, targeted novelty search, and a decision on whether any archived experiment must be reconstructed before the v0.2 tag.

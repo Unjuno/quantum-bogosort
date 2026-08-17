@@ -16,6 +16,8 @@
 - complete manuscript appendix proofs for T1–T5 and supplementary derivations;
 - Supplementary Theorem S1 for shared-latent branch-policy coherence;
 - historical experiment archive index and supersession ledger;
+- explicit Everett bridge support / constraint / rejection criteria;
+- v0.2 manuscript claim consistency audit;
 - independent LaTeX/PDF manuscript build job in GitHub Actions.
 
 ### Changed
@@ -23,8 +25,9 @@
 - narrowed novelty positioning so normalized weighting and the elementary covariance identity are treated as standard change-of-measure mathematics rather than the central novelty claim;
 - expanded Related Work to include both advocates and critics of Everettian probability programs, alternative many-world measure proposals, and classical weighted-measure context;
 - upgraded figure documentation from a plan to committed figure provenance and reproduction instructions;
-- refreshed `ROADMAP.md` to mark completed research-map, supplementary, experiment-card, figure, proof, archive, and CI milestones;
-- clarified that earlier recognition is not universally better without explicit causal and information assumptions.
+- refreshed `ROADMAP.md` to mark completed research-map, supplementary, experiment-card, figure, proof, archive, CI, bridge-review, and claim-audit milestones;
+- clarified that earlier recognition is not universally better without explicit causal and information assumptions;
+- clarified that structural bridge coherence, interpretive adequacy, and empirical falsifiability are distinct levels of evaluation.
 
 ### Repository discipline
 

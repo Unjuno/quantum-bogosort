@@ -14,8 +14,6 @@ E_{FP}[X]-E[X]
 \frac{\operatorname{Cov}(X,S)}{E[S]}.
 $$
 
-Therefore positive mean uplift is equivalent to positive covariance under the weighted-measure model.
-
 ### Tail identity
 
 For threshold `c`:
@@ -80,7 +78,7 @@ m(Y)=E[U\mid Y],
 S=s(Y)\ge0.
 $$
 
-When accessibility is measurable with respect to the score `Y` and the relevant moments are finite:
+Then:
 
 $$
 \operatorname{Cov}(U,S)
@@ -93,8 +91,6 @@ If versions of `m(y)` and `s(y)` are both nondecreasing, then:
 $$
 \operatorname{Cov}(U,S)\ge0.
 $$
-
-Strict pairwise comonotonicity on a positive-probability set gives strict positivity.
 
 ### S2.2 posterior-mean self-calibration
 
@@ -135,8 +131,6 @@ Conditional Jensen gives:
 $$
 \operatorname{Var}(e(Y))
 \le
-E[e(Y)^2]
-\le
 E[(U-Y)^2],
 $$
 
@@ -152,25 +146,7 @@ $$
 
 ### S2.5 finite-sample held-out certificate
 
-Let a fixed predictor/accessibility rule be evaluated on an independent i.i.d. sample and assume known bounds:
-
-$$
-|Y|\le B_Y,
-\qquad
-0\le S\le B_S,
-\qquad
-|U-Y|\le B_R.
-$$
-
-S2.5 constructs a data-dependent lower certificate:
-
-$$
-D_L
-=
-C_L-\sqrt{M_UV_U}
-$$
-
-such that:
+Under independent i.i.d. evaluation and valid boundedness assumptions, S2.5 constructs a lower certificate `D_L` satisfying:
 
 $$
 P\left(
@@ -181,46 +157,37 @@ $$
 
 ### S2.6 validity after arbitrary independent training
 
-Let `T` denote the entire random training procedure. Conditional on `T`, suppose the trained predictor/accessibility rule and valid population bounds are fixed before an independent certification sample is evaluated. Then:
+Let `T` denote the entire random training procedure. Conditional on `T`, if the final certification sample is independent and the trained rule/bounds are valid for fresh draws, then:
 
 $$
 P\!\left(
 C(T)\ge D_L(T)
 \mid T
 \right)
-\ge1-\delta
-$$
-
-almost surely, and therefore:
-
-$$
-P\!\left(
-C(T)\ge D_L(T)
-\right)
 \ge1-\delta.
 $$
 
 ### S2.7 finite candidate post-selection validity
 
-Suppose `K` candidate rules are fixed before the certification sample is inspected and receive predeclared failure budgets:
+For a finite predeclared candidate family with confidence budgets:
 
 $$
 \delta_k>0,
 \qquad
-\sum_{k=1}^K\delta_k\le\delta.
+\sum_{k=1}^K\delta_k\le\delta,
 $$
 
-If each candidate has a valid S2.5 or S2.8 certificate at level `1-delta_k`, then all candidate certificates hold simultaneously with probability at least:
+simultaneous candidate certificates hold with probability at least:
 
 $$
 1-\delta.
 $$
 
-Therefore any data-dependent selected index from that predeclared family retains its corresponding lower bound.
+Any data-dependent selected index from that predeclared family retains its lower bound.
 
 ### S2.8 generic confidence-envelope certificate
 
-Suppose a statistical procedure supplies a simultaneous event with probability at least:
+Suppose a statistical procedure supplies a simultaneous event of probability at least:
 
 $$
 1-\delta
@@ -242,13 +209,11 @@ E[S^2]\le U_{S^2},
 E[(U-Y)^2]\le U_M.
 $$
 
-Because `S>=0`, define:
+Define:
 
 $$
-L_S^+=\max\{0,L_S\}.
+L_S^+=\max\{0,L_S\},
 $$
-
-Let:
 
 $$
 P_U
@@ -283,45 +248,25 @@ P\!\left(
 \ge1-\delta.
 $$
 
-S2.8 is a deterministic composition theorem conditional on the validity of the input simultaneous confidence envelope.
-
 ### S2.9 light-tail instantiation
 
-S2.9 assumes two-sided sample-mean concentration for `Y` and `S` of the form:
+S2.9 assumes valid sub-Gaussian sample-mean controls for `Y` and `S`, and valid Bernstein/sub-exponential sample-mean controls for:
 
 $$
-P\!\left(
-|\bar X-E[X]|>
-\sigma_X\sqrt{\frac{2t}{n}}
-\right)
-\le2e^{-t},
+YS,
+\qquad
+S^2,
+\qquad
+(U-Y)^2.
 $$
 
-for `X=Y,S`, and Bernstein/sub-exponential sample-mean concentration:
+These five controls generate the S2.8 simultaneous event and a light-tail lower margin:
 
 $$
-P\!\left(
-|\bar W-E[W]|>
-\sqrt{\frac{2v_Wt}{n}}
-+
-\frac{b_Wt}{n}
-\right)
-\le2e^{-t}
+D_{\mathrm{LT}}
 $$
 
-for:
-
-$$
-W\in\{YS,S^2,(U-Y)^2\}.
-$$
-
-With:
-
-$$
-t=\log\frac{10}{\delta},
-$$
-
-a union bound supplies the five simultaneous S2.8 moment envelopes at confidence at least `1-delta`. The resulting light-tail margin `D_LT` therefore satisfies:
+satisfying:
 
 $$
 P\!\left(
@@ -330,7 +275,72 @@ P\!\left(
 \ge1-\delta.
 $$
 
-S2.9 is an unbounded light-tail statistical instantiation, not a new physical claim.
+### S2.10 robust median-of-means instantiation
+
+Define:
+
+$$
+Z_1=Y,
+\qquad
+Z_2=S,
+\qquad
+Z_3=YS,
+\qquad
+Z_4=S^2,
+\qquad
+Z_5=(U-Y)^2.
+$$
+
+Assume known variance bounds:
+
+$$
+\operatorname{Var}(Z_j)\le v_j<\infty,
+\qquad
+j=1,\ldots,5.
+$$
+
+Choose an odd block count `b` satisfying:
+
+$$
+b\ge8\log\frac{5}{\delta},
+$$
+
+with block size:
+
+$$
+m=\left\lfloor\frac{n}{b}\right\rfloor.
+$$
+
+For each target, the median-of-means estimator has radius:
+
+$$
+r_j
+=
+2\sqrt{\frac{v_j}{m}}
+$$
+
+and failure probability at most:
+
+$$
+\frac{\delta}{5}.
+$$
+
+A union bound gives a simultaneous S2.8 envelope and a robust lower margin:
+
+$$
+D_{\mathrm{MoM}}
+$$
+
+satisfying:
+
+$$
+P\!\left(
+\operatorname{Cov}(U,S)\ge D_{\mathrm{MoM}}
+\right)
+\ge1-\delta.
+$$
+
+S2.10 is a robust finite-moment statistical instantiation, not a physical Everettian claim.
 
 ## Simulation-supported claims
 
@@ -346,23 +356,45 @@ E2/E3 illustrate premise generation for S2. They do not establish any finite-sam
 
 ## Adaptive-learning and statistical-validation boundary
 
-S2 proves the conditional-mean alignment implication. S2.2 proves exact posterior-mean calibration. S2.3 and S2.4 provide population robustness certificates. S2.5 supplies a bounded independent-held-out confidence certificate. S2.6 proves that arbitrary independent training can be conditioned away for certification. S2.7 permits same-holdout selection among a finite predeclared candidate family after multiplicity correction. S2.8 makes the finite-sample QBS step concentration-method agnostic. S2.9 supplies one unbounded light-tail instantiation.
+S2 proves conditional-mean alignment. S2.2 proves posterior-mean calibration. S2.3/S2.4 provide population robustness certificates. S2.5 provides a bounded held-out certificate. S2.6–S2.7 handle independent training and finite candidate selection. S2.8 separates QBS composition from the concentration method. S2.9 supplies a light-tail instantiation. S2.10 supplies a median-of-means robust finite-moment instantiation.
 
-Positive mutual information is not sufficient. There exist distributions with:
-
-$$
-I(U;Y)>0
-$$
-
-but constant:
+S2.10 does **not** require only finite variance of the raw variables. It requires finite variance of all five S2.8 target variables. In particular:
 
 $$
-E[U\mid Y],
+\operatorname{Var}(S^2)<\infty
 $$
 
-so every accessibility map `S=s(Y)` has zero covariance with `U`.
+requires:
 
-S2.9 does not claim that marginal sub-Gaussianity automatically determines valid product/square concentration constants. The required controls for `YS`, `S^2`, and `(U-Y)^2` are explicit statistical inputs.
+$$
+E[S^4]<\infty,
+$$
+
+and:
+
+$$
+\operatorname{Var}((U-Y)^2)<\infty
+$$
+
+requires:
+
+$$
+E[(U-Y)^4]<\infty.
+$$
+
+Likewise:
+
+$$
+\operatorname{Var}(YS)<\infty
+$$
+
+requires:
+
+$$
+E[Y^2S^2]<\infty.
+$$
+
+Positive mutual information is not sufficient for the S2 covariance premise.
 
 ## Model assumptions
 
@@ -378,9 +410,7 @@ $$
 0<E[S_\pi]<\infty.
 $$
 
-The common-randomness comparison assumes policies can be evaluated on the same primitive sample space.
-
-S2 assumes score-measurable accessibility `S=s(Y)`. S2.2 assumes the score is the true conditional expectation under the analyzed probability model. S2.3/S2.4 assume square integrability. S2.5 additionally assumes i.i.d. independent held-out evaluation and known finite bounds on the score, accessibility, and prediction residual. S2.6 permits training-dependent rules and bounds only when the certification sample is independent and those bounds are valid for fresh draws. S2.7 assumes a finite candidate family and confidence allocation fixed before the certification sample is inspected. S2.8 assumes a valid simultaneous five-moment confidence envelope. S2.9 assumes valid light-tail concentration parameters for all five required sample means.
+S2 assumes score-measurable accessibility `S=s(Y)`. S2.2 assumes the score is the true conditional expectation under the analyzed probability model. S2.3/S2.4 assume square integrability. S2.5 assumes independent bounded held-out evaluation. S2.6 permits training-dependent rules only with independent certification data. S2.7 assumes a finite predeclared candidate family with multiplicity accounting. S2.8 assumes a valid simultaneous five-moment confidence envelope. S2.9 assumes valid light-tail concentration parameters. S2.10 assumes valid population variance upper bounds for the five target variables and enough observations to form the requested blocks.
 
 ## Everett bridge assumption
 
@@ -393,15 +423,7 @@ d\mu^{FP}_\pi(\omega)
 \,d\mu(\omega).
 $$
 
-The repository does not currently derive this rule from unitary quantum mechanics, decoherence, observer dynamics, or the Born rule. Establishing, replacing, or rejecting this bridge remains a physical open problem.
-
-The detailed bridge criteria are in `docs/everett_bridge_tests.md`.
-
-### Bridge status levels
-
-- **Abstract change of measure:** exact once `S_pi` is specified.
-- **Observer-model bridge:** requires an independent account of why observer persistence or self-location induces `S_pi`.
-- **Physical Everett bridge:** additionally requires a defensible relation to branch amplitude, decoherence, Born-rule probability, and operational quantum predictions.
+The repository does not currently derive this rule from unitary quantum mechanics, decoherence, observer dynamics, or the Born rule.
 
 ## Non-claims
 
@@ -417,14 +439,9 @@ The repository does **not** claim that:
 - failure of an S2 certificate implies negative covariance;
 - the same sample may be reused arbitrarily for training and certification while preserving nominal confidence;
 - uncorrected best-of-K selection preserves the certificate confidence level;
-- predictor/accessibility candidates may be invented after inspecting certification data without additional statistical accounting;
 - marginal sub-Gaussianity alone fixes all product/square concentration constants needed by S2.9;
-- tail parameters estimated from the certification sample can be plugged in without additional coverage accounting;
-- finite variance alone is enough for the light-tail S2.9 theorem;
-- low prediction MSE is necessary for positive covariance;
-- pure reweighting creates outcomes absent from the fixed-policy support;
-- negative policy–QBS interaction means either policy effect is itself negative;
-- the classical simulations prove an Everett interpretation;
+- finite variance of `Y`, `S`, and `U` individually is enough for S2.10;
+- variance bounds estimated from certification data can be plugged into S2.10 without additional accounting;
 - a statistical S2 certificate establishes the Everett accessibility bridge;
 - internal consistency of a weighted measure confirms the Everett bridge.
 
@@ -434,14 +451,14 @@ The formal conclusions weaken or fail when their assumptions are violated:
 
 - outcome/accessibility independence gives zero pure weighting uplift in expectation;
 - nonmonotone conditional accessibility can break FOSD;
-- a score can be statistically informative while having constant conditional outcome mean, defeating the S2 uplift premise;
-- a finite score can fail the S2.3 robustness certificate when calibration error dominates the alignment margin;
-- large irreducible conditional variance can make S2.4 inconclusive even when actual covariance is positive;
-- a nonpositive finite-sample lower margin is inconclusive at the selected confidence level;
-- training/evaluation leakage or invalid post-hoc bounds remove the simple S2.5/S2.6 coverage guarantee;
+- a statistically informative score can still have constant conditional outcome mean, defeating the S2 premise;
+- excessive calibration error can make S2.3 inconclusive;
+- large irreducible conditional variance can make S2.4 inconclusive;
+- a nonpositive finite-sample lower margin is inconclusive;
+- training/evaluation leakage removes the simple S2.5/S2.6 guarantee;
 - uncorrected multiple-candidate search removes the S2.7 family-wise guarantee;
-- invalid or non-simultaneous input intervals invalidate the S2.8 certificate;
-- invalid light-tail parameters or unaccounted tail-parameter estimation invalidate the S2.9 coverage guarantee;
-- no change in trajectory or accessibility gives zero recognition effect;
+- invalid or non-simultaneous input intervals invalidate S2.8;
+- invalid light-tail parameters invalidate S2.9;
+- invalid target-variable variance bounds, insufficient blocks, or missing fourth-moment-type conditions invalidate S2.10 as stated;
 - zero expected accessibility makes the normalized FP measure undefined;
-- rejecting the Everett bridge removes the physical Everett interpretation while leaving the measure-theoretic and statistical identities intact.
+- rejecting the Everett bridge removes the physical Everett interpretation while leaving the mathematical and statistical identities intact.

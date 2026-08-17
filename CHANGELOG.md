@@ -13,17 +13,18 @@
 - Corollary S2.7 proving multiplicity-corrected same-holdout selection validity for a finite predeclared candidate family;
 - Corollary S2.8 composing any valid simultaneous five-moment confidence envelope into a covariance lower certificate;
 - Corollary S2.9 instantiating S2.8 for unbounded light-tail data using sub-Gaussian first-moment and Bernstein/sub-exponential product/square controls;
+- Corollary S2.10 instantiating S2.8 with median-of-means under finite variance bounds for the five target variables;
 - unequal confidence allocation for finite candidate families;
 - simultaneous Hoeffding bounds for empirical `Y`, `S`, `YS`, `S^2`, and squared residuals;
 - an explicit held-out certificate margin `D_L` satisfying
   $$
   P(\operatorname{Cov}(U,S)\ge D_L)\ge1-\delta;
   $$
-- a generic envelope margin `D_env` and light-tail margin `D_LT` with the same one-sided covariance guarantee;
+- generic, light-tail, and median-of-means lower margins `D_env`, `D_LT`, and `D_MoM` with the same one-sided covariance guarantee;
 - quantitative first-person lower bounds using a simultaneous upper bound on `E[S]` when a certificate margin is positive;
 - consistency of S2.5 when the population S2.4 margin is strictly positive;
-- theorem audits for the S2 alignment family, S2.5 finite-sample certificate, S2.6–S2.7 selection validity, S2.8 generic envelope composition, and S2.9 light-tail instantiation;
-- explicit mutual-information, certificate-failure, uncorrected best-of-K, post-hoc candidate-construction, and tail-parameter-estimation boundaries.
+- theorem audits for the S2 alignment family, S2.5 finite-sample certificate, S2.6–S2.7 selection validity, S2.8 generic envelope composition, S2.9 light-tail instantiation, and S2.10 median-of-means instantiation;
+- explicit mutual-information, certificate-failure, uncorrected best-of-K, post-hoc candidate-construction, tail-parameter-estimation, and raw-vs-target-moment boundaries.
 
 ### Changed
 
@@ -34,8 +35,10 @@
 - S2.7 permits same-holdout selection only within a finite candidate family whose certificates are simultaneously multiplicity-corrected;
 - S2.8 makes Hoeffding only one possible statistical instantiation of a generic confidence-envelope interface;
 - S2.9 permits unbounded light-tail variables when the required five concentration controls are valid;
+- S2.10 permits heavy-tailed target variables without exponential-tail assumptions when all five S2.8 target variables have valid finite variance bounds;
 - product and square tail constants are treated as explicit inputs rather than silently inferred from marginal sub-Gaussianity;
-- uncorrected multiple-candidate search, post-hoc candidate invention, and unaccounted tail-parameter estimation are explicitly outside the stated guarantees;
+- S2.10 explicitly records that finite variance of `S^2` and `(U-Y)^2` entails fourth-moment-type requirements and therefore is stronger than raw-variable finite variance;
+- uncorrected multiple-candidate search, post-hoc candidate invention, unaccounted tail-parameter estimation, and invalid variance bounds are explicitly outside the stated guarantees;
 - no sixth core experiment is introduced by the S2 theorem stack;
 - the core five theorem set remains unchanged.
 

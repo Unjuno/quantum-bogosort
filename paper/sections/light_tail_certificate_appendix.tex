@@ -1,0 +1,140 @@
+\section{Light-Tail Confidence-Envelope Instantiation}
+
+This section records Corollary S2.9, an unbounded light-tail instantiation of the generic S2.8 confidence-envelope certificate.
+
+Let
+\[
+R=U-Y.
+\]
+Assume $S\ge0$ and $0<\mathbb E[S]<\infty$.
+
+For an i.i.d. sample of size $n$, suppose $Y$ and $S$ satisfy the two-sided sample-mean concentration bounds
+\[
+P\!\left(
+|\bar X-\mathbb E[X]|>
+\sigma_X\sqrt{\frac{2t}{n}}
+\right)
+\le2e^{-t},
+\qquad X\in\{Y,S\}.
+\]
+Suppose further that each of
+\[
+YS,\qquad S^2,\qquad R^2
+\]
+satisfies a Bernstein-type mean bound
+\[
+P\!\left(
+|\bar W-\mathbb E[W]|>
+\sqrt{\frac{2v_Wt}{n}}+
+\frac{b_Wt}{n}
+\right)
+\le2e^{-t}.
+\]
+
+\begin{corollary}[Light-tail S2.8 instantiation]
+Let
+\[
+t_\delta=\log\frac{10}{\delta}.
+\]
+Define
+\[
+r_Y=\sigma_Y\sqrt{\frac{2t_\delta}{n}},
+\qquad
+r_S=\sigma_S\sqrt{\frac{2t_\delta}{n}},
+\]
+\[
+r_{YS}=\sqrt{\frac{2v_{YS}t_\delta}{n}}+\frac{b_{YS}t_\delta}{n},
+\]
+\[
+r_{S^2}=\sqrt{\frac{2v_{S^2}t_\delta}{n}}+\frac{b_{S^2}t_\delta}{n},
+\]
+and
+\[
+r_{R^2}=\sqrt{\frac{2v_{R^2}t_\delta}{n}}+\frac{b_{R^2}t_\delta}{n}.
+\]
+Construct
+\[
+L_Y=\bar Y-r_Y,
+\quad U_Y=\bar Y+r_Y,
+\quad
+L_S=\bar S-r_S,
+\quad U_S=\bar S+r_S,
+\]
+\[
+L_{YS}=\overline{YS}-r_{YS},
+\quad
+U_{S^2}=\overline{S^2}+r_{S^2},
+\quad
+U_M=\overline{R^2}+r_{R^2}.
+\]
+Let
+\[
+L_S^+=\max\{0,L_S\},
+\]
+\[
+P_U=
+\max\{L_YL_S^+,L_YU_S,U_YL_S^+,U_YU_S\},
+\]
+\[
+C_L=L_{YS}-P_U,
+\qquad
+V_U=\max\{0,U_{S^2}-(L_S^+)^2\},
+\]
+and
+\[
+D_{\rm LT}=C_L-\sqrt{U_MV_U}.
+\]
+Then
+\[
+P\!\left(
+\operatorname{Cov}(U,S)\ge D_{\rm LT}
+\right)
+\ge1-\delta.
+\]
+Hence $D_{\rm LT}>0$ certifies positive population covariance at confidence at least $1-\delta$. If $0<U_S<\infty$ on the same simultaneous event, then
+\[
+\mathbb E_{\rm FP}[U]-\mathbb E[U]
+\ge
+\frac{D_{\rm LT}}{U_S}>0.
+\]
+\end{corollary}
+
+\begin{proof}
+Set $t=t_\delta$. By assumption, each of the five moment-concentration events fails with probability at most
+\[
+2e^{-t_\delta}=\frac{\delta}{5}.
+\]
+A union bound therefore gives simultaneous coverage at least $1-\delta$ for
+\[
+L_Y\le\mathbb E[Y]\le U_Y,
+\qquad
+L_S\le\mathbb E[S]\le U_S,
+\]
+\[
+\mathbb E[YS]\ge L_{YS},
+\qquad
+\mathbb E[S^2]\le U_{S^2},
+\qquad
+\mathbb E[(U-Y)^2]\le U_M.
+\]
+These are exactly the S2.8 inputs. Applying the deterministic S2.8 composition yields
+\[
+\operatorname{Cov}(U,S)
+\ge D_{\rm LT}
+\]
+on the simultaneous event, proving the coverage statement. The first-person lower bound follows from T1 and the simultaneous upper bound $\mathbb E[S]\le U_S$ when $D_{\rm LT}>0$.
+\end{proof}
+
+\paragraph{Selection-safe extension.}
+For $K$ candidates fixed independently of the certification data, predeclare failure budgets $\delta_k$ satisfying
+\[
+\sum_{k=1}^K\delta_k\le\delta.
+\]
+Applying S2.9 to candidate $k$ with
+\[
+t_k=\log\frac{10}{\delta_k}
+\]
+and then taking a union bound gives simultaneous validity for all candidates. Thus any subsequent data-dependent choice among the predeclared candidates retains its own valid lower bound, as in S2.7.
+
+\paragraph{Boundary.}
+The theorem takes the concentration controls for $YS$, $S^2$, and $(U-Y)^2$ as explicit inputs. Marginal light-tail control of $Y$ and $S$ alone is not silently promoted to universal product/square constants. Tail parameters estimated from the same certification sample require additional accounting. Finite variance alone does not imply the concentration assumptions used here.

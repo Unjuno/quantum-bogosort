@@ -1,25 +1,57 @@
 \section{Experiments}
 
-The computational package contains five locked experiment families, each paired with a human-readable experiment card and reproducible Python script.
+The computational package contains five locked experiment families, each paired with a human-readable experiment card and reproducible Python script. Figures in this section are classical toy-model outputs and are not measurements of Everettian branch physics.
 
 \subsection{E1: weighting, tails, and stochastic dominance}
 
-E1 verifies the covariance and tail identities, tests monotone-accessibility FOSD across several toy distributions, and includes independence and nonmonotone controls.
+E1 verifies the covariance and tail identities, tests monotone-accessibility FOSD across several toy distributions, and includes independence and nonmonotone controls. Figure~\ref{fig:fosd-boundary} illustrates the theorem boundary used by these controls.
 
 \subsection{E2: learned predictive alignment}
 
-E2 uses a nonlinear environment to compare a misspecified linear evaluator, an interaction-capable evaluator, and a random-score control. Positive weighted uplift appears only when the evaluator can recover predictive structure.
+E2 uses a nonlinear environment to compare a misspecified linear evaluator, an interaction-capable evaluator, and a random-score control. Positive weighted uplift appears only when the evaluator can recover predictive structure. This experiment supports the mechanism claim that outcome/accessibility alignment can arise from a learned internal model rather than only from an exogenously specified correlation parameter.
 
 \subsection{E3: paired recognition decomposition}
 
 E3 evaluates recognition-off and recognition-on policies on common primitive randomness. The total first-person effect decomposes into ordinary trajectory change and conditioning contribution to floating-point precision. A recognition-label null verifies zero effect when neither trajectory nor accessibility changes.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.72\linewidth]{../figures/generated_pdf/fig3_recognition_decomposition.pdf}
+\caption{E3 classical paired-recognition simulation. The total first-person value difference is the sum of the ordinary policy/trajectory contribution and the first-person conditioning contribution to floating-point precision. The plotted values are toy-model quantities, not physical Everett measurements.}
+\label{fig:recognition-decomposition}
+\end{figure}
+
 \subsection{E4: policy--selection interaction}
 
-E4 tests the exact sign identity for fixed accessibility and the generalized targeting plus selector-map-shift decomposition when accessibility changes with policy. Rescue-bad, neutral, and amplify-good controls show that negative interaction is conditional rather than universal.
+E4 tests the exact sign identity for fixed accessibility and the generalized targeting plus selector-map-shift decomposition when accessibility changes with policy. Rescue-bad, neutral, and amplify-good controls show that negative interaction is conditional rather than universal. Figure~\ref{fig:interaction-sign} displays the fixed-selector sign test.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.76\linewidth]{../figures/generated_pdf/fig4_interaction_sign.pdf}
+\caption{E4 fixed-selector interaction-sign simulation. Policies that concentrate improvement in low-accessibility bad states give a negative interaction; a neutral control is approximately zero; improvement concentrated in high-accessibility good states gives a positive interaction. This is a numerical illustration of the exact covariance sign identity.}
+\label{fig:interaction-sign}
+\end{figure}
+
+The broader adaptation sweep in Figure~\ref{fig:adaptation-substitution} shows that increasing ordinary targeting accuracy can increase total first-person value even while making the policy--selection interaction more negative. This is the expected substitution pattern when ordinary adaptation increasingly rescues states that the selector would otherwise downweight.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.84\linewidth]{../figures/generated_pdf/fig5_adaptation_quality.pdf}
+\caption{Classical adaptation-quality sweep associated with the E4 interaction mechanism. Better targeting raises the ordinary policy effect and total first-person effect, while the marginal post-policy QBS contribution falls and the interaction becomes more negative. The result demonstrates partial substitution, not a universal law about adaptation.}
+\label{fig:adaptation-substitution}
+\end{figure}
 
 \subsection{E5: branch-wide recognition structure}
 
 E5 separates marginal recognition prevalence from shared recognition and realized action correlation. Paired execution-strength and environmental-correlation sweeps use common primitive randomness; a shared-versus-independent recognition comparison holds marginal recognition prevalence fixed while changing correlation structure.
 
-\paragraph{Reproducibility.} All five scripts are executed by GitHub Actions. Locked historical summaries and current reproduction outputs are stored in the repository. The experiments are designed as formal-model stress tests and mechanism demonstrations, not empirical tests of Everettian observer selection.
+Figure~\ref{fig:branch-coherence} emphasizes the main distinction: cross-copy action correlation can change substantially with shared environmental structure while the single-observer total first-person gain remains comparatively stable. The two quantities should therefore not be conflated.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.84\linewidth]{../figures/generated_pdf/fig6_branch_coherence.pdf}
+\caption{E5 classical branch-copy simulation. Recognition-induced action-correlation increment increases strongly with shared environmental correlation, whereas the single-observer total FP gain remains nearly flat in this sweep. The figure illustrates that branch-wide policy coherence and marginal first-person uplift are different observables of the model.}
+\label{fig:branch-coherence}
+\end{figure}
+
+\paragraph{Reproducibility.} All five scripts are executed by GitHub Actions. Locked historical summaries and current reproduction outputs are stored in the repository. The figure PDFs are generated from committed source data before the LaTeX build. The experiments are formal-model stress tests and mechanism demonstrations, not empirical tests of Everettian observer selection.

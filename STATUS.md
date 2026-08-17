@@ -22,6 +22,7 @@ This file is the canonical status ledger for the Quantum Bogosort research repos
 | S2.5 | Bounded finite-sample held-out covariance certificate | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/finite_sample_certificate.md` |
 | S2.6 | Conditional validity after arbitrary independent training | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/selection_validity.md` |
 | S2.7 | Multiplicity-corrected finite candidate selection on one hold-out sample | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/selection_validity.md` |
+| S2.8 | Generic simultaneous-confidence-envelope covariance certificate | PROVED (STACKED POST-v0.2 CANDIDATE) | `supplementary/confidence_envelope_certificate.md` |
 | P1 | Costless recognition has nonnegative option value | PROVED | `theory/propositions_boundaries.md` |
 | P2 | Pure reweighting cannot create support | PROVED | `theory/propositions_boundaries.md` |
 
@@ -67,7 +68,7 @@ $$
 \sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
 $$
 
-S2.5 turns the population inequality into a bounded finite-sample held-out certificate. Under known bounds and independent i.i.d. evaluation, it constructs `D_L` satisfying:
+S2.5 converts this population inequality into a bounded finite-sample held-out lower certificate `D_L` satisfying:
 
 $$
 P\left(
@@ -76,55 +77,84 @@ P\left(
 \ge1-\delta.
 $$
 
-Therefore:
+S2.6 shows that arbitrary upstream training can be conditioned on when the final certification sample is independent.
+
+S2.7 shows that same-holdout selection among a finite predeclared candidate family remains valid when candidate certificates are made simultaneous with multiplicity correction.
+
+### S2.8 generic confidence-envelope composition
+
+S2.8 removes Hoeffding from the QBS-specific composition layer. Suppose a statistical procedure supplies a simultaneous event controlling:
 
 $$
-D_L>0
+E[Y],
+\quad
+E[S],
+\quad
+E[YS],
+\quad
+E[S^2],
+\quad
+E[(U-Y)^2].
 $$
 
-certifies positive population covariance with confidence at least `1-delta`.
-
-### S2.6 training-selection validity
-
-Let `T` denote an arbitrary training random element. If the final certification sample is independent of `T`, then conditional on the realized trained rule S2.5 remains valid:
+Let the simultaneous bounds be:
 
 $$
-P\!\left(
-C(T)\ge D_L(T)
-\mid T
-\right)
-\ge1-\delta.
+L_Y\le E[Y]\le U_Y,
+\qquad
+L_S\le E[S]\le U_S,
 $$
 
-Hence arbitrary upstream training, hyperparameter search, or representation learning is compatible with the certificate provided the final certification sample remains independent and the post-training bounds are valid for fresh population draws.
-
-### S2.7 finite candidate post-selection validity
-
-If `K` candidate rules are fixed before the certification sample is inspected, apply S2.5 with per-candidate error budget:
-
 $$
-\delta_k=\frac{\delta}{K}.
+E[YS]\ge L_{YS},
+\qquad
+E[S^2]\le U_{S^2},
+\qquad
+E[(U-Y)^2]\le U_M.
 $$
 
-Then:
+With:
 
 $$
-P\!\left(
-C_k\ge D_{L,k}
-\text{ for every }k
-\right)
-\ge1-\delta.
+L_S^+=\max\{0,L_S\},
 $$
 
-Consequently, any candidate index selected from the same held-out observations retains the corresponding valid lower bound. Equal allocation changes the Hoeffding radius to:
-
 $$
-\tau_{n,\delta,K}
+P_U
 =
-\sqrt{\frac{\log(10K/\delta)}{2n}}.
+\max\{L_YL_S^+,L_YU_S,U_YL_S^+,U_YU_S\},
 $$
 
-Uncorrected best-of-`K` reporting and post-hoc invention of new candidates are not covered.
+$$
+C_L=L_{YS}-P_U,
+$$
+
+and:
+
+$$
+V_U
+=
+\max\{0,U_{S^2}-(L_S^+)^2\},
+$$
+
+S2.8 defines:
+
+$$
+D_{\mathrm{env}}
+=
+C_L-\sqrt{U_MV_U}
+$$
+
+and proves:
+
+$$
+P\!\left(
+\operatorname{Cov}(U,S)\ge D_{\mathrm{env}}
+\right)
+\ge1-\delta.
+$$
+
+Thus Hoeffding, sub-Gaussian, empirical-Bernstein, robust, or sequential methods can enter through their own independently valid simultaneous moment envelopes without changing the QBS covariance-composition proof.
 
 ## Sequential extension
 
@@ -144,7 +174,7 @@ Uncorrected best-of-`K` reporting and post-hoc invention of new candidates are n
 | E4 | Fixed and changing-selector interaction decomposition | REPRODUCIBLE |
 | E5 | Paired branch-map sweeps and shared-recognition comparison | REPRODUCIBLE |
 
-All five experiments are rerun by GitHub Actions. S2–S2.7 do not create a sixth core experiment. A new held-out diagnostic should be added only if review requires empirical evaluation of the certificate stack.
+All five experiments are rerun by GitHub Actions. S2–S2.8 do not create a sixth core experiment.
 
 ## Figure and manuscript state
 
@@ -152,10 +182,9 @@ All five experiments are rerun by GitHub Actions. S2–S2.7 do not create a sixt
 |---|---|
 | Six GitHub-readable SVG figures | COMMITTED / REGENERATED IN CI |
 | Six LaTeX PDF figure build products | GENERATED IN CI |
-| Figure provenance and source-data mapping | DOCUMENTED |
-| Figure placement, captions, and cross-references | INTEGRATED / AUDITED |
+| Figure placement and captions | INTEGRATED / AUDITED |
 | Manuscript theorem appendix | FULL PROOFS INTEGRATED |
-| Post-v0.2 S2/S2.7 appendices | SEPARATE STACKED REVIEW BRANCHES |
+| Post-v0.2 S2/S2.8 appendices | SEPARATE STACKED REVIEW BRANCHES |
 | LaTeX/PDF build | VALIDATED BY CI ON EACH REVIEW BRANCH WHEN GREEN |
 | Expanded bibliography and critique-side prior art | INTEGRATED |
 | Final v0.2 repository release audit | PASS |
@@ -170,24 +199,26 @@ All five experiments are rerun by GitHub Actions. S2–S2.7 do not create a sixt
 | A true posterior-mean score is conditionally mean-calibrated | PROVED (S2.2) |
 | Population robustness via calibration error / MSE | PROVED SUFFICIENT CONDITIONS (S2.3/S2.4) |
 | Bounded independent held-out data can certify positive covariance | PROVED SUFFICIENT HIGH-PROBABILITY CONDITION (S2.5) |
-| Arbitrary independent training preserves S2.5 validity conditional on the trained rule | PROVED (S2.6) |
-| Same-holdout selection among a finite predeclared candidate family is valid with multiplicity correction | PROVED (S2.7) |
-| Finite learned models necessarily pass the certificate | NOT CLAIMED |
+| Arbitrary independent training preserves held-out validity conditional on the trained rule | PROVED (S2.6) |
+| Same-holdout selection among a finite predeclared family is valid with multiplicity correction | PROVED (S2.7) |
+| Any valid simultaneous moment envelope can be composed into a covariance certificate | PROVED (S2.8) |
+| A specific sub-Gaussian/robust/asymptotic interval is valid merely because S2.8 can consume it | NOT CLAIMED |
 | A passed statistical certificate establishes the Everett bridge | NOT CLAIMED |
 | External random generators become objectively lucky | NOT CLAIMED |
 
-## Open problems after S2.7
+## Open problems after S2.8
 
 1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics.
-2. Extend S2.5 to unbounded/sub-Gaussian/sub-exponential or robust-mean settings.
-3. Extend selection validity from finite predeclared candidate families to infinite or data-dependent classes using uniform-convergence, selective-inference, or fresh-sample methods.
-4. Add a held-out diagnostic experiment only if review requires direct empirical evaluation of the S2.5–S2.7 certificate stack.
-5. Extend S2 beyond score-measurable accessibility by controlling the residual conditional-covariance term.
-6. Continue literature search if review identifies a more specific novelty conflict.
-7. Develop a recognition-time ordering theorem only under explicit pathwise/conditional advantage assumptions.
+2. Instantiate S2.8 with explicit sub-Gaussian/sub-exponential concentration under clearly stated tail assumptions.
+3. Instantiate S2.8 with robust finite-moment estimators such as median-of-means and compare conservatism.
+4. Extend selection validity from finite predeclared candidate families to infinite or data-dependent classes using uniform-convergence, selective-inference, or fresh-sample methods.
+5. Add a held-out diagnostic experiment only if review requires empirical evaluation of the S2.5–S2.8 stack.
+6. Extend S2 beyond score-measurable accessibility by controlling the residual conditional-covariance term.
+7. Continue literature search if review identifies a more specific novelty conflict.
+8. Develop a recognition-time ordering theorem only under explicit pathwise/conditional advantage assumptions.
 
 ## Release state
 
 Repository baseline: **v0.2 — Public Review** at merge commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
 
-PR #11 is the base S2 review branch. PR #12 adds S2.4. PR #13 adds S2.5. S2.6–S2.7 are developed as the next stacked selection-validity layer and remain separately reviewable before any later preprint merge.
+PR #11 is the base S2 review branch, PR #12 adds S2.4, PR #13 adds S2.5, PR #15 adds S2.6–S2.7, and S2.8 is the next stacked confidence-envelope layer. All remain separately reviewable before any later preprint merge.

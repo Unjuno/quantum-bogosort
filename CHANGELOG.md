@@ -9,14 +9,25 @@
 - research map, notation reference, and claims/assumptions ledger;
 - H/T/D/C/U experiment cards for E1–E5;
 - topic-split supplementary notes;
-- initial prior-art ledger;
-- manuscript scaffold with Related Work and bibliography.
+- initial and extended prior-art ledgers;
+- manuscript scaffold with Related Work and bibliography;
+- six committed publication-oriented SVG figures with deterministic regeneration script;
+- complete manuscript appendix proofs for T1–T5 and supplementary derivations;
+- Supplementary Theorem S1 for shared-latent branch-policy coherence;
+- independent LaTeX/PDF manuscript build job in GitHub Actions.
+
+### Changed
+
+- narrowed novelty positioning so normalized weighting and the elementary covariance identity are treated as standard change-of-measure mathematics rather than the central novelty claim;
+- expanded Related Work to include both advocates and critics of Everettian probability programs, alternative many-world measure proposals, and classical weighted-measure context;
+- upgraded figure documentation from a plan to committed figure provenance and reproduction instructions.
 
 ### Repository discipline
 
 - GitHub remains the source of truth for theorem status, experiment status, open assumptions, and manuscript progress.
 - Markdown mathematics continues to use double-dollar display blocks only.
 - Theorem, simulation, model assumption, Everett bridge assumption, and non-claim are tracked separately.
+- CI reruns E1–E5, regenerates figures, validates repository structure, and builds the manuscript PDF.
 
 ## v0.1 — Public Technical Review
 

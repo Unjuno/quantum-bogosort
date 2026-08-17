@@ -25,10 +25,18 @@ required = [
     "supplementary/selectivity_frontier.md",
     "supplementary/branch_recognition.md",
     "literature/prior_art.md",
+    "literature/extended_prior_art.md",
     "paper/README.md",
     "paper/main.tex",
     "paper/references.bib",
     "figures/README.md",
+    "figures/generate_figures.py",
+    "figures/generated/fig1_framework.svg",
+    "figures/generated/fig2_fosd.svg",
+    "figures/generated/fig3_recognition_decomposition.svg",
+    "figures/generated/fig4_interaction_sign.svg",
+    "figures/generated/fig5_adaptation_quality.svg",
+    "figures/generated/fig6_branch_coherence.svg",
 ]
 
 missing = [path for path in required if not (ROOT / path).exists()]

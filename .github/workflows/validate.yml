@@ -12,10 +12,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: pip install -r requirements.txt
-      - name: Compile experiment and validation scripts
-        run: python -m py_compile experiments/*.py scripts/*.py
+      - name: Compile experiment, figure, and validation scripts
+        run: python -m py_compile experiments/*.py figures/*.py scripts/*.py
       - name: Enforce GitHub Markdown math delimiters
         run: python scripts/validate_markdown_math.py
       - name: Validate research repository structure
@@ -27,5 +27,33 @@ jobs:
           python experiments/exp3_recognition_decomposition.py
           python experiments/exp4_interaction.py
           python experiments/exp5_branch_map.py
+      - name: Regenerate publication figures
+        run: python figures/generate_figures.py
+      - name: Check figure outputs
+        run: |
+          test -s figures/generated/fig1_framework.svg
+          test -s figures/generated/fig2_fosd.svg
+          test -s figures/generated/fig3_recognition_decomposition.svg
+          test -s figures/generated/fig4_interaction_sign.svg
+          test -s figures/generated/fig5_adaptation_quality.svg
+          test -s figures/generated/fig6_branch_coherence.svg
       - name: Validate manifest references
         run: python scripts/validate_manifest.py
+
+  manuscript-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install LaTeX toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk texlive-latex-base texlive-latex-recommended texlive-fonts-recommended
+      - name: Build manuscript PDF
+        working-directory: paper
+        run: latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+      - name: Verify manuscript PDF
+        run: test -s paper/main.pdf
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qbs-manuscript-pdf
+          path: paper/main.pdf

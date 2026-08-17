@@ -6,82 +6,81 @@ This roadmap turns the public repository into the source of truth for the theory
 
 - [x] Publish core theorem set.
 - [x] Publish E1–E5 reproduction code and outputs.
-- [x] Add CI for math delimiters, Python compilation, experiments, and manifest validation.
-- [ ] Maintain `STATUS.md` as the canonical claim ledger.
-- [ ] Add notation and assumptions documents.
-- [ ] Add a research map linking every claim to proof, code, and data.
+- [x] Add CI for math delimiters, Python compilation, experiments, manifest validation, figure generation, and manuscript PDF build.
+- [x] Maintain `STATUS.md` as the canonical claim ledger.
+- [x] Add notation and assumptions documents.
+- [x] Add a research map linking claims to proof, code, and data.
 
 ## Phase 2 — Supplementary decomposition
 
-Split the current monolithic supplementary notes into topic files:
+- [x] Multi-observer normalization.
+- [x] Binary soft-QBS.
+- [x] Repeated filtering.
+- [x] Gaussian closed form.
+- [x] Adaptive-agent mechanism.
+- [x] Evidence-driven recognition.
+- [x] Recognition-time stopping-time formalization.
+- [x] Selectivity frontier.
+- [x] Branch-wide recognition and policy coherence.
 
-- multi-observer normalization,
-- binary soft-QBS,
-- repeated filtering,
-- Gaussian closed form,
-- adaptive-agent mechanism,
-- evidence-driven recognition,
-- selectivity frontier,
-- branch-wide recognition.
+The recognition-time note explicitly defers a universal early-versus-late ordering theorem beyond v0.2 unless stronger causal/information assumptions are introduced.
 
-Each note should contain motivation, definitions, result, derivation or experiment, interpretation, limitations, status, and linked files.
+## Phase 3 — Experiment cards and archive
 
-## Phase 3 — Experiment cards
-
-Create one human-readable card for each core experiment E1–E5 using the same structure:
-
-- H — Hypothesis,
-- T — Test design,
-- D — Data/result,
-- C — Controls/counterexamples,
-- U — Uncertainty/interpretation boundary,
-- ERROR CHECK.
+- [x] Create H/T/D/C/U + ERROR CHECK cards for E1–E5.
+- [x] Add historical experiment archive policy.
+- [x] Add an archive index classifying prior work as CORE, APPENDIX CANDIDATE, SUPERSEDED, or HISTORICAL LOCAL ARTIFACT.
+- [ ] Reconstruct archived experiments only if they are promoted back into active manuscript evidence.
 
 ## Phase 4 — Literature and novelty
 
-Build `literature/prior_art.md` and `paper/references.bib` covering:
-
-- Everett / Many-Worlds probability and self-location,
-- quantum suicide / immortality,
-- anthropic and observer-selection decision theory,
-- value of information,
-- change of measure / importance weighting,
-- related agent-selection models.
-
-For each source record what it establishes, what it does not establish, and how QBS differs.
+- [x] Build initial Everett / self-location / observer-selection / anthropic prior-art ledger.
+- [x] Add criticism-side Everett probability literature.
+- [x] Add alternative many-world probability constructions and weighted-measure context.
+- [x] Narrow novelty claims so normalized weighting and the covariance identity are not treated as the central novelty.
+- [ ] Continue targeted search for direct prior art combining endogenous policy change with self-locating or observer-indexed weighting.
 
 ## Phase 5 — Figures
 
-Produce publication-quality figures from locked/reproducible outputs:
-
-1. causal framework diagram,
-2. FOSD illustration,
-3. recognition decomposition,
-4. interaction-sign experiment,
-5. adaptation accuracy / total-effect relation,
-6. branch-correlation versus marginal FP effect.
+- [x] Framework diagram.
+- [x] FOSD illustration.
+- [x] Recognition decomposition.
+- [x] Interaction-sign figure.
+- [x] Adaptation quality / total-effect figure.
+- [x] Branch-coherence versus marginal FP figure.
+- [x] Commit deterministic figure generator and provenance documentation.
+- [ ] Final manuscript caption/layout review and optional PDF/EPS publication variants.
 
 ## Phase 6 — Manuscript
 
-Create and maintain:
+- [x] Create manuscript scaffold.
+- [x] Add Related Work and bibliography.
+- [x] Integrate complete proofs of T1–T5 into the appendix.
+- [x] Add strict/equality conditions and supplementary derivations.
+- [x] Add GitHub Actions LaTeX/PDF build and artifact upload.
+- [ ] Finalize prose, figure placement, captions, and cross-references.
+- [ ] Perform final claim-by-claim consistency audit against `STATUS.md` and `docs/claims_and_assumptions.md`.
 
-- abstract,
-- introduction,
-- formal model,
-- main theorems,
-- adaptive-agent mechanism,
-- experiments,
-- Everett interpretation,
-- limitations and falsifiability,
-- discussion,
-- appendix,
-- bibliography.
+## Phase 7 — Everett bridge review
 
-The manuscript must distinguish theorem, simulation, and physical interpretation at every stage.
+- [x] Keep the Everett accessibility map as a separate bridge assumption rather than a theorem consequence.
+- [x] Review the bridge against both supportive and critical Everett probability literature at an initial level.
+- [ ] Decide the final manuscript wording for what evidence would support, constrain, or reject the bridge.
 
-## Phase 7 — Public review and release
+## Phase 8 — Public review and release
 
-- Keep GitHub Issues open for proof corrections, counterexamples, prior art, and implementation bugs.
-- Integrate review feedback into `main` through PRs.
-- Cut a `v0.2-public-review` release when the manuscript scaffold and literature ledger are complete.
-- Prepare `v1.0-preprint` only after the manuscript and references are stable enough for arXiv submission.
+- [x] Keep GitHub Issues open for proof corrections, counterexamples, prior art, and implementation bugs.
+- [x] Integrate major repository corrections through PRs with CI gates.
+- [ ] Complete final v0.2 manuscript-readiness audit.
+- [ ] Cut `v0.2-public-review` when the remaining layout/bridge/audit gates are satisfied.
+- [ ] Prepare `v1.0-preprint` only after references, claims, and manuscript are stable enough for arXiv submission.
+
+## Current focus
+
+The project is no longer in the experiment-expansion phase. The default priority is now:
+
+1. final manuscript coherence and figure integration;
+2. bridge-assumption falsifiability wording;
+3. targeted prior-art gaps;
+4. v0.2 release audit;
+5. only then any new theorem or experiment justified by review feedback.

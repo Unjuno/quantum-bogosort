@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased — toward v0.2 public review
+## v0.2 — Public Review — 2026-08-17
 
 ### Added
 
@@ -20,6 +20,7 @@
 - historical experiment archive index and supersession ledger;
 - explicit Everett bridge support / constraint / rejection criteria;
 - v0.2 manuscript claim consistency audit and post-layout re-audit;
+- final `docs/v0.2_release_audit.md` repository audit;
 - independent LaTeX/PDF manuscript build job in GitHub Actions.
 
 ### Changed
@@ -28,17 +29,21 @@
 - expanded Related Work to include advocates and critics of Everettian probability, alternative many-world measure proposals, classical weighted-measure context, and direct self-locating policy-optimization work;
 - integrated all six figures into the manuscript with captions that identify schematic, theorem-illustration, or classical-simulation status;
 - updated CI so both SVG previews and manuscript PDF figures are regenerated from committed sources;
-- refreshed `ROADMAP.md` to mark completed research-map, supplementary, experiment-card, figure, proof, archive, CI, bridge-review, novelty-search, and claim-audit milestones;
 - clarified that earlier recognition is not universally better without explicit causal and information assumptions;
 - clarified that structural bridge coherence, interpretive adequacy, and empirical falsifiability are distinct levels of evaluation;
-- decided that no archived experiment is promoted as new active evidence for v0.2, so historical reconstruction is not a release blocker.
+- decided that no archived experiment is promoted as new active evidence for v0.2, so historical reconstruction is not a release blocker;
+- synchronized README and citation metadata to the v0.2 public-review snapshot.
 
 ### Repository discipline
 
-- GitHub remains the source of truth for theorem status, experiment status, open assumptions, and manuscript progress.
-- Markdown mathematics continues to use double-dollar display blocks only.
+- GitHub is the source of truth for theorem status, experiment status, open assumptions, and manuscript progress.
+- Markdown mathematics uses double-dollar display blocks only.
 - Theorem, simulation, model assumption, Everett bridge assumption, and non-claim are tracked separately.
 - CI reruns E1–E5, regenerates SVG/PDF figures, validates repository structure, and builds the illustrated manuscript PDF.
+
+### Release interpretation
+
+The repository snapshot is ready for public technical review. A formal GitHub Release/tag is a hosting-layer action separate from the scientific/reproducibility snapshot and is not required for the theorem, data, code, or manuscript state to be auditable.
 
 ## v0.1 — Public Technical Review
 

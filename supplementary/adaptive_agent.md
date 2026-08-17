@@ -110,6 +110,96 @@ $$
 
 This form does not require the raw score `Y` itself to have a globally meaningful scale; only the predicted conditional value must be ordered consistently with accessibility.
 
+### Corollary S2.2: posterior-mean self-calibration
+
+Let `B` denote an internal information state and suppose the evaluation score is the posterior-mean forecast:
+
+$$
+Y=E[U\mid B].
+$$
+
+Because `Y` is measurable with respect to `B`, the tower property gives:
+
+$$
+E[U\mid Y]
+=
+E[E[U\mid B]\mid Y]
+=
+E[Y\mid Y]
+=Y.
+$$
+
+Therefore the conditional-mean calibration premise of S2 holds **exactly**:
+
+$$
+m(Y)=Y.
+$$
+
+Hence, for every nondecreasing score-measurable accessibility map `S=s(Y)`:
+
+$$
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(Y,s(Y))
+\ge0.
+$$
+
+If `Y` is nonconstant and `s` is strictly increasing on the essential range of `Y`, then:
+
+$$
+\operatorname{Cov}(U,S)>0.
+$$
+
+This corollary converts a standard posterior-mean prediction target into the directional calibration condition required by S2. It still does not prove that a learned finite model exactly equals the true posterior mean.
+
+### Corollary S2.3: approximate-calibration robustness
+
+Assume `U`, `Y`, and `S=s(Y)` are square-integrable and define calibration error:
+
+$$
+e(Y)=E[U\mid Y]-Y.
+$$
+
+Then:
+
+$$
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(Y,S)
++
+\operatorname{Cov}(e(Y),S).
+$$
+
+By Cauchy--Schwarz:
+
+$$
+|\operatorname{Cov}(e(Y),S)|
+\le
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+$$
+
+Therefore:
+
+$$
+\boxed{
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}
+}.
+$$
+
+A sufficient robustness condition for positive covariance is:
+
+$$
+\operatorname{Cov}(Y,S)
+>
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+$$
+
+This gives a direct quantitative target for learned agents: a positively ordered score can tolerate calibration error up to the point where the worst-case covariance perturbation exceeds the score/accessibility alignment margin.
+
 ## D — derivation
 
 Because `S=s(Y)` is measurable with respect to `Y`, the tower property gives:
@@ -226,34 +316,37 @@ is false without an additional directional conditional-mean calibration assumpti
 
 ## Connection to adaptation
 
-Adaptation can still supply the theorem's premises through the causal chain:
+The cleanest sufficient chain is now:
 
 $$
-\text{environmental structure}
+\text{internal information }B_t
 \longrightarrow
-\text{learned internal model}
+Y_t=E[U_T\mid B_t]
 \longrightarrow
-\text{mean-predictive signal }Y_t
+E[U_T\mid Y_t]=Y_t
 \longrightarrow
-\text{monotone accessibility }S_t.
+S_t=s(Y_t)\text{ monotone}
+\longrightarrow
+\operatorname{Cov}(U_T,S_t)\ge0.
 $$
 
-The theorem does **not** prove that learning automatically produces directional calibration. It proves the next step exactly: once the learned signal orders conditional expected future outcomes and accessibility respects that ordering, positive outcome/accessibility covariance follows.
+For an approximate learned predictor, Corollary S2.3 quantifies how much conditional-mean calibration error can be tolerated while preserving positive covariance.
 
-E2 provides a classical nonlinear example in which a representationally adequate model learns such alignment while a misspecified linear model and random control do not. E3 provides a paired endogenous-policy example in which a learned internal signal remains positively associated with post-policy outcomes.
+E2 provides a classical nonlinear example in which a representationally adequate model learns predictive alignment while a misspecified linear model and random control do not. E3 provides a paired endogenous-policy example in which a learned internal signal remains positively associated with post-policy outcomes.
 
 ## U — interpretation boundary
 
-S2 is a probability theorem about a score-measurable accessibility function. It strengthens the adaptive-agent part of QBS from a purely simulation-supported covariance mechanism to an exact sufficient condition.
+S2 is a probability theorem about a score-measurable accessibility function. It strengthens the adaptive-agent part of QBS from a purely simulation-supported covariance mechanism to an exact sufficient condition, and S2.2 gives an exact self-calibration result for posterior-mean forecasts.
 
 It does **not** establish:
 
-- that adaptation always produces a calibrated score;
+- that adaptation always learns the true posterior mean;
+- that finite learned models have negligible calibration error;
 - that mutual information alone is enough;
 - that accessibility is physically determined by the score;
 - that Everettian branch self-location obeys this accessibility map.
 
-The remaining adaptive-learning problem is therefore narrower: derive or empirically justify conditions under which learning dynamics make `E[U_T\mid Y_t=y]` monotone in the agent's evaluation signal.
+The remaining adaptive-learning problem is narrower and empirically meaningful: measure or bound the calibration error of the learned score and compare it with the alignment margin in S2.3.
 
 ## ERROR CHECK
 
@@ -261,9 +354,11 @@ The remaining adaptive-learning problem is therefore narrower: derive or empiric
 2. Monotonicity gives a sufficient condition, not a necessary condition. Positive covariance can occur without global monotonicity.
 3. Strict positivity requires nondegeneracy; two constant functions give equality.
 4. Positive mutual information is deliberately not used as a sufficient condition.
-5. The first-person uplift conclusion additionally requires `0<E[S]<\infty`.
-6. The theorem is interpretation-neutral and does not derive the Everett bridge.
+5. Posterior-mean self-calibration uses only the tower property and the fact that `Y=E[U|B]` is `B`-measurable.
+6. The approximate-calibration bound is one-sided after applying the absolute Cauchy--Schwarz bound; it is sufficient, not necessary, for positivity.
+7. The first-person uplift conclusion additionally requires `0<E[S]<\infty`.
+8. The theorem is interpretation-neutral and does not derive the Everett bridge.
 
 ## Status
 
-**Supplementary Theorem S2 PROVED. E2/E3 remain classical mechanism demonstrations. Physical accessibility mapping remains OPEN.**
+**Supplementary Theorem S2 and Corollaries S2.1–S2.3 PROVED. E2/E3 remain classical mechanism demonstrations. Physical accessibility mapping remains OPEN.**

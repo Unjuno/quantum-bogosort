@@ -1,18 +1,416 @@
 \appendix
-\section{Appendix Roadmap}
+\section{Proofs and Supplementary Derivations}
 
-The final appendix is expected to contain:
+This appendix collects the complete measure-theoretic proofs used by the manuscript. Throughout, $S\ge 0$, $0<\mathbb E[S]<\infty$, and all displayed expectations are assumed finite whenever required.
 
-\begin{enumerate}
-\item full proofs of Theorems 1--5;
-\item strict/equality conditions for FOSD;
-\item adaptive-rescue covariance proof;
-\item binary soft-QBS derivation;
-\item repeated-filter sensitivity identity;
-\item Gaussian closed-form derivation;
-\item multi-observer normalization examples;
-\item additional robustness experiments and archived parameter sweeps;
-\item reproducibility details and random-seed conventions.
-\end{enumerate}
+\subsection{Covariance identity}
 
-During public review, the detailed material remains in the repository theorem and supplementary notes so corrections can be made before the manuscript appendix is frozen.
+\begin{theorem}[QBS covariance identity]
+For any random variable $X$ such that $\mathbb E[|X|S]<\infty$,
+\[
+\mathbb E_{\mathrm{FP}}[X]-\mathbb E[X]
+=
+\frac{\operatorname{Cov}(X,S)}{\mathbb E[S]}.
+\]
+\end{theorem}
+
+\begin{proof}
+By definition,
+\[
+\mathbb E_{\mathrm{FP}}[X]
+=
+\frac{\mathbb E[XS]}{\mathbb E[S]}.
+\]
+Using
+\[
+\mathbb E[XS]
+=
+\mathbb E[X]\mathbb E[S]+\operatorname{Cov}(X,S),
+\]
+we obtain
+\[
+\mathbb E_{\mathrm{FP}}[X]
+=
+\mathbb E[X]
++
+\frac{\operatorname{Cov}(X,S)}{\mathbb E[S]}.
+\]
+Subtracting $\mathbb E[X]$ gives the result.
+\end{proof}
+
+Because $\mathbb E[S]>0$, the sign criterion is exact:
+\[
+\mathbb E_{\mathrm{FP}}[X]>\mathbb E[X]
+\quad\Longleftrightarrow\quad
+\operatorname{Cov}(X,S)>0.
+\]
+Equality holds exactly when $\operatorname{Cov}(X,S)=0$.
+
+\subsection{Tail probability identity}
+
+\begin{theorem}[Tail identity]
+For every threshold $c$,
+\[
+P_{\mathrm{FP}}(X\ge c)-P(X\ge c)
+=
+\frac{\operatorname{Cov}(\mathbf 1_{\{X\ge c\}},S)}{\mathbb E[S]}.
+\]
+\end{theorem}
+
+\begin{proof}
+Apply the covariance identity to the bounded random variable
+\[
+Z=\mathbf 1_{\{X\ge c\}}.
+\]
+Then $\mathbb E[Z]=P(X\ge c)$ and $\mathbb E_{\mathrm{FP}}[Z]=P_{\mathrm{FP}}(X\ge c)$.
+\end{proof}
+
+\subsection{Monotone accessibility and first-order stochastic dominance}
+
+\begin{theorem}[Monotone accessibility implies FOSD]
+Let
+\[
+g(x)=\mathbb E[S\mid X=x]
+\]
+be a version of the conditional expectation that is nondecreasing on the support of $X$. Then
+\[
+F_{\mathrm{FP}}(c)\le F(c)
+\]
+for every real $c$.
+\end{theorem}
+
+\begin{proof}
+Fix $c$ and define
+\[
+f_c(x)=\mathbf 1_{\{x\le c\}}.
+\]
+The covariance identity gives
+\[
+F_{\mathrm{FP}}(c)-F(c)
+=
+\frac{\operatorname{Cov}(f_c(X),S)}{\mathbb E[S]}.
+\]
+Since $f_c(X)$ is measurable with respect to $X$,
+\[
+\operatorname{Cov}(f_c(X),S)
+=
+\operatorname{Cov}(f_c(X),\mathbb E[S\mid X])
+=
+\operatorname{Cov}(f_c(X),g(X)).
+\]
+Let $X'$ be an independent copy of $X$. For integrable functions $a$ and $b$,
+\[
+2\operatorname{Cov}(a(X),b(X))
+=
+\mathbb E[(a(X)-a(X'))(b(X)-b(X'))].
+\]
+Here $f_c$ is nonincreasing and $g$ is nondecreasing. Therefore
+\[
+(f_c(X)-f_c(X'))(g(X)-g(X'))\le 0
+\]
+almost surely. Hence
+\[
+\operatorname{Cov}(f_c(X),g(X))\le 0.
+\]
+Division by the positive quantity $\mathbb E[S]$ proves
+\[
+F_{\mathrm{FP}}(c)\le F(c).
+\]
+\end{proof}
+
+\paragraph{Equality condition.}
+At a fixed threshold $c$,
+\[
+F_{\mathrm{FP}}(c)=F(c)
+\]
+if and only if
+\[
+\operatorname{Cov}(\mathbf 1_{\{X\le c\}},g(X))=0.
+\]
+A sufficient condition for equality at every threshold is that $g(X)$ is almost surely constant.
+
+\paragraph{Strictness condition.}
+At threshold $c$, strict dominance holds whenever two independent copies $X,X'$ have positive probability of satisfying
+\[
+X\le c<X'
+\]
+and simultaneously
+\[
+g(X)<g(X').
+\]
+On this event the covariance-pair product is strictly negative, and therefore
+\[
+F_{\mathrm{FP}}(c)<F(c).
+\]
+
+\paragraph{Boundary of the theorem.}
+Positive Pearson correlation between $X$ and $S$ does not imply FOSD. The proof requires the stronger ordering condition that $g(x)$ be nondecreasing. Nonmonotone accessibility may generate CDF crossings even when the first-person mean is larger.
+
+\subsection{Recognition decomposition}
+
+Let recognition state $R\in\{0,1\}$ induce policy-dependent pairs $(U_R,S_R)$ and define
+\[
+V_R
+=
+\frac{\mathbb E[U_RS_R]}{\mathbb E[S_R]},
+\qquad
+Q(U,S)
+=
+\frac{\operatorname{Cov}(U,S)}{\mathbb E[S]}.
+\]
+
+\begin{theorem}[Recognition decomposition]
+\[
+V_1-V_0
+=
+\mathbb E[U_1-U_0]
++
+Q(U_1,S_1)-Q(U_0,S_0).
+\]
+\end{theorem}
+
+\begin{proof}
+Apply the covariance identity separately to each recognition state:
+\[
+V_R
+=
+\mathbb E[U_R]+Q(U_R,S_R).
+\]
+Subtract the expression for $R=0$ from that for $R=1$.
+\end{proof}
+
+If the pre-recognition accessibility is constant,
+\[
+S_0\equiv 1,
+\]
+then $Q(U_0,S_0)=0$ and
+\[
+V_1-V_0
+=
+\mathbb E[U_1-U_0]
++
+\frac{\operatorname{Cov}(U_1,S_1)}{\mathbb E[S_1]}.
+\]
+The first term is the ordinary trajectory/policy effect; the second is the first-person conditioning contribution.
+
+\paragraph{Recognition-label null.}
+If recognition changes neither trajectory nor accessibility,
+\[
+U_1=U_0,
+\qquad
+S_1=S_0
+\]
+almost surely, then $V_1-V_0=0$ exactly.
+
+\subsection{Policy--QBS interaction decomposition}
+
+Let
+\[
+D=U_1-U_0,
+\qquad
+I=Q(U_1,S_1)-Q(U_0,S_0).
+\]
+
+\begin{theorem}[Interaction decomposition]
+\[
+I
+=
+\frac{\operatorname{Cov}(D,S_0)}{\mathbb E[S_0]}
++
+\left[Q(U_1,S_1)-Q(U_1,S_0)\right].
+\]
+\end{theorem}
+
+\begin{proof}
+Add and subtract $Q(U_1,S_0)$:
+\[
+I
+=
+\left[Q(U_1,S_0)-Q(U_0,S_0)\right]
++
+\left[Q(U_1,S_1)-Q(U_1,S_0)\right].
+\]
+Since $U_1=U_0+D$ and covariance is linear in its first argument,
+\[
+Q(U_1,S_0)-Q(U_0,S_0)
+=
+\frac{\operatorname{Cov}(D,S_0)}{\mathbb E[S_0]}.
+\]
+Substitution proves the identity.
+\end{proof}
+
+For a fixed selector $S_1=S_0=S$,
+\[
+I
+=
+\frac{\operatorname{Cov}(D,S)}{\mathbb E[S]}.
+\]
+Therefore the sign of the interaction is exactly the sign of $\operatorname{Cov}(D,S)$.
+
+\subsection{Adaptive-rescue sign condition}
+
+\begin{corollary}[Adaptive rescue]
+Let $B$ denote branch badness. Suppose policy improvement is $D=d(B)$ with $d$ nondecreasing and accessibility is $S=s(B)$ with $s$ nonincreasing. Then
+\[
+\operatorname{Cov}(D,S)\le 0.
+\]
+Under a fixed selector, $I\le 0$.
+\end{corollary}
+
+\begin{proof}
+Let $B'$ be an independent copy of $B$. Then
+\[
+2\operatorname{Cov}(d(B),s(B))
+=
+\mathbb E[(d(B)-d(B'))(s(B)-s(B'))].
+\]
+Because $d$ and $s$ have opposite monotonicity, the integrand is nonpositive almost surely. Hence the covariance is nonpositive.
+\end{proof}
+
+Strict negativity holds when the two functions vary nontrivially in opposite directions on a set that can be separated by two independent draws with positive probability.
+
+\subsection{Option value and support preservation}
+
+\begin{proposition}[Costless recognition option value]
+If $\Pi_0\subseteq\Pi_1$ and the same value functional $V$ evaluates both policy sets, then
+\[
+\sup_{\pi\in\Pi_1}V(\pi)
+\ge
+\sup_{\pi\in\Pi_0}V(\pi).
+\]
+\end{proposition}
+
+\begin{proof}
+The supremum over a superset cannot be smaller than the supremum over a subset.
+\end{proof}
+
+\begin{proposition}[Pure reweighting cannot create support]
+For fixed policy $\pi$, the first-person measure is absolutely continuous with respect to the base measure:
+\[
+\mu^{\mathrm{FP}}_\pi\ll\mu.
+\]
+Thus $\mu(A)=0$ implies $\mu^{\mathrm{FP}}_\pi(A)=0$.
+\end{proposition}
+
+\begin{proof}
+If $\mu(A)=0$, then $\mathbf 1_A=0$ almost surely. Hence
+\[
+\mathbb E[\mathbf 1_A S_\pi]=0,
+\]
+and therefore $\mu^{\mathrm{FP}}_\pi(A)=0$ whenever $\mathbb E[S_\pi]>0$.
+\end{proof}
+
+Recognition may nevertheless change the policy and therefore the trajectory map itself. Support preservation applies to pure reweighting under a fixed policy, not to causal policy changes.
+
+\subsection{Zero-accessible-measure boundary}
+
+The normalized first-person measure requires
+\[
+\mathbb E[S]>0.
+\]
+If $\mathbb E[S]=0$, the normalized measure is undefined. This is not merely a low-value state; normalization itself fails.
+
+\subsection{Repeated-filter sensitivity identity}
+
+Let $N_B$ count adverse triggers and define
+\[
+S=\lambda^{N_B},
+\qquad
+V(\lambda)
+=
+\frac{\mathbb E[U\lambda^{N_B}]}{\mathbb E[\lambda^{N_B}]}.
+\]
+Assume differentiation under the expectation is valid. Define the $\lambda$-weighted expectation by
+\[
+\mathbb E_\lambda[X]
+=
+\frac{\mathbb E[X\lambda^{N_B}]}{\mathbb E[\lambda^{N_B}]}.
+\]
+Then
+\[
+\frac{dV}{d\log\lambda}
+=
+\operatorname{Cov}_\lambda(U,N_B).
+\]
+Indeed, writing $N(\lambda)=\mathbb E[U\lambda^{N_B}]$ and $D(\lambda)=\mathbb E[\lambda^{N_B}]$, the quotient rule gives
+\[
+\lambda\frac{dV}{d\lambda}
+=
+\frac{\mathbb E[UN_B\lambda^{N_B}]}{D(\lambda)}
+-
+\frac{N(\lambda)}{D(\lambda)}
+\frac{\mathbb E[N_B\lambda^{N_B}]}{D(\lambda)},
+\]
+which is the weighted covariance.
+
+\subsection{Gaussian minimal model}
+
+Let $(L,Y)$ be jointly standard normal with correlation $\rho$. Let
+\[
+S
+=
+\begin{cases}
+1, & Y\ge 0,\\
+\lambda, & Y<0.
+\end{cases}
+\]
+Because
+\[
+\mathbb E[L\mid Y]=\rho Y,
+\]
+we have
+\[
+\mathbb E[LS]
+=
+\rho\,\mathbb E[YS].
+\]
+Using
+\[
+\mathbb E[Y\mathbf 1_{\{Y\ge0\}}]
+=
+\frac{1}{\sqrt{2\pi}},
+\qquad
+\mathbb E[Y\mathbf 1_{\{Y<0\}}]
+=
+-\frac{1}{\sqrt{2\pi}},
+\]
+we obtain
+\[
+\mathbb E[YS]
+=
+\frac{1-\lambda}{\sqrt{2\pi}}.
+\]
+Also
+\[
+\mathbb E[S]
+=
+\frac{1+\lambda}{2}.
+\]
+Therefore
+\[
+\mathbb E_{\mathrm{FP}}[L]
+=
+\frac{2(1-\lambda)\rho}{(1+\lambda)\sqrt{2\pi}}.
+\]
+Under the toy parameterization $\lambda=1-q(1-\alpha)$,
+\[
+\mathbb E_{\mathrm{FP}}[L]
+=
+\frac{2q(1-\alpha)\rho}{[2-q(1-\alpha)]\sqrt{2\pi}}.
+\]
+This is an exact result for the Gaussian toy model, not a physical Everett prediction.
+
+\subsection{Separate normalization for multiple observers}
+
+For observer $i$, define
+\[
+d\mu_i^{\mathrm{FP}}
+=
+\frac{S_i}{\mathbb E[S_i]}
+\,d\mu.
+\]
+Each observer's first-person measure is normalized separately. These normalized measures are not shares of a single probability budget and therefore need not sum over observer index $i$. This observation is purely measure-theoretic and does not imply that mutually incompatible shared-world events are jointly likely.
+
+\subsection{Reproducibility conventions}
+
+The principal experiments use explicit random seeds and committed source data. GitHub Actions reruns E1--E5, regenerates the publication SVG figures, validates the experiment manifest, and independently compiles the manuscript PDF. Historical exploratory parameter sweeps remain secondary evidence and are not promoted to theorem status.

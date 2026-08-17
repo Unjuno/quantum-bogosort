@@ -82,27 +82,24 @@ This roadmap turns the public repository into the source of truth for the theory
 
 ## Post-v0.2 theorem development
 
-- [x] Prove Supplementary Theorem S2: score-measurable predictive-calibration alignment.
-- [x] Prove posterior-mean self-calibration.
-- [x] Derive the S2.3 approximate-calibration robustness bound.
-- [x] Derive the S2.4 conservative prediction-MSE population certificate.
-- [x] Prove the MSE decomposition separating irreducible conditional variance from squared calibration error.
-- [x] Prove S2.5, a bounded i.i.d. independent-held-out high-probability certificate using simultaneous Hoeffding bounds.
-- [x] Derive the quantitative first-person lower bound `D_L/B_S` when the finite-sample certificate is positive.
-- [x] Prove consistency of S2.5 when the population S2.4 margin is strictly positive.
-- [x] Prove S2.6: arbitrary independent training preserves S2.5 coverage conditional on the realized trained rule.
-- [x] Prove S2.7: finite predeclared same-holdout candidate selection is valid under simultaneous multiplicity-corrected certificates.
-- [x] Add unequal confidence allocation for finite candidate families.
-- [x] Prove S2.8: any valid simultaneous five-moment confidence envelope can be composed into a covariance lower certificate.
-- [x] Prove S2.9: a light-tail sub-Gaussian/Bernstein instantiation of S2.8 without deterministic boundedness.
-- [x] Record why product/square tail controls must be explicit rather than silently inferred from marginal sub-Gaussianity.
-- [x] Prove S2.10: a robust median-of-means instantiation of S2.8 using finite variance bounds for the five target variables.
-- [x] Record the fourth-moment-type implications needed for `S^2`, `(U-Y)^2`, and `YS` in the S2.10 variance assumptions.
+- [x] Prove S2 predictive-calibration alignment.
+- [x] Prove S2.2 posterior-mean self-calibration.
+- [x] Derive S2.3 approximate-calibration robustness.
+- [x] Derive S2.4 prediction-MSE population certificate.
+- [x] Prove S2.5 bounded held-out finite-sample certification.
+- [x] Prove S2.6 validity after arbitrary independent training.
+- [x] Prove S2.7 finite predeclared candidate post-selection validity.
+- [x] Prove S2.8 generic five-moment confidence-envelope composition.
+- [x] Prove S2.9 light-tail sub-Gaussian/Bernstein instantiation.
+- [x] Prove S2.10 robust median-of-means instantiation.
+- [x] Record S2.10's target-variable variance and fourth-moment-type boundaries.
+- [x] Prove S2.11 residual conditional-covariance extension beyond `S=s(Y)`.
+- [x] Record the exact total-covariance decomposition and a counterexample showing score-level alignment can be overturned by negative residual dependence.
+- [ ] Develop estimable bounds or diagnostics for the S2.11 residual term in specific learned-agent models.
 - [ ] Derive explicit Orlicz/mgf sufficient conditions for the S2.9 Bernstein parameters with convention-specific constants.
-- [ ] Explore robust estimators that weaken the S2.10 fourth-moment-type requirements for squared target variables.
-- [ ] Extend selection validity from finite predeclared candidate families to infinite or certification-data-dependent classes using uniform convergence, selective inference, or fresh-sample methods.
-- [ ] Add a held-out calibration/MSE experiment only if review requires direct empirical evaluation of the S2.5–S2.10 stack.
-- [ ] Extend S2 beyond score-measurable accessibility by bounding or signing the residual conditional-covariance term.
+- [ ] Explore robust estimators that weaken S2.10's fourth-moment-type requirements for squared target variables.
+- [ ] Extend finite-candidate selection validity to infinite or certification-data-dependent classes.
+- [ ] Add a held-out certificate experiment only if review requires direct empirical evaluation.
 
 ## Current focus
 
@@ -110,12 +107,13 @@ The v0.2 public-review baseline remains fixed at merge commit `7405f7408f74fa32b
 
 Current stack:
 
-1. PR #11 — S2 through S2.3;
-2. PR #12 — S2.4 prediction-MSE population certificate;
-3. PR #13 — S2.5 finite-sample held-out certificate;
-4. PR #15 — S2.6–S2.7 training and finite-candidate selection validity;
-5. PR #16 — S2.8 generic confidence-envelope composition;
-6. PR #17 — S2.9 light-tail sub-Gaussian/Bernstein instantiation;
-7. current robust branch — S2.10 median-of-means finite-moment instantiation.
+1. PR #11 — S2 through S2.3.
+2. PR #12 — S2.4 prediction-MSE population certificate.
+3. PR #13 — S2.5 bounded finite-sample held-out certificate.
+4. PR #15 — S2.6–S2.7 training and finite-candidate selection validity.
+5. PR #16 — S2.8 generic confidence-envelope composition.
+6. PR #17 — S2.9 light-tail sub-Gaussian/Bernstein instantiation.
+7. PR #18 — S2.10 robust median-of-means instantiation.
+8. Current branch — S2.11 residual conditional-covariance extension.
 
-Next default theorem priority is the residual conditional-covariance extension beyond score-measurable accessibility, followed by explicit Orlicz/mgf constants for S2.9 if review needs them. Another toy experiment is not added by default.
+Next priority is to determine when the S2.11 residual term can be signed or bounded from observable/model-level quantities without reintroducing the deterministic `S=s(Y)` assumption. Another toy experiment is not added by default.

@@ -1,0 +1,65 @@
+\section{Main Theorems}
+
+The complete proofs are maintained in the theorem notes; this manuscript section will eventually contain polished statements and proofs.
+
+\subsection{Covariance identity}
+
+For integrable $X$ and nonnegative $S$ with positive finite mean,
+\[
+\mathbb E_{\mathrm{FP}}[X]-\mathbb E[X]
+=
+\frac{\operatorname{Cov}(X,S)}{\mathbb E[S]}.
+\]
+Hence positive first-person mean uplift is equivalent to positive outcome--accessibility covariance.
+
+\subsection{Tail identity}
+
+For threshold $c$,
+\[
+P_{\mathrm{FP}}(X\ge c)-P(X\ge c)
+=
+\frac{\operatorname{Cov}(\mathbf 1_{\{X\ge c\}},S)}{\mathbb E[S]}.
+\]
+
+\subsection{Monotone accessibility and FOSD}
+
+Let $g(x)=\mathbb E[S\mid X=x]$. If $g$ is nondecreasing, then
+\[
+F_{\mathrm{FP}}(c)\le F(c)
+\]
+for every $c$. Positive Pearson correlation alone is not sufficient; nonmonotone accessibility can produce CDF crossings.
+
+\subsection{Recognition decomposition}
+
+Recognition satisfies
+\[
+V_1-V_0
+=
+\mathbb E[U_1-U_0]
++
+Q(U_1,S_1)-Q(U_0,S_0).
+\]
+If $S_0\equiv1$,
+\[
+V_1-V_0
+=
+\mathbb E[U_1-U_0]
++
+\frac{\operatorname{Cov}(U_1,S_1)}{\mathbb E[S_1]}.
+\]
+
+\subsection{Policy--QBS interaction}
+
+Let $D=U_1-U_0$ and define
+\[
+I=Q(U_1,S_1)-Q(U_0,S_0).
+\]
+Then
+\[
+I
+=
+\frac{\operatorname{Cov}(D,S_0)}{\mathbb E[S_0]}
++
+\left[Q(U_1,S_1)-Q(U_1,S_0)\right].
+\]
+For a fixed selector, the second term vanishes. If policy improvement increases with branch badness while accessibility decreases with branch badness, the interaction is nonpositive.

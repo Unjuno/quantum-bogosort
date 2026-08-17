@@ -71,4 +71,11 @@ I
 \]
 For a fixed selector, the second term vanishes. If policy improvement increases with branch badness while accessibility decreases with branch badness, the interaction is nonpositive.
 
-A supplementary hierarchical result for cross-branch policy coherence is kept outside the core five in \texttt{supplementary/branch\_recognition.md} and is used to interpret E5 without conflating policy-map sharing with realized action correlation.
+The core five remain fixed. Two supplementary results are used for mechanism interpretation: S1 gives cross-branch policy coherence under explicit shared-latent assumptions, and S2 gives predictive-calibration alignment. In S2, if $m(Y)=\mathbb E[U\mid Y]$ and score-measurable accessibility $S=s(Y)$ are comonotone, then
+\[
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(m(Y),s(Y))
+\ge0.
+\]
+The proof and the counterexample showing that positive mutual information alone is insufficient are kept in the supplementary appendix.

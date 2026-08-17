@@ -84,11 +84,30 @@ The recognition-time note explicitly defers a universal early-versus-late orderi
 - [ ] Collect public review and revise the repository/manuscript.
 - [ ] Prepare `v1.0-preprint` only after the review interval and subsequent revisions stabilize the manuscript for arXiv submission.
 
+## Post-v0.2 theorem development
+
+- [x] Prove Supplementary Theorem S2: score-measurable predictive-calibration alignment.
+- [x] Prove the exact projection identity:
+
+$$
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(E[U\mid Y],s(Y)).
+$$
+
+- [x] Give monotone/comonotone sufficient conditions for nonnegative and strict covariance.
+- [x] Record the counterexample showing that positive mutual information alone is insufficient.
+- [x] Integrate the theorem into a separate manuscript appendix while keeping the core five fixed.
+- [ ] Derive learning-theoretic sufficient conditions under which an adapted agent's score orders `E[U_T|Y_t]` correctly.
+- [ ] Extend S2 beyond score-measurable accessibility by bounding or signing the residual conditional-covariance term.
+
 ## Current focus
 
-After the release-audit PR passes CI, the research enters the public-review phase. The default priority becomes:
+The v0.2 public-review baseline remains fixed at merge commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`. Post-v0.2 work should remain separately reviewable.
 
-1. collect and triage review comments;
-2. correct proofs, wording, references, or code when justified;
-3. avoid expanding experiments unless review reveals a specific missing test;
-4. prepare `v1.0-preprint` only after the review period and revision pass.
+Current theoretical priority:
+
+1. review S2 and its mutual-information boundary;
+2. derive conditions connecting learning dynamics to monotone conditional-mean calibration;
+3. only then consider a new experiment if the derived conditions require a missing falsification test;
+4. preserve the Everett bridge as a separate physical question.

@@ -96,9 +96,28 @@ $$
 $$
 
 - [x] Give monotone/comonotone sufficient conditions for nonnegative and strict covariance.
+- [x] Prove posterior-mean self-calibration:
+
+$$
+Y=E[U\mid B]
+\Longrightarrow
+E[U\mid Y]=Y.
+$$
+
+- [x] Derive the approximate-calibration robustness bound:
+
+$$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+$$
+
 - [x] Record the counterexample showing that positive mutual information alone is insufficient.
-- [x] Integrate the theorem into a separate manuscript appendix while keeping the core five fixed.
-- [ ] Derive learning-theoretic sufficient conditions under which an adapted agent's score orders `E[U_T|Y_t]` correctly.
+- [x] Integrate S2 and its corollaries into a separate manuscript appendix while keeping the core five fixed.
+- [ ] Derive learning-theoretic upper bounds on `Var(e(Y))` for finite adapted agents.
+- [ ] Add a calibration diagnostic experiment only if review requires direct estimation of the S2.3 margin.
 - [ ] Extend S2 beyond score-measurable accessibility by bounding or signing the residual conditional-covariance term.
 
 ## Current focus
@@ -107,7 +126,7 @@ The v0.2 public-review baseline remains fixed at merge commit `7405f7408f74fa32b
 
 Current theoretical priority:
 
-1. review S2 and its mutual-information boundary;
-2. derive conditions connecting learning dynamics to monotone conditional-mean calibration;
-3. only then consider a new experiment if the derived conditions require a missing falsification test;
+1. review S2, posterior-mean self-calibration, and the approximate-error bound;
+2. derive finite-model learning bounds for calibration error;
+3. only then consider a new experiment if the bound requires a missing falsification test;
 4. preserve the Everett bridge as a separate physical question.

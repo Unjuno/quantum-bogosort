@@ -1,26 +1,50 @@
 \section{Adaptive-Agent Mechanism}
 
-A central modeling question is whether positive outcome--accessibility alignment must be inserted exogenously. We instead consider an adapted agent with environment state $X_t$, internal belief state $B_t$, evaluation signal $Y_t$, and later outcome $U_T$.
+A central modeling question is whether positive outcome--accessibility alignment must be inserted exogenously. We instead consider an adapted agent with environment state $X_t$, internal belief state $B_t$, scalar evaluation signal $Y_t=h(B_t)$, and later outcome $U_T$.
 
-Adaptation can create predictive information,
+Adaptation can create statistical dependence between the internal model and future outcomes, but mutual information alone is not enough for the mean-uplift result. The relevant directional object is the conditional mean
 \[
-I(B_t;X_t)>0,
+m(y)=\mathbb E[U_T\mid Y_t=y].
 \]
-and temporal environment structure can make current state informative about later outcomes,
+Suppose accessibility is score-measurable,
 \[
-I(X_t;U_T)>0.
+S_t=s(Y_t),
 \]
-These information relations alone do not guarantee positive Pearson correlation. The useful additional condition is directional calibration: $\mathbb E[U_T\mid Y_t=y]$ should be nondecreasing in $y$. If accessibility is also nondecreasing in the evaluation signal, the model naturally produces positive outcome--accessibility covariance under corresponding regularity assumptions.
+with $S_t\ge0$, $0<\mathbb E[S_t]<\infty$, and the required product integrability. Then Supplementary Theorem S2 gives the exact projection identity
+\[
+\operatorname{Cov}(U_T,S_t)
+=
+\operatorname{Cov}(m(Y_t),s(Y_t)).
+\]
+If $m(y)$ and $s(y)$ are both nondecreasing on the support of $Y_t$, then
+\[
+\operatorname{Cov}(U_T,S_t)\ge0.
+\]
+The inequality is strict when the two orderings vary together on a positive-probability set. By the main covariance identity, this implies nonnegative first-person mean uplift under the corresponding weighted-measure model.
 
-The intended causal chain is
+A particularly transparent corollary is
+\[
+S_t=r(m(Y_t))
+\]
+for a nondecreasing function $r$. If the predicted conditional mean is nonconstant and $r$ is strictly increasing on its essential range, the covariance is strictly positive.
+
+For square-integrable $U_T$, the quantity
+\[
+M(U_T;Y_t)
+=
+\operatorname{Var}(\mathbb E[U_T\mid Y_t])
+\]
+measures conditional-mean predictive strength. It is the relevant nondegeneracy quantity for this theorem. Positive mutual information $I(U_T;Y_t)>0$ is weaker: dependence can occur entirely through conditional variance while $\mathbb E[U_T\mid Y_t]$ remains constant, in which case every score-measurable accessibility map has zero covariance with $U_T$.
+
+The intended causal chain is therefore
 \[
 \text{adaptation}
 \rightarrow
 \text{predictive internal model}
 \rightarrow
-\text{ordered evaluation signal}
+\text{ordered conditional-mean signal}
 \rightarrow
 \text{outcome-aligned accessibility}.
 \]
 
-Experiment E2 tests the minimal version of this mechanism in a nonlinear environment. A misspecified model that cannot represent the relevant interaction fails to produce predictive alignment, while a small interaction-capable model succeeds. This provides a classical mechanism for endogenous correlation but does not establish a physical Everettian accessibility map.
+Experiment E2 tests the minimal version of this mechanism in a nonlinear environment. A misspecified model that cannot represent the relevant interaction fails to produce predictive alignment, while a small interaction-capable model succeeds. E3 supplies a paired endogenous-policy example. These simulations support the premise that learning can generate the required ordering in toy environments; S2 proves the covariance implication once that ordering and score-measurable accessibility are given. Neither step establishes a physical Everettian accessibility map.

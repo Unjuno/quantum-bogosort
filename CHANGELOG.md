@@ -14,31 +14,32 @@
 - Corollary S2.8 composing any valid simultaneous five-moment confidence envelope into a covariance lower certificate;
 - Corollary S2.9 instantiating S2.8 for unbounded light-tail data using sub-Gaussian first-moment and Bernstein/sub-exponential product/square controls;
 - Corollary S2.10 instantiating S2.8 with median-of-means under finite variance bounds for the five target variables;
+- Supplementary Theorem S2.11 extending predictive alignment beyond `S=s(Y)` via the exact law of total covariance;
+- S2.11 residual-tolerance bound
+  $$
+  \operatorname{Cov}(U,S)
+  \ge
+  \operatorname{Cov}(E[U\mid Y],E[S\mid Y])
+  -\varepsilon
+  $$
+  whenever the average conditional residual covariance is at least `-epsilon`;
+- an explicit S2.11 counterexample showing negative residual dependence can overturn score-level alignment;
 - unequal confidence allocation for finite candidate families;
-- simultaneous Hoeffding bounds for empirical `Y`, `S`, `YS`, `S^2`, and squared residuals;
-- an explicit held-out certificate margin `D_L` satisfying
-  $$
-  P(\operatorname{Cov}(U,S)\ge D_L)\ge1-\delta;
-  $$
-- generic, light-tail, and median-of-means lower margins `D_env`, `D_LT`, and `D_MoM` with the same one-sided covariance guarantee;
+- bounded, generic-envelope, light-tail, and median-of-means covariance lower margins;
 - quantitative first-person lower bounds using a simultaneous upper bound on `E[S]` when a certificate margin is positive;
-- consistency of S2.5 when the population S2.4 margin is strictly positive;
-- theorem audits for the S2 alignment family, S2.5 finite-sample certificate, S2.6–S2.7 selection validity, S2.8 generic envelope composition, S2.9 light-tail instantiation, and S2.10 median-of-means instantiation;
-- explicit mutual-information, certificate-failure, uncorrected best-of-K, post-hoc candidate-construction, tail-parameter-estimation, and raw-vs-target-moment boundaries.
+- theorem audits for S2 through S2.11;
+- explicit mutual-information, certificate-failure, multiple-selection, tail-parameter, target-moment, and residual-dependence boundaries.
 
 ### Changed
 
-- the adaptive-agent mechanism now separates the QBS composition theorem from the statistical concentration method used to estimate its required moments;
-- S2.4 is explicitly marked conservative because ordinary prediction MSE includes irreducible conditional outcome variance;
-- S2.5 explicitly requires independent held-out evaluation or an equivalent conditional-on-training formulation;
-- S2.6 makes that conditional-on-training formulation an explicit theorem;
-- S2.7 permits same-holdout selection only within a finite candidate family whose certificates are simultaneously multiplicity-corrected;
-- S2.8 makes Hoeffding only one possible statistical instantiation of a generic confidence-envelope interface;
-- S2.9 permits unbounded light-tail variables when the required five concentration controls are valid;
-- S2.10 permits heavy-tailed target variables without exponential-tail assumptions when all five S2.8 target variables have valid finite variance bounds;
-- product and square tail constants are treated as explicit inputs rather than silently inferred from marginal sub-Gaussianity;
-- S2.10 explicitly records that finite variance of `S^2` and `(U-Y)^2` entails fourth-moment-type requirements and therefore is stronger than raw-variable finite variance;
-- uncorrected multiple-candidate search, post-hoc candidate invention, unaccounted tail-parameter estimation, and invalid variance bounds are explicitly outside the stated guarantees;
+- the adaptive-agent mechanism now separates score-level predictive alignment from residual branch-level outcome/accessibility dependence;
+- S2 is explicitly identified as the zero-residual special case of S2.11 when `S` is `Y`-measurable;
+- the statistical certification layer is separated from the QBS covariance-composition layer through S2.8;
+- S2.9 permits unbounded light-tail variables only when all required moment-concentration controls are valid;
+- S2.10 permits robust median-of-means certification only when the five S2.8 target variables have valid finite variance bounds;
+- S2.10 records the fourth-moment-type implications needed for squared targets;
+- S2.11 explicitly prevents an overclaim that comonotone conditional means alone are enough once additional accessibility randomness is allowed;
+- uncorrected model search, post-hoc candidate invention, invalid tail/variance inputs, and ignored negative residual dependence are outside the stated guarantees;
 - no sixth core experiment is introduced by the S2 theorem stack;
 - the core five theorem set remains unchanged.
 

@@ -58,29 +58,31 @@ The recognition-time note explicitly defers a universal early-versus-late orderi
 - [x] Integrate complete proofs of T1–T5 into the appendix.
 - [x] Add strict/equality conditions and supplementary derivations.
 - [x] Add GitHub Actions LaTeX/PDF build and artifact upload.
+- [x] Perform a claim-by-claim consistency audit against `STATUS.md` and `docs/claims_and_assumptions.md`.
 - [ ] Finalize prose, figure placement, captions, and cross-references.
-- [ ] Perform final claim-by-claim consistency audit against `STATUS.md` and `docs/claims_and_assumptions.md`.
+- [ ] Re-run the claim audit after final layout/prose changes.
 
 ## Phase 7 — Everett bridge review
 
 - [x] Keep the Everett accessibility map as a separate bridge assumption rather than a theorem consequence.
-- [x] Review the bridge against both supportive and critical Everett probability literature at an initial level.
-- [ ] Decide the final manuscript wording for what evidence would support, constrain, or reject the bridge.
+- [x] Review the bridge against both supportive and critical Everett probability literature.
+- [x] Specify structural support, constraint, and rejection criteria in `docs/everett_bridge_tests.md`.
+- [x] Add layer-specific falsifiability wording to the manuscript Everett and Limitations sections.
+- [ ] Pursue a concrete physical derivation or empirical model only as post-v0.2 research unless review produces a credible candidate.
 
 ## Phase 8 — Public review and release
 
 - [x] Keep GitHub Issues open for proof corrections, counterexamples, prior art, and implementation bugs.
 - [x] Integrate major repository corrections through PRs with CI gates.
-- [ ] Complete final v0.2 manuscript-readiness audit.
-- [ ] Cut `v0.2-public-review` when the remaining layout/bridge/audit gates are satisfied.
+- [ ] Complete final v0.2 manuscript-readiness audit after figure placement and targeted novelty search.
+- [ ] Cut `v0.2-public-review` when the remaining layout/search/audit gates are satisfied.
 - [ ] Prepare `v1.0-preprint` only after references, claims, and manuscript are stable enough for arXiv submission.
 
 ## Current focus
 
 The project is no longer in the experiment-expansion phase. The default priority is now:
 
-1. final manuscript coherence and figure integration;
-2. bridge-assumption falsifiability wording;
-3. targeted prior-art gaps;
-4. v0.2 release audit;
-5. only then any new theorem or experiment justified by review feedback.
+1. final manuscript prose, figure integration, captions, and cross-references;
+2. targeted prior-art search for direct endogenous-policy/self-location overlap;
+3. final v0.2 release audit;
+4. only then any new theorem or experiment justified by review feedback.

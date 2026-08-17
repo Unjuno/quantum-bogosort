@@ -94,6 +94,90 @@ If $m(Y)$ is nonconstant with positive probability and $r$ is strictly increasin
 \]
 \end{corollary}
 
+\begin{corollary}[Posterior-mean self-calibration]
+Let $B$ be an internal information state and suppose
+\[
+Y=\mathbb E[U\mid B].
+\]
+Then
+\[
+\mathbb E[U\mid Y]=Y.
+\]
+Consequently, if $S=s(Y)$ with $s$ nondecreasing, then
+\[
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(Y,s(Y))
+\ge0.
+\]
+If $Y$ is nonconstant and $s$ is strictly increasing on the essential range of $Y$, the covariance is strictly positive.
+\end{corollary}
+
+\begin{proof}
+Because $Y=\mathbb E[U\mid B]$ is measurable with respect to $B$,
+\[
+\mathbb E[U\mid Y]
+=
+\mathbb E[\mathbb E[U\mid B]\mid Y]
+=
+\mathbb E[Y\mid Y]
+=Y.
+\]
+The covariance conclusion then follows from S2 with $m(Y)=Y$.
+\end{proof}
+
+\begin{corollary}[Approximate-calibration robustness]
+Assume $U$, $Y$, and $S=s(Y)$ are square-integrable and define
+\[
+e(Y)=\mathbb E[U\mid Y]-Y.
+\]
+Then
+\[
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(Y,S)
++
+\operatorname{Cov}(e(Y),S)
+\]
+and
+\[
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+\]
+Hence
+\[
+\operatorname{Cov}(Y,S)
+>
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}
+\]
+is sufficient for strict positive outcome--accessibility covariance.
+\end{corollary}
+
+\begin{proof}
+Write
+\[
+\mathbb E[U\mid Y]=Y+e(Y).
+\]
+Using the S2 projection identity and covariance linearity,
+\[
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(Y,S)
++
+\operatorname{Cov}(e(Y),S).
+\]
+Cauchy--Schwarz gives
+\[
+|\operatorname{Cov}(e(Y),S)|
+\le
+\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+\]
+Taking the worst-case negative sign for the calibration-error term gives the stated lower bound.
+\end{proof}
+
 For square-integrable $U$, define conditional-mean predictive strength by
 \[
 M(U;Y)
@@ -148,4 +232,4 @@ The score-measurability assumption is material. For a more general accessibility
 \]
 S2 sets the conditional-covariance term to zero because $S=s(Y)$. If accessibility contains additional randomness that remains conditionally correlated with the future outcome, that residual term must be analyzed separately.
 
-The theorem is a sufficient-condition result about an abstract accessibility map. It does not prove that learning dynamics produce monotone calibration or that Everettian observer self-location is represented by $S=s(Y)$.
+The theorem and corollaries are sufficient-condition results about an abstract accessibility map. Posterior-mean self-calibration is exact only when the score equals the true conditional expectation under the model being analyzed; an approximate learned predictor is covered only through the calibration-error bound. None of these results derives Everettian observer self-location from quantum dynamics.

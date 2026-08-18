@@ -8,7 +8,7 @@ Recognition need not be modeled as an externally fixed switch. An agent can acti
 
 A generic pipeline is:
 
-$$
+```math
 \text{data}
 \longrightarrow
 \widehat{\rho}
@@ -20,7 +20,7 @@ q
 S
 \longrightarrow
 \mu^{FP}.
-$$
+```
 
 Here `q` is an execution/adherence strength and the activation rule depends on estimated predictive evidence.
 
@@ -34,11 +34,11 @@ The exploratory result was qualitative but stable: weak true correlations requir
 
 A sequential extension defines recognition time as a stopping time:
 
-$$
+```math
 \tau_{recognition}
 =
 \inf\{t:\text{evidence criterion is satisfied at time }t\}.
-$$
+```
 
 This would allow explicit separation of:
 

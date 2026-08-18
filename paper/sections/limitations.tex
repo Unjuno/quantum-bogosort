@@ -2,7 +2,15 @@
 
 The framework has several explicit mathematical failure conditions. Pure weighting does not generically improve first-person outcomes: if accessibility is independent of outcome, the covariance contribution vanishes in expectation. Positive correlation is weaker than the monotone conditional-accessibility condition required for first-order stochastic dominance, and nonmonotone accessibility can produce CDF crossings. Recognition has no effect if it changes neither trajectory utility nor accessibility. If expected accessibility is zero, the normalized first-person measure is undefined.
 
-The classical simulations also have limited scope. They are toy models designed to test formal identities, mechanism plausibility, and failure modes. They are not evidence that Everettian branch self-location obeys the proposed accessibility rule.
+The predictive-alignment results also have explicit boundaries. Positive mutual information does not imply favorable conditional-mean ordering. After score-measurability is removed, the residual term
+\[
+\mathbb E[\operatorname{Cov}(U,S\mid Y)]
+\]
+cannot be dropped: sufficiently negative residual dependence can overturn positive alignment between conditional means. The S2.12 and S2.13 inequalities use worst-case residual penalties and are therefore sufficient rather than necessary. Failure of an explained-variance or finite-sample certificate is inconclusive; it does not establish nonpositive outcome--accessibility covariance.
+
+The finite-sample validation results also depend on their own statistical assumptions. Independent held-out evaluation, multiplicity control for candidate selection, valid tail parameters, and valid target-moment bounds are not optional bookkeeping details. Training/evaluation leakage or data-dependent tuning outside the stated guarantees invalidates the nominal certificate without changing the underlying population identities.
+
+The classical simulations have limited scope. They are toy models designed to test formal identities, mechanism plausibility, and failure modes. They are not evidence that Everettian branch self-location obeys the proposed accessibility rule.
 
 \subsection{Everett bridge: structural constraints}
 
@@ -24,8 +32,8 @@ A concrete physical model that fixes $S_\pi$ before outcomes are inspected and p
 
 \subsection{Layer-specific falsifiability}
 
-Claims of falsifiability must specify the layer under test. The theorem assumptions can fail mathematically and can be instantiated or violated in toy experiments. A proposed observer model can fail structural consistency requirements. A physical Everett bridge becomes empirically falsifiable only when it makes observational predictions that differ from competing physical accounts.
+Claims of falsifiability must specify the layer under test. The theorem assumptions can fail mathematically and can be instantiated or violated in toy experiments. Statistical certificates can fail because their sufficient margins are too weak or their sampling assumptions are not met. A proposed observer model can fail structural consistency requirements. A physical Everett bridge becomes empirically falsifiable only when it makes observational predictions that differ from competing physical accounts.
 
-The project therefore treats rejection of the Everett bridge as compatible with retention of the measure-theoretic theorems and classical policy simulations. A failed bridge would change the interpretation of the framework, not the algebraic identities.
+The project therefore treats rejection of the Everett bridge as compatible with retention of the measure-theoretic theorems, predictive-alignment results, and classical policy simulations. A failed bridge would change the interpretation of the framework, not the algebraic identities.
 
-Additional open technical issues include stronger adaptive-agent information theorems, predictor misspecification, adaptive environments, accessible-measure collapse, and a general recognition-time ordering theorem under explicit causal assumptions. These are treated as research questions rather than hidden assumptions.
+Additional open technical issues include finite-sample estimation of the general-accessibility residual or explained-variance quantities, predictor misspecification in adaptive environments, robust certification under weaker moment assumptions, infinite or data-dependent model classes, accessible-measure collapse, and recognition-time ordering under explicit causal assumptions. These are treated as research questions rather than hidden assumptions.

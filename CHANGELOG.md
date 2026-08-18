@@ -100,7 +100,7 @@
 - six committed publication-oriented SVG figures with deterministic regeneration script;
 - PDF figure generator for LaTeX manuscript builds;
 - complete manuscript appendix proofs for T1–T5 and supplementary derivations;
-- Supplementary Theorem S1 for shared-latent branch-policy coherence;
+- Supplementary Theorem S1 for shared-latent policy coherence;
 - historical experiment archive index and supersession ledger;
 - explicit Everett bridge support / constraint / rejection criteria;
 - v0.2 manuscript claim consistency audit and post-layout re-audit;

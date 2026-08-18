@@ -5,11 +5,11 @@
 S2.11 gives the exact general-accessibility decomposition:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(E[U\mid Y],E[S\mid Y])
+\mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 +
-E[\operatorname{Cov}(U,S\mid Y)].
+E[\mathrm{Cov}(U,S\mid Y)].
 $$
 
 Its residual-tolerance form assumes a lower bound on the average conditional covariance itself. S2.12 replaces that unknown residual covariance by a universal lower bound based on conditional variances.
@@ -35,22 +35,22 @@ a(Y)=E[S\mid Y],
 $$
 
 $$
-v_U(Y)=\operatorname{Var}(U\mid Y),
+v_U(Y)=\mathrm{Var}(U\mid Y),
 $$
 
 and:
 
 $$
-v_S(Y)=\operatorname{Var}(S\mid Y).
+v_S(Y)=\mathrm{Var}(S\mid Y).
 $$
 
 Then:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 E\!\left[
 \sqrt{v_U(Y)v_S(Y)}
@@ -75,9 +75,9 @@ Therefore the coarser but simpler certificate is:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 \sqrt{
 E[v_U(Y)]
@@ -89,7 +89,7 @@ $$
 Consequently, either of the sufficient conditions:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 >
 E\!\left[
 \sqrt{v_U(Y)v_S(Y)}
@@ -99,7 +99,7 @@ $$
 or the stronger but simpler condition:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 >
 \sqrt{
 E[v_U(Y)]
@@ -110,7 +110,7 @@ $$
 implies:
 
 $$
-\operatorname{Cov}(U,S)>0.
+\mathrm{Cov}(U,S)>0.
 $$
 
 Under T1, positive total covariance implies positive first-person mean uplift.
@@ -151,9 +151,9 @@ Hence:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 \sqrt{E[\eta^2]E[\xi^2]}
 }.
@@ -176,7 +176,7 @@ $$
 If the conditional covariance satisfies the stronger model-specific lower bound:
 
 $$
-\operatorname{Cov}(U,S\mid Y)
+\mathrm{Cov}(U,S\mid Y)
 \ge
 -\rho(Y)
 \sigma_U(Y)\sigma_S(Y)
@@ -192,9 +192,9 @@ then:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 E[\rho(Y)\sigma_U(Y)\sigma_S(Y)]
 }.
@@ -207,28 +207,28 @@ Thus any substantive model restriction preventing perfect residual anti-alignmen
 S2.11 gives:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 +
-E[\operatorname{Cov}(U,S\mid Y)].
+E[\mathrm{Cov}(U,S\mid Y)].
 $$
 
 For each realized `Y`, conditional Cauchy--Schwarz gives:
 
 $$
-|\operatorname{Cov}(U,S\mid Y)|
+|\mathrm{Cov}(U,S\mid Y)|
 \le
 \sqrt{
-\operatorname{Var}(U\mid Y)
-\operatorname{Var}(S\mid Y)
+\mathrm{Var}(U\mid Y)
+\mathrm{Var}(S\mid Y)
 }.
 $$
 
 Therefore:
 
 $$
-\operatorname{Cov}(U,S\mid Y)
+\mathrm{Cov}(U,S\mid Y)
 \ge
 -
 \sqrt{v_U(Y)v_S(Y)}
@@ -237,9 +237,9 @@ $$
 almost surely. Taking expectations and substituting into S2.11 yields:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 E[\sqrt{v_U(Y)v_S(Y)}].
 $$
@@ -269,7 +269,7 @@ The residual-energy identities follow from the law of total variance:
 $$
 E[(U-m(Y))^2]
 =
-E[\operatorname{Var}(U\mid Y)],
+E[\mathrm{Var}(U\mid Y)],
 $$
 
 and analogously for `S`.
@@ -319,7 +319,7 @@ $$
 Therefore:
 
 $$
-\operatorname{Cov}(U,S\mid Y)
+\mathrm{Cov}(U,S\mid Y)
 =-cE[\eta^2]
 =-c,
 $$
@@ -328,8 +328,8 @@ while:
 
 $$
 \sqrt{
-\operatorname{Var}(U\mid Y)
-\operatorname{Var}(S\mid Y)
+\mathrm{Var}(U\mid Y)
+\mathrm{Var}(S\mid Y)
 }
 =c.
 $$

@@ -22,8 +22,21 @@ The locked core remains T1–T5 and E1–E5. The supplementary line is complete 
 - [ ] Keep `main` CI-green after review-driven editorial or scientific corrections.
 - [ ] Keep README, research map, claim ledger, notation, status, and roadmap free of conflicting source-of-truth roles.
 - [x] Validate repository-relative Markdown links in CI.
+- [x] Enforce delimiter-only, balanced double-dollar math blocks in repository Markdown.
+- [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
+- [ ] Confirm the current root README renders correctly in the GitHub web UI, including Mermaid blocks, display math, tables, and SVG previews.
 - [ ] Keep E1–E5 as the locked reproducibility suite unless a review identifies a concrete missing core test.
 - [ ] Preserve deterministic figure regeneration and manuscript PDF verification.
+
+## Broad-announcement gate
+
+Before directing broad external traffic to the repository:
+
+- [ ] complete a visual pass of the root README in GitHub desktop and mobile layouts;
+- [ ] verify that the main conceptual diagram, mathematical definitions, and experiment figures are visible without opening raw source files;
+- [ ] verify that every visual result links to its H/T/D/C/U experiment card and data provenance;
+- [ ] verify that the interpretation boundary and Everett bridge status are visible from the landing page;
+- [ ] confirm the latest `main` validation run after the presentation changes.
 
 ## Publication gates
 
@@ -69,4 +82,4 @@ Do not treat statistical success inside the abstract model as validation of this
 
 Do not add S2.14 or a sixth core experiment by default.
 
-The next high-value work is external review, correction, compression, and publication readiness.
+The next high-value work is external review, correction, presentation QA, compression, and publication readiness.

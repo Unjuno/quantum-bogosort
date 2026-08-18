@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="440" viewBox="0 0 720 440">
 <rect x="0" y="0" width="720" height="440" fill="white"/>
-<style>text{font-family:Arial,Helvetica,sans-serif;fill:#111}.axis{stroke:#222;stroke-width:1}.grid{stroke:#bbb;stroke-width:.6;stroke-dasharray:3 4}.s1{fill:none;stroke:#111;stroke-width:2.2}.s2{fill:none;stroke:#555;stroke-width:2.2;stroke-dasharray:8 5}.s3{fill:none;stroke:#888;stroke-width:2.2;stroke-dasharray:2 4}.bar{fill:#bbb;stroke:#222;stroke-width:1}</style>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#111}.axis{stroke:#222;stroke-width:1}.grid{stroke:#bbb;stroke-width:.6;stroke-dasharray:3 4}.s1{fill:none;stroke:#111;stroke-width:2.2}.s2{fill:none;stroke:#555;stroke-width:2.2;stroke-dasharray:8 5}.s3{fill:none;stroke:#888;stroke-width:2.2;stroke-dasharray:2 4}.s4{fill:none;stroke:#111;stroke-width:2.2;stroke-dasharray:12 4 2 4}.bar{fill:#bbb;stroke:#222;stroke-width:1}</style>
 <text x="360.0" y="26" text-anchor="middle" font-size="16" font-weight="600">Adaptation quality and substitution</text>
 <line class="axis" x1="82" y1="55" x2="82" y2="368"/>
 <line class="axis" x1="82" y1="368" x2="696" y2="368"/>
@@ -54,7 +54,7 @@
 <circle cx="573.2" cy="333.9" r="2.5" fill="#222"/>
 <circle cx="634.6" cy="335.8" r="2.5" fill="#222"/>
 <circle cx="696.0" cy="337.7" r="2.5" fill="#222"/>
-<polyline class="s1" points="82.0,149.0 143.4,142.5 204.8,136.3 266.2,129.9 327.6,123.6 389.0,117.3 450.4,110.8 511.8,104.6 573.2,98.1 634.6,91.6 696.0,85.3"/>
+<polyline class="s4" points="82.0,149.0 143.4,142.5 204.8,136.3 266.2,129.9 327.6,123.6 389.0,117.3 450.4,110.8 511.8,104.6 573.2,98.1 634.6,91.6 696.0,85.3"/>
 <circle cx="82.0" cy="149.0" r="2.5" fill="#222"/>
 <circle cx="143.4" cy="142.5" r="2.5" fill="#222"/>
 <circle cx="204.8" cy="136.3" r="2.5" fill="#222"/>
@@ -83,7 +83,7 @@
 <text x="511" y="84" font-size="10">QBS after policy</text>
 <line class="s3" x1="475" y1="98" x2="503" y2="98"/>
 <text x="511" y="102" font-size="10">Interaction</text>
-<line class="s1" x1="475" y1="116" x2="503" y2="116"/>
+<line class="s4" x1="475" y1="116" x2="503" y2="116"/>
 <text x="511" y="120" font-size="10">Total FP effect</text>
 <text x="360.0" y="428" text-anchor="middle" font-size="10">Toy adaptation study: total value rises while the interaction becomes more negative.</text>
 </svg>

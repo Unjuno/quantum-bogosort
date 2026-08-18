@@ -74,23 +74,23 @@ Anthropic decision theory treats action choice directly in self-locating problem
 
 The targeted search did **not** identify a source that, in one framework, clearly reproduces all of the following QBS structure:
 
-$$
+```math
 R
 \longrightarrow
 \pi_R
 \longrightarrow
 (U_R,S_R),
-$$
+```
 
 with an exact recognition decomposition separating ordinary trajectory and first-person conditioning effects, a separate policy--selection interaction decomposition, and the general-accessibility identity:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 +
 E[\mathrm{Cov}(U,S\mid Y)].
-$$
+```
 
 This is **not** evidence that no such prior work exists. It means that the present targeted search did not find a direct structural duplicate.
 

@@ -207,4 +207,4 @@ See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. GitHub's r
 
 ## Citation
 
-Citation metadata is in [`CITATION.cff`](CITATION.cff) and tracks the frozen current public-review snapshot.
+Citation metadata is in [`CITATION.cff`](CITATION.cff) and tracks the frozen v0.3 public-review snapshot.

@@ -5,11 +5,11 @@
 S2.4 gives a population-level sufficient condition:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 -
-\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
+\sqrt{E[(U-Y)^2]\mathrm{Var}(S)}.
 $$
 
 For a learned agent, the right-hand side is unknown. The next question is whether an independent held-out sample can certify positive population covariance with an explicit confidence level.
@@ -154,7 +154,7 @@ over the held-out sample:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)\ge D_L
+\mathrm{Cov}(U,S)\ge D_L
 }.
 $$
 
@@ -167,7 +167,7 @@ $$
 then with confidence at least `1-delta`:
 
 $$
-\operatorname{Cov}(U,S)>0.
+\mathrm{Cov}(U,S)>0.
 $$
 
 Under the QBS weighted-measure model, the same event gives the quantitative lower bound:
@@ -246,7 +246,7 @@ All following statements are made on this simultaneous event.
 Write:
 
 $$
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 =
 E[YS]-E[Y]E[S].
 $$
@@ -292,7 +292,7 @@ $$
 Hence:
 
 $$
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 \ge
 \widehat C
 -
@@ -344,7 +344,7 @@ $$
 Therefore:
 
 $$
-\operatorname{Var}(S)
+\mathrm{Var}(S)
 =
 E[S^2]-E[S]^2
 $$
@@ -358,13 +358,13 @@ $$
 gives:
 
 $$
-\operatorname{Var}(S)\le\frac{B_S^2}{4}.
+\mathrm{Var}(S)\le\frac{B_S^2}{4}.
 $$
 
 Taking the smaller valid upper bound gives:
 
 $$
-\operatorname{Var}(S)\le V_U.
+\mathrm{Var}(S)\le V_U.
 $$
 
 ### Step 5: invoke S2.4
@@ -372,19 +372,19 @@ $$
 S2.4 gives:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 -
 \sqrt{
-E[(U-Y)^2]\operatorname{Var}(S)
+E[(U-Y)^2]\mathrm{Var}(S)
 }.
 $$
 
 Using the simultaneous lower and upper bounds:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 C_L-\sqrt{M_UV_U}
 =
@@ -394,7 +394,7 @@ $$
 Thus:
 
 $$
-P(\operatorname{Cov}(U,S)\ge D_L)
+P(\mathrm{Cov}(U,S)\ge D_L)
 \ge
 1-\delta.
 $$
@@ -412,7 +412,7 @@ and the certified covariance lower bound is positive:
 $$
 E_{FP}[U]-E[U]
 =
-\frac{\operatorname{Cov}(U,S)}{E[S]}
+\frac{\mathrm{Cov}(U,S)}{E[S]}
 \ge
 \frac{D_L}{B_S}.
 $$
@@ -424,10 +424,10 @@ Under the S2.5 boundedness assumptions, if the population S2.4 margin is strictl
 $$
 D_*
 =
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 -
 \sqrt{
-E[(U-Y)^2]\operatorname{Var}(S)
+E[(U-Y)^2]\mathrm{Var}(S)
 }
 >0,
 $$

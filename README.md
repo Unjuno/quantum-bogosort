@@ -2,6 +2,10 @@
 
 Quantum Bogosort is a formal research program for recognition-dependent policies whose trajectories and observer-indexed accessibility can change together.
 
+The motivating question is self-referential: if an agent recognizes a QBS-type rule and that information changes the policy it uses, while the resulting policy also changes which future continuations are observer-accessible, how does accessibility conditioning change the agent's first-person distribution over trajectories and present self-location? The model keeps the base probability law fixed; interpreting the accessibility weighting as an Everettian physical self-location rule is a separate bridge assumption.
+
+The name **Quantum Bogosort** labels this observer-selection intuition. The formal object studied here is the recognition-dependent weighted-measure model below, not a claim that quantum mechanics literally sorts branches by utility.
+
 The core structure is:
 
 $$
@@ -229,7 +233,7 @@ GitHub Actions checks:
 - repository-relative Markdown links;
 - required repository structure;
 - E1–E5 reproduction;
-- figure regeneration and output existence;
+- deterministic SVG regeneration and byte-for-byte committed-output verification;
 - experiment-manifest references;
 - manuscript LaTeX build and PDF verification.
 

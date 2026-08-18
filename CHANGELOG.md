@@ -5,16 +5,21 @@
 ### Changed
 
 - clarified that recognition may include recognition of a QBS-type rule itself, while recognition has no privileged causal power beyond the policy and trajectory/accessibility changes it induces;
+- added a concise landing-page statement of the self-referential QBS question and clarified that the name labels the observer-selection intuition rather than a literal utility-sorting operation by quantum mechanics;
 - exposed present self-location under future accessibility in the root README, canonical claim ledger, research map, notation reference, and manuscript formal model;
 - clarified that future accessibility can reweight present self-location without by itself guaranteeing a favorable direction; favorable/upward reweighting additionally requires alignment with the relevant favorability or utility statistic;
 - aligned manuscript recognition wording with an information-state / policy-selection interpretation to avoid implying a privileged physical causal role for recognition itself;
 - added a Mermaid dependency diagram to the root README and an experiment/theorem Mermaid map to `experiments/README.md`;
 - embedded the committed SVG theorem/simulation figures directly into the root README, experiment index, and figure-provenance page so results are visually inspectable without opening raw CSV files;
+- added a dedicated E2 predictive-alignment review figure so every locked experiment family E1–E5 has a direct visual route from the repository landing page;
+- synchronized committed SVGs with the deterministic generator and added CI byte-for-byte verification after regeneration;
+- added explicit white backgrounds to repository SVGs for GitHub dark-mode readability and separated overlapping Figure 5 series with distinct monochrome line styles;
 - hardened `scripts/validate_markdown_math.py` so double-dollar display delimiters must be balanced and placed on delimiter-only lines, preventing display openers and expressions from sharing a line;
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
 - removed public repository-process wording that depended on tool availability;
 - removed merged/superseded development branches while preserving `main` and the frozen release snapshots;
-- added CI concurrency cancellation and runtime limits so stalled manuscript-toolchain provisioning cannot remain indefinitely in progress.
+- added CI concurrency cancellation and runtime limits so stalled validation jobs cannot remain indefinitely in progress;
+- routed manuscript LaTeX installation through explicit Ubuntu archive/security sources so transient Azure runner-mirror failures do not masquerade as manuscript build failures.
 
 ### Scientific scope
 

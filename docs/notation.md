@@ -264,4 +264,4 @@ P(R=1).
 
 ## Markdown convention
 
-Repository Markdown uses fenced `math` blocks for display mathematics. Inline mathematical symbols are written as code spans or moved into display blocks. GitHub-disallowed macros such as `\operatorname` are not used in Markdown; named quantities use safe roman forms such as `\mathrm{Cov}`, `\mathrm{Var}`, and `\mathrm{Corr}`.
+Repository Markdown uses fenced `math` blocks for display mathematics. Inline mathematical symbols are written as code spans or moved into display blocks. Named quantities use a repository-wide roman-form convention such as `\mathrm{Cov}`, `\mathrm{Var}`, and `\mathrm{Corr}`. This is a consistency policy, not a claim that MathJax lacks other operator macros.

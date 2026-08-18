@@ -28,7 +28,7 @@ The automated/source-level presentation QA is complete through merged PR #29. Br
 - [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
 - [x] Provide a dedicated visual route for every locked experiment family E1–E5, including E2 predictive alignment.
 - [x] Require committed SVGs to match deterministic generator output byte-for-byte.
-- [x] Keep only `main` plus the intentional frozen v0.2/v0.3 release snapshots; remove merged/superseded development branches.
+- [x] Keep `main` as the only branch; preserve frozen v0.2/v0.3 snapshots as tags/GitHub Releases.
 - [ ] Confirm the current root README renders correctly in the GitHub web UI, including Mermaid blocks, display math, tables, and SVG previews.
 - [ ] Keep E1–E5 as the locked reproducibility suite unless a review identifies a concrete missing core test.
 - [ ] Preserve deterministic figure regeneration and manuscript PDF verification.
@@ -52,7 +52,7 @@ The unchecked items in this section are presentation/release checks, not missing
 - [ ] Finalize author/citation metadata for the preprint version.
 - [ ] Prepare `v1.0-preprint` only after review-driven revisions stabilize.
 - [ ] Add DOI/arXiv metadata only when an identifier actually exists.
-- [ ] Create formal GitHub Release/tag objects when archival release packaging is warranted.
+- [x] Preserve formal GitHub tags/Releases for frozen v0.2 and v0.3 public-review snapshots.
 
 ## Deferred mathematical work
 

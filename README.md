@@ -34,6 +34,10 @@ flowchart LR
 
 The Mermaid diagram is an interpretation-neutral map of the formal dependencies. It is not a literal diagram of quantum branching.
 
+The same dependency structure is also committed as a static SVG fallback for renderers that do not display Mermaid:
+
+[![Recognition-dependent QBS framework](figures/generated/fig1_framework.svg)](figures/README.md)
+
 ## Core first-person quantity
 
 For:
@@ -136,22 +140,22 @@ These are classical simulations of the formal model.
 
 ## Visual results
 
-The committed SVGs below are regenerated from deterministic theorem illustrations or committed experiment outputs. Every locked experiment family now has a direct visual route from the repository landing page.
+The committed SVGs below are regenerated from three explicitly separated source classes: deterministic theorem illustrations, current reproduction outputs, and locked historical summaries. Every locked experiment family E1–E5 has a direct visual route from the repository landing page; [`figures/README.md`](figures/README.md) records the figure-level provenance.
 
 | E1 — FOSD theorem boundary | E2 — learned predictive alignment |
 |---|---|
 | [![Base and first-person CDF comparison](figures/generated/fig2_fosd.svg)](experiments/E1_FOSD.md) | [![Interaction-capable, misspecified, and random evaluators across noise levels](figures/generated/fig7_predictive_alignment.svg)](experiments/E2_LEARNED_AGENT.md) |
-| Monotone accessibility versus a nonmonotone control. | Predictive correlation under increasing environmental noise. |
+| Deterministic theorem illustration: monotone accessibility versus a nonmonotone control. | Locked E2 summary: predictive correlation under increasing environmental noise; current rerun output is stored separately. |
 
 | E3 — recognition decomposition | E4 — interaction sign |
 |---|---|
 | [![Policy, QBS, and total recognition effects](figures/generated/fig3_recognition_decomposition.svg)](experiments/E3_RECOGNITION.md) | [![Policy-QBS interaction sign](figures/generated/fig4_interaction_sign.svg)](experiments/E4_INTERACTION.md) |
-| Ordinary policy, QBS conditioning, and total effects. | Rescue-bad, neutral, and amplify-good interaction regimes. |
+| Current reproduction: ordinary policy, QBS conditioning, and total effects. | Current reproduction: rescue-bad, neutral, and amplify-good interaction regimes. |
 
 | E4 — adaptation quality | E5 — branch coherence |
 |---|---|
 | [![Adaptation quality sweep](figures/generated/fig5_adaptation_quality.svg)](experiments/E4_INTERACTION.md) | [![Cross-copy action correlation and first-person gain](figures/generated/fig6_branch_coherence.svg)](experiments/E5_BRANCH_MAP.md) |
-| Policy, conditioning, interaction, and total FP effect versus targeting quality. | Cross-copy action-correlation increment versus single-observer first-person gain. |
+| Locked E4 adaptation summary; the current E4 script reproduces the fixed-selector and general interaction identities, not this historical sweep. | Current reproduction: cross-copy action-correlation increment versus single-observer first-person gain. |
 
 See [`experiments/README.md`](experiments/README.md) for the H/T/D/C/U experiment map and [`figures/README.md`](figures/README.md) for figure provenance.
 

@@ -16,6 +16,20 @@ Here `R` is recognition, `pi_R` is the policy used under that recognition state,
 
 In the self-referential case motivating QBS, `R=1` may represent recognition of a QBS-type rule itself. Recognition has no privileged causal power in the formal model: it matters only through any policy change it induces and the resulting changes in `U_R` and/or `S_R`. If recognition changes neither quantity, the recognition-label null gives no QBS effect.
 
+## Visual model
+
+```mermaid
+flowchart LR
+    R[Recognition / information state] --> P[Policy selection]
+    P --> U[Trajectory outcome / utility]
+    P --> S[Observer-indexed accessibility]
+    U --> FP[First-person weighted distribution]
+    S --> FP
+    FP --> SL[Self-location / first-person value]
+```
+
+The Mermaid diagram is an interpretation-neutral map of the formal dependencies. It is not a literal diagram of quantum branching.
+
 ## Core first-person quantity
 
 For:
@@ -72,6 +86,8 @@ $$
 
 Thus, when expected future accessibility differs across present states, the first-person measure can reweight present self-location toward states with greater expected future accessibility. This is a conditioning/change-of-measure statement, not backward causation and not a causal change in the base probability law.
 
+A favorable or upward shift requires additional alignment between the relevant outcome/favorability statistic and future accessibility; differential accessibility alone gives reweighting, not a guaranteed favorable direction.
+
 ## What is established
 
 ### Core mathematics
@@ -114,6 +130,27 @@ The locked core experiment suite is E1–E5:
 
 These are classical simulations of the formal model.
 
+## Visual results
+
+The committed SVGs below are regenerated from deterministic theorem illustrations or committed experiment outputs. They are intended to make the result structure inspectable directly from the repository landing page.
+
+| FOSD theorem boundary | Recognition decomposition |
+|---|---|
+| [![Base and first-person CDF comparison](figures/generated/fig2_fosd.svg)](experiments/E1_FOSD.md) | [![Policy, QBS, and total recognition effects](figures/generated/fig3_recognition_decomposition.svg)](experiments/E3_RECOGNITION.md) |
+| **Figure 2.** Monotone accessibility versus a nonmonotone control. | **Figure 3.** Ordinary policy, QBS conditioning, and total effects. |
+
+| Interaction sign | Adaptation quality |
+|---|---|
+| [![Policy-QBS interaction sign](figures/generated/fig4_interaction_sign.svg)](experiments/E4_INTERACTION.md) | [![Adaptation quality sweep](figures/generated/fig5_adaptation_quality.svg)](experiments/E4_INTERACTION.md) |
+| **Figure 4.** Rescue-bad, neutral, and amplify-good interaction regimes. | **Figure 5.** Policy, conditioning, interaction, and total FP effect versus targeting quality. |
+
+| Branch coherence |
+|---|
+| [![Cross-copy action correlation and first-person gain](figures/generated/fig6_branch_coherence.svg)](experiments/E5_BRANCH_MAP.md) |
+| **Figure 6.** Cross-copy action-correlation increment versus single-observer first-person gain. |
+
+See [`experiments/README.md`](experiments/README.md) for the H/T/D/C/U experiment map and [`figures/README.md`](figures/README.md) for figure provenance.
+
 ## Interpretation boundary
 
 The mathematical weighting results do not by themselves derive an Everettian physical interpretation. The separate bridge assumption is:
@@ -137,6 +174,7 @@ The repository does not claim that statistical covariance certification establis
 | Check theorem statements and assumptions | [`theory/core_theorems.md`](theory/core_theorems.md) and [`supplementary/README.md`](supplementary/README.md) |
 | Check claim strength and non-claims | [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md) |
 | Check notation and terminology | [`docs/notation.md`](docs/notation.md) |
+| Inspect experiments visually | [`experiments/README.md`](experiments/README.md) and [`figures/README.md`](figures/README.md) |
 | Reproduce the simulations | [`experiments/manifest.csv`](experiments/manifest.csv) and [`experiments/`](experiments/) |
 | Review the Everett bridge | [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md) |
 | Read the manuscript | [`paper/`](paper/) |
@@ -171,7 +209,7 @@ The current review priority is external proof, novelty, manuscript, statistical-
 
 ## Repository state
 
-The frozen scientific public-review snapshot is **v0.3-public-review**. The default `main` branch is the current review/development surface and may contain post-snapshot editorial, interpretive, repository-hygiene, or CI-hardening clarifications. Those changes are tracked in [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md) and [`CHANGELOG.md`](CHANGELOG.md).
+The frozen scientific public-review snapshot is **v0.3-public-review**. The default `main` branch is the current review/development surface and may contain post-snapshot editorial, interpretive, repository-hygiene, visualization, or CI-hardening clarifications. Those changes are tracked in [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md) and [`CHANGELOG.md`](CHANGELOG.md).
 
 - current frozen snapshot: `release/v0.3-public-review`;
 - current review/development surface: `main`;
@@ -187,7 +225,7 @@ The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged in 
 GitHub Actions checks:
 
 - Python compilation;
-- GitHub Markdown math delimiters;
+- GitHub Markdown math delimiter structure;
 - repository-relative Markdown links;
 - required repository structure;
 - E1–E5 reproduction;

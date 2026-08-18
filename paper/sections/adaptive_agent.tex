@@ -2,15 +2,15 @@
 
 A central modeling question is whether positive outcome--accessibility alignment must be inserted exogenously. We instead consider an adapted agent with environment state $X_t$, internal belief state $B_t$, scalar evaluation signal $Y_t=h(B_t)$, and later outcome $U_T$.
 
-Adaptation can create statistical dependence between the internal model and future outcomes, but mutual information alone is not enough for the mean-uplift result. The relevant directional object is the conditional mean
+Statistical dependence alone is not sufficient for the QBS mean-shift mechanism. The relevant directional object is the conditional mean
 \[
 m(y)=\mathbb E[U_T\mid Y_t=y].
 \]
-Suppose accessibility is score-measurable,
+In the clean score-measurable case,
 \[
 S_t=s(Y_t),
 \]
-with $S_t\ge0$, $0<\mathbb E[S_t]<\infty$, and the required product integrability. Then Supplementary Theorem S2 gives the exact projection identity
+with $S_t\ge0$, $0<\mathbb E[S_t]<\infty$, and the required integrability. Supplementary Theorem S2 gives
 \[
 \operatorname{Cov}(U_T,S_t)
 =
@@ -20,113 +20,25 @@ If $m(y)$ and $s(y)$ are both nondecreasing on the support of $Y_t$, then
 \[
 \operatorname{Cov}(U_T,S_t)\ge0.
 \]
-The inequality is strict when the two orderings vary together on a positive-probability set. By the main covariance identity, this implies nonnegative first-person mean uplift under the corresponding weighted-measure model.
+Strict comovement on a positive-probability set gives strict positivity. By the main covariance identity, positive covariance produces positive first-person mean uplift under the weighted-measure model.
 
-A particularly transparent corollary is
+A particularly transparent calibration case occurs when the score is a posterior-mean forecast from internal information $B_t$:
 \[
-S_t=r(m(Y_t))
+Y_t=\mathbb E[U_T\mid B_t].
 \]
-for a nondecreasing function $r$. If the predicted conditional mean is nonconstant and $r$ is strictly increasing on its essential range, the covariance is strictly positive.
-
-There is also an exact self-calibration case. If the agent's score is its posterior-mean forecast from internal information $B_t$,
-\[
-Y_t=\mathbb E[U_T\mid B_t],
-\]
-then the tower property gives
+The tower property then gives
 \[
 \mathbb E[U_T\mid Y_t]
 =
-\mathbb E[\mathbb E[U_T\mid B_t]\mid Y_t]
-=
 Y_t.
 \]
-Thus the directional-calibration premise of S2 is automatic for a true posterior-mean score. Any nondecreasing accessibility function $s(Y_t)$ then gives nonnegative covariance, with strict positivity when the score is nonconstant and the accessibility map is strictly increasing on its essential range.
+Thus Supplementary Corollary S2.2 makes the directional-calibration premise automatic for a true posterior-mean score. Any nondecreasing score-measurable accessibility map then inherits the sign conclusion of S2.
 
-For a learned score that is only approximately calibrated, let
+For learned scores, exact calibration is not assumed. Writing
 \[
-e(Y_t)=\mathbb E[U_T\mid Y_t]-Y_t.
+e(Y_t)=\mathbb E[U_T\mid Y_t]-Y_t,
 \]
-Under square integrability,
-\[
-\operatorname{Cov}(U_T,S_t)
-=
-\operatorname{Cov}(Y_t,S_t)
-+
-\operatorname{Cov}(e(Y_t),S_t),
-\]
-and Cauchy--Schwarz yields
-\[
-\operatorname{Cov}(U_T,S_t)
-\ge
-\operatorname{Cov}(Y_t,S_t)
--
-\sqrt{\operatorname{Var}(e(Y_t))\operatorname{Var}(S_t)}.
-\]
-Hence a sufficient robustness condition is
-\[
-\operatorname{Cov}(Y_t,S_t)
->
-\sqrt{\operatorname{Var}(e(Y_t))\operatorname{Var}(S_t)}.
-\]
-
-The calibration-error term can itself be bounded by ordinary prediction mean-squared error. Since
-\[
-e(Y_t)=\mathbb E[U_T-Y_t\mid Y_t],
-\]
-conditional Jensen implies
-\[
-\operatorname{Var}(e(Y_t))
-\le
-\mathbb E[e(Y_t)^2]
-\le
-\mathbb E[(U_T-Y_t)^2].
-\]
-Therefore
-\[
-\operatorname{Cov}(U_T,S_t)
-\ge
-\operatorname{Cov}(Y_t,S_t)
--
-\sqrt{\mathbb E[(U_T-Y_t)^2]\operatorname{Var}(S_t)}.
-\]
-This S2.4 population certificate is conservative because prediction MSE also includes irreducible conditional outcome variance.
-
-Corollary S2.5 converts the population inequality into a bounded independent-held-out certificate. Corollary S2.6 shows that arbitrary upstream training is compatible with this guarantee when the final certification sample is independent. Corollary S2.7 permits same-holdout selection among a finite predeclared candidate family after multiplicity correction.
-
-Corollary S2.8 then separates the QBS covariance-composition step from any particular concentration inequality. It requires only a simultaneous confidence envelope for
-\[
-\mathbb E[Y_t],
-\quad
-\mathbb E[S_t],
-\quad
-\mathbb E[Y_tS_t],
-\quad
-\mathbb E[S_t^2],
-\quad
-\mathbb E[(U_T-Y_t)^2].
-\]
-Any statistical method that validly supplies those five simultaneous moment bounds can be inserted without changing the QBS covariance proof.
-
-Corollary S2.9 supplies one unbounded light-tail instantiation. It uses sub-Gaussian sample-mean control for $Y_t$ and $S_t$ and explicit Bernstein/sub-exponential sample-mean controls for
-\[
-Y_tS_t,
-\qquad
-S_t^2,
-\qquad
-(U_T-Y_t)^2.
-\]
-With
-\[
-t_\delta=\log\frac{10}{\delta},
-\]
-the five concentration events form a simultaneous S2.8 envelope with probability at least $1-\delta$. The resulting lower margin $D_{\rm LT}$ therefore satisfies
-\[
-P\!\left(
-\operatorname{Cov}(U_T,S_t)\ge D_{\rm LT}
-\right)
-\ge1-\delta.
-\]
-This permits unbounded light-tail validation without silently assuming universal product or square constants from marginal sub-Gaussianity.
+S2.3--S2.4 bound the damage caused by calibration error using either its variance or ordinary prediction MSE. These are sufficient population bounds rather than necessary conditions. Their finite-sample counterparts are developed in the Appendix: S2.5--S2.10 cover independent held-out certification, training and finite-candidate selection validity, a generic moment-envelope interface, and bounded, light-tail, and median-of-means instantiations. These statistical layers are kept separate from the conceptual mechanism because they concern validation technology rather than the definition of QBS.
 
 For square-integrable $U_T$, the quantity
 \[
@@ -134,19 +46,18 @@ M(U_T;Y_t)
 =
 \operatorname{Var}(\mathbb E[U_T\mid Y_t])
 \]
-measures conditional-mean predictive strength. Positive mutual information $I(U_T;Y_t)>0$ is weaker: dependence can occur entirely through conditional variance while $\mathbb E[U_T\mid Y_t]$ remains constant, in which case every score-measurable accessibility map has zero covariance with $U_T$.
+measures conditional-mean predictive strength. Positive mutual information $I(U_T;Y_t)>0$ is weaker: dependence can occur through conditional variance while $\mathbb E[U_T\mid Y_t]$ remains constant. In that case every accessibility map measurable with respect to $Y_t$ has zero covariance with $U_T$.
 
-The intended causal and validation chain is therefore
+The intended mechanism is therefore
 \[
 \text{adaptation / inference}
 \rightarrow
-\text{posterior-mean or approximately calibrated score}
+\text{predictive conditional mean}
 \rightarrow
-\text{population covariance certificate}
+\text{aligned accessibility}
 \rightarrow
-\text{finite-sample moment envelopes}
-\rightarrow
-\text{selection-safe statistical certification}.
+\operatorname{Cov}(U_T,S_t)>0.
 \]
+The next section removes the restrictive assumption that accessibility must be a deterministic function of the score and keeps the residual outcome--accessibility dependence explicit.
 
-Experiment E2 tests the minimal version of the predictive mechanism in a nonlinear environment. A misspecified model that cannot represent the relevant interaction fails to produce predictive alignment, while a small interaction-capable model succeeds. E3 supplies a paired endogenous-policy example. These simulations support premise generation in toy environments; S2--S2.9 provide the mathematical and statistical implications once the stated calibration, accessibility, concentration, held-out-evaluation, and selection conditions are specified. None of these steps establishes a physical Everettian accessibility map.
+Experiment E2 tests premise generation in a nonlinear toy environment: a misspecified model that cannot represent the relevant interaction fails to produce predictive ordering, while an interaction-capable model succeeds. E3 supplies a paired endogenous-policy example. These classical simulations support the modeled mechanism; neither they nor the S2 statistical certificates establish a physical Everettian accessibility map.

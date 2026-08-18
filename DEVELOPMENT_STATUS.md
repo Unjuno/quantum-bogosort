@@ -67,4 +67,4 @@ Use:
 - `STATUS.md` for the stable v0.2 snapshot;
 - this file for current post-v0.2 development;
 - PR #21 for the active cumulative diff;
-- `docs/research_integrity.md` for the rule separating mathematical corrections, interpretation changes, and non-scientific operational constraints.
+- `docs/claims_and_assumptions.md` for the formal separation of mathematical results, simulations, model assumptions, Everett bridge assumptions, and explicit non-claims.

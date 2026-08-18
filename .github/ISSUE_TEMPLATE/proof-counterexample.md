@@ -12,7 +12,7 @@ Theorem/corollary/proposition ID:
 
 File and section:
 
-Stable v0.2 snapshot or current `main`:
+Target: current v0.3 snapshot, current `main`, or an archived snapshot/PR:
 
 ## Exact claim disputed
 

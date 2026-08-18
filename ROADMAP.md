@@ -8,7 +8,7 @@ The project is in **v0.3 public review / preprint preparation**.
 
 The locked core remains T1–T5 and E1–E5. The supplementary line is complete through S2.13. The default next step is review quality, not theorem expansion.
 
-Source-level presentation QA now includes the post-PR GitHub math-rendering fixes: the root README uses fenced `math` blocks, GitHub-disallowed `\operatorname` is removed from rendered Markdown mathematics, and CI rejects its reintroduction. Broad announcement remains gated on a direct human inspection of the rendered GitHub landing page and the final `main` validation state.
+Source-level presentation QA now includes repository-wide GitHub math-rendering hardening: public Markdown display mathematics is standardized on fenced `math` blocks, GitHub-disallowed `\operatorname` is absent from rendered Markdown mathematics, and CI rejects double-dollar/single-dollar regressions and unsupported macros. Broad announcement remains gated on direct human inspection of rendered GitHub pages and the final `main` validation state.
 
 ## Immediate review gates
 
@@ -24,14 +24,14 @@ Source-level presentation QA now includes the post-PR GitHub math-rendering fixe
 - [ ] Keep `main` CI-green after review-driven editorial or scientific corrections.
 - [ ] Keep README, research map, claim ledger, notation, status, and roadmap free of conflicting source-of-truth roles.
 - [x] Validate repository-relative Markdown links in CI.
-- [x] Enforce balanced supported display-math structure in repository Markdown; require fenced `math` blocks in the root README and reject GitHub-disallowed `\operatorname` inside rendered math.
+- [x] Standardize repository Markdown display mathematics on balanced fenced `math` blocks; reject `$$`, single-dollar math, and GitHub-disallowed `\operatorname` outside literal code examples.
 - [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
 - [x] Provide a dedicated visual route for every locked experiment family E1–E5, including E2 predictive alignment.
 - [x] Require committed SVGs to match deterministic generator output byte-for-byte.
 - [x] Keep deterministic theorem illustrations, current reproduction outputs, and locked historical summaries explicitly separated at figure level.
 - [x] Provide a static SVG fallback for the root Mermaid dependency diagram.
 - [x] Keep `main` as the only branch; preserve frozen v0.2/v0.3 snapshots as tags/GitHub Releases.
-- [ ] Confirm the current root README renders correctly in the GitHub web UI, including Mermaid blocks, display math, tables, and SVG previews.
+- [ ] Confirm rendered GitHub pages display correctly in the web UI, including the root README plus representative theory, experiment, canonical-doc, supplementary, and audit pages.
 - [ ] Keep E1–E5 as the locked reproducibility suite unless a review identifies a concrete missing core test.
 - [ ] Preserve deterministic figure regeneration and manuscript PDF verification.
 
@@ -39,8 +39,8 @@ Source-level presentation QA now includes the post-PR GitHub math-rendering fixe
 
 Before directing broad external traffic to the repository:
 
-- [ ] complete a visual pass of the root README in GitHub desktop and mobile layouts;
-- [ ] verify in the rendered UI that the main conceptual diagram, mathematical definitions, and experiment figures are visible without opening raw source files;
+- [ ] complete a visual pass of the root README and representative linked research pages in GitHub desktop and mobile layouts;
+- [ ] verify in the rendered UI that the main conceptual diagram, mathematical definitions, theorem pages, and experiment figures are visible without opening raw source files;
 - [x] verify in repository source that every visual result links to its H/T/D/C/U experiment card and figure/data provenance;
 - [x] verify that the interpretation boundary and Everett bridge status are visible from the landing-page source;
 - [ ] confirm the final `main` validation state after the last presentation/status changes.

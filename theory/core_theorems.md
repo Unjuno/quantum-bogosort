@@ -1,6 +1,6 @@
-# Quantum Bogosort — Core Theorem Set v0.1
+# Quantum Bogosort — Core Theorem Set (T1–T5)
 
-This is the GitHub-rendered index for the core theorem set. Mathematical display blocks in Markdown use only double-dollar delimiters.
+This is the GitHub-rendered index for the locked core theorem set. Mathematical display blocks in Markdown use only double-dollar delimiters.
 
 ## Setup
 

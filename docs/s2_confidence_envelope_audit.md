@@ -9,7 +9,7 @@ S2.5 uses a specific bounded Hoeffding construction. S2.8 should isolate the det
 
 The required population objects are:
 
-$$
+```math
 E[Y],
 \quad
 E[S],
@@ -19,51 +19,51 @@ E[YS],
 E[S^2],
 \quad
 E[(U-Y)^2].
-$$
+```
 
 ## T — covariance product envelope
 
 On a simultaneous event, suppose:
 
-$$
+```math
 E[Y]\in[L_Y,U_Y],
 \qquad
 E[S]\in[L_S^+,U_S],
-$$
+```
 
 where:
 
-$$
+```math
 L_S^+=\max\{0,L_S\}.
-$$
+```
 
 Because the product map is bilinear, its maximum over the rectangle occurs at a corner:
 
-$$
+```math
 P_U
 =
 \max\{L_YL_S^+,L_YU_S,U_YL_S^+,U_YU_S\}.
-$$
+```
 
 Therefore:
 
-$$
+```math
 E[Y]E[S]\le P_U.
-$$
+```
 
 If also:
 
-$$
+```math
 E[YS]\ge L_{YS},
-$$
+```
 
 then:
 
-$$
+```math
 \mathrm{Cov}(Y,S)
 \ge
 L_{YS}-P_U.
-$$
+```
 
 **Audit:** PASS.
 
@@ -71,33 +71,33 @@ $$
 
 If:
 
-$$
+```math
 E[S^2]\le U_{S^2}
-$$
+```
 
 and:
 
-$$
+```math
 E[S]\ge L_S^+,
-$$
+```
 
 then:
 
-$$
+```math
 \mathrm{Var}(S)
 =
 E[S^2]-E[S]^2
 \le
 U_{S^2}-(L_S^+)^2.
-$$
+```
 
 Thus:
 
-$$
+```math
 V_U
 =
 \max\{0,U_{S^2}-(L_S^+)^2\}
-$$
+```
 
 is a valid reported upper envelope on the simultaneous event.
 
@@ -107,34 +107,34 @@ is a valid reported upper envelope on the simultaneous event.
 
 If:
 
-$$
+```math
 E[(U-Y)^2]\le U_M,
-$$
+```
 
 then S2.4 gives:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 C_L-\sqrt{U_MV_U}
 =
 D_{\mathrm{env}}.
-$$
+```
 
 If the input confidence event has probability at least:
 
-$$
+```math
 1-\delta,
-$$
+```
 
 then:
 
-$$
+```math
 P\!\left(
 \mathrm{Cov}(U,S)\ge D_{\mathrm{env}}
 \right)
 \ge1-\delta.
-$$
+```
 
 **Audit:** PASS.
 
@@ -142,19 +142,19 @@ $$
 
 If the same event contains:
 
-$$
+```math
 E[S]\le U_S
-$$
+```
 
 and the realized certificate is positive, then:
 
-$$
+```math
 E_{FP}[U]-E[U]
 =
 \frac{\mathrm{Cov}(U,S)}{E[S]}
 \ge
 \frac{D_{\mathrm{env}}}{U_S}.
-$$
+```
 
 The positivity of the numerator is required for this denominator substitution direction.
 
@@ -164,15 +164,15 @@ The positivity of the numerator is required for this denominator substitution di
 
 A simplified expression such as:
 
-$$
+```math
 U_YU_S
-$$
+```
 
 is not always an upper bound on the product if the entire `Y` interval is negative. For example, when:
 
-$$
+```math
 U_Y<0,
-$$
+```
 
 the product is maximized by pairing the least-negative `Y` endpoint with the **smallest** nonnegative `S` endpoint.
 
@@ -192,11 +192,11 @@ Five marginal intervals each labeled `95%` do not imply a `95%` simultaneous eve
 
 S2.8 does not establish the validity of any particular sub-Gaussian, empirical-Bernstein, bootstrap, median-of-means, or sequential interval. It only states:
 
-$$
+```math
 \text{valid simultaneous moment envelope}
 \Longrightarrow
 \text{valid covariance certificate}.
-$$
+```
 
 This prevents the QBS theorem from inheriting unspoken distributional assumptions from a particular estimator.
 
@@ -206,15 +206,15 @@ This prevents the QBS theorem from inheriting unspoken distributional assumption
 
 The post-v0.2 stack now separates:
 
-$$
+```math
 \text{QBS covariance algebra}
-$$
+```
 
 from:
 
-$$
+```math
 \text{statistical concentration method}.
-$$
+```
 
 S2.5 is a bounded Hoeffding instantiation. S2.8 is the generic composition layer. Future sub-Gaussian, empirical-Bernstein, robust, or sequential results should prove only that their own moment envelopes satisfy the S2.8 input event.
 

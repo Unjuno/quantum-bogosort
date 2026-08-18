@@ -4,13 +4,13 @@
 
 S2.4 gives a population-level sufficient condition:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(Y,S)
 -
 \sqrt{E[(U-Y)^2]\mathrm{Var}(S)}.
-$$
+```
 
 For a learned agent, the right-hand side is unknown. The next question is whether an independent held-out sample can certify positive population covariance with an explicit confidence level.
 
@@ -18,47 +18,47 @@ For a learned agent, the right-hand side is unknown. The next question is whethe
 
 Let:
 
-$$
+```math
 (U_i,Y_i,S_i)_{i=1}^n
-$$
+```
 
 be an i.i.d. held-out sample from the population analyzed by S2.4. The predictor and accessibility rule must be fixed before this sample is evaluated, or the theorem must be applied conditionally on an independently trained fixed model.
 
 Assume known finite bounds:
 
-$$
+```math
 |Y|\le B_Y,
 \qquad
 0\le S\le B_S,
 \qquad
 |U-Y|\le B_R,
-$$
+```
 
 with:
 
-$$
+```math
 B_S>0,
 \qquad
 0<E[S].
-$$
+```
 
 For confidence level:
 
-$$
+```math
 0<\delta<1,
-$$
+```
 
 define:
 
-$$
+```math
 \tau_{n,\delta}
 =
 \sqrt{\frac{\log(10/\delta)}{2n}}.
-$$
+```
 
 Define empirical moments:
 
-$$
+```math
 \bar Y
 =
 \frac1n\sum_{i=1}^nY_i,
@@ -66,9 +66,9 @@ $$
 \bar S
 =
 \frac1n\sum_{i=1}^nS_i,
-$$
+```
 
-$$
+```math
 \overline{YS}
 =
 \frac1n\sum_{i=1}^nY_iS_i,
@@ -76,48 +76,48 @@ $$
 \overline{S^2}
 =
 \frac1n\sum_{i=1}^nS_i^2,
-$$
+```
 
 and prediction MSE:
 
-$$
+```math
 \widehat M
 =
 \frac1n\sum_{i=1}^n(U_i-Y_i)^2.
-$$
+```
 
 Let:
 
-$$
+```math
 \widehat C
 =
 \overline{YS}-\bar Y\bar S.
-$$
+```
 
 Define the covariance lower bound:
 
-$$
+```math
 C_L
 =
 \widehat C
 -
 5B_YB_S\tau_{n,\delta}.
-$$
+```
 
 Define the MSE upper bound:
 
-$$
+```math
 M_U
 =
 \min\left\{
 B_R^2,
 \widehat M+B_R^2\tau_{n,\delta}
 \right\}.
-$$
+```
 
 Define the accessibility-variance upper bound:
 
-$$
+```math
 V_U
 =
 \min\left\{
@@ -132,54 +132,54 @@ V_U
 \right)^2
 \right]
 \right\}.
-$$
+```
 
 Finally define the empirical certificate margin:
 
-$$
+```math
 \boxed{
 D_L
 =
 C_L-\sqrt{M_UV_U}
 }.
-$$
+```
 
 Then, with probability at least:
 
-$$
+```math
 1-\delta,
-$$
+```
 
 over the held-out sample:
 
-$$
+```math
 \boxed{
 \mathrm{Cov}(U,S)\ge D_L
 }.
-$$
+```
 
 Therefore, if the observed held-out sample satisfies:
 
-$$
+```math
 \boxed{D_L>0},
-$$
+```
 
 then with confidence at least `1-delta`:
 
-$$
+```math
 \mathrm{Cov}(U,S)>0.
-$$
+```
 
 Under the QBS weighted-measure model, the same event gives the quantitative lower bound:
 
-$$
+```math
 \boxed{
 E_{FP}[U]-E[U]
 \ge
 \frac{D_L}{B_S}
 >0
 }.
-$$
+```
 
 ## D — proof
 
@@ -187,13 +187,13 @@ $$
 
 For any bounded random variable with range width `w`, Hoeffding gives:
 
-$$
+```math
 P\left(
 |\widehat E[X]-E[X]|>w\tau_{n,\delta}
 \right)
 \le
 \frac{\delta}{5}.
-$$
+```
 
 Apply this to the five variables:
 
@@ -205,39 +205,39 @@ Apply this to the five variables:
 
 By a union bound, with probability at least `1-delta`, all five inequalities hold simultaneously:
 
-$$
+```math
 |E[Y]-\bar Y|
 \le
 2B_Y\tau_{n,\delta},
-$$
+```
 
-$$
+```math
 |E[S]-\bar S|
 \le
 B_S\tau_{n,\delta},
-$$
+```
 
-$$
+```math
 |E[YS]-\overline{YS}|
 \le
 2B_YB_S\tau_{n,\delta},
-$$
+```
 
-$$
+```math
 |E[S^2]-\overline{S^2}|
 \le
 B_S^2\tau_{n,\delta},
-$$
+```
 
 and:
 
-$$
+```math
 \left|
 E[(U-Y)^2]-\widehat M
 \right|
 \le
 B_R^2\tau_{n,\delta}.
-$$
+```
 
 All following statements are made on this simultaneous event.
 
@@ -245,53 +245,53 @@ All following statements are made on this simultaneous event.
 
 Write:
 
-$$
+```math
 \mathrm{Cov}(Y,S)
 =
 E[YS]-E[Y]E[S].
-$$
+```
 
 The first term obeys:
 
-$$
+```math
 E[YS]
 \ge
 \overline{YS}
 -
 2B_YB_S\tau_{n,\delta}.
-$$
+```
 
 For the product term:
 
-$$
+```math
 E[Y]E[S]-\bar Y\bar S
 =
 (E[Y]-\bar Y)E[S]
 +
 \bar Y(E[S]-\bar S).
-$$
+```
 
 Using:
 
-$$
+```math
 E[S]\le B_S,
 \qquad
 |\bar Y|\le B_Y,
-$$
+```
 
 we obtain:
 
-$$
+```math
 E[Y]E[S]
 \le
 \bar Y\bar S
 +
 3B_YB_S\tau_{n,\delta}.
-$$
+```
 
 Hence:
 
-$$
+```math
 \mathrm{Cov}(Y,S)
 \ge
 \widehat C
@@ -299,79 +299,79 @@ $$
 5B_YB_S\tau_{n,\delta}
 =
 C_L.
-$$
+```
 
 ### Step 3: upper-bound prediction MSE
 
 The Hoeffding event gives:
 
-$$
+```math
 E[(U-Y)^2]
 \le
 \widehat M+B_R^2\tau_{n,\delta}.
-$$
+```
 
 The deterministic bound:
 
-$$
+```math
 E[(U-Y)^2]\le B_R^2
-$$
+```
 
 also holds, so:
 
-$$
+```math
 E[(U-Y)^2]\le M_U.
-$$
+```
 
 ### Step 4: upper-bound `Var(S)`
 
 The simultaneous event implies:
 
-$$
+```math
 E[S^2]
 \le
 \overline{S^2}+B_S^2\tau_{n,\delta},
-$$
+```
 
 and because `S` is nonnegative:
 
-$$
+```math
 E[S]
 \ge
 \max\{0,\bar S-B_S\tau_{n,\delta}\}.
-$$
+```
 
 Therefore:
 
-$$
+```math
 \mathrm{Var}(S)
 =
 E[S^2]-E[S]^2
-$$
+```
 
 is bounded above by the second expression inside the definition of `V_U`. Independently, Popoviciu's inequality for:
 
-$$
+```math
 0\le S\le B_S
-$$
+```
 
 gives:
 
-$$
+```math
 \mathrm{Var}(S)\le\frac{B_S^2}{4}.
-$$
+```
 
 Taking the smaller valid upper bound gives:
 
-$$
+```math
 \mathrm{Var}(S)\le V_U.
-$$
+```
 
 ### Step 5: invoke S2.4
 
 S2.4 gives:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(Y,S)
@@ -379,49 +379,49 @@ $$
 \sqrt{
 E[(U-Y)^2]\mathrm{Var}(S)
 }.
-$$
+```
 
 Using the simultaneous lower and upper bounds:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 C_L-\sqrt{M_UV_U}
 =
 D_L.
-$$
+```
 
 Thus:
 
-$$
+```math
 P(\mathrm{Cov}(U,S)\ge D_L)
 \ge
 1-\delta.
-$$
+```
 
 If `D_L>0`, positive covariance is certified at confidence at least `1-delta`.
 
 Finally, because:
 
-$$
+```math
 E[S]\le B_S,
-$$
+```
 
 and the certified covariance lower bound is positive:
 
-$$
+```math
 E_{FP}[U]-E[U]
 =
 \frac{\mathrm{Cov}(U,S)}{E[S]}
 \ge
 \frac{D_L}{B_S}.
-$$
+```
 
 ## Corollary S2.5.1 — consistency of the certificate
 
 Under the S2.5 boundedness assumptions, if the population S2.4 margin is strictly positive:
 
-$$
+```math
 D_*
 =
 \mathrm{Cov}(Y,S)
@@ -430,27 +430,27 @@ D_*
 E[(U-Y)^2]\mathrm{Var}(S)
 }
 >0,
-$$
+```
 
 then for every fixed confidence level `delta`, the empirical certificate satisfies:
 
-$$
+```math
 D_L\to D_*
-$$
+```
 
 almost surely as:
 
-$$
+```math
 n\to\infty.
-$$
+```
 
 Therefore the certificate eventually becomes positive almost surely.
 
 This follows from the strong law of large numbers for the bounded empirical moments and:
 
-$$
+```math
 \tau_{n,\delta}\to0.
-$$
+```
 
 ## C — controls and failure boundaries
 
@@ -471,9 +471,9 @@ S2.5 uses Hoeffding and therefore requires valid finite bounds on `Y`, `S`, and 
 
 If:
 
-$$
+```math
 D_L\le0,
-$$
+```
 
 the data do not establish the S2.5 sufficient condition at the selected confidence level. This is not evidence that the true covariance is nonpositive.
 

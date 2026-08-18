@@ -67,7 +67,7 @@ V_1-V_0
 =
 E[U_1-U_0]
 +
-\frac{\operatorname{Cov}(U_1,S_1)}{E[S_1]}.
+\frac{\mathrm{Cov}(U_1,S_1)}{E[S_1]}.
 ```
 
 The first term is the ordinary policy/trajectory effect. The second is the first-person conditioning contribution.

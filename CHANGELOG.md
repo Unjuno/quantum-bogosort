@@ -17,8 +17,9 @@
 - synchronized committed SVGs with the deterministic generator and added CI byte-for-byte verification after regeneration;
 - added explicit white backgrounds to repository SVGs for GitHub dark-mode readability and separated overlapping Figure 5 series with distinct monochrome line styles;
 - moved root README display mathematics to GitHub fenced `math` blocks after direct rendered-UI QA exposed broken double-dollar rendering;
+- standardized display mathematics across public repository Markdown on GitHub fenced `math` blocks, including theory, experiment cards, canonical docs, supplementary theorem/certificate pages, audit pages, prior-art notes, and the experiment archive;
 - replaced GitHub-disallowed `\operatorname` in rendered Markdown mathematics with safe roman forms such as `\mathrm{Cov}`, `\mathrm{Var}`, `\mathrm{Corr}`, `\mathrm{sign}`, and `\mathrm{median}` while leaving LaTeX manuscript sources unchanged;
-- hardened `scripts/validate_markdown_math.py` to require fenced display math in the root README, validate balanced display blocks elsewhere, and reject `\operatorname` when it appears inside a rendered Markdown math context;
+- hardened `scripts/validate_markdown_math.py` to reject double-dollar and single-dollar math delimiters outside code fences, require balanced fenced `math` blocks, and reject `\operatorname` inside rendered Markdown math;
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
 - removed public repository-process wording that depended on tool availability;
 - removed merged/superseded development branches;
@@ -92,7 +93,7 @@
 - six committed publication-oriented SVG figures with deterministic regeneration script;
 - PDF figure generator for LaTeX manuscript builds;
 - complete manuscript appendix proofs for T1–T5 and supplementary derivations;
-- Supplementary Theorem S1 for shared-latent branch-policy coherence;
+- Supplementary Theorem S1 for shared-latent policy coherence;
 - historical experiment archive index and supersession ledger;
 - explicit Everett bridge support / constraint / rejection criteria;
 - v0.2 manuscript claim consistency audit and post-layout re-audit;

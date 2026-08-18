@@ -1,6 +1,6 @@
 # S2.11 Residual Conditional-Covariance Extension — Theorem Audit
 
-**Status:** post-v0.2 stacked theorem candidate
+**Status:** post-v0.2 stacked theorem candidate; proof-review assumptions tightened
 
 ## H — claim under review
 
@@ -11,6 +11,18 @@ S=s(Y)
 $$
 
 without discarding residual accessibility/outcome dependence that remains after conditioning on `Y`.
+
+For the theorem statement used in the repository, assume:
+
+$$
+U,S\in L^2,
+\qquad
+S\ge0,
+\qquad
+0<E[S]<\infty.
+$$
+
+Square integrability is a simple sufficient condition ensuring every covariance and residual product below is finite.
 
 ## T — identity audit
 
@@ -64,8 +76,7 @@ then:
 $$
 \operatorname{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))-
-\varepsilon.
+\operatorname{Cov}(m(Y),a(Y))-\varepsilon.
 $$
 
 Thus:
@@ -91,10 +102,10 @@ $$
 Then:
 
 $$
-E[\eta\mid Y]=E[\xi\mid Y]=0.
+E[\eta\mid Y]=E[\xi\mid Y]=0,
 $$
 
-Expanding the covariance removes cross terms because the residuals have zero conditional mean, leaving:
+and:
 
 $$
 \operatorname{Cov}(U,S)
@@ -112,36 +123,45 @@ $$
 
 **Audit:** PASS.
 
-## C — counterexample boundary
+## C — bounded counterexample boundary
 
-Let `Y` be constant. Then:
+A previous draft described arbitrary centered residuals and then said a sufficiently large constant could be added to accessibility. That statement requires a bounded-below accessibility residual. The proof-review version uses a bounded construction explicitly.
 
-$$
-\operatorname{Cov}(m(Y),a(Y))=0.
-$$
-
-Let centered residuals satisfy:
+Let `Y` be constant and let `eta` be Rademacher:
 
 $$
-\xi=-\eta
+P(\eta=1)=P(\eta=-1)=\frac12.
 $$
 
-and add a sufficiently large positive constant to accessibility so that `S>=0`. Then:
+Set:
 
 $$
-E[\eta\xi]
-=-E[\eta^2]<0.
+U=\eta,
+\qquad
+S=M-\eta,
+\qquad
+M>1.
 $$
 
-Therefore:
+Then `S>0` almost surely, the conditional means are constant, and the centered accessibility residual is:
 
 $$
-\operatorname{Cov}(U,S)<0.
+\xi=-\eta.
 $$
 
-This proves that comonotone or constant conditional means do not control the total covariance after score-measurability is removed unless the residual term is also bounded or signed.
+Hence:
 
-**Audit:** PASS.
+$$
+\operatorname{Cov}(m(Y),a(Y))=0,
+$$
+
+but:
+
+$$
+E[\eta\xi]=-1<0.
+$$
+
+**Audit:** PASS. This establishes the required counterexample without any hidden boundedness assumption.
 
 ## U — relation to S2
 
@@ -165,19 +185,19 @@ $$
 
 almost surely.
 
-S2.11 therefore strictly broadens the abstract probability model, while making the additional residual-dependence requirement explicit rather than silently dropping it.
+S2.11 therefore broadens the abstract model while keeping residual dependence explicit.
 
 ## ERROR CHECK
 
-1. No conditional independence assumption is used.
-2. The law of total covariance is exact under the stated moment conditions.
-3. Comonotonicity controls only the first term.
+1. `U,S in L^2` is sufficient for all displayed covariance terms.
+2. No conditional independence assumption is used.
+3. Comonotonicity controls only the conditional-mean term.
 4. The residual term may have either sign.
 5. The epsilon condition is sufficient, not necessary.
 6. `S=s(Y)` is correctly recovered as a zero-residual special case.
-7. The counterexample preserves accessibility nonnegativity by adding a constant, which does not change covariance.
+7. The counterexample uses bounded residuals and strictly positive accessibility.
 8. The Everett bridge remains separate.
 
 ## Audit conclusion
 
-**S2.11 IS MATHEMATICALLY SOUND UNDER THE STATED INTEGRABILITY CONDITIONS. THE EXTENSION CORRECTLY REPLACES SCORE-MEASURABILITY WITH AN EXACT TOTAL-COVARIANCE DECOMPOSITION AND AN EXPLICIT RESIDUAL CONDITION.**
+**S2.11 IS MATHEMATICALLY SOUND UNDER THE EXPLICIT SQUARE-INTEGRABILITY ASSUMPTION. THE PROOF-REVIEW REVISION REMOVES AN AMBIGUOUS MOMENT CONDITION AND MAKES THE NEGATIVE-RESIDUAL COUNTEREXAMPLE FULLY BOUNDED.**

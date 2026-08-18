@@ -38,7 +38,6 @@ for path in ROOT.rglob("*.md"):
     fence_start = None
     math_fence_has_content = False
     math_fence_count = 0
-    in_dollar_math = False
 
     for line_no, line in enumerate(text.splitlines(), start=1):
         stripped = line.strip()
@@ -62,8 +61,7 @@ for path in ROOT.rglob("*.md"):
                 check_unsupported_math_macros(path, line_no, line)
             continue
 
-        # GitHub supports ```math fenced display blocks. Treat them as first-class
-        # math syntax rather than ordinary code fences.
+        # Repository display mathematics uses GitHub fenced math blocks uniformly.
         if stripped == "```math":
             in_fence = True
             fence_marker = "```"
@@ -81,39 +79,26 @@ for path in ROOT.rglob("*.md"):
             fence_start = line_no
             continue
 
-        # Single-dollar math is not used in repository Markdown.
+        # Single-dollar inline/display math is not used in repository Markdown.
         for _match in re.finditer(r"(?<!\$)\$(?!\$)", line):
             errors.append(
                 f"{path.relative_to(ROOT)}:{line_no}: single-dollar math delimiter"
             )
 
+        # Although GitHub documents $$ display math, this repository standardizes on
+        # fenced math because direct rendered-UI review exposed inconsistent $$
+        # rendering on repository pages. Keep the syntax uniform and regression-safe.
         if "$$" in line:
-            # The public landing page uses fenced math blocks. Do not regress it to
-            # double-dollar blocks even though GitHub also documents that syntax.
-            if path == ROOT_README:
-                errors.append(
-                    f"README.md:{line_no}: root README display math must use ```math fences"
-                )
-                continue
-
-            if stripped != "$$":
-                errors.append(
-                    f"{path.relative_to(ROOT)}:{line_no}: display delimiter must be on its own line"
-                )
-                continue
-            in_dollar_math = not in_dollar_math
-            continue
-
-        if in_dollar_math:
-            check_unsupported_math_macros(path, line_no, line)
+            errors.append(
+                f"{path.relative_to(ROOT)}:{line_no}: use fenced ```math blocks "
+                "instead of $$ display delimiters"
+            )
 
     if in_fence:
         kind = "math" if fence_kind == "math" else "code"
         errors.append(
             f"{path.relative_to(ROOT)}:{fence_start}: unclosed fenced {kind} block"
         )
-    if in_dollar_math:
-        errors.append(f"{path.relative_to(ROOT)}: unclosed double-dollar display block")
     if path == ROOT_README and math_fence_count == 0:
         errors.append("README.md: expected at least one fenced ```math display block")
 
@@ -123,6 +108,6 @@ if errors:
     sys.exit(1)
 
 print(
-    "Markdown math validation passed: root README uses fenced GitHub math blocks; "
-    "display blocks are balanced; unsupported GitHub math macros are absent."
+    "Markdown math validation passed: repository display math uses fenced GitHub "
+    "math blocks; fences are balanced; unsupported GitHub math macros are absent."
 )

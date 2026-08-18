@@ -21,7 +21,10 @@
 - standardized named Markdown math operators on repository roman forms such as `\mathrm{Cov}`, `\mathrm{Var}`, `\mathrm{Corr}`, `\mathrm{sign}`, and `\mathrm{median}` while leaving LaTeX manuscript sources unchanged; this is a repository consistency convention rather than a claim that MathJax lacks `\operatorname`;
 - exhaustively inspected all 66 repository Markdown sources for rendering-critical structure, including issue-template front matter, math/code/Mermaid fences, tables, images, links, and public-state routing language;
 - added `scripts/validate_github_markdown_render.py`, which sends every Markdown file through GitHub's own GFM REST renderer in CI and checks that expected headings, tables, and images survive rendering;
+- added `scripts/validate_svg_sources.py` to parse all committed SVGs as XML/browser assets and reject malformed viewBoxes, missing sizes/backgrounds, active/external content, and non-finite attributes;
+- added `scripts/validate_latex_sources.py` to preflight manuscript input paths, TeX environments, bibliography/citation keys, labels/references, and generated graphics before `latexmk`;
 - hardened `scripts/validate_markdown_math.py` to support variable-length CommonMark fences, ignore literal inline code, reject legacy dollar/LaTeX delimiter regressions, enforce repository macro conventions, and check brace, TeX-environment, and common `\left`/`\right` balance inside fenced math blocks;
+- hardened `scripts/validate_markdown_links.py` so link-like examples inside fenced or inline literal code are not misclassified as rendered repository links;
 - corrected stale `CONTRIBUTING.md` references to removed release branches and replaced obsolete double-dollar contribution guidance with the current fenced-math convention;
 - marked or rewrote historical stacked-branch S2 audit language so it cannot be mistaken for the current single-branch repository state;
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
@@ -97,7 +100,7 @@
 - six committed publication-oriented SVG figures with deterministic regeneration script;
 - PDF figure generator for LaTeX manuscript builds;
 - complete manuscript appendix proofs for T1–T5 and supplementary derivations;
-- Supplementary Theorem S1 for shared-latent policy coherence;
+- Supplementary Theorem S1 for shared-latent branch-policy coherence;
 - historical experiment archive index and supersession ledger;
 - explicit Everett bridge support / constraint / rejection criteria;
 - v0.2 manuscript claim consistency audit and post-layout re-audit;

@@ -2,12 +2,13 @@
 
 This section records Supplementary Theorem S2.11, which removes the deterministic score-measurability requirement $S=s(Y)$.
 
-Let $U$ and $S$ be integrable random variables with $S\ge0$, $0<\mathbb E[S]<\infty$, and sufficient product integrability for the covariances below. Let $Y$ be any conditioning signal and define
+Let $U$ and $S$ be square-integrable random variables with $S\ge0$ and $0<\mathbb E[S]<\infty$. Let $Y$ be any conditioning signal and define
 \[
 m(Y)=\mathbb E[U\mid Y],
 \qquad
 a(Y)=\mathbb E[S\mid Y].
 \]
+Square integrability guarantees that all covariance and residual terms below are finite.
 
 \begin{theorem}[Residual conditional-covariance alignment]
 The exact decomposition is
@@ -94,4 +95,16 @@ where
 Thus S2 is recovered as the special case in which $S$ is $Y$-measurable and the residual accessibility variable $\xi$ vanishes.
 
 \paragraph{Boundary.}
-Comonotone conditional means are not sufficient if the residual term is strongly negative. A constant $Y$ with centered residuals satisfying $\xi=-\eta$ gives zero conditional-mean covariance and negative total covariance after adding a sufficiently large constant to $S$ to preserve nonnegativity. Hence the residual term cannot be omitted once score-measurability is relaxed.
+Comonotone conditional means are not sufficient if the residual term is strongly negative. For a bounded explicit example, let $Y$ be constant and let $\eta$ be Rademacher, with $P(\eta=1)=P(\eta=-1)=1/2$. Set
+\[
+U=\eta,
+\qquad
+S=M-\eta,
+\qquad
+M>1.
+\]
+Then $S>0$ almost surely, the conditional means are constant, and the residuals satisfy $\xi=-\eta$. Hence the conditional-mean covariance is zero while
+\[
+\mathbb E[\eta\xi]=-1<0.
+\]
+Thus the residual term cannot be omitted once score-measurability is relaxed.

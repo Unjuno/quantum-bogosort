@@ -165,11 +165,13 @@ Historical locked summaries and current reproduction outputs are stored in [`dat
 
 Use [`CONTRIBUTING.md`](CONTRIBUTING.md) and the issue templates for proof/counterexample reports, prior-art overlap, reproducibility failures, and Everett-bridge criticism.
 
+The focused v0.3 S2 technical-review thread is [Issue #14](https://github.com/Unjuno/quantum-bogosort/issues/14).
+
 The current review priority is external proof, novelty, manuscript, statistical-assumption, and Everett-bridge scrutiny rather than automatic theorem expansion.
 
 ## Repository state
 
-The current public-review snapshot is **v0.3-public-review**.
+The frozen scientific public-review snapshot is **v0.3-public-review**. The default `main` branch is the current review/development surface and may contain post-snapshot editorial, interpretive, repository-hygiene, or CI-hardening clarifications. Those changes are tracked in [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md) and [`CHANGELOG.md`](CHANGELOG.md).
 
 - current frozen snapshot: `release/v0.3-public-review`;
 - current review/development surface: `main`;
@@ -205,4 +207,4 @@ See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. GitHub's r
 
 ## Citation
 
-Citation metadata is in [`CITATION.cff`](CITATION.cff) and tracks the current public-review snapshot.
+Citation metadata is in [`CITATION.cff`](CITATION.cff) and tracks the frozen current public-review snapshot.

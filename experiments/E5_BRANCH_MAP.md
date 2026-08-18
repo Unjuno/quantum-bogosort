@@ -16,27 +16,27 @@ Three comparisons are performed:
 
 The action map is conceptually:
 
-$$
+```math
 A(\omega)
 =
 \pi_{R(\omega)}(B(\omega)).
-$$
+```
 
 The experiment distinguishes:
 
-$$
+```math
 P(R=1),
-$$
+```
 
-$$
+```math
 \mathrm{Corr}(R_i,R_j),
-$$
+```
 
 and:
 
-$$
+```math
 \mathrm{Corr}(A_i,A_j).
-$$
+```
 
 ## D — Data / Result
 

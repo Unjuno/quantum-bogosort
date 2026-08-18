@@ -21,18 +21,18 @@ $$
 For every conditioning state `Y`, conditional Cauchy--Schwarz gives:
 
 $$
-|\operatorname{Cov}(U,S\mid Y)|
+|\mathrm{Cov}(U,S\mid Y)|
 \le
 \sqrt{
-\operatorname{Var}(U\mid Y)
-\operatorname{Var}(S\mid Y)
+\mathrm{Var}(U\mid Y)
+\mathrm{Var}(S\mid Y)
 }.
 $$
 
 Therefore:
 
 $$
-\operatorname{Cov}(U,S\mid Y)
+\mathrm{Cov}(U,S\mid Y)
 \ge
 -
 \sqrt{v_U(Y)v_S(Y)}.
@@ -41,9 +41,9 @@ $$
 Substitution into S2.11 yields:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 E[\sqrt{v_U(Y)v_S(Y)}].
 $$
@@ -63,9 +63,9 @@ $$
 Replacing the tighter penalty by this larger upper bound gives the weaker but valid lower certificate:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 \sqrt{E[v_U(Y)]E[v_S(Y)]}.
 $$
@@ -87,13 +87,13 @@ $$
 we have:
 
 $$
-E[\eta^2]=E[\operatorname{Var}(U\mid Y)],
+E[\eta^2]=E[\mathrm{Var}(U\mid Y)],
 $$
 
 and:
 
 $$
-E[\xi^2]=E[\operatorname{Var}(S\mid Y)].
+E[\xi^2]=E[\mathrm{Var}(S\mid Y)].
 $$
 
 **Audit:** PASS.
@@ -129,15 +129,15 @@ $$
 Thus:
 
 $$
-\operatorname{Cov}(U,S\mid Y)=-c,
+\mathrm{Cov}(U,S\mid Y)=-c,
 $$
 
 while:
 
 $$
 \sqrt{
-\operatorname{Var}(U\mid Y)
-\operatorname{Var}(S\mid Y)
+\mathrm{Var}(U\mid Y)
+\mathrm{Var}(S\mid Y)
 }=c.
 $$
 

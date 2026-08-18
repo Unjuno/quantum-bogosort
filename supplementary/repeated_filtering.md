@@ -13,35 +13,35 @@ These must not be conflated.
 
 Let `N_B` count adverse triggers along a history. Define repeated accessibility by:
 
-$$
+```math
 S
 =
 \lambda^{N_B},
-$$
+```
 
 with:
 
-$$
+```math
 0<\lambda\le1.
-$$
+```
 
 The weighted value is:
 
-$$
+```math
 V(\lambda)
 =
 \frac{E[U\lambda^{N_B}]}{E[\lambda^{N_B}]}.
-$$
+```
 
 ## Result
 
 Differentiating with respect to log selectivity gives:
 
-$$
+```math
 \frac{dV}{d\log\lambda}
 =
 \mathrm{Cov}_{\lambda}(U,N_B),
-$$
+```
 
 where the covariance is evaluated under the normalized measure induced by the current value of `lambda`.
 
@@ -49,23 +49,23 @@ where the covariance is evaluated under the normalized measure induced by the cu
 
 Normalization requires:
 
-$$
+```math
 E[S]>0.
-$$
+```
 
 If repeated filtering drives:
 
-$$
+```math
 E[S]\rightarrow0,
-$$
+```
 
 then the normalized FP mean may remain finite while effective support and Monte Carlo effective sample size collapse.
 
 At:
 
-$$
+```math
 E[S]=0,
-$$
+```
 
 the normalized FP measure is undefined.
 

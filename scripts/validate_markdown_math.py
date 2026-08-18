@@ -10,6 +10,7 @@ UNSUPPORTED_MATH_MACROS = {
 }
 LEGACY_MATH_DELIMITERS = (r"\(", r"\)", r"\[", r"\]")
 FENCE_RE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
+BEGIN_END_RE = re.compile(r"\\(begin|end)\{([^{}]+)\}")
 errors = []
 
 
@@ -37,6 +38,70 @@ def closes_fence(stripped: str, marker: str) -> bool:
     return len(stripped) >= len(marker)
 
 
+def check_math_structure(path: Path, start_line: int, lines: list[str]) -> None:
+    """Catch structural TeX errors that commonly stop MathJax block rendering."""
+    text = "\n".join(lines)
+
+    # Count only grouping braces, not escaped literal set braces such as \{ and \}.
+    brace_depth = 0
+    escaped = False
+    for char in text:
+        if escaped:
+            escaped = False
+            continue
+        if char == "\\":
+            escaped = True
+            continue
+        if char == "{":
+            brace_depth += 1
+        elif char == "}":
+            brace_depth -= 1
+            if brace_depth < 0:
+                errors.append(
+                    f"{path.relative_to(ROOT)}:{start_line}: unmatched closing brace in math block"
+                )
+                break
+    if brace_depth > 0:
+        errors.append(
+            f"{path.relative_to(ROOT)}:{start_line}: {brace_depth} unclosed grouping brace(s) in math block"
+        )
+
+    env_stack: list[str] = []
+    for match in BEGIN_END_RE.finditer(text):
+        kind, env = match.groups()
+        if kind == "begin":
+            env_stack.append(env)
+        elif not env_stack or env_stack[-1] != env:
+            expected = env_stack[-1] if env_stack else "<none>"
+            errors.append(
+                f"{path.relative_to(ROOT)}:{start_line}: mismatched \\end{{{env}}}; "
+                f"expected {expected}"
+            )
+            break
+        else:
+            env_stack.pop()
+    if env_stack:
+        errors.append(
+            f"{path.relative_to(ROOT)}:{start_line}: unclosed TeX environment(s): "
+            + ", ".join(env_stack)
+        )
+
+    left_count = len(re.findall(r"\\left(?=\\|\.|\s|\(|\[|\{)", text))
+    right_count = len(re.findall(r"\\right(?=\\|\.|\s|\)|\]|\})", text))
+    if left_count != right_count:
+        errors.append(
+            f"{path.relative_to(ROOT)}:{start_line}: \\left/\\right count mismatch "
+            f"({left_count} != {right_count})"
+        )
+
+    for token in LEGACY_MATH_DELIMITERS:
+        if token in text:
+            errors.append(
+                f"{path.relative_to(ROOT)}:{start_line}: nested legacy delimiter {token} "
+                "inside fenced math"
+            )
+
+
 for path in ROOT.rglob("*.md"):
     if ".git" in path.parts:
         continue
@@ -48,23 +113,29 @@ for path in ROOT.rglob("*.md"):
     fence_start: int | None = None
     math_fence_has_content = False
     math_fence_count = 0
+    math_lines: list[str] = []
 
     for line_no, line in enumerate(text.splitlines(), start=1):
         stripped = line.strip()
 
         if fence_marker is not None:
             if closes_fence(stripped, fence_marker):
-                if fence_kind == "math" and not math_fence_has_content:
-                    errors.append(
-                        f"{path.relative_to(ROOT)}:{fence_start}: empty fenced math block"
-                    )
+                if fence_kind == "math":
+                    if not math_fence_has_content:
+                        errors.append(
+                            f"{path.relative_to(ROOT)}:{fence_start}: empty fenced math block"
+                        )
+                    else:
+                        check_math_structure(path, fence_start or line_no, math_lines)
                 fence_marker = None
                 fence_kind = None
                 fence_start = None
                 math_fence_has_content = False
+                math_lines = []
                 continue
 
             if fence_kind == "math":
+                math_lines.append(line)
                 if stripped:
                     math_fence_has_content = True
                 check_unsupported_math_macros(path, line_no, line)
@@ -78,6 +149,7 @@ for path in ROOT.rglob("*.md"):
             fence_kind = "math" if info == "math" else "code"
             fence_start = line_no
             math_fence_has_content = False
+            math_lines = []
             if fence_kind == "math":
                 math_fence_count += 1
             continue
@@ -121,5 +193,6 @@ if errors:
 
 print(
     "Markdown math validation passed: repository display math uses fenced GitHub "
-    "math blocks; fences are balanced; unsupported GitHub math macros are absent."
+    "math blocks; fences and TeX grouping/environments are balanced; unsupported "
+    "GitHub math macros are absent."
 )

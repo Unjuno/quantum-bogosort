@@ -5,13 +5,13 @@
 S2.12 gives the general-accessibility lower bound:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(E[U\mid Y],E[S\mid Y])
+\mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 -
 \sqrt{
-E[\operatorname{Var}(U\mid Y)]
-E[\operatorname{Var}(S\mid Y)]
+E[\mathrm{Var}(U\mid Y)]
+E[\mathrm{Var}(S\mid Y)]
 }.
 $$
 
@@ -30,9 +30,9 @@ $$
 and:
 
 $$
-\operatorname{Var}(U)>0,
+\mathrm{Var}(U)>0,
 \qquad
-\operatorname{Var}(S)>0.
+\mathrm{Var}(S)>0.
 $$
 
 Let:
@@ -50,8 +50,8 @@ Define explained-variance fractions:
 $$
 A_U
 =
-\frac{\operatorname{Var}(m(Y))}
-{\operatorname{Var}(U)},
+\frac{\mathrm{Var}(m(Y))}
+{\mathrm{Var}(U)},
 $$
 
 and:
@@ -59,8 +59,8 @@ and:
 $$
 A_S
 =
-\frac{\operatorname{Var}(a(Y))}
-{\operatorname{Var}(S)}.
+\frac{\mathrm{Var}(a(Y))}
+{\mathrm{Var}(S)}.
 $$
 
 By the law of total variance:
@@ -75,13 +75,13 @@ Then S2.12 implies:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 \sqrt{
-\operatorname{Var}(U)
-\operatorname{Var}(S)
+\mathrm{Var}(U)
+\mathrm{Var}(S)
 (1-A_U)(1-A_S)
 }
 }.
@@ -100,18 +100,18 @@ define the conditional-mean correlation:
 $$
 \rho_{ma}
 =
-\operatorname{Corr}(m(Y),a(Y)).
+\mathrm{Corr}(m(Y),a(Y)).
 $$
 
 Then:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 =
 \rho_{ma}
 \sqrt{
-\operatorname{Var}(U)
-\operatorname{Var}(S)
+\mathrm{Var}(U)
+\mathrm{Var}(S)
 A_UA_S
 }.
 $$
@@ -120,11 +120,11 @@ Therefore:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 \sqrt{
-\operatorname{Var}(U)
-\operatorname{Var}(S)
+\mathrm{Var}(U)
+\mathrm{Var}(S)
 }
 \left[
 \rho_{ma}\sqrt{A_UA_S}
@@ -147,7 +147,7 @@ $$
 implies:
 
 $$
-\operatorname{Cov}(U,S)>0.
+\mathrm{Cov}(U,S)>0.
 $$
 
 Under T1, this implies positive first-person mean uplift.
@@ -274,39 +274,39 @@ $$
 The law of total variance gives:
 
 $$
-\operatorname{Var}(U)
+\mathrm{Var}(U)
 =
-\operatorname{Var}(E[U\mid Y])
+\mathrm{Var}(E[U\mid Y])
 +
-E[\operatorname{Var}(U\mid Y)].
+E[\mathrm{Var}(U\mid Y)].
 $$
 
 Therefore:
 
 $$
-E[\operatorname{Var}(U\mid Y)]
+E[\mathrm{Var}(U\mid Y)]
 =
-\operatorname{Var}(U)(1-A_U).
+\mathrm{Var}(U)(1-A_U).
 $$
 
 Similarly:
 
 $$
-E[\operatorname{Var}(S\mid Y)]
+E[\mathrm{Var}(S\mid Y)]
 =
-\operatorname{Var}(S)(1-A_S).
+\mathrm{Var}(S)(1-A_S).
 $$
 
 Substituting these identities into the coarser S2.12 bound yields:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 \sqrt{
-\operatorname{Var}(U)
-\operatorname{Var}(S)
+\mathrm{Var}(U)
+\mathrm{Var}(S)
 (1-A_U)(1-A_S)
 }.
 $$
@@ -320,29 +320,29 @@ $$
 we have:
 
 $$
-\operatorname{Var}(m(Y))
+\mathrm{Var}(m(Y))
 =
-A_U\operatorname{Var}(U),
+A_U\mathrm{Var}(U),
 $$
 
 and:
 
 $$
-\operatorname{Var}(a(Y))
+\mathrm{Var}(a(Y))
 =
-A_S\operatorname{Var}(S).
+A_S\mathrm{Var}(S).
 $$
 
 By the definition of `rho_ma`:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 =
 \rho_{ma}
 \sqrt{
 A_UA_S
-\operatorname{Var}(U)
-\operatorname{Var}(S)
+\mathrm{Var}(U)
+\mathrm{Var}(S)
 }.
 $$
 
@@ -350,8 +350,8 @@ Factoring out:
 
 $$
 \sqrt{
-\operatorname{Var}(U)
-\operatorname{Var}(S)
+\mathrm{Var}(U)
+\mathrm{Var}(S)
 }
 $$
 

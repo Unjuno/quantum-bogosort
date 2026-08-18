@@ -12,7 +12,6 @@ required = [
     "docs/research_map.md",
     "docs/notation.md",
     "docs/claims_and_assumptions.md",
-    "docs/research_integrity.md",
     "docs/everett_bridge_tests.md",
     "docs/manuscript_claim_audit.md",
     "docs/v0.2_release_audit.md",

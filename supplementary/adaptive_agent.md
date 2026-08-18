@@ -13,7 +13,7 @@ The adaptive-agent mechanism should not rely on an externally inserted score/out
 The exact question is: under what conditions does a predictive internal signal imply
 
 $$
-\operatorname{Cov}(U_T,S_t)\ge 0?
+\mathrm{Cov}(U_T,S_t)\ge 0?
 $$
 
 The relevant notion of prediction is **conditional-mean prediction**, not mutual information by itself.
@@ -44,9 +44,9 @@ Then the following projection identity is exact:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),s(Y))
+\mathrm{Cov}(m(Y),s(Y))
 }.
 $$
 
@@ -54,7 +54,7 @@ If versions of `m(y)` and `s(y)` are both nondecreasing on the support of `Y`, t
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)\ge 0
+\mathrm{Cov}(U,S)\ge 0
 }.
 $$
 
@@ -71,7 +71,7 @@ Therefore, under the weighted first-person value model:
 $$
 E_{FP}[U]-E[U]
 =
-\frac{\operatorname{Cov}(U,S)}{E[S]}
+\frac{\mathrm{Cov}(U,S)}{E[S]}
 \ge 0,
 $$
 
@@ -99,13 +99,13 @@ $$
 for a nondecreasing measurable function `r`, then:
 
 $$
-\operatorname{Cov}(U,S)\ge0.
+\mathrm{Cov}(U,S)\ge0.
 $$
 
 If `m(Y)` is nonconstant with positive probability and `r` is strictly increasing on its essential range, then:
 
 $$
-\operatorname{Cov}(U,S)>0.
+\mathrm{Cov}(U,S)>0.
 $$
 
 This form does not require the raw score `Y` itself to have a globally meaningful scale; only the predicted conditional value must be ordered consistently with accessibility.
@@ -138,16 +138,16 @@ $$
 Hence, for every nondecreasing score-measurable accessibility map `S=s(Y)`:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(Y,s(Y))
+\mathrm{Cov}(Y,s(Y))
 \ge0.
 $$
 
 If `Y` is nonconstant and `s` is strictly increasing on the essential range of `Y`, then:
 
 $$
-\operatorname{Cov}(U,S)>0.
+\mathrm{Cov}(U,S)>0.
 $$
 
 This corollary converts a standard posterior-mean prediction target into the directional calibration condition required by S2. It still does not prove that a learned finite model exactly equals the true posterior mean.
@@ -163,39 +163,39 @@ $$
 Then:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 +
-\operatorname{Cov}(e(Y),S).
+\mathrm{Cov}(e(Y),S).
 $$
 
 By Cauchy--Schwarz:
 
 $$
-|\operatorname{Cov}(e(Y),S)|
+|\mathrm{Cov}(e(Y),S)|
 \le
-\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+\sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}.
 $$
 
 Therefore:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 -
-\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}
+\sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}
 }.
 $$
 
 A sufficient robustness condition for positive covariance is:
 
 $$
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 >
-\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+\sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}.
 $$
 
 This gives a direct quantitative target for learned agents: a positively ordered score can tolerate calibration error up to the point where the worst-case covariance perturbation exceeds the score/accessibility alignment margin.
@@ -221,7 +221,7 @@ $$
 Since:
 
 $$
-\operatorname{Var}(e(Y))
+\mathrm{Var}(e(Y))
 \le
 E[e(Y)^2],
 $$
@@ -230,20 +230,20 @@ S2.3 implies the observable/conservative bound:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 -
-\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+\sqrt{E[(U-Y)^2]\mathrm{Var}(S)}
 }.
 $$
 
 Therefore:
 
 $$
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 >
-\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+\sqrt{E[(U-Y)^2]\mathrm{Var}(S)}
 $$
 
 is sufficient for positive outcome/accessibility covariance.
@@ -253,7 +253,7 @@ The underlying prediction MSE decomposes exactly as:
 $$
 E[(U-Y)^2]
 =
-E[\operatorname{Var}(U\mid Y)]
+E[\mathrm{Var}(U\mid Y)]
 +
 E[e(Y)^2].
 $$
@@ -283,17 +283,17 @@ $$
 Hence:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
 E[m(Y)s(Y)]-E[m(Y)]E[s(Y)]
 =
-\operatorname{Cov}(m(Y),s(Y)).
+\mathrm{Cov}(m(Y),s(Y)).
 $$
 
 Now let `Y'` be an independent copy of `Y`. For integrable random variables of the required products:
 
 $$
-2\operatorname{Cov}(m(Y),s(Y))
+2\mathrm{Cov}(m(Y),s(Y))
 =
 E\!\left[
 (m(Y)-m(Y'))(s(Y)-s(Y'))
@@ -303,7 +303,7 @@ $$
 If `m` and `s` are both nondecreasing, every integrand is nonnegative. Therefore:
 
 $$
-\operatorname{Cov}(U,S)\ge0.
+\mathrm{Cov}(U,S)\ge0.
 $$
 
 If the pairwise product is strictly positive on a positive-probability event, the expectation is strictly positive.
@@ -315,15 +315,15 @@ For `U` in `L^2`, define:
 $$
 M(U;Y)
 =
-\operatorname{Var}(E[U\mid Y]).
+\mathrm{Var}(E[U\mid Y]).
 $$
 
-This quantity is zero exactly when the signal does not change the conditional mean of `U` almost surely. When `\operatorname{Var}(U)>0`, the normalized correlation-ratio form is:
+This quantity is zero exactly when the signal does not change the conditional mean of `U` almost surely. When `\mathrm{Var}(U)>0`, the normalized correlation-ratio form is:
 
 $$
 \eta^2(U\mid Y)
 =
-\frac{\operatorname{Var}(E[U\mid Y])}{\operatorname{Var}(U)}.
+\frac{\mathrm{Var}(E[U\mid Y])}{\mathrm{Var}(U)}.
 $$
 
 A positive value of `M(U;Y)` or `\eta^2(U\mid Y)` supplies the nondegeneracy needed for strict uplift when accessibility is a strictly increasing function of predicted value.
@@ -361,7 +361,7 @@ $$
 almost surely, and for **every** accessibility map of the form `S=s(Y)`:
 
 $$
-\operatorname{Cov}(U,S)=0.
+\mathrm{Cov}(U,S)=0.
 $$
 
 Thus the chain
@@ -369,7 +369,7 @@ Thus the chain
 $$
 I(Y;U)>0
 \Longrightarrow
-\operatorname{Cov}(U,S)>0
+\mathrm{Cov}(U,S)>0
 $$
 
 is false without an additional directional conditional-mean calibration assumption.
@@ -387,7 +387,7 @@ E[U_T\mid Y_t]=Y_t
 \longrightarrow
 S_t=s(Y_t)\text{ monotone}
 \longrightarrow
-\operatorname{Cov}(U_T,S_t)\ge0.
+\mathrm{Cov}(U_T,S_t)\ge0.
 $$
 
 For an approximate learned predictor, S2.3 quantifies calibration-error tolerance. S2.4 supplies a more conservative certificate using only ordinary prediction MSE and `Var(S)`.

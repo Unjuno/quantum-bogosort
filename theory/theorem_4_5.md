@@ -25,7 +25,7 @@ Define the QBS conditioning contribution:
 $$
 Q(U,S)
 =
-\frac{\operatorname{Cov}(U,S)}{E[S]}.
+\frac{\mathrm{Cov}(U,S)}{E[S]}.
 $$
 
 Then:
@@ -83,7 +83,7 @@ V_1-V_0
 =
 E[U_1-U_0]
 +
-\frac{\operatorname{Cov}(U_1,S_1)}{E[S_1]}.
+\frac{\mathrm{Cov}(U_1,S_1)}{E[S_1]}.
 $$
 
 The first term is the ordinary causal policy/trajectory effect. The second term is the first-person conditioning contribution.
@@ -135,7 +135,7 @@ Then:
 $$
 I
 =
-\frac{\operatorname{Cov}(D,S_0)}{E[S_0]}
+\frac{\mathrm{Cov}(D,S_0)}{E[S_0]}
 +
 \left[
 Q(U_1,S_1)-Q(U_1,S_0)
@@ -171,7 +171,7 @@ and linearity of covariance in its first argument:
 $$
 Q(U_1,S_0)-Q(U_0,S_0)
 =
-\frac{\operatorname{Cov}(D,S_0)}{E[S_0]}.
+\frac{\mathrm{Cov}(D,S_0)}{E[S_0]}.
 $$
 
 Substitution proves the result.
@@ -183,7 +183,7 @@ The first term is the **targeting term**:
 $$
 I_{\mathrm{target}}
 =
-\frac{\operatorname{Cov}(D,S_0)}{E[S_0]}.
+\frac{\mathrm{Cov}(D,S_0)}{E[S_0]}.
 $$
 
 It measures whether ordinary policy improvement is concentrated in branches that the baseline selector would upweight or downweight.
@@ -221,15 +221,15 @@ then:
 $$
 I
 =
-\frac{\operatorname{Cov}(D,S)}{E[S]}.
+\frac{\mathrm{Cov}(D,S)}{E[S]}.
 $$
 
 Therefore:
 
 $$
-\operatorname{sign}(I)
+\mathrm{sign}(I)
 =
-\operatorname{sign}(\operatorname{Cov}(D,S)).
+\mathrm{sign}(\mathrm{Cov}(D,S)).
 $$
 
 ---
@@ -251,7 +251,7 @@ $$
 Then:
 
 $$
-\operatorname{Cov}(D,S)
+\mathrm{Cov}(D,S)
 \le
 0.
 $$
@@ -267,7 +267,7 @@ $$
 Let `B'` be an independent copy of `B`. Then:
 
 $$
-2\operatorname{Cov}(d(B),s(B))
+2\mathrm{Cov}(d(B),s(B))
 =
 E[(d(B)-d(B'))(s(B)-s(B'))].
 $$
@@ -279,7 +279,7 @@ Because the two functions have opposite monotonicity, the product inside the exp
 If both functions vary nontrivially and there is positive probability of ordered pairs for which improvement strictly rises while accessibility strictly falls, then:
 
 $$
-\operatorname{Cov}(D,S)<0,
+\mathrm{Cov}(D,S)<0,
 $$
 
 and therefore:

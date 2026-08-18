@@ -35,11 +35,11 @@ The S2 family is supplementary and must not silently renumber or replace T1–T5
 
 The repository does not claim:
 
-$$
+```math
 \mathrm{Cov}(U,S)>0
 \Longrightarrow
 U_{FP}\succeq_{\mathrm{FOSD}}U.
-$$
+```
 
 The stronger monotonicity condition remains necessary for the stated T3 theorem. Nonmonotone selector counterexamples remain in E1 and the processed data.
 
@@ -49,17 +49,17 @@ The stronger monotonicity condition remains necessary for the stated T3 theorem.
 
 The exact null remains:
 
-$$
+```math
 U_1=U_0,
 \qquad
 S_1=S_0
-$$
+```
 
 almost surely implies:
 
-$$
+```math
 V_1-V_0=0.
-$$
+```
 
 This prevents recognition labels from being treated as causally magical.
 
@@ -71,11 +71,11 @@ Primary sources remain T4, E3, and the recognition-null reproduction outputs.
 
 For a fixed policy, pure accessibility reweighting is absolutely continuous with respect to the stated base measure. Therefore:
 
-$$
+```math
 \mu(A)=0
 \Longrightarrow
 \mu^{FP}(A)=0.
-$$
+```
 
 Pure reweighting does not create outcomes absent from the fixed-policy support.
 
@@ -87,15 +87,15 @@ Primary source: `theory/propositions_boundaries.md`.
 
 The normalized FP measure requires:
 
-$$
+```math
 0<E[S]<\infty.
-$$
+```
 
 When:
 
-$$
+```math
 E[S]=0,
-$$
+```
 
 the normalized FP measure is undefined rather than merely low-valued.
 
@@ -107,12 +107,12 @@ Primary source: `theory/propositions_boundaries.md`.
 
 The abstract model may define:
 
-$$
+```math
 d\mu^{FP}_\pi(\omega)
 =
 \frac{S_\pi(\omega)}{E[S_\pi]}
 \,d\mu(\omega),
-$$
+```
 
 but the repository does not derive this rule from unitary quantum mechanics, decoherence, Born-rule probability, or an independently established observer theory.
 
@@ -136,21 +136,21 @@ QBS results concern policy-dependent trajectories and observer-indexed condition
 
 The post-v0.2 S2 family explicitly records that:
 
-$$
+```math
 I(U;Y)>0
-$$
+```
 
 does not imply:
 
-$$
+```math
 \mathrm{Cov}(U,S)>0.
-$$
+```
 
 A signal may change conditional variance while leaving:
 
-$$
+```math
 E[U\mid Y]
-$$
+```
 
 constant.
 
@@ -167,9 +167,9 @@ For every sufficient finite-sample certificate in S2.5–S2.10, a nonpositive lo
 
 It does not imply:
 
-$$
+```math
 \mathrm{Cov}(U,S)\le0.
-$$
+```
 
 **Audit:** PASS.
 
@@ -187,13 +187,13 @@ Post-hoc candidate invention, uncorrected best-of-many search, or unaccounted ta
 
 S2.9 does not claim marginal sub-Gaussianity automatically supplies universal constants for:
 
-$$
+```math
 YS,
 \qquad
 S^2,
 \qquad
 (U-Y)^2.
-$$
+```
 
 S2.10 does not claim raw-variable finite variance is enough. It requires finite variance of the five S2.8 target variables themselves, including the associated fourth-moment-type conditions for squared targets.
 
@@ -203,15 +203,15 @@ S2.10 does not claim raw-variable finite variance is enough. It requires finite 
 
 After removing:
 
-$$
+```math
 S=s(Y),
-$$
+```
 
 S2.11 retains the residual term:
 
-$$
+```math
 E[\mathrm{Cov}(U,S\mid Y)].
-$$
+```
 
 It is not silently set to zero.
 
@@ -223,11 +223,11 @@ S2.12 and S2.13 provide sufficient worst-case lower certificates, but neither cl
 
 The explained-variance condition:
 
-$$
+```math
 \rho_{ma}\sqrt{A_UA_S}
 >
 \sqrt{(1-A_U)(1-A_S)}
-$$
+```
 
 is inherited from the worst-case S2.12 residual penalty.
 

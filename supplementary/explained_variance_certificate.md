@@ -179,6 +179,8 @@ This form makes the tradeoff explicit:
 - stronger predictive/explanatory power lowers the required conditional-mean correlation;
 - large unexplained residual variation raises the certification threshold.
 
+Because the right-hand side is nonnegative, this sufficient condition necessarily requires positive conditional-mean correlation.
+
 ## Corollary S2.13.2 — perfectly aligned conditional means
 
 If:
@@ -227,7 +229,13 @@ $$
 1-A.
 $$
 
-Equivalently:
+When:
+
+$$
+\rho_{ma}>-1,
+$$
+
+this is algebraically equivalent to:
 
 $$
 \boxed{
@@ -237,7 +245,19 @@ A
 }.
 $$
 
-For:
+Because:
+
+$$
+0<A\le1,
+$$
+
+the strict certificate is feasible only when:
+
+$$
+\rho_{ma}>0.
+$$
+
+At `rho_ma=0`, the divided threshold is `A>1`, which is impossible. For `rho_ma<0`, the threshold exceeds one, and for `rho_ma=-1` the divided form is undefined. For:
 
 $$
 \rho_{ma}=1,
@@ -248,8 +268,6 @@ this reduces to:
 $$
 A>\frac12.
 $$
-
-For smaller positive `rho_ma`, a larger explained-variance fraction is required.
 
 ## D — proof
 
@@ -339,7 +357,7 @@ $$
 
 gives the normalized certificate.
 
-The perfect-alignment and symmetric corollaries follow by elementary algebra.
+The perfect-alignment corollary follows by elementary expansion and cancellation. In the symmetric case, division by `1+rho_ma` is valid only when `rho_ma>-1`; feasibility under `0<A<=1` further requires positive `rho_ma`.
 
 ## C — boundary cases
 
@@ -371,7 +389,9 @@ $$
 \rho_{ma}\le0.
 $$
 
-The conditional means still need favorable directional alignment unless stronger information about the residual term is available.
+Indeed, the normalized worst-case certificate itself cannot be strictly positive when `rho_ma<=0` because its first term is nonpositive and its residual penalty is nonnegative.
+
+The conditional means therefore need favorable directional alignment unless stronger information about the residual term is available.
 
 ## U — interpretation boundary
 
@@ -391,7 +411,7 @@ No Everettian physical conclusion follows without an independent accessibility b
 2. The normalized correlation form is used only when both conditional-mean variances are positive.
 3. The factorization of `Cov(m,a)` uses the correct explained-variance scales.
 4. The perfect-correlation condition simplifies exactly to `A_U + A_S > 1`.
-5. The symmetric condition simplifies exactly to `A > 1/(1+rho_ma)`.
+5. The symmetric divided form requires `rho_ma>-1`, and a feasible strict certificate with `0<A<=1` requires `rho_ma>0`.
 6. S2.13 is sufficient, not necessary, because S2.12 uses a worst-case residual penalty.
 7. High explained variance without positive conditional-mean alignment is not enough.
 8. T1 additionally requires positive finite expected accessibility.

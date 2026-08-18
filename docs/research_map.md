@@ -52,7 +52,7 @@ These simulations reproduce the formal structure. They are not empirical evidenc
 
 ## 4. Supplementary conceptual spine
 
-The post-v0.2 line should be read as one argument:
+The supplementary predictive-alignment line should be read as one argument:
 
 $$
 \text{predictive signal}

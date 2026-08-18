@@ -77,11 +77,11 @@ The principal conceptual results are:
 The central general-accessibility identity is:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(E[U\mid Y],E[S\mid Y])
+\mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 +
-E[\operatorname{Cov}(U,S\mid Y)].
+E[\mathrm{Cov}(U,S\mid Y)].
 $$
 
 S2.12 and S2.13 are sufficient worst-case certificates. Failure of either certificate does not imply negative total covariance.

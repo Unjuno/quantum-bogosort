@@ -8,13 +8,13 @@ The name **Quantum Bogosort** labels this observer-selection intuition. The form
 
 The core structure is:
 
-$$
+```math
 R
 \longrightarrow
 \pi_R
 \longrightarrow
 (U_R,S_R).
-$$
+```
 
 Here `R` is recognition, `pi_R` is the policy used under that recognition state, `U_R` is the resulting outcome or utility, and `S_R` is a nonnegative observer-indexed accessibility weight.
 
@@ -42,33 +42,33 @@ The same dependency structure is also committed as a static SVG fallback for ren
 
 For:
 
-$$
+```math
 0<E_\mu[S_\pi]<\infty,
-$$
+```
 
 define:
 
-$$
+```math
 V_{FP}(\pi)
 =
 \frac{E_\mu[U_\pi S_\pi]}{E_\mu[S_\pi]}.
-$$
+```
 
 For the baseline:
 
-$$
+```math
 S_0\equiv1,
-$$
+```
 
 the recognition effect decomposes as:
 
-$$
+```math
 V_1-V_0
 =
 E[U_1-U_0]
 +
 \frac{\operatorname{Cov}(U_1,S_1)}{E[S_1]}.
-$$
+```
 
 The first term is the ordinary policy/trajectory effect. The second is the first-person conditioning contribution.
 
@@ -78,19 +78,19 @@ A positive conditioning contribution means that the first-person measure gives g
 
 The same weighted measure can be restricted to a present state while accessibility is determined over a future continuation. Let `Z` denote a present state or present trajectory descriptor and let `S_T` denote future-continuation accessibility. Then:
 
-$$
+```math
 P_{FP}(Z\in A)
 =
 \frac{E[\mathbf 1_{\{Z\in A\}}S_T]}{E[S_T]}.
-$$
+```
 
 For a discrete present state:
 
-$$
+```math
 P_{FP}(Z=z)
 =
 \frac{E[S_T\mid Z=z]P(Z=z)}{E[S_T]}.
-$$
+```
 
 Thus, when expected future accessibility differs across present states, the first-person measure can reweight present self-location toward states with greater expected future accessibility. This is a conditioning/change-of-measure statement, not backward causation and not a causal change in the base probability law.
 
@@ -114,7 +114,7 @@ See [`theory/core_theorems.md`](theory/core_theorems.md) and the canonical [`doc
 
 The current supplementary argument is organized around one conceptual spine:
 
-$$
+```math
 \text{predictive signal}
 \longrightarrow
 \text{conditional-mean alignment}
@@ -122,7 +122,7 @@ $$
 \text{outcome/accessibility covariance}
 \longrightarrow
 \text{first-person shift}.
-$$
+```
 
 Its principal results are S2, S2.11, S2.12, and S2.13. S2.3–S2.10 provide calibration, finite-sample, selection-validity, light-tail, and robust statistical-certification machinery. See [`supplementary/README.md`](supplementary/README.md).
 
@@ -163,12 +163,12 @@ See [`experiments/README.md`](experiments/README.md) for the H/T/D/C/U experimen
 
 The mathematical weighting results do not by themselves derive an Everettian physical interpretation. The separate bridge assumption is:
 
-$$
+```math
 d\mu^{FP}_\pi(\omega)
 =
 \frac{S_\pi(\omega)}{E_\mu[S_\pi]}
 \,d\mu(\omega).
-$$
+```
 
 A concrete physical account must explain why an Everettian observer should be described by the proposed accessibility map. Structural and empirical review criteria are in [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md).
 
@@ -234,7 +234,7 @@ The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged in 
 GitHub Actions checks:
 
 - Python compilation;
-- GitHub Markdown math delimiter structure;
+- GitHub Markdown math-block structure;
 - repository-relative Markdown links;
 - required repository structure;
 - E1–E5 reproduction;

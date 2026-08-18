@@ -4,8 +4,8 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 
 required = [
-    "STATUS.md", "ROADMAP.md", "CHANGELOG.md",
-    "docs/research_map.md", "docs/notation.md", "docs/claims_and_assumptions.md",
+    "STATUS.md", "DEVELOPMENT_STATUS.md", "ROADMAP.md", "CHANGELOG.md", "CONTRIBUTING.md",
+    "docs/research_map.md", "docs/notation.md", "docs/claims_and_assumptions.md", "docs/research_integrity.md",
     "docs/everett_bridge_tests.md", "docs/manuscript_claim_audit.md", "docs/v0.2_release_audit.md",
     "docs/s2_stack_review_map.md", "docs/s2_stack_semantic_audit.md",
     "docs/post_v02_manuscript_compression_audit.md", "docs/post_v02_core_s2_proof_review.md",
@@ -14,6 +14,8 @@ required = [
     "docs/s2_light_tail_certificate_audit.md", "docs/s2_robust_mom_certificate_audit.md",
     "docs/s2_residual_covariance_audit.md", "docs/s2_residual_variance_audit.md",
     "docs/s2_explained_variance_audit.md",
+    ".github/ISSUE_TEMPLATE/proof-counterexample.md", ".github/ISSUE_TEMPLATE/prior-art.md",
+    ".github/ISSUE_TEMPLATE/reproducibility.md", ".github/ISSUE_TEMPLATE/everett-bridge.md",
     "experiments/E1_FOSD.md", "experiments/E2_LEARNED_AGENT.md", "experiments/E3_RECOGNITION.md",
     "experiments/E4_INTERACTION.md", "experiments/E5_BRANCH_MAP.md",
     "supplementary/README.md", "supplementary/multi_observer.md", "supplementary/binary_soft_qbs.md",

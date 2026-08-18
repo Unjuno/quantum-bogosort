@@ -85,11 +85,11 @@ $$
 with an exact recognition decomposition separating ordinary trajectory and first-person conditioning effects, a separate policy--selection interaction decomposition, and the general-accessibility identity:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(E[U\mid Y],E[S\mid Y])
+\mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 +
-E[\operatorname{Cov}(U,S\mid Y)].
+E[\mathrm{Cov}(U,S\mid Y)].
 $$
 
 This is **not** evidence that no such prior work exists. It means that the present targeted search did not find a direct structural duplicate.

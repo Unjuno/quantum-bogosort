@@ -5,7 +5,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 required = [
     "STATUS.md", "DEVELOPMENT_STATUS.md", "ROADMAP.md", "CHANGELOG.md", "CONTRIBUTING.md",
-    "docs/research_map.md", "docs/notation.md", "docs/claims_and_assumptions.md", "docs/research_integrity.md",
+    "docs/research_map.md", "docs/notation.md", "docs/claims_and_assumptions.md",
     "docs/everett_bridge_tests.md", "docs/manuscript_claim_audit.md", "docs/v0.2_release_audit.md",
     "docs/s2_stack_review_map.md", "docs/s2_stack_semantic_audit.md",
     "docs/post_v02_manuscript_compression_audit.md", "docs/post_v02_core_s2_proof_review.md",

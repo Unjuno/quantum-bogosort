@@ -14,7 +14,7 @@ This file records the current review and development state. It complements the f
 - future work: [`ROADMAP.md`](ROADMAP.md);
 - archived v0.2 snapshot: tag/Release `v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
 
-PRs #11–#20 preserve the staged derivation history. PR #21 preserves the cumulative integration history. PRs #27–#29 preserve the pre-announcement rendering, visualization, reproducibility, and final landing-page QA history. Current authoritative statements are the frozen v0.3 snapshot and the files on `main`.
+PRs #11–#20 preserve the staged derivation history. PR #21 preserves the cumulative integration history. PRs #27–#29 preserve the earlier pre-announcement rendering, visualization, reproducibility, and landing-page QA history. Current authoritative statements are the frozen v0.3 snapshot and the files on `main`.
 
 ## Branch and archive state
 
@@ -27,7 +27,7 @@ Frozen scientific snapshots are archived as tags and GitHub Releases rather than
 - `v0.3-public-review` — frozen v0.3 snapshot;
 - `v0.2-public-review` — archived v0.2 snapshot.
 
-This keeps archival states immutable without making them look like pending or unmerged development work. Merged/superseded `agent/*` branches have also been removed.
+This keeps archival states immutable without making them look like pending or unmerged development work. Merged/superseded development branches have been removed.
 
 ## Post-snapshot `main` clarifications
 
@@ -43,7 +43,11 @@ Current `main` now makes the following points explicit:
 - `experiments/README.md` exposes the E1–E5 H/T/D/C/U map and visual result previews;
 - a dedicated E2 predictive-alignment figure closes the previous visualization gap;
 - committed SVGs are deterministic generator outputs, checked byte-for-byte in CI and given explicit backgrounds for dark-mode readability;
-- rendered Markdown mathematics is being standardized on fenced `math` blocks, and validation rejects unsupported math syntax;
+- repository Markdown display mathematics is standardized on fenced `math` blocks, and local validation rejects unsupported or legacy math syntax;
+- every repository Markdown source has been inspected in the current rendering audit, including issue templates, status/governance pages, canonical docs, experiment cards, audit pages, literature notes, paper README, supplementary notes, and theory pages;
+- CI now includes a GitHub-native GFM rendering check that submits every repository Markdown file to GitHub's Markdown REST renderer and verifies preservation of expected headings, tables, and images;
+- contributor guidance now points to snapshot tags/Releases rather than removed release branches and matches the fenced-math policy;
+- historical stacked-branch review pages are labeled or worded so they are not mistaken for current branch state;
 - manuscript LaTeX installation is routed through explicit Ubuntu archive/security sources to reduce runner-mirror failures;
 - current public headings and research-map language avoid stale development-version labels;
 - historical snapshots are represented by tags/Releases rather than release branches;
@@ -53,16 +57,29 @@ No T1–T5 theorem, E1–E5 experiment, S2-family result, or Everett-bridge stat
 
 ## Pre-announcement QA status
 
-The automated/source-level pre-announcement QA is complete through merged PR #29, with additional post-PR Markdown rendering hardening on `main`:
+The current source-level rendering audit inspected all 66 repository Markdown files rather than only representative entry pages. The audit covered display-math fences, code-fence balance, Mermaid blocks, Markdown tables, images and relative paths, issue-template front matter, public-state routing language, and the seven committed SVG sources plus their deterministic generator.
 
-- strict GitHub Markdown display-math structure is enforced;
-- Mermaid source is present on the landing page and experiment index;
-- every locked experiment family E1–E5 has a direct SVG review route;
-- visual results link back to their experiment cards and provenance;
-- committed SVGs are deterministically reproducible;
-- manuscript PDF validation passed on the merged visual-QA line.
+Source findings corrected during this pass include stale release-branch references, obsolete double-dollar contribution guidance, historical stacked-branch wording that could be read as current state, and the absence of any GitHub-native renderer test in CI.
 
-The repository is **not yet marked ready for broad announcement** because one presentation gate remains intentionally human-facing: directly inspect the rendered GitHub UI on desktop/mobile and confirm display math, Mermaid rendering, SVG sizing/readability, and overall landing-page flow. This is a presentation check, not a new-theory requirement.
+The repository-validation workflow is now configured to:
+
+- enforce repository-wide fenced display-math syntax;
+- validate repository-relative Markdown links;
+- validate required repository structure;
+- render every Markdown file through GitHub's own GFM REST renderer and verify that source headings, tables, and images survive rendering;
+- reproduce E1–E5;
+- regenerate and byte-compare committed SVGs;
+- validate manifest references.
+
+The new GitHub-renderer step has been added to `main`, but its latest push-run result must still be confirmed before it is marked PASS. This distinction is deliberate: source inspection and CI configuration are complete, while final execution evidence and browser-level visual inspection remain release gates.
+
+The repository is **not yet marked ready for broad announcement**. Remaining presentation gates are:
+
+1. confirm the latest `main` validation run, including the new GitHub-renderer step;
+2. directly inspect rendered GitHub pages on desktop/mobile, not only the root README, with representative theory, experiment, canonical-doc, supplementary, and audit pages included;
+3. confirm MathJax output, Mermaid rendering, SVG sizing/readability, tables, and overall navigation in the actual GitHub UI.
+
+These are presentation/release checks, not new-theory requirements.
 
 ## Locked core
 
@@ -100,7 +117,9 @@ The corrections concern explicit square-integrability assumptions, bounded posit
 
 ## Computational status
 
-E1–E5 remain locked and reproducible under GitHub Actions. CI validates Markdown math structure, repository-relative Markdown links, repository structure, E1–E5 reproduction, deterministic committed SVG regeneration, manifest references, manuscript build, and PDF output.
+E1–E5 remain the locked reproducibility suite. The validation workflow is configured to check Markdown syntax and GitHub GFM rendering, repository-relative links, repository structure, E1–E5 reproduction, deterministic committed SVG regeneration, manifest references, manuscript build, and PDF output.
+
+The latest post-audit `main` workflow result is intentionally not recorded as green until the corresponding Actions run is directly confirmed.
 
 No sixth core experiment is planned by default.
 
@@ -120,11 +139,12 @@ The repository does not claim that an external random-number generator becomes o
 
 Work should now prioritize:
 
-1. direct human GitHub-UI visual inspection before broad announcement;
-2. external/public proof review of S2, S2.11, S2.12, and S2.13;
-3. prior-art and novelty review of the combined recognition-dependent architecture;
-4. manuscript claim consistency and compression;
-5. statistical-certificate assumption review, including leakage and selection boundaries;
-6. independent scrutiny of the Everett accessibility bridge.
+1. confirmation of the latest `main` Actions run including repository-wide GitHub Markdown rendering;
+2. direct human GitHub-UI visual inspection of representative linked pages before broad announcement;
+3. external/public proof review of S2, S2.11, S2.12, and S2.13;
+4. prior-art and novelty review of the combined recognition-dependent architecture;
+5. manuscript claim consistency and compression;
+6. statistical-certificate assumption review, including leakage and selection boundaries;
+7. independent scrutiny of the Everett accessibility bridge.
 
 Do not add another S2-numbered theorem by default. Add new mathematical machinery only in response to a concrete modeling gap or review-identified need.

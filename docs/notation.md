@@ -69,7 +69,7 @@ Normalized covariance contribution:
 $$
 Q(U,S)
 =
-\frac{\operatorname{Cov}(U,S)}{E[S]}.
+\frac{\mathrm{Cov}(U,S)}{E[S]}.
 $$
 
 ## Canonical terminology
@@ -93,7 +93,7 @@ First-person uplift means that an outcome statistic is larger under the first-pe
 $$
 E_{FP}[U]-E[U]
 =
-\frac{\operatorname{Cov}(U,S)}{E[S]}.
+\frac{\mathrm{Cov}(U,S)}{E[S]}.
 $$
 
 This is a distributional statement about observer-conditioned weighting.
@@ -173,7 +173,7 @@ so:
 $$
 I
 =
-\frac{\operatorname{Cov}(D,S)}{E[S]}.
+\frac{\mathrm{Cov}(D,S)}{E[S]}.
 $$
 
 ## Predictive-alignment notation
@@ -189,9 +189,9 @@ $$
 Conditional residual variances are:
 
 $$
-v_U(Y)=\operatorname{Var}(U\mid Y),
+v_U(Y)=\mathrm{Var}(U\mid Y),
 \qquad
-v_S(Y)=\operatorname{Var}(S\mid Y).
+v_S(Y)=\mathrm{Var}(S\mid Y).
 $$
 
 Explained-variance fractions are:
@@ -199,11 +199,11 @@ Explained-variance fractions are:
 $$
 A_U
 =
-\frac{\operatorname{Var}(m(Y))}{\operatorname{Var}(U)},
+\frac{\mathrm{Var}(m(Y))}{\mathrm{Var}(U)},
 \qquad
 A_S
 =
-\frac{\operatorname{Var}(a(Y))}{\operatorname{Var}(S)}.
+\frac{\mathrm{Var}(a(Y))}{\mathrm{Var}(S)}.
 $$
 
 When both explained fractions are positive:
@@ -211,7 +211,7 @@ When both explained fractions are positive:
 $$
 \rho_{ma}
 =
-\operatorname{Corr}(m(Y),a(Y)).
+\mathrm{Corr}(m(Y),a(Y)).
 $$
 
 ## Adaptive-agent notation
@@ -245,13 +245,13 @@ $$
 For branch/copy indices `i` and `j`:
 
 $$
-\operatorname{Corr}(R_i,R_j)
+\mathrm{Corr}(R_i,R_j)
 $$
 
 measures recognition correlation, while:
 
 $$
-\operatorname{Corr}(A_i,A_j)
+\mathrm{Corr}(A_i,A_j)
 $$
 
 measures realized action correlation.
@@ -264,4 +264,4 @@ $$
 
 ## Markdown convention
 
-Markdown math in this repository uses double-dollar display blocks only. Inline mathematical symbols are written as code spans or moved into display blocks.
+The public root README uses fenced `math` blocks for display mathematics. Other repository Markdown may use delimiter-only `$$` display blocks. Inline mathematical symbols are written as code spans or moved into display blocks. GitHub-disallowed macros such as `\operatorname` are not used in Markdown; named quantities use safe roman forms such as `\mathrm{Cov}`, `\mathrm{Var}`, and `\mathrm{Corr}`.

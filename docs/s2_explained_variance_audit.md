@@ -15,41 +15,41 @@ Define:
 $$
 A_U
 =
-\frac{\operatorname{Var}(E[U\mid Y])}{\operatorname{Var}(U)},
+\frac{\mathrm{Var}(E[U\mid Y])}{\mathrm{Var}(U)},
 $$
 
 $$
 A_S
 =
-\frac{\operatorname{Var}(E[S\mid Y])}{\operatorname{Var}(S)}.
+\frac{\mathrm{Var}(E[S\mid Y])}{\mathrm{Var}(S)}.
 $$
 
 The law of total variance gives:
 
 $$
-E[\operatorname{Var}(U\mid Y)]
+E[\mathrm{Var}(U\mid Y)]
 =
-\operatorname{Var}(U)(1-A_U),
+\mathrm{Var}(U)(1-A_U),
 $$
 
 and:
 
 $$
-E[\operatorname{Var}(S\mid Y)]
+E[\mathrm{Var}(S\mid Y)]
 =
-\operatorname{Var}(S)(1-A_S).
+\mathrm{Var}(S)(1-A_S).
 $$
 
 Therefore substitution into S2.12 gives:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 \sqrt{
-\operatorname{Var}(U)
-\operatorname{Var}(S)
+\mathrm{Var}(U)
+\mathrm{Var}(S)
 (1-A_U)(1-A_S)
 }.
 $$
@@ -69,30 +69,30 @@ define:
 $$
 \rho_{ma}
 =
-\operatorname{Corr}(m(Y),a(Y)).
+\mathrm{Corr}(m(Y),a(Y)).
 $$
 
 Then:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 =
 \rho_{ma}
 \sqrt{
 A_UA_S
-\operatorname{Var}(U)
-\operatorname{Var}(S)
+\mathrm{Var}(U)
+\mathrm{Var}(S)
 }.
 $$
 
 Factoring out the positive total standard-deviation product yields:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 \sqrt{
-\operatorname{Var}(U)
-\operatorname{Var}(S)
+\mathrm{Var}(U)
+\mathrm{Var}(S)
 }
 \left[
 \rho_{ma}\sqrt{A_UA_S}

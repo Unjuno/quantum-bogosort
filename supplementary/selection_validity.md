@@ -52,7 +52,7 @@ For the population covariance of the trained rule, define:
 $$
 C(T)
 =
-\operatorname{Cov}(U,S_T\mid T),
+\mathrm{Cov}(U,S_T\mid T),
 $$
 
 where the covariance is over a fresh population draw conditional on the trained rule.
@@ -67,10 +67,8 @@ C(T)\ge D_L(T)
 \right)
 \ge
 1-\delta
-}
+}.
 $$
-
-almost surely in `T`.
 
 Consequently, by taking expectations over training randomness:
 
@@ -172,7 +170,7 @@ denote the resulting lower certificate and let:
 $$
 C_k
 =
-\operatorname{Cov}(U,S^{(k)})
+\mathrm{Cov}(U,S^{(k)})
 $$
 
 be the corresponding population covariance.

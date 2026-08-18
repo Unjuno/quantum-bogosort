@@ -259,9 +259,9 @@ A theorem can establish a statement of the form:
 
 It cannot establish that Everettian observer self-location actually supplies that accessibility variable without a separate physical bridge.
 
-## 6. Review gates before merge into a preprint branch
+## 6. Review gates before preprint promotion
 
-The stack should not be merged merely because CI is green. Before promotion, review should address:
+The S2 result set should not be promoted merely because CI is green. Before preprint promotion, review should address:
 
 1. proof correctness of S2, S2.11, S2.12, and S2.13;
 2. whether S2.3–S2.10 are mathematically useful enough to retain in the paper appendix rather than only the repository;

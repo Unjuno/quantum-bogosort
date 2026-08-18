@@ -60,7 +60,7 @@ $$
 then:
 
 $$
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 \ge
 L_{YS}-P_U.
 $$
@@ -84,7 +84,7 @@ $$
 then:
 
 $$
-\operatorname{Var}(S)
+\mathrm{Var}(S)
 =
 E[S^2]-E[S]^2
 \le
@@ -114,7 +114,7 @@ $$
 then S2.4 gives:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 C_L-\sqrt{U_MV_U}
 =
@@ -131,7 +131,7 @@ then:
 
 $$
 P\!\left(
-\operatorname{Cov}(U,S)\ge D_{\mathrm{env}}
+\mathrm{Cov}(U,S)\ge D_{\mathrm{env}}
 \right)
 \ge1-\delta.
 $$
@@ -151,7 +151,7 @@ and the realized certificate is positive, then:
 $$
 E_{FP}[U]-E[U]
 =
-\frac{\operatorname{Cov}(U,S)}{E[S]}
+\frac{\mathrm{Cov}(U,S)}{E[S]}
 \ge
 \frac{D_{\mathrm{env}}}{U_S}.
 $$

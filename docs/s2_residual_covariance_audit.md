@@ -38,11 +38,11 @@ The law of total covariance gives:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 +
-E[\operatorname{Cov}(U,S\mid Y)]
+E[\mathrm{Cov}(U,S\mid Y)]
 }.
 $$
 
@@ -53,7 +53,7 @@ $$
 For an independent copy `Y'`:
 
 $$
-2\operatorname{Cov}(m(Y),a(Y))
+2\mathrm{Cov}(m(Y),a(Y))
 =
 E[(m(Y)-m(Y'))(a(Y)-a(Y'))].
 $$
@@ -67,22 +67,22 @@ If `m` and `a` are comonotone, the integrand is nonnegative almost surely.
 If:
 
 $$
-E[\operatorname{Cov}(U,S\mid Y)]
+E[\mathrm{Cov}(U,S\mid Y)]
 \ge-\varepsilon,
 $$
 
 then:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))-\varepsilon.
+\mathrm{Cov}(m(Y),a(Y))-\varepsilon.
 $$
 
 Thus:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))>\varepsilon
+\mathrm{Cov}(m(Y),a(Y))>\varepsilon
 $$
 
 is sufficient for positive total covariance.
@@ -108,9 +108,9 @@ $$
 and:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),a(Y))+E[\eta\xi].
+\mathrm{Cov}(m(Y),a(Y))+E[\eta\xi].
 $$
 
 Conditioning on `Y` gives:
@@ -118,7 +118,7 @@ Conditioning on `Y` gives:
 $$
 E[\eta\xi\mid Y]
 =
-\operatorname{Cov}(U,S\mid Y).
+\mathrm{Cov}(U,S\mid Y).
 $$
 
 **Audit:** PASS.
@@ -152,7 +152,7 @@ $$
 Hence:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))=0,
+\mathrm{Cov}(m(Y),a(Y))=0,
 $$
 
 but:
@@ -180,7 +180,7 @@ $$
 and:
 
 $$
-\operatorname{Cov}(U,S\mid Y)=0
+\mathrm{Cov}(U,S\mid Y)=0
 $$
 
 almost surely.

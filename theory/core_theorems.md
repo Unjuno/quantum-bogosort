@@ -8,19 +8,19 @@ Let the base probability space be represented by the usual triplet of sample spa
 
 Assume:
 
-$$
+```math
 0<E_\mu[S_\pi]<\infty,
 \qquad
 E_\mu[|U_\pi|S_\pi]<\infty.
-$$
+```
 
 Define the first-person measure by:
 
-$$
+```math
 \mu^{FP}_\pi(A)
 =
 \frac{E_\mu[\mathbf 1_A S_\pi]}{E_\mu[S_\pi]}.
-$$
+```
 
 The full theorem set is split for readability:
 
@@ -33,29 +33,29 @@ The full theorem set is split for readability:
 
 Recognition can change both trajectory utility and accessibility:
 
-$$
+```math
 R
 \longrightarrow
 \pi_R
 \longrightarrow
 (U_R,S_R).
-$$
+```
 
 For the no-pre-recognition-selector baseline:
 
-$$
+```math
 S_0\equiv 1,
-$$
+```
 
 we obtain:
 
-$$
+```math
 V_1-V_0
 =
 E[U_1-U_0]
 +
 \frac{\mathrm{Cov}(U_1,S_1)}{E[S_1]}.
-$$
+```
 
 The first term is the ordinary causal policy/trajectory effect. The second term is the observer-indexed conditioning contribution.
 

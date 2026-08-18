@@ -177,6 +177,30 @@ def fig6():
     line_chart("fig6_branch_coherence.svg", "Branch coherence versus marginal FP uplift", x, "Shared environmental correlation", [("Action-correlation increment", d.recognition_corr_increment.to_numpy(), "s1"), ("Total FP gain", d.total_FP_gain.to_numpy(), "s2")], "Simulation quantity", "Cross-copy coherence changes strongly while single-observer FP gain remains nearly flat.")
 
 
+def fig7():
+    d = pd.read_csv(DATA / "qbs_nonlinear_minimal_mock_summary.csv")
+    d = d[d.metric == "corr_score_luck"]
+    x = np.array(sorted(d.noise_sigma.unique()), dtype=float)
+
+    def values(evaluator):
+        s = d[d.evaluator == evaluator].set_index("noise_sigma").loc[x]
+        return s["mean"].to_numpy(dtype=float)
+
+    line_chart(
+        "fig7_predictive_alignment.svg",
+        "Learned predictive alignment under noise",
+        x,
+        "Environment noise sigma",
+        [
+            ("Interaction-capable", values("interaction_4param"), "s1"),
+            ("Misspecified linear", values("linear_3param"), "s2"),
+            ("Random control", values("random_control"), "s3"),
+        ],
+        "Mean score-outcome correlation",
+        "E2 toy model: the representable interaction structure retains predictive alignment as noise rises.",
+    )
+
+
 if __name__ == "__main__":
-    fig1(); fig2(); fig3(); fig4(); fig5(); fig6()
-    print(f"Generated six SVG figures in {OUT}")
+    fig1(); fig2(); fig3(); fig4(); fig5(); fig6(); fig7()
+    print(f"Generated seven SVG figures in {OUT}")

@@ -16,7 +16,9 @@
 - made figure-level provenance explicit so deterministic theorem illustrations, current reproduction outputs, and locked historical summaries are not conflated; Figure 5 and Figure 7 are labeled as locked-summary visualizations;
 - synchronized committed SVGs with the deterministic generator and added CI byte-for-byte verification after regeneration;
 - added explicit white backgrounds to repository SVGs for GitHub dark-mode readability and separated overlapping Figure 5 series with distinct monochrome line styles;
-- hardened `scripts/validate_markdown_math.py` so double-dollar display delimiters must be balanced and placed on delimiter-only lines, preventing display openers and expressions from sharing a line;
+- moved root README display mathematics to GitHub fenced `math` blocks after direct rendered-UI QA exposed broken double-dollar rendering;
+- replaced GitHub-disallowed `\operatorname` in rendered Markdown mathematics with safe roman forms such as `\mathrm{Cov}`, `\mathrm{Var}`, `\mathrm{Corr}`, `\mathrm{sign}`, and `\mathrm{median}` while leaving LaTeX manuscript sources unchanged;
+- hardened `scripts/validate_markdown_math.py` to require fenced display math in the root README, validate balanced display blocks elsewhere, and reject `\operatorname` when it appears inside a rendered Markdown math context;
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
 - removed public repository-process wording that depended on tool availability;
 - removed merged/superseded development branches;
@@ -29,7 +31,7 @@
 - no T1–T5 theorem statement is changed;
 - no E1–E5 experiment result is changed;
 - no S2-family theorem or statistical certificate is changed;
-- the visualization layer presents existing model structure and existing committed experiment outputs; it does not add new physical evidence;
+- the visualization and GitHub-math compatibility changes alter presentation syntax only; they do not add new physical or statistical evidence;
 - the present-self-location identities are direct consequences of the already-defined first-person weighted measure, not a new physical bridge claim;
 - the Everett accessibility bridge remains physically open;
 - tag/Release `v0.3-public-review` remains the frozen v0.3 scientific snapshot at commit `58038763127258bd3e2f0d41708c4dfa01f81fd6`.

@@ -4,21 +4,21 @@ This is the canonical index from QBS claims to theorem sources, experiments, man
 
 ## 1. Core architecture
 
-$$
+```math
 R
 \longrightarrow
 \pi_R
 \longrightarrow
 (U_R,S_R).
-$$
+```
 
 For a policy `pi` with nonnegative accessibility and positive finite expected accessibility:
 
-$$
+```math
 V_{FP}(\pi)
 =
 \frac{E_\mu[U_\pi S_\pi]}{E_\mu[S_\pi]}.
-$$
+```
 
 The repository separates three questions:
 
@@ -54,7 +54,7 @@ These simulations reproduce the formal structure. They are not empirical evidenc
 
 The supplementary predictive-alignment line should be read as one argument:
 
-$$
+```math
 \text{predictive signal}
 \longrightarrow
 \text{conditional-mean alignment}
@@ -62,7 +62,7 @@ $$
 \text{outcome/accessibility covariance}
 \longrightarrow
 \text{first-person shift}.
-$$
+```
 
 The principal conceptual results are:
 
@@ -76,13 +76,13 @@ The principal conceptual results are:
 
 The central general-accessibility identity is:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 +
 E[\mathrm{Cov}(U,S\mid Y)].
-$$
+```
 
 S2.12 and S2.13 are sufficient worst-case certificates. Failure of either certificate does not imply negative total covariance.
 
@@ -118,27 +118,27 @@ QBS changes the first-person weighting in the model when accessibility and outco
 
 A convenient summary is:
 
-$$
+```math
 \text{base chance unchanged}
 \qquad\text{while}\qquad
 \text{first-person trajectory weight changes}.
-$$
+```
 
 The same change of measure can be applied to a present state when accessibility is determined over a future continuation. Let `Z` denote a present state and `S_T` future accessibility. Then:
 
-$$
+```math
 P_{FP}(Z\in A)
 =
 \frac{E[\mathbf 1_{\{Z\in A\}}S_T]}{E[S_T]}.
-$$
+```
 
 For a discrete present state:
 
-$$
+```math
 P_{FP}(Z=z)
 =
 \frac{E[S_T\mid Z=z]P(Z=z)}{E[S_T]}.
-$$
+```
 
 Thus differential future accessibility can reweight present self-location toward states associated with higher expected future accessibility. This is a conditioning/change-of-measure statement, not backward causation or a causal change in the base probability law.
 
@@ -150,12 +150,12 @@ Canonical terminology is maintained in [`docs/notation.md`](notation.md).
 
 The physical bridge is a separate model assumption:
 
-$$
+```math
 d\mu^{FP}_\pi(\omega)
 =
 \frac{S_\pi(\omega)}{E_\mu[S_\pi]}
 \,d\mu(\omega).
-$$
+```
 
 The abstract change-of-measure mathematics is exact after the model is defined. A physical Everett interpretation additionally requires an independent account of why observer persistence or self-location induces the proposed `S_pi`.
 

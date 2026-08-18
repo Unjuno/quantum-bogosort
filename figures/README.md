@@ -4,14 +4,43 @@ The repository contains six committed SVG figures under `figures/generated/`. Th
 
 The manuscript uses PDF build products generated from the same source data by `figures/generate_pdf_figures.py`. These PDFs are produced under `figures/generated_pdf/` during local or CI builds and do not need to be committed as binary artifacts.
 
-## Figure set
+## Figure set and previews
 
-1. `fig1_framework` — schematic of recognition, policy, trajectory utility, accessibility, and first-person value. **Type:** interpretation-neutral mathematical schematic.
-2. `fig2_fosd` — base CDF versus monotone-accessibility and nonmonotone-accessibility first-person CDFs. **Type:** theorem illustration generated deterministically from a standard-normal base density.
-3. `fig3_recognition_decomposition` — policy, QBS, and total effects from the paired recognition experiment. **Source:** `data/processed/e3_recognition_decomposition_reproduction.csv`.
-4. `fig4_interaction_sign` — rescue-bad, neutral, and amplify-good policy-QBS interactions. **Source:** `data/processed/e4_fixed_selector_sign_reproduction.csv`.
-5. `fig5_adaptation_quality` — policy effect, post-policy QBS marginal effect, interaction, and total first-person effect versus targeting accuracy. **Source:** `data/processed/qbs_adaptation_total_effect_summary.csv`.
-6. `fig6_branch_coherence` — recognition-induced action-correlation increment versus single-observer total FP gain as shared environmental correlation varies. **Source:** `data/processed/e5_rho_paired_reproduction.csv`.
+### Figure 1 — Recognition-dependent QBS framework
+
+![Recognition, policy, trajectory, accessibility, and first-person value](generated/fig1_framework.svg)
+
+**Type:** interpretation-neutral mathematical schematic. This is not a literal quantum-branch diagram.
+
+### Figure 2 — FOSD and the monotone-accessibility boundary
+
+![Base and first-person CDF comparison](generated/fig2_fosd.svg)
+
+**Type:** deterministic theorem illustration generated from a standard-normal base density. The nonmonotone case is included specifically to show possible CDF crossing.
+
+### Figure 3 — Recognition decomposition
+
+![Policy, QBS, and total recognition effects](generated/fig3_recognition_decomposition.svg)
+
+**Source:** `data/processed/e3_recognition_decomposition_reproduction.csv`.
+
+### Figure 4 — Policy-QBS interaction sign
+
+![Rescue-bad, neutral, and amplify-good interaction regimes](generated/fig4_interaction_sign.svg)
+
+**Source:** `data/processed/e4_fixed_selector_sign_reproduction.csv`.
+
+### Figure 5 — Adaptation quality and substitution
+
+![Policy, QBS, interaction, and total FP effect versus targeting accuracy](generated/fig5_adaptation_quality.svg)
+
+**Source:** `data/processed/qbs_adaptation_total_effect_summary.csv`.
+
+### Figure 6 — Branch coherence versus marginal first-person uplift
+
+![Cross-copy action correlation and single-observer FP gain](generated/fig6_branch_coherence.svg)
+
+**Source:** `data/processed/e5_rho_paired_reproduction.csv`.
 
 ## Reproduction
 
@@ -31,8 +60,8 @@ The SVG generator writes Figure 2's deterministic theorem-illustration CDF data 
 
 ## Interpretation discipline
 
-- Figures 2--6 display theorem illustrations or classical toy simulations, not physical Everett observables.
-- Figure 1 is a causal/model schematic, not a literal diagram of quantum branching.
+- Figures 2–6 display theorem illustrations or classical toy simulations, not physical Everett observables.
+- Figure 1 is a model schematic, not a literal diagram of quantum branching.
 - Cross-branch action correlation and single-observer first-person uplift are plotted separately because they are distinct quantities.
 - Manuscript captions state whether the figure is a theorem illustration, simulation result, or interpretation schematic.
 

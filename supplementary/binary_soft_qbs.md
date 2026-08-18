@@ -10,61 +10,61 @@ Let favorable outcomes have prior probability `p`. Give favorable outcomes acces
 
 Then:
 
-$$
+```math
 0\le\lambda\le1.
-$$
+```
 
 ## Result
 
 The favorable first-person probability is:
 
-$$
+```math
 p_{FP}
 =
 \frac{p}{p+(1-p)\lambda}.
-$$
+```
 
 If:
 
-$$
+```math
 0\le\lambda<1
-$$
+```
 
 and:
 
-$$
+```math
 0<p<1,
-$$
+```
 
 then:
 
-$$
+```math
 p_{FP}>p.
-$$
+```
 
 ## Execution / leakage parameterization
 
 A provisional toy parameterization used in exploratory experiments is:
 
-$$
+```math
 \lambda
 =
 1-q(1-\alpha),
-$$
+```
 
 where `q` is an execution-strength parameter and `alpha` is residual leakage/accessibility in the downweighted class.
 
 At:
 
-$$
+```math
 q=0,
-$$
+```
 
 we obtain:
 
-$$
+```math
 \lambda=1,
-$$
+```
 
 so there is no weighting effect.
 

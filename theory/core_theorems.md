@@ -1,6 +1,6 @@
 # Quantum Bogosort — Core Theorem Set (T1–T5)
 
-This is the GitHub-rendered index for the locked core theorem set. Mathematical display blocks in Markdown use only double-dollar delimiters.
+This is the GitHub-rendered index for the locked core theorem set. Mathematical display blocks use GitHub-compatible Markdown math syntax.
 
 ## Setup
 
@@ -54,7 +54,7 @@ V_1-V_0
 =
 E[U_1-U_0]
 +
-\frac{\operatorname{Cov}(U_1,S_1)}{E[S_1]}.
+\frac{\mathrm{Cov}(U_1,S_1)}{E[S_1]}.
 $$
 
 The first term is the ordinary causal policy/trajectory effect. The second term is the observer-indexed conditioning contribution.

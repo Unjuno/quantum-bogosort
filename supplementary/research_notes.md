@@ -76,7 +76,7 @@ Differentiation with respect to log selectivity gives:
 $$
 \frac{dV}{d\log\lambda}
 =
-\operatorname{Cov}_{\lambda}(U,N_B).
+\mathrm{Cov}_{\lambda}(U,N_B).
 $$
 
 This identity was numerically verified in the exploratory experiments.
@@ -241,13 +241,13 @@ P(R=1),
 $$
 
 $$
-\operatorname{Corr}(R_i,R_j),
+\mathrm{Corr}(R_i,R_j),
 $$
 
 and:
 
 $$
-\operatorname{Corr}(A_i,A_j).
+\mathrm{Corr}(A_i,A_j).
 $$
 
 The cross-branch experiments show that recognition correlation and shared environmental structure can change the decision-map correlation even when single-observer marginal first-person uplift changes little.

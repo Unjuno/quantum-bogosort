@@ -8,7 +8,7 @@ The project is in **v0.3 public review / preprint preparation**.
 
 The locked core remains T1–T5 and E1–E5. The supplementary line is complete through S2.13. The default next step is review quality, not theorem expansion.
 
-Source-level presentation QA now includes repository-wide GitHub math-rendering hardening: public Markdown display mathematics is standardized on fenced `math` blocks, GitHub-disallowed `\operatorname` is absent from rendered Markdown mathematics, and CI rejects double-dollar/single-dollar regressions and unsupported macros. Broad announcement remains gated on direct human inspection of rendered GitHub pages and the final `main` validation state.
+Source-level presentation QA now includes repository-wide GitHub rendering hardening: public Markdown display mathematics is standardized on fenced `math` blocks, repository math-macro conventions use roman forms such as `\mathrm{Cov}`, and CI rejects legacy delimiter regressions and structurally malformed math blocks. Broad announcement remains gated on direct human inspection of rendered GitHub pages and the final `main` validation state.
 
 ## Immediate review gates
 
@@ -24,7 +24,10 @@ Source-level presentation QA now includes repository-wide GitHub math-rendering 
 - [ ] Keep `main` CI-green after review-driven editorial or scientific corrections.
 - [ ] Keep README, research map, claim ledger, notation, status, and roadmap free of conflicting source-of-truth roles.
 - [x] Validate repository-relative Markdown links in CI.
-- [x] Standardize repository Markdown display mathematics on balanced fenced `math` blocks; reject `$$`, single-dollar math, and GitHub-disallowed `\operatorname` outside literal code examples.
+- [x] Inspect all 66 repository Markdown sources for rendering-critical structure rather than sampling representative pages only.
+- [x] Standardize repository Markdown display mathematics on balanced fenced `math` blocks; reject legacy display/inline delimiters outside literal code examples and enforce repository math-macro conventions.
+- [x] Validate brace balance, TeX environment balance, and common `\left`/`\right` pairing inside fenced Markdown math blocks.
+- [x] Add CI rendering of every Markdown file through GitHub's own GFM REST renderer with source/render structure checks for headings, tables, and images.
 - [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
 - [x] Provide a dedicated visual route for every locked experiment family E1–E5, including E2 predictive alignment.
 - [x] Require committed SVGs to match deterministic generator output byte-for-byte.

@@ -27,13 +27,13 @@ P(R=1),
 $$
 
 $$
-\operatorname{Corr}(R_i,R_j),
+\mathrm{Corr}(R_i,R_j),
 $$
 
 and:
 
 $$
-\operatorname{Corr}(A_i,A_j).
+\mathrm{Corr}(A_i,A_j).
 $$
 
 ## Supplementary Theorem S1 — Shared-latent policy coherence
@@ -41,25 +41,25 @@ $$
 Let `Theta` be a shared latent variable inherited by descendant copies. Let descendant actions `A_i` and `A_j` have finite second moments. Then the law of total covariance gives:
 
 $$
-\operatorname{Cov}(A_i,A_j)
+\mathrm{Cov}(A_i,A_j)
 =
-\operatorname{Cov}(E[A_i\mid\Theta],E[A_j\mid\Theta])
+\mathrm{Cov}(E[A_i\mid\Theta],E[A_j\mid\Theta])
 +
-E[\operatorname{Cov}(A_i,A_j\mid\Theta)].
+E[\mathrm{Cov}(A_i,A_j\mid\Theta)].
 $$
 
 Assume descendant actions are conditionally independent given `Theta`:
 
 $$
-\operatorname{Cov}(A_i,A_j\mid\Theta)=0
+\mathrm{Cov}(A_i,A_j\mid\Theta)=0
 $$
 
 almost surely. Then:
 
 $$
-\operatorname{Cov}(A_i,A_j)
+\mathrm{Cov}(A_i,A_j)
 =
-\operatorname{Cov}(m_i(\Theta),m_j(\Theta)),
+\mathrm{Cov}(m_i(\Theta),m_j(\Theta)),
 $$
 
 where:
@@ -78,9 +78,9 @@ we obtain:
 
 $$
 \boxed{
-\operatorname{Cov}(A_i,A_j)
+\mathrm{Cov}(A_i,A_j)
 =
-\operatorname{Var}(m(\Theta))
+\mathrm{Var}(m(\Theta))
 \ge0
 }.
 $$
@@ -96,7 +96,7 @@ The first identity is the law of total covariance. Conditional independence remo
 If `Theta` is degenerate, then:
 
 $$
-\operatorname{Var}(m(\Theta))=0.
+\mathrm{Var}(m(\Theta))=0.
 $$
 
 Therefore a fixed deterministic policy map shared by all descendants does **not** by itself imply positive realized Pearson action correlation when descendant local signals are conditionally independent. Positive cross-copy covariance requires shared variation in recognition/policy parameters, shared environment/history, residual conditional dependence, or some combination of these.
@@ -106,11 +106,11 @@ Therefore a fixed deterministic policy map shared by all descendants does **not*
 For a richer shared history variable `H`, no conditional-independence assumption is required:
 
 $$
-\operatorname{Cov}(A_i,A_j)
+\mathrm{Cov}(A_i,A_j)
 =
-\operatorname{Cov}(E[A_i\mid H],E[A_j\mid H])
+\mathrm{Cov}(E[A_i\mid H],E[A_j\mid H])
 +
-E[\operatorname{Cov}(A_i,A_j\mid H)].
+E[\mathrm{Cov}(A_i,A_j\mid H)].
 $$
 
 The first term measures covariance induced by shared hierarchical state. The second measures remaining within-hierarchy dependence. This decomposition is the appropriate theoretical object for interpreting E5.

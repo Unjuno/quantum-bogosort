@@ -22,7 +22,7 @@ $$
 +
 \text{ordered accessibility}
 \Longrightarrow
-\operatorname{Cov}(U,S)\ge0.
+\mathrm{Cov}(U,S)\ge0.
 $$
 
 ## T — theorem audit
@@ -41,9 +41,9 @@ Therefore:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(E[U\mid Y],s(Y))
+\mathrm{Cov}(E[U\mid Y],s(Y))
 }.
 $$
 
@@ -54,7 +54,7 @@ $$
 For an independent copy `Y'`:
 
 $$
-2\operatorname{Cov}(m(Y),s(Y))
+2\mathrm{Cov}(m(Y),s(Y))
 =
 E[(m(Y)-m(Y'))(s(Y)-s(Y'))].
 $$
@@ -74,7 +74,7 @@ $$
 then the nonnegative integrand is strictly positive on a positive-probability set, hence:
 
 $$
-\operatorname{Cov}(U,S)>0.
+\mathrm{Cov}(U,S)>0.
 $$
 
 **Audit:** PASS.
@@ -92,7 +92,7 @@ T1 gives:
 $$
 E_{FP}[U]-E[U]
 =
-\frac{\operatorname{Cov}(U,S)}{E[S]}.
+\frac{\mathrm{Cov}(U,S)}{E[S]}.
 $$
 
 Thus S2 supplies a sufficient condition for nonnegative or strict first-person mean uplift.
@@ -132,35 +132,35 @@ $$
 Then:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(Y,S)+\operatorname{Cov}(e(Y),S).
+\mathrm{Cov}(Y,S)+\mathrm{Cov}(e(Y),S).
 $$
 
 Cauchy--Schwarz gives:
 
 $$
-|\operatorname{Cov}(e(Y),S)|
+|\mathrm{Cov}(e(Y),S)|
 \le
-\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+\sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}.
 $$
 
 Therefore:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 -
-\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+\sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}.
 $$
 
 The strict inequality:
 
 $$
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 >
-\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}
+\sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}
 $$
 
 is sufficient for positive outcome/accessibility covariance.
@@ -186,7 +186,7 @@ $$
 Also:
 
 $$
-\operatorname{Var}(e(Y))
+\mathrm{Var}(e(Y))
 \le
 E[e(Y)^2].
 $$
@@ -195,20 +195,20 @@ Substituting into S2.3 yields:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 -
-\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+\sqrt{E[(U-Y)^2]\mathrm{Var}(S)}
 }.
 $$
 
 Therefore:
 
 $$
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 >
-\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}
+\sqrt{E[(U-Y)^2]\mathrm{Var}(S)}
 $$
 
 is sufficient for strict positive outcome/accessibility covariance.
@@ -220,7 +220,7 @@ The prediction MSE decomposes exactly as:
 $$
 E[(U-Y)^2]
 =
-E[\operatorname{Var}(U\mid Y)]
+E[\mathrm{Var}(U\mid Y)]
 +
 E[e(Y)^2].
 $$
@@ -277,7 +277,7 @@ $$
 almost surely. Therefore, for every `S=s(Y)`:
 
 $$
-\operatorname{Cov}(U,S)=0.
+\mathrm{Cov}(U,S)=0.
 $$
 
 Hence:
@@ -285,7 +285,7 @@ Hence:
 $$
 I(U;Y)>0
 \not\Rightarrow
-\operatorname{Cov}(U,S)>0.
+\mathrm{Cov}(U,S)>0.
 $$
 
 **Audit:** PASS; this blocks an overstrong information-theoretic claim.
@@ -303,7 +303,7 @@ but the future outcome has large irreducible conditional variance. Then S2.2/S2.
 $$
 E[(U-Y)^2]
 =
-E[\operatorname{Var}(U\mid Y)]
+E[\mathrm{Var}(U\mid Y)]
 $$
 
 is large enough that the S2.4 inequality does not certify positivity.
@@ -317,11 +317,11 @@ Therefore failure of the MSE certificate means only that this **sufficient lower
 For general `S` not measurable with respect to `Y`:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(E[U\mid Y],E[S\mid Y])
+\mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 +
-E[\operatorname{Cov}(U,S\mid Y)].
+E[\mathrm{Cov}(U,S\mid Y)].
 $$
 
 S2 controls only the first term unless score-measurability sets the second term to zero.

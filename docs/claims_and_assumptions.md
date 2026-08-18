@@ -7,13 +7,13 @@ This document prevents theorem statements, simulation results, statistical valid
 $$
 E_{FP}[X]-E[X]
 =
-\frac{\operatorname{Cov}(X,S)}{E[S]}.
+\frac{\mathrm{Cov}(X,S)}{E[S]}.
 $$
 
 $$
 P_{FP}(X\ge c)-P(X\ge c)
 =
-\frac{\operatorname{Cov}(\mathbf 1_{\{X\ge c\}},S)}{E[S]}.
+\frac{\mathrm{Cov}(\mathbf 1_{\{X\ge c\}},S)}{E[S]}.
 $$
 
 If:
@@ -43,7 +43,7 @@ and:
 $$
 I
 =
-\frac{\operatorname{Cov}(D,S_0)}{E[S_0]}
+\frac{\mathrm{Cov}(D,S_0)}{E[S_0]}
 +
 \left[Q(U_1,S_1)-Q(U_1,S_0)\right].
 $$
@@ -83,9 +83,9 @@ $$
 S2 gives:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),s(Y)).
+\mathrm{Cov}(m(Y),s(Y)).
 $$
 
 If:
@@ -125,27 +125,27 @@ $$
 Then:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 +
-E[\operatorname{Cov}(U,S\mid Y)].
+E[\mathrm{Cov}(U,S\mid Y)].
 $$
 
 With:
 
 $$
-v_U(Y)=\operatorname{Var}(U\mid Y),
+v_U(Y)=\mathrm{Var}(U\mid Y),
 \qquad
-v_S(Y)=\operatorname{Var}(S\mid Y),
+v_S(Y)=\mathrm{Var}(S\mid Y),
 $$
 
 S2.12 gives:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 E[\sqrt{v_U(Y)v_S(Y)}],
 $$
@@ -153,9 +153,9 @@ $$
 and:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 \sqrt{E[v_U(Y)]E[v_S(Y)]}.
 $$
@@ -167,9 +167,9 @@ The basic residual-variance penalty is sharp under perfect conditional anti-corr
 Assume additionally:
 
 $$
-\operatorname{Var}(U)>0,
+\mathrm{Var}(U)>0,
 \qquad
-\operatorname{Var}(S)>0.
+\mathrm{Var}(S)>0.
 $$
 
 Define:
@@ -177,23 +177,23 @@ Define:
 $$
 A_U
 =
-\frac{\operatorname{Var}(m(Y))}{\operatorname{Var}(U)},
+\frac{\mathrm{Var}(m(Y))}{\mathrm{Var}(U)},
 \qquad
 A_S
 =
-\frac{\operatorname{Var}(a(Y))}{\operatorname{Var}(S)}.
+\frac{\mathrm{Var}(a(Y))}{\mathrm{Var}(S)}.
 $$
 
 Then:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 \sqrt{
-\operatorname{Var}(U)
-\operatorname{Var}(S)
+\mathrm{Var}(U)
+\mathrm{Var}(S)
 (1-A_U)(1-A_S)
 }.
 $$
@@ -209,15 +209,15 @@ define:
 $$
 \rho_{ma}
 =
-\operatorname{Corr}(m(Y),a(Y)).
+\mathrm{Corr}(m(Y),a(Y)).
 $$
 
 Then:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\sqrt{\operatorname{Var}(U)\operatorname{Var}(S)}
+\sqrt{\mathrm{Var}(U)\mathrm{Var}(S)}
 \left[
 \rho_{ma}\sqrt{A_UA_S}
 -

@@ -278,28 +278,50 @@ The bounded conditional anti-correlation corollary follows by inserting its stro
 
 ## C — sharpness boundary
 
-The basic conditional Cauchy--Schwarz penalty is sharp.
+The basic conditional Cauchy--Schwarz penalty is sharp, and the sharpness is compatible with nonnegative accessibility.
 
-Let `Y` be constant and let centered residuals satisfy:
-
-$$
-\xi
-=
--c\eta
-$$
-
-for some:
+Let `Y` be constant and let `eta` be a Rademacher variable:
 
 $$
-c>0.
+P(\eta=1)=P(\eta=-1)=\frac12.
 $$
 
-Then:
+For any:
+
+$$
+c>0,
+$$
+
+set:
+
+$$
+U=\eta,
+$$
+
+and:
+
+$$
+S=M-c\eta
+$$
+
+with:
+
+$$
+M>c.
+$$
+
+Then `S>0` almost surely and the centered accessibility residual is:
+
+$$
+\xi=-c\eta.
+$$
+
+Therefore:
 
 $$
 \operatorname{Cov}(U,S\mid Y)
-=
--cE[\eta^2],
+=-cE[\eta^2]
+=-c,
 $$
 
 while:
@@ -309,17 +331,10 @@ $$
 \operatorname{Var}(U\mid Y)
 \operatorname{Var}(S\mid Y)
 }
-=
-cE[\eta^2].
+=c.
 $$
 
-Thus equality holds in the negative Cauchy--Schwarz bound. Adding a sufficiently large constant to `S` preserves:
-
-$$
-S\ge0
-$$
-
-without changing covariance.
+Thus equality holds in the negative conditional Cauchy--Schwarz bound while accessibility remains strictly positive.
 
 Therefore no uniformly tighter residual lower bound is possible from conditional variances alone.
 
@@ -335,13 +350,13 @@ In an Everett interpretation, a physical model would still be needed to justify 
 
 1. Conditional Cauchy--Schwarz is applied pointwise in `Y`.
 2. The outer Cauchy--Schwarz step makes the second certificate weaker, not stronger.
-3. Square integrability is sufficient for all displayed variance terms.
+3. Square integrability is sufficient for all displayed variance and covariance terms.
 4. The residual-energy identities are exact conditional-variance identities.
 5. The Cauchy--Schwarz residual penalty is sharp under perfect conditional anti-correlation.
-6. Adding a constant to `S` preserves covariance and can enforce nonnegativity in the sharpness example.
+6. The bounded Rademacher construction proves sharpness while maintaining `S>0` with a finite constant.
 7. The bounded conditional anti-correlation result is a model-specific tightening, not a universal assumption.
 8. S2.11 remains the exact decomposition; S2.12 is a conservative lower certificate built on it.
-9. T1 additionally requires positive finite `E[S]`.
+9. T1 additionally requires positive finite `E[S]`, already included here.
 10. The Everett bridge remains separate.
 
 ## Status

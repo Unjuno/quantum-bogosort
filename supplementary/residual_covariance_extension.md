@@ -20,18 +20,12 @@ A more general accessibility variable may contain additional branch-level random
 
 ## T — Supplementary Theorem S2.11: residual-covariance alignment
 
-Let `U` and `S` be random variables with:
+Let `U` and `S` be square-integrable random variables with:
 
 $$
 S\ge0,
 \qquad
-0<E[S]<\infty,
-$$
-
-and assume the moments required below are finite, in particular:
-
-$$
-E[|US|]<\infty.
+0<E[S]<\infty.
 $$
 
 Let `Y` be any conditioning signal and define:
@@ -44,7 +38,7 @@ $$
 a(Y)=E[S\mid Y].
 $$
 
-Then the following identity is exact:
+Square integrability guarantees that all covariance and residual terms below are finite. Then the following identity is exact:
 
 $$
 \boxed{
@@ -266,7 +260,8 @@ then adding the two components yields:
 $$
 \operatorname{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))-arepsilon.
+\operatorname{Cov}(m(Y),a(Y))-
+\varepsilon.
 $$
 
 Strict positivity follows whenever the conditional-mean alignment margin is larger than the permitted negative residual term.
@@ -307,38 +302,53 @@ and taking expectations gives the final equality.
 
 Comonotone conditional means alone are not sufficient when the residual conditional covariance is sufficiently negative.
 
-For example, let `Y` be constant. Then:
+For a fully explicit bounded example, let `Y` be constant and let `eta` be a Rademacher variable:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))=0.
+P(\eta=1)=P(\eta=-1)=\frac12.
 $$
 
-Choose centered residuals `eta` and `xi` with:
+Set:
 
 $$
-\xi=-\eta
+U=\eta,
+\qquad
+S=M-\eta,
 $$
 
-and add a sufficiently large positive constant to `S` so that:
+with:
 
 $$
-S\ge0.
+M>1.
 $$
 
-Then:
+Then `S>0` almost surely, both conditional means are constant, and the residuals satisfy:
+
+$$
+\xi=-\eta.
+$$
+
+Therefore:
+
+$$
+\operatorname{Cov}(m(Y),a(Y))=0,
+$$
+
+while:
 
 $$
 E[\eta\xi]
-=-E[\eta^2]<0,
+=-E[\eta^2]
+=-1<0.
 $$
 
-so:
+Thus:
 
 $$
 \operatorname{Cov}(U,S)<0.
 $$
 
-Thus once score-measurability is removed, the residual conditional covariance cannot be ignored.
+Once score-measurability is removed, the residual conditional covariance cannot be ignored.
 
 ## U — interpretation boundary
 
@@ -350,16 +360,17 @@ The theorem remains an abstract probability result. It does not identify the phy
 
 ## ERROR CHECK
 
-1. The identity is exactly the law of total covariance; no independence assumption is introduced.
+1. Square integrability guarantees all covariance and residual terms used by the total-covariance identity are finite.
 2. `S=s(Y)` is a special case because then `Cov(U,S|Y)=0` almost surely.
 3. Comonotonicity controls only the conditional-mean covariance term.
 4. A negative residual term can overturn positive score-level alignment.
 5. The epsilon bound is sufficient, not necessary, for positive total covariance.
 6. Scalar monotonicity is only one sufficient route to comonotonicity.
 7. The residual decomposition uses zero conditional means, so the cross terms vanish correctly.
-8. T1 additionally requires positive finite `E[S]`.
-9. No claim is made about the physical sign of the Everettian residual term.
-10. The core five theorem set remains unchanged.
+8. The bounded Rademacher counterexample enforces `S>0` with a finite constant and gives strictly negative covariance.
+9. T1 additionally requires positive finite `E[S]`, already included here.
+10. No claim is made about the physical sign of the Everettian residual term.
+11. The core five theorem set remains unchanged.
 
 ## Status
 

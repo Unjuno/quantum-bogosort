@@ -18,8 +18,12 @@
 - added explicit white backgrounds to repository SVGs for GitHub dark-mode readability and separated overlapping Figure 5 series with distinct monochrome line styles;
 - moved root README display mathematics to GitHub fenced `math` blocks after direct rendered-UI QA exposed broken double-dollar rendering;
 - standardized display mathematics across public repository Markdown on GitHub fenced `math` blocks, including theory, experiment cards, canonical docs, supplementary theorem/certificate pages, audit pages, prior-art notes, and the experiment archive;
-- replaced GitHub-disallowed `\operatorname` in rendered Markdown mathematics with safe roman forms such as `\mathrm{Cov}`, `\mathrm{Var}`, `\mathrm{Corr}`, `\mathrm{sign}`, and `\mathrm{median}` while leaving LaTeX manuscript sources unchanged;
-- hardened `scripts/validate_markdown_math.py` to reject double-dollar and single-dollar math delimiters outside code fences, require balanced fenced `math` blocks, and reject `\operatorname` inside rendered Markdown math;
+- standardized named Markdown math operators on repository roman forms such as `\mathrm{Cov}`, `\mathrm{Var}`, `\mathrm{Corr}`, `\mathrm{sign}`, and `\mathrm{median}` while leaving LaTeX manuscript sources unchanged; this is a repository consistency convention rather than a claim that MathJax lacks `\operatorname`;
+- exhaustively inspected all 66 repository Markdown sources for rendering-critical structure, including issue-template front matter, math/code/Mermaid fences, tables, images, links, and public-state routing language;
+- added `scripts/validate_github_markdown_render.py`, which sends every Markdown file through GitHub's own GFM REST renderer in CI and checks that expected headings, tables, and images survive rendering;
+- hardened `scripts/validate_markdown_math.py` to support variable-length CommonMark fences, ignore literal inline code, reject legacy dollar/LaTeX delimiter regressions, enforce repository macro conventions, and check brace, TeX-environment, and common `\left`/`\right` balance inside fenced math blocks;
+- corrected stale `CONTRIBUTING.md` references to removed release branches and replaced obsolete double-dollar contribution guidance with the current fenced-math convention;
+- marked or rewrote historical stacked-branch S2 audit language so it cannot be mistaken for the current single-branch repository state;
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
 - removed public repository-process wording that depended on tool availability;
 - removed merged/superseded development branches;
@@ -104,7 +108,7 @@
 
 - narrowed novelty positioning so normalized weighting, anthropic decision-making, self-location-dependent action, and the elementary covariance identity are not treated as standalone novelty claims;
 - expanded Related Work to include advocates and critics of Everettian probability, alternative many-world measure proposals, classical weighted-measure context, and direct self-locating policy-optimization work;
-- integrated all six figures into the manuscript with captions that identify schematic, theorem-illustration, or classical-simulation status;
+- integrated all six figures into the manuscript with captions that identify schematic/theorem-illustration or classical-simulation status;
 - clarified that earlier recognition is not universally better without explicit causal and information assumptions;
 - clarified that structural bridge coherence, interpretive adequacy, and empirical falsifiability are distinct levels of evaluation.
 

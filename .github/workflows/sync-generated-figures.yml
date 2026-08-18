@@ -1,0 +1,38 @@
+name: one-shot generated figure sync
+
+on:
+  push:
+    branches:
+      - agent/figure-reproducibility-qa
+    paths:
+      - .github/workflows/sync-generated-figures.yml
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/figure-reproducibility-qa
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Regenerate committed SVGs
+        run: python figures/generate_figures.py
+      - name: Commit canonical generated outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add figures/generated/ data/processed/fig2_fosd_theorem_illustration.csv
+          if git diff --cached --quiet; then
+            echo "Generated outputs already clean."
+          else
+            git commit -m "Sync dark-mode-safe SVG outputs"
+            git push origin HEAD:agent/figure-reproducibility-qa
+          fi

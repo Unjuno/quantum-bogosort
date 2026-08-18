@@ -10,8 +10,10 @@
 - clarified that future accessibility can reweight present self-location without by itself guaranteeing a favorable direction; favorable/upward reweighting additionally requires alignment with the relevant favorability or utility statistic;
 - aligned manuscript recognition wording with an information-state / policy-selection interpretation to avoid implying a privileged physical causal role for recognition itself;
 - added a Mermaid dependency diagram to the root README and an experiment/theorem Mermaid map to `experiments/README.md`;
+- added a static Figure 1 SVG fallback below the root Mermaid dependency diagram so the core visual remains available when Mermaid is not rendered;
 - embedded the committed SVG theorem/simulation figures directly into the root README, experiment index, and figure-provenance page so results are visually inspectable without opening raw CSV files;
 - added a dedicated E2 predictive-alignment review figure so every locked experiment family E1–E5 has a direct visual route from the repository landing page;
+- made figure-level provenance explicit so deterministic theorem illustrations, current reproduction outputs, and locked historical summaries are not conflated; Figure 5 and Figure 7 are labeled as locked-summary visualizations;
 - synchronized committed SVGs with the deterministic generator and added CI byte-for-byte verification after regeneration;
 - added explicit white backgrounds to repository SVGs for GitHub dark-mode readability and separated overlapping Figure 5 series with distinct monochrome line styles;
 - hardened `scripts/validate_markdown_math.py` so double-dollar display delimiters must be balanced and placed on delimiter-only lines, preventing display openers and expressions from sharing a line;

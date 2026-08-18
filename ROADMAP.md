@@ -28,6 +28,8 @@ The automated/source-level presentation QA is complete through merged PR #29. Br
 - [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
 - [x] Provide a dedicated visual route for every locked experiment family E1–E5, including E2 predictive alignment.
 - [x] Require committed SVGs to match deterministic generator output byte-for-byte.
+- [x] Keep deterministic theorem illustrations, current reproduction outputs, and locked historical summaries explicitly separated at figure level.
+- [x] Provide a static SVG fallback for the root Mermaid dependency diagram.
 - [x] Keep `main` as the only branch; preserve frozen v0.2/v0.3 snapshots as tags/GitHub Releases.
 - [ ] Confirm the current root README renders correctly in the GitHub web UI, including Mermaid blocks, display math, tables, and SVG previews.
 - [ ] Keep E1–E5 as the locked reproducibility suite unless a review identifies a concrete missing core test.

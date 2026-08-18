@@ -1,6 +1,6 @@
 # QBS Current Research Status
 
-**Updated:** 2026-08-18
+**Updated:** 2026-08-19
 
 This file records the current review and development state. It complements the frozen snapshot ledger in [`STATUS.md`](STATUS.md) and the future-work ledger in [`ROADMAP.md`](ROADMAP.md).
 
@@ -15,6 +15,21 @@ This file records the current review and development state. It complements the f
 - archived v0.2 snapshot: `release/v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
 
 PRs #11–#20 preserve the staged derivation history. PR #21 preserves the cumulative integration history. Current authoritative statements are the files in the v0.3 snapshot and on `main`.
+
+## Post-snapshot `main` clarifications
+
+The frozen `release/v0.3-public-review` snapshot is unchanged. Subsequent `main` changes are editorial, interpretive, repository-hygiene, or CI-hardening changes rather than new theorem or experiment content.
+
+Current `main` now makes the following points explicit:
+
+- recognition may include recognition of a QBS-type rule itself, while recognition has no privileged causal power beyond the policy and trajectory/accessibility changes it induces;
+- future accessibility can reweight present self-location under the same first-person change of measure;
+- this present-self-location statement is conditioning/change of measure, not backward causation or objective-probability modification;
+- current public headings and research-map language avoid stale development-version labels;
+- merged/superseded development branches have been removed while frozen release branches remain preserved;
+- CI uses concurrency cancellation and runtime limits to prevent indefinitely stalled validation jobs.
+
+No T1–T5 theorem, E1–E5 experiment, S2-family result, or Everett-bridge status is changed by these post-snapshot clarifications.
 
 ## Locked core
 

@@ -6,7 +6,7 @@ S2.5 derives a finite-sample certificate by one specific route: bounded observat
 
 The QBS covariance step itself does not depend on Hoeffding. What is actually needed is a simultaneous confidence envelope for five population moments:
 
-$$
+```math
 E[Y],
 \qquad
 E[S],
@@ -16,7 +16,7 @@ E[YS],
 E[S^2],
 \qquad
 E[(U-Y)^2].
-$$
+```
 
 S2.8 separates the **statistical concentration layer** from the **QBS certificate-composition layer**.
 
@@ -24,17 +24,17 @@ S2.8 separates the **statistical concentration layer** from the **QBS certificat
 
 Assume:
 
-$$
+```math
 S\ge0,
 \qquad
 0<E[S]<\infty,
-$$
+```
 
 and the moments below are finite.
 
 Suppose a statistical procedure outputs random bounds:
 
-$$
+```math
 L_Y\le U_Y,
 \qquad
 L_S\le U_S,
@@ -44,11 +44,11 @@ L_{YS},
 U_{S^2},
 \qquad
 U_M,
-$$
+```
 
 such that the simultaneous event:
 
-$$
+```math
 \mathcal E
 =
 \left\{
@@ -58,9 +58,9 @@ L_Y\le E[Y]\le U_Y
 \left\{
 L_S\le E[S]\le U_S
 \right\}
-$$
+```
 
-$$
+```math
 \cap
 \left\{
 E[YS]\ge L_{YS}
@@ -73,25 +73,25 @@ E[S^2]\le U_{S^2}
 \left\{
 E[(U-Y)^2]\le U_M
 \right\}
-$$
+```
 
 satisfies:
 
-$$
+```math
 P(\mathcal E)\ge1-\delta.
-$$
+```
 
 Because accessibility is nonnegative, define the effective lower bound:
 
-$$
+```math
 L_S^+
 =
 \max\{0,L_S\}.
-$$
+```
 
 Define the largest possible product of the two mean intervals:
 
-$$
+```math
 P_U
 =
 \max\left\{
@@ -100,40 +100,40 @@ L_YU_S,
 U_YL_S^+,
 U_YU_S
 \right\}.
-$$
+```
 
 Define:
 
-$$
+```math
 C_L
 =
 L_{YS}-P_U.
-$$
+```
 
 Define the variance upper envelope:
 
-$$
+```math
 V_U
 =
 \max\left\{
 0,
 U_{S^2}-(L_S^+)^2
 \right\}.
-$$
+```
 
 Finally define:
 
-$$
+```math
 \boxed{
 D_{\mathrm{env}}
 =
 C_L-\sqrt{U_MV_U}
 }.
-$$
+```
 
 Then:
 
-$$
+```math
 \boxed{
 P\!\left(
 \mathrm{Cov}(U,S)
@@ -142,34 +142,34 @@ D_{\mathrm{env}}
 \right)
 \ge1-\delta
 }.
-$$
+```
 
 Therefore, whenever the realized confidence envelopes satisfy:
 
-$$
+```math
 \boxed{
 D_{\mathrm{env}}>0,
 }
-$$
+```
 
 positive population outcome/accessibility covariance is certified at confidence at least `1-delta`.
 
 If additionally:
 
-$$
+```math
 0<U_S<\infty,
-$$
+```
 
 then T1 gives the first-person lower bound:
 
-$$
+```math
 \boxed{
 E_{FP}[U]-E[U]
 \ge
 \frac{D_{\mathrm{env}}}{U_S}
 >0
 }
-$$
+```
 
 on the same simultaneous event.
 
@@ -181,103 +181,103 @@ All statements below are on the simultaneous event `E`.
 
 Write:
 
-$$
+```math
 \mathrm{Cov}(Y,S)
 =
 E[YS]-E[Y]E[S].
-$$
+```
 
 The event gives:
 
-$$
+```math
 E[YS]\ge L_{YS}.
-$$
+```
 
 Also:
 
-$$
+```math
 E[Y]\in[L_Y,U_Y],
-$$
+```
 
 and because `S>=0`:
 
-$$
+```math
 E[S]\in[L_S^+,U_S].
-$$
+```
 
 The bilinear map:
 
-$$
+```math
 (a,b)\mapsto ab
-$$
+```
 
 attains its maximum on a compact rectangle at a corner. Therefore:
 
-$$
+```math
 E[Y]E[S]
 \le
 P_U.
-$$
+```
 
 Hence:
 
-$$
+```math
 \mathrm{Cov}(Y,S)
 \ge
 L_{YS}-P_U
 =
 C_L.
-$$
+```
 
 ### Step 2: variance upper envelope
 
 Because:
 
-$$
+```math
 \mathrm{Var}(S)
 =
 E[S^2]-E[S]^2,
-$$
+```
 
 and on `E`:
 
-$$
+```math
 E[S^2]\le U_{S^2},
 \qquad
 E[S]\ge L_S^+,
-$$
+```
 
 we obtain:
 
-$$
+```math
 \mathrm{Var}(S)
 \le
 U_{S^2}-(L_S^+)^2.
-$$
+```
 
 On the simultaneous-validity event this right-hand side is nonnegative. The explicit outer `max` merely keeps the reported numerical envelope nonnegative even on samples outside the confidence event. Thus:
 
-$$
+```math
 \mathrm{Var}(S)
 \le
 V_U.
-$$
+```
 
 ### Step 3: prediction-MSE upper envelope
 
 The event directly gives:
 
-$$
+```math
 E[(U-Y)^2]
 \le
 U_M.
-$$
+```
 
 ### Step 4: compose with S2.4
 
 S2.4 states:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(Y,S)
@@ -285,35 +285,35 @@ $$
 \sqrt{
 E[(U-Y)^2]\mathrm{Var}(S)
 }.
-$$
+```
 
 Substituting the simultaneous lower and upper envelopes gives:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 C_L-\sqrt{U_MV_U}
 =
 D_{\mathrm{env}}.
-$$
+```
 
 Because `P(E)>=1-delta`, the claimed coverage follows.
 
 If `D_env>0`, then on `E`:
 
-$$
+```math
 \mathrm{Cov}(U,S)>0.
-$$
+```
 
 Finally, when `E[S]<=U_S` and `D_env>0`:
 
-$$
+```math
 E_{FP}[U]-E[U]
 =
 \frac{\mathrm{Cov}(U,S)}{E[S]}
 \ge
 \frac{D_{\mathrm{env}}}{U_S}.
-$$
+```
 
 ## Corollary S2.8.1 — S2.5 is an instantiation
 
@@ -321,11 +321,11 @@ The bounded Hoeffding construction in S2.5 supplies one valid simultaneous envel
 
 Therefore S2.5 can be viewed as:
 
-$$
+```math
 \text{Hoeffding moment bounds}
 \longrightarrow
 \text{S2.8 envelope composition}.
-$$
+```
 
 The constants in S2.5 are specialized and can be tighter than a naive generic-envelope substitution because S2.5 directly exploits the bounded structure when forming its covariance and variance bounds.
 
@@ -348,15 +348,15 @@ S2.8 does **not** assert that every method in this list automatically yields val
 
 Suppose there are `K` predeclared candidate rules. If candidate `k` receives a simultaneous envelope with failure probability at most:
 
-$$
+```math
 \delta_k,
-$$
+```
 
 where:
 
-$$
+```math
 \sum_{k=1}^K\delta_k\le\delta,
-$$
+```
 
 then the S2.8 certificate is simultaneously valid for every candidate with probability at least `1-delta`.
 
@@ -382,9 +382,9 @@ Choosing among several interval constructions after viewing the certification da
 
 If:
 
-$$
+```math
 D_{\mathrm{env}}\le0,
-$$
+```
 
 then the envelope does not certify positive covariance. This does not imply that the true covariance is nonpositive.
 

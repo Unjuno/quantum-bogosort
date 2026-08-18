@@ -14,6 +14,8 @@ $$
 
 Here `R` is recognition, `pi_R` is the policy used under that recognition state, `U_R` is the resulting outcome or utility, and `S_R` is a nonnegative observer-indexed accessibility weight.
 
+In the self-referential case motivating QBS, `R=1` may represent recognition of a QBS-type rule itself. Recognition has no privileged causal power in the formal model: it matters only through any policy change it induces and the resulting changes in `U_R` and/or `S_R`. If recognition changes neither quantity, the recognition-label null gives no QBS effect.
+
 ## Core first-person quantity
 
 For:
@@ -49,6 +51,26 @@ $$
 The first term is the ordinary policy/trajectory effect. The second is the first-person conditioning contribution.
 
 A positive conditioning contribution means that the first-person measure gives greater weight to favorable accessible trajectories. It does **not** mean that the base measure or an external random-number generator is causally changed.
+
+## Present self-location under future accessibility
+
+The same weighted measure can be restricted to a present state while accessibility is determined over a future continuation. Let `Z` denote a present state or present trajectory descriptor and let `S_T` denote future-continuation accessibility. Then:
+
+$$
+P_{FP}(Z\in A)
+=
+\frac{E[\mathbf 1_{\{Z\in A\}}S_T]}{E[S_T]}.
+$$
+
+For a discrete present state:
+
+$$
+P_{FP}(Z=z)
+=
+\frac{E[S_T\mid Z=z]P(Z=z)}{E[S_T]}.
+$$
+
+Thus, when expected future accessibility differs across present states, the first-person measure can reweight present self-location toward states with greater expected future accessibility. This is a conditioning/change-of-measure statement, not backward causation and not a causal change in the base probability law.
 
 ## What is established
 

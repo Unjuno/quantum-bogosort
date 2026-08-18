@@ -15,7 +15,7 @@ Then:
 $$
 E_{FP}[X]-E[X]
 =
-\frac{\operatorname{Cov}(X,S)}{E[S]}.
+\frac{\mathrm{Cov}(X,S)}{E[S]}.
 $$
 
 ### Proof
@@ -35,7 +35,7 @@ E[XS]
 =
 E[X]E[S]
 +
-\operatorname{Cov}(X,S),
+\mathrm{Cov}(X,S),
 $$
 
 we get:
@@ -45,7 +45,7 @@ E_{FP}[X]
 =
 E[X]
 +
-\frac{\operatorname{Cov}(X,S)}{E[S]}.
+\frac{\mathrm{Cov}(X,S)}{E[S]}.
 $$
 
 Subtracting the base expectation proves the identity.
@@ -57,13 +57,13 @@ Because the denominator is positive:
 $$
 E_{FP}[X]>E[X]
 \iff
-\operatorname{Cov}(X,S)>0.
+\mathrm{Cov}(X,S)>0.
 $$
 
 Equality holds exactly when:
 
 $$
-\operatorname{Cov}(X,S)=0.
+\mathrm{Cov}(X,S)=0.
 $$
 
 In particular, outcome-independent accessibility implies zero mean uplift in expectation.
@@ -78,7 +78,7 @@ $$
 P_{FP}(X\ge c)-P(X\ge c)
 =
 \frac{
-\operatorname{Cov}(\mathbf 1_{\{X\ge c\}},S)
+\mathrm{Cov}(\mathbf 1_{\{X\ge c\}},S)
 }{E[S]}.
 $$
 
@@ -115,7 +115,7 @@ Theorem 1 immediately gives the result.
 $$
 P_{FP}(X\ge c)>P(X\ge c)
 \iff
-\operatorname{Cov}(\mathbf 1_{\{X\ge c\}},S)>0.
+\mathrm{Cov}(\mathbf 1_{\{X\ge c\}},S)>0.
 $$
 
 ---
@@ -164,24 +164,24 @@ $$
 F_{FP}(c)-F(c)
 =
 \frac{
-\operatorname{Cov}(f_c(X),S)
+\mathrm{Cov}(f_c(X),S)
 }{E[S]}.
 $$
 
 Because `f_c(X)` is measurable with respect to `X`:
 
 $$
-\operatorname{Cov}(f_c(X),S)
+\mathrm{Cov}(f_c(X),S)
 =
-\operatorname{Cov}(f_c(X),E[S\mid X])
+\mathrm{Cov}(f_c(X),E[S\mid X])
 =
-\operatorname{Cov}(f_c(X),g(X)).
+\mathrm{Cov}(f_c(X),g(X)).
 $$
 
 Let `X'` be an independent copy of `X`. For integrable functions `a` and `b`:
 
 $$
-2\operatorname{Cov}(a(X),b(X))
+2\mathrm{Cov}(a(X),b(X))
 =
 E[(a(X)-a(X'))(b(X)-b(X'))].
 $$
@@ -197,7 +197,7 @@ $$
 almost surely. Therefore:
 
 $$
-\operatorname{Cov}(f_c(X),g(X))
+\mathrm{Cov}(f_c(X),g(X))
 \le
 0.
 $$
@@ -225,7 +225,7 @@ for all thresholds.
 At a fixed threshold, equality holds exactly when:
 
 $$
-\operatorname{Cov}(\mathbf 1_{\{X\le c\}},g(X))
+\mathrm{Cov}(\mathbf 1_{\{X\le c\}},g(X))
 =
 0.
 $$

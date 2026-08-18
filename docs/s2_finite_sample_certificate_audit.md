@@ -21,21 +21,21 @@ The audit checks:
 
 Assume:
 
-$$
+```math
 |Y|\le B_Y,
 \qquad
 0\le S\le B_S,
 \qquad
 |U-Y|\le B_R.
-$$
+```
 
 For `n` i.i.d. held-out observations and confidence level `delta`, define:
 
-$$
+```math
 \tau
 =
 \sqrt{\frac{\log(10/\delta)}{2n}}.
-$$
+```
 
 The five empirical means are based on:
 
@@ -47,7 +47,7 @@ The five empirical means are based on:
 
 Their range widths are respectively:
 
-$$
+```math
 2B_Y,
 \quad
 B_S,
@@ -57,7 +57,7 @@ B_S,
 B_S^2,
 \quad
 B_R^2.
-$$
+```
 
 Hoeffding therefore assigns failure probability at most `delta/5` to each two-sided deviation when the tolerance is range-width times `tau`. A union bound gives simultaneous coverage at least `1-delta`.
 
@@ -67,57 +67,57 @@ Hoeffding therefore assigns failure probability at most `delta/5` to each two-si
 
 The simultaneous event gives:
 
-$$
+```math
 E[YS]
 \ge
 \overline{YS}-2B_YB_S\tau.
-$$
+```
 
 For the product of means:
 
-$$
+```math
 E[Y]E[S]-\bar Y\bar S
 =
 (E[Y]-\bar Y)E[S]
 +
 \bar Y(E[S]-\bar S).
-$$
+```
 
 Using:
 
-$$
+```math
 |E[Y]-\bar Y|\le2B_Y\tau,
 \qquad
 E[S]\le B_S,
-$$
+```
 
-$$
+```math
 |\bar Y|\le B_Y,
 \qquad
 |E[S]-\bar S|\le B_S\tau,
-$$
+```
 
 we obtain:
 
-$$
+```math
 E[Y]E[S]
 \le
 \bar Y\bar S+3B_YB_S\tau.
-$$
+```
 
 Hence:
 
-$$
+```math
 \mathrm{Cov}(Y,S)
 \ge
 \widehat C-5B_YB_S\tau.
-$$
+```
 
 The coefficient `5` is therefore:
 
-$$
+```math
 2+2+1.
-$$
+```
 
 **Audit:** PASS.
 
@@ -125,23 +125,23 @@ $$
 
 Since:
 
-$$
+```math
 0\le(U-Y)^2\le B_R^2,
-$$
+```
 
 Hoeffding gives:
 
-$$
+```math
 E[(U-Y)^2]
 \le
 \widehat M+B_R^2\tau.
-$$
+```
 
 The deterministic bound:
 
-$$
+```math
 E[(U-Y)^2]\le B_R^2
-$$
+```
 
 is also valid, so taking the minimum of the two upper bounds is valid.
 
@@ -151,41 +151,41 @@ is also valid, so taking the minimum of the two upper bounds is valid.
 
 The moment event gives:
 
-$$
+```math
 E[S^2]
 \le
 \overline{S^2}+B_S^2\tau.
-$$
+```
 
 Because `S` is nonnegative:
 
-$$
+```math
 E[S]
 \ge
 \max\{0,\bar S-B_S\tau\}.
-$$
+```
 
 Therefore:
 
-$$
+```math
 \mathrm{Var}(S)
 =
 E[S^2]-E[S]^2
-$$
+```
 
 is upper-bounded by:
 
-$$
+```math
 \overline{S^2}+B_S^2\tau
 -
 \left(\max\{0,\bar S-B_S\tau\}\right)^2.
-$$
+```
 
 Popoviciu independently gives:
 
-$$
+```math
 \mathrm{Var}(S)\le\frac{B_S^2}{4}.
-$$
+```
 
 The minimum of valid upper bounds remains a valid upper bound.
 
@@ -195,27 +195,27 @@ The minimum of valid upper bounds remains a valid upper bound.
 
 S2.4 gives:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(Y,S)
 -
 \sqrt{E[(U-Y)^2]\mathrm{Var}(S)}.
-$$
+```
 
 Replacing the positive first term by its lower bound and the nonnegative terms under the square root by upper bounds gives:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 D_L.
-$$
+```
 
 Thus:
 
-$$
+```math
 D_L>0
-$$
+```
 
 certifies positive covariance on the simultaneous event, which has probability at least `1-delta`.
 
@@ -223,31 +223,31 @@ certifies positive covariance on the simultaneous event, which has probability a
 
 For the first-person value shift:
 
-$$
+```math
 \Delta_{FP}
 =
 \frac{\mathrm{Cov}(U,S)}{E[S]}.
-$$
+```
 
 When `D_L>0`, use:
 
-$$
+```math
 \mathrm{Cov}(U,S)\ge D_L
-$$
+```
 
 and:
 
-$$
+```math
 E[S]\le B_S
-$$
+```
 
 to obtain:
 
-$$
+```math
 \Delta_{FP}
 \ge
 \frac{D_L}{B_S}.
-$$
+```
 
 **Audit:** PASS, conditional on `D_L>0` and `E[S]>0`.
 
@@ -255,25 +255,25 @@ $$
 
 All empirical moments are bounded and therefore obey the strong law. For fixed `delta`:
 
-$$
+```math
 \tau_{n,\delta}\to0.
-$$
+```
 
 The covariance lower bound converges to `Cov(Y,S)`, the MSE upper bound converges to the population MSE, and the variance upper bound converges to `Var(S)` because the Popoviciu cap cannot fall below the true variance. Therefore:
 
-$$
+```math
 D_L\to D_*
-$$
+```
 
 almost surely, where:
 
-$$
+```math
 D_*
 =
 \mathrm{Cov}(Y,S)
 -
 \sqrt{E[(U-Y)^2]\mathrm{Var}(S)}.
-$$
+```
 
 If `D_*>0`, eventual positive certification follows.
 
@@ -303,15 +303,15 @@ The theorem does not cover unbounded heavy-tailed outcomes or scores. Sub-Gaussi
 
 If:
 
-$$
+```math
 D_L\le0,
-$$
+```
 
 the theorem is inconclusive. It does not imply:
 
-$$
+```math
 \mathrm{Cov}(U,S)\le0.
-$$
+```
 
 **Audit:** PASS; one-sided certificate interpretation is explicit.
 
@@ -319,41 +319,41 @@ $$
 
 The post-v0.2 chain is now:
 
-$$
+```math
 \text{S2: conditional-mean alignment}
-$$
+```
 
-$$
+```math
 \Downarrow
-$$
+```
 
-$$
+```math
 \text{S2.2: posterior-mean exact calibration}
-$$
+```
 
-$$
+```math
 \Downarrow
-$$
+```
 
-$$
+```math
 \text{S2.3: calibration-error robustness}
-$$
+```
 
-$$
+```math
 \Downarrow
-$$
+```
 
-$$
+```math
 \text{S2.4: prediction-MSE population certificate}
-$$
+```
 
-$$
+```math
 \Downarrow
-$$
+```
 
-$$
+```math
 \text{S2.5: finite held-out high-probability certificate}.
-$$
+```
 
 Each step is still within the abstract agent/probability layer. No step derives the Everett bridge.
 

@@ -7,7 +7,7 @@
 S2.9 should convert valid light-tail concentration controls for the five S2.8 moments into a finite-sample lower confidence bound for:
 
 $$
-\operatorname{Cov}(U,S).
+\mathrm{Cov}(U,S).
 $$
 
 It must not rely on ambiguous universal `sub-exponential` constants.
@@ -68,7 +68,7 @@ $$
 On the simultaneous event, the constructed intervals satisfy all five S2.8 envelope requirements. Therefore S2.8 gives:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 D_{\mathrm{LT}}.
 $$
@@ -94,7 +94,7 @@ T1 gives:
 $$
 E_{FP}[U]-E[U]
 =
-\frac{\operatorname{Cov}(U,S)}{E[S]}
+\frac{\mathrm{Cov}(U,S)}{E[S]}
 \ge
 \frac{D_{\mathrm{LT}}}{U_S}.
 $$

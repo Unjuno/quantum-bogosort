@@ -213,15 +213,13 @@ The current review priority is external proof, novelty, manuscript, statistical-
 
 ## Repository state
 
-The frozen scientific public-review snapshot is **v0.3-public-review**. The default `main` branch is the current review/development surface and may contain post-snapshot editorial, interpretive, repository-hygiene, visualization, or CI-hardening clarifications. Those changes are tracked in [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md) and [`CHANGELOG.md`](CHANGELOG.md).
+The repository has a single active branch: `main`. Frozen scientific snapshots are preserved as immutable tags and GitHub Releases rather than as branches, so they cannot be mistaken for pending development work.
 
-The two `release/*` branches are intentional frozen scientific snapshots, not pending or unmerged development branches. Merged/superseded work branches are removed; new review/development changes land on `main`.
-
-- current frozen snapshot: `release/v0.3-public-review`;
 - current review/development surface: `main`;
+- current frozen snapshot: tag/Release `v0.3-public-review` at commit `58038763127258bd3e2f0d41708c4dfa01f81fd6`;
+- previous frozen snapshot: tag/Release `v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
 - current snapshot ledger: [`STATUS.md`](STATUS.md);
 - current development/review ledger: [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md);
-- previous frozen snapshot: `release/v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
 - historical derivation provenance: PRs #11–#21;
 - post-snapshot rendering/visualization/reproducibility QA provenance: PRs #27–#29.
 

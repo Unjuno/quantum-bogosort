@@ -8,7 +8,7 @@ A simple robust route is median-of-means (MoM). The key point is that S2.8 needs
 
 Define:
 
-$$
+```math
 Z_1=Y,
 \qquad
 Z_2=S,
@@ -18,7 +18,7 @@ Z_3=YS,
 Z_4=S^2,
 \qquad
 Z_5=(U-Y)^2.
-$$
+```
 
 S2.10 assumes finite variance bounds for these five `Z_j` directly.
 
@@ -26,131 +26,131 @@ S2.10 assumes finite variance bounds for these five `Z_j` directly.
 
 Assume:
 
-$$
+```math
 S\ge0,
 \qquad
 0<E[S]<\infty.
-$$
+```
 
 Assume the five target variables have finite variances bounded by known constants:
 
-$$
+```math
 \mathrm{Var}(Z_j)\le v_j<\infty,
 \qquad
 j=1,\ldots,5.
-$$
+```
 
 Let:
 
-$$
+```math
 0<\delta<1.
-$$
+```
 
 Choose an odd integer `b` satisfying:
 
-$$
+```math
 b\ge8\log\frac{5}{\delta},
 \qquad
 b\le n.
-$$
+```
 
 Let:
 
-$$
+```math
 m=\left\lfloor\frac{n}{b}\right\rfloor.
-$$
+```
 
 Use the first `bm` held-out observations and split them into `b` disjoint blocks of size `m`. For target variable `Z_j`, let:
 
-$$
+```math
 \bar Z_{j,r}
-$$
+```
 
 be the mean in block `r`, and define the median-of-means estimator:
 
-$$
+```math
 \widetilde\mu_j
 =
 \mathrm{median}
 \left(
 \bar Z_{j,1},\ldots,\bar Z_{j,b}
 \right).
-$$
+```
 
 Define radii:
 
-$$
+```math
 r_j
 =
 2\sqrt{\frac{v_j}{m}}.
-$$
+```
 
 Then, simultaneously for all five targets, with probability at least:
 
-$$
+```math
 1-\delta,
-$$
+```
 
 we have:
 
-$$
+```math
 |\widetilde\mu_j-E[Z_j]|
 \le r_j,
 \qquad
 j=1,\ldots,5.
-$$
+```
 
 Construct S2.8 envelopes:
 
-$$
+```math
 L_Y=\widetilde\mu_1-r_1,
 \qquad
 U_Y=\widetilde\mu_1+r_1,
-$$
+```
 
-$$
+```math
 L_S=\widetilde\mu_2-r_2,
 \qquad
 U_S=\widetilde\mu_2+r_2,
-$$
+```
 
-$$
+```math
 L_{YS}=\widetilde\mu_3-r_3,
-$$
+```
 
-$$
+```math
 U_{S^2}=\widetilde\mu_4+r_4,
-$$
+```
 
 and:
 
-$$
+```math
 U_M=\widetilde\mu_5+r_5.
-$$
+```
 
 Because:
 
-$$
+```math
 Z_4=S^2\ge0,
 \qquad
 Z_5=(U-Y)^2\ge0,
-$$
+```
 
 one may safely replace the numerical upper envelopes by:
 
-$$
+```math
 U_{S^2}^+=\max\{0,U_{S^2}\},
 \qquad
 U_M^+=\max\{0,U_M\}.
-$$
+```
 
 Let:
 
-$$
+```math
 L_S^+=\max\{0,L_S\},
-$$
+```
 
-$$
+```math
 P_U
 =
 \max\left\{
@@ -159,34 +159,34 @@ L_YU_S,
 U_YL_S^+,
 U_YU_S
 \right\},
-$$
+```
 
-$$
+```math
 C_L=L_{YS}-P_U,
-$$
+```
 
-$$
+```math
 V_U
 =
 \max\left\{
 0,
 U_{S^2}^+-(L_S^+)^2
 \right\},
-$$
+```
 
 and:
 
-$$
+```math
 \boxed{
 D_{\mathrm{MoM}}
 =
 C_L-\sqrt{U_M^+V_U}
 }.
-$$
+```
 
 Then:
 
-$$
+```math
 \boxed{
 P\!\left(
 \mathrm{Cov}(U,S)
@@ -195,32 +195,32 @@ D_{\mathrm{MoM}}
 \right)
 \ge1-\delta
 }.
-$$
+```
 
 Therefore:
 
-$$
+```math
 D_{\mathrm{MoM}}>0
-$$
+```
 
 certifies positive population outcome/accessibility covariance at confidence at least `1-delta`.
 
 If, on the same event:
 
-$$
+```math
 0<U_S<\infty,
-$$
+```
 
 then T1 gives:
 
-$$
+```math
 \boxed{
 E_{FP}[U]-E[U]
 \ge
 \frac{D_{\mathrm{MoM}}}{U_S}
 >0
 }.
-$$
+```
 
 ## D — proof
 
@@ -228,56 +228,56 @@ $$
 
 Fix target `Z_j` with:
 
-$$
+```math
 \mathrm{Var}(Z_j)\le v_j.
-$$
+```
 
 A block mean has variance at most:
 
-$$
+```math
 \mathrm{Var}(\bar Z_{j,r})
 \le
 \frac{v_j}{m}.
-$$
+```
 
 By Chebyshev:
 
-$$
+```math
 P\!\left(
 |\bar Z_{j,r}-E[Z_j]|>
 2\sqrt{\frac{v_j}{m}}
 \right)
 \le
 \frac14.
-$$
+```
 
 Call a block `bad` when this event occurs. Blocks are independent because they are formed from disjoint i.i.d. observations.
 
 Let `B_j` be the number of bad blocks. Then:
 
-$$
+```math
 E[B_j]\le\frac{b}{4}.
-$$
+```
 
 If the median-of-means estimator lies outside the interval:
 
-$$
+```math
 E[Z_j]\pm2\sqrt{\frac{v_j}{m}},
-$$
+```
 
 at least half of the blocks must be bad. Hoeffding's inequality for the independent bad-block indicators gives:
 
-$$
+```math
 P\!\left(
 B_j\ge\frac{b}{2}
 \right)
 \le
 \exp\left(-\frac{b}{8}\right).
-$$
+```
 
 Therefore:
 
-$$
+```math
 P\!\left(
 |\widetilde\mu_j-E[Z_j]|>r_j
 \right)
@@ -285,26 +285,26 @@ P\!\left(
 \exp\left(-\frac{b}{8}\right)
 \le
 \frac{\delta}{5}.
-$$
+```
 
 ### Step 2: simultaneous five-target event
 
 A union bound over:
 
-$$
+```math
 j=1,\ldots,5
-$$
+```
 
 gives:
 
-$$
+```math
 P\!\left(
 |\widetilde\mu_j-E[Z_j]|\le r_j
 \text{ for every }j
 \right)
 \ge
 1-\delta.
-$$
+```
 
 This simultaneous event supplies exactly the five confidence envelopes required by S2.8.
 
@@ -312,11 +312,11 @@ This simultaneous event supplies exactly the five confidence envelopes required 
 
 On the simultaneous event, S2.8 gives:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 D_{\mathrm{MoM}}.
-$$
+```
 
 The positive-certificate and first-person conclusions follow exactly as in S2.8.
 
@@ -324,25 +324,25 @@ The positive-certificate and first-person conclusions follow exactly as in S2.8.
 
 For `K` predeclared candidate rules, choose candidate failure budgets:
 
-$$
+```math
 \delta_k>0,
 \qquad
 \sum_{k=1}^K\delta_k\le\delta.
-$$
+```
 
 Candidate `k` may use an odd block count:
 
-$$
+```math
 b_k
 \ge
 8\log\frac{5}{\delta_k}.
-$$
+```
 
 If all candidate definitions, variance bounds, and confidence allocations are fixed independently of certification outcomes, then the candidate-level MoM certificates are simultaneously valid with probability at least:
 
-$$
+```math
 1-\delta.
-$$
+```
 
 Any data-dependent selection among those predeclared candidates therefore retains its own lower bound, as in S2.7.
 
@@ -352,7 +352,7 @@ Any data-dependent selection among those predeclared candidates therefore retain
 
 S2.10 requires finite variance of:
 
-$$
+```math
 Y,
 \quad
 S,
@@ -362,31 +362,43 @@ YS,
 S^2,
 \quad
 (U-Y)^2.
-$$
+```
 
 In particular:
 
-$$
+```math
 \mathrm{Var}(S^2)<\infty
-$$
-
-requires a finite fourth moment of `S`, and:
-
-$$
-\mathrm{Var}((U-Y)^2)<\infty
-$$
-
-requires a finite fourth moment of the prediction residual. Likewise:
-
-$$
-\mathrm{Var}(YS)<\infty
-$$
+```
 
 requires:
 
-$$
+```math
+E[S^4]<\infty.
+```
+
+Also:
+
+```math
+\mathrm{Var}((U-Y)^2)<\infty
+```
+
+requires:
+
+```math
+E[(U-Y)^4]<\infty,
+```
+
+and:
+
+```math
+\mathrm{Var}(YS)<\infty
+```
+
+requires:
+
+```math
 E[Y^2S^2]<\infty.
-$$
+```
 
 Therefore the theorem must not be summarized as requiring only finite variance of `Y`, `S`, and `U` individually.
 
@@ -394,9 +406,9 @@ Therefore the theorem must not be summarized as requiring only finite variance o
 
 The constants:
 
-$$
+```math
 v_1,\ldots,v_5
-$$
+```
 
 must be valid population upper bounds, fixed independently of certification outcomes or themselves covered by additional confidence accounting.
 
@@ -404,9 +416,9 @@ must be valid population upper bounds, fixed independently of certification outc
 
 The theorem requires enough observations to form the requested number of independent blocks:
 
-$$
+```math
 n\ge b.
-$$
+```
 
 If this fails, S2.10 is not available at the requested confidence level with this construction.
 
@@ -414,9 +426,9 @@ If this fails, S2.10 is not available at the requested confidence level with thi
 
 Median-of-means provides exponential confidence from finite target-variable variances, but the radius:
 
-$$
+```math
 2\sqrt{\frac{v_j}{m}}
-$$
+```
 
 can be wider than a correctly specified light-tail certificate. The method trades efficiency for robustness.
 
@@ -424,9 +436,9 @@ can be wider than a correctly specified light-tail certificate. The method trade
 
 If:
 
-$$
+```math
 D_{\mathrm{MoM}}\le0,
-$$
+```
 
 S2.10 does not certify positive covariance. This does not imply nonpositive true covariance.
 

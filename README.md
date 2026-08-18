@@ -151,13 +151,14 @@ The current review priority is proof and novelty review of the compressed post-v
 
 ## Repository state
 
-The repository distinguishes the stable scientific snapshot from active development:
+The repository distinguishes the frozen v0.2 snapshot from the current integrated review state:
 
 - stable v0.2 snapshot: branch `release/v0.2-public-review`, commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
 - stable snapshot ledger: [`STATUS.md`](STATUS.md);
+- current integrated post-v0.2 review surface: `main`;
+- post-v0.2 integration merge commit: `042fb12d070a51b37310792b882136a0ea6a58f8`;
 - current development ledger: [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md);
-- active cumulative post-v0.2 review candidate: PR #21;
-- historical development provenance: PRs #11–#20.
+- historical development provenance: PRs #11–#21.
 
 The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged by the post-v0.2 supplementary work.
 
@@ -167,6 +168,7 @@ GitHub Actions currently checks:
 
 - Python compilation;
 - GitHub Markdown math delimiters;
+- repository-relative Markdown links;
 - required repository structure;
 - E1–E5 reproduction;
 - figure regeneration and output existence;
@@ -185,4 +187,4 @@ See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. GitHub's r
 
 ## Citation
 
-Citation metadata is in [`CITATION.cff`](CITATION.cff). It should be updated when a manuscript identifier becomes available.
+`CITATION.cff` currently describes the frozen v0.2 public-review snapshot. It should receive a new version only when the next formal repository/manuscript version is designated.

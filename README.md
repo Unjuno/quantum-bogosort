@@ -1,61 +1,28 @@
 # Quantum Bogosort (QBS)
 
-**Stable scientific snapshot:** v0.2 — Public Review
+Quantum Bogosort is a formal research program for recognition-dependent policies whose trajectories and observer-indexed accessibility can change together.
 
-**Active post-v0.2 review candidate:** PR #21
-
-Formal theory and reproducible simulations of recognition-activated Quantum Bogosort, including policy-dependent trajectories, observer-indexed accessibility, and cross-branch decision correlations.
-
-## Stable snapshot versus active development
-
-The repository intentionally separates the frozen public-review snapshot from current research development.
-
-- Frozen v0.2 snapshot: branch `release/v0.2-public-review`, commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
-- Stable snapshot ledger: [`STATUS.md`](STATUS.md).
-- Current post-v0.2 ledger: [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md).
-- Active cumulative post-v0.2 diff: PR #21, `Consolidate post-v0.2 theory stack into the preprint review candidate`.
-- Historical stacked development: PRs #11–#20. These preserve provenance but are superseded for active review by PR #21.
-
-The locked core theorem set T1–T5 and locked core experiments E1–E5 remain unchanged by the post-v0.2 supplementary stack.
-
-## Repository map
-
-For the stable v0.2 state, start with:
-
-- [`STATUS.md`](STATUS.md) — stable v0.2 ledger of proved, simulated, assumed, open, and non-claimed results.
-- [`docs/v0.2_release_audit.md`](docs/v0.2_release_audit.md) — final v0.2 public-review release audit.
-
-For current post-v0.2 work, start with:
-
-- [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md) — current development and review routing.
-- PR #21 — the single active cumulative post-v0.2 review candidate.
-
-Repository-wide references:
-
-- [`ROADMAP.md`](ROADMAP.md) — public-review and manuscript milestones.
-- [`docs/research_map.md`](docs/research_map.md) — claim-to-proof-to-experiment map.
-- [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md) — theorem / simulation / bridge-assumption separation.
-- [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md) — support, constraint, and rejection criteria for a physical Everett bridge.
-- [`docs/manuscript_claim_audit.md`](docs/manuscript_claim_audit.md) — manuscript claim and figure-caption audit.
-- [`docs/notation.md`](docs/notation.md) — shared notation.
-- [`theory/`](theory/) — core theorem statements and proofs.
-- [`experiments/`](experiments/) — E1–E5 cards and reproducible code.
-- [`supplementary/`](supplementary/) — secondary exact results and exploratory mechanisms.
-- [`literature/`](literature/) — prior-art and novelty-boundary review.
-- [`paper/`](paper/) — illustrated manuscript source.
-- [`figures/README.md`](figures/README.md) — publication figures and provenance.
-- [`CHANGELOG.md`](CHANGELOG.md) — public research-package changes.
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) — public review and issue-reporting guide.
-
-## Core model
-
-Recognition may change both policy-dependent trajectories and the accessibility map:
+The core structure is:
 
 $$
-R \longrightarrow \pi_R \longrightarrow (U_R,S_R).
+R
+\longrightarrow
+\pi_R
+\longrightarrow
+(U_R,S_R).
 $$
 
-First-person value is modeled as:
+Here `R` is recognition, `pi_R` is the policy used under that recognition state, `U_R` is the resulting outcome or utility, and `S_R` is a nonnegative observer-indexed accessibility weight.
+
+## Core first-person quantity
+
+For:
+
+$$
+0<E_\mu[S_\pi]<\infty,
+$$
+
+the first-person value is:
 
 $$
 V_{FP}(\pi)
@@ -63,13 +30,13 @@ V_{FP}(\pi)
 \frac{E_\mu[U_\pi S_\pi]}{E_\mu[S_\pi]}.
 $$
 
-For the baseline with no pre-recognition selector:
+For the baseline:
 
 $$
 S_0\equiv1,
 $$
 
-so:
+the recognition effect decomposes as:
 
 $$
 V_1-V_0
@@ -79,31 +46,84 @@ E[U_1-U_0]
 \frac{\operatorname{Cov}(U_1,S_1)}{E[S_1]}.
 $$
 
-The first term is the ordinary causal policy/trajectory effect. The second is the first-person conditioning contribution.
+The first term is the ordinary policy/trajectory effect. The second is the first-person conditioning contribution.
 
-## Theory
+A positive conditioning contribution means that the first-person measure gives greater weight to favorable accessible trajectories. It does **not** mean that the base measure or an external random-number generator is causally changed.
 
-GitHub-rendered theorem notes are indexed at [`theory/core_theorems.md`](theory/core_theorems.md):
+## What is established
 
-1. QBS Covariance Identity
-2. Tail Probability Identity
-3. Monotone Accessibility implies First-Order Stochastic Dominance
-4. Recognition Decomposition
-5. Policy–QBS Interaction Decomposition
+### Core mathematics
 
-The notes also cover option value, support preservation under pure reweighting, the zero-accessible-measure boundary, counterexamples, and the separate Everett bridge assumption. The manuscript appendix contains complete proofs and supplementary derivations. A supplementary hierarchical policy-coherence theorem is in [`supplementary/branch_recognition.md`](supplementary/branch_recognition.md).
+The locked core theorem set is T1–T5:
 
-## Experiments
+1. covariance identity for the first-person mean shift;
+2. tail-probability covariance identity;
+3. a monotone-accessibility sufficient condition for FOSD;
+4. recognition decomposition;
+5. policy–QBS interaction decomposition.
 
-The locked experiment map is [`experiments/manifest.csv`](experiments/manifest.csv). Human-readable H/T/D/C/U cards are also provided:
+See [`theory/core_theorems.md`](theory/core_theorems.md) and the canonical [`docs/research_map.md`](docs/research_map.md).
 
-- [`E1_FOSD.md`](experiments/E1_FOSD.md) — covariance, tails, FOSD, independence null, and nonmonotone counterexample.
-- [`E2_LEARNED_AGENT.md`](experiments/E2_LEARNED_AGENT.md) — minimal learned agent and endogenous predictive correlation.
-- [`E3_RECOGNITION.md`](experiments/E3_RECOGNITION.md) — paired recognition decomposition and recognition-label null.
-- [`E4_INTERACTION.md`](experiments/E4_INTERACTION.md) — fixed-selector interaction identity plus the general selector-map-shift decomposition.
-- [`E5_BRANCH_MAP.md`](experiments/E5_BRANCH_MAP.md) — paired execution-strength and environment-correlation sweeps, plus shared versus branch-independent recognition.
+### Post-v0.2 supplementary line
 
-Run all five from the repository root:
+The current supplementary argument is organized around one conceptual spine:
+
+$$
+\text{predictive alignment}
+\longrightarrow
+\text{general accessibility}
+\longrightarrow
+\text{residual penalty}
+\longrightarrow
+\text{explained-variance certificate}.
+$$
+
+Its principal results are S2, S2.11, S2.12, and S2.13. S2.3–S2.10 provide calibration, finite-sample, selection-validity, light-tail, and robust statistical certification machinery. See [`supplementary/README.md`](supplementary/README.md).
+
+### Reproducible simulations
+
+The locked core experiment suite is E1–E5:
+
+- [`experiments/E1_FOSD.md`](experiments/E1_FOSD.md) — covariance, tails, FOSD, independence null, and a nonmonotone counterexample;
+- [`experiments/E2_LEARNED_AGENT.md`](experiments/E2_LEARNED_AGENT.md) — endogenous predictive alignment in a minimal learned agent;
+- [`experiments/E3_RECOGNITION.md`](experiments/E3_RECOGNITION.md) — paired recognition decomposition;
+- [`experiments/E4_INTERACTION.md`](experiments/E4_INTERACTION.md) — policy–QBS interaction decomposition;
+- [`experiments/E5_BRANCH_MAP.md`](experiments/E5_BRANCH_MAP.md) — marginal first-person uplift versus cross-copy policy coherence.
+
+These are classical simulations of the formal model.
+
+## What remains open
+
+The mathematical weighting results do not by themselves derive an Everettian physical interpretation. The separate bridge assumption is:
+
+$$
+d\mu^{FP}_\pi(\omega)
+=
+\frac{S_\pi(\omega)}{E_\mu[S_\pi]}
+\,d\mu(\omega).
+$$
+
+A concrete physical account must explain why an Everettian observer should be described by the proposed accessibility map. The structural and empirical review criteria are in [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md).
+
+The repository also does not claim that statistical covariance certification establishes Everettian observer selection, that positive correlation alone implies FOSD, or that external random generators become objectively lucky. The complete claim boundary is maintained in [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md).
+
+## Where to read next
+
+| Goal | Start here |
+|---|---|
+| Understand the complete claim structure | [`docs/research_map.md`](docs/research_map.md) |
+| Check theorem statements and assumptions | [`theory/core_theorems.md`](theory/core_theorems.md) and [`supplementary/README.md`](supplementary/README.md) |
+| Check claim strength and non-claims | [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md) |
+| Check notation and terminology | [`docs/notation.md`](docs/notation.md) |
+| Reproduce the simulations | [`experiments/manifest.csv`](experiments/manifest.csv) and [`experiments/`](experiments/) |
+| Review the Everett bridge | [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md) |
+| Read the manuscript | [`paper/`](paper/) |
+| Review prior art and novelty boundaries | [`literature/`](literature/) |
+| See the current post-v0.2 state | [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md) |
+
+## Reproduce E1–E5
+
+From the repository root:
 
 ```bash
 python -m venv .venv
@@ -116,86 +136,53 @@ python experiments/exp4_interaction.py
 python experiments/exp5_branch_map.py
 ```
 
-Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/). Secondary and superseded work is documented under [`experiments/archive/`](experiments/archive/), with superseded designs explicitly excluded from current evidence.
-
-## Supplementary research notes
-
-Secondary results are indexed in [`supplementary/README.md`](supplementary/README.md), including:
-
-- multi-observer normalization,
-- binary soft-QBS,
-- repeated-filter identities and accessible-measure decay,
-- Gaussian closed form,
-- adaptive-agent predictive structure,
-- evidence-driven recognition activation,
-- recognition time as a stopping-time extension,
-- selectivity frontier,
-- branch-wide recognition and policy coherence.
-
-The recognition-time note explicitly does **not** claim that earlier recognition is universally better.
-
-Post-v0.2 supplementary theorem development is reviewed cumulatively in PR #21 rather than through the historical stacked PRs one by one.
-
-## Manuscript, figures, and literature
-
-The evolving illustrated manuscript is in [`paper/`](paper/). It contains Abstract, Introduction, Related Work, Formal Model, Main Theorems, Adaptive-Agent Mechanism, Experiments, Everett Interpretation, Limitations/Falsifiability, Discussion, a full proof appendix, and bibliography.
-
-Six GitHub-readable SVG figures are committed under `figures/generated/`. LaTeX-ready PDF variants are regenerated from committed data during CI before the manuscript build. Captions explicitly distinguish mathematical schematics, theorem illustrations, and classical toy simulations.
-
-The literature review is in [`literature/`](literature/). It includes supportive and critical Everett probability work, anthropic decision theory, classical change-of-measure context, and direct self-locating policy-optimization prior art. The novelty claim is therefore intentionally narrower than "self-location affects decisions" or "weighted expectations change outcomes."
-
-## Markdown math convention
-
-Markdown math in this repository uses **double-dollar display blocks only**. Inline mathematical symbols are written as code spans or moved into display blocks. CI rejects legacy parenthesis/bracket math delimiters and single-dollar math delimiters.
-
-## Validation
-
-GitHub Actions validates the research package by:
-
-- compiling experiment, figure, and validation scripts;
-- enforcing the Markdown math-delimiter convention;
-- validating the required research-repository structure;
-- rerunning E1–E5;
-- regenerating SVG and PDF publication figures;
-- validating experiment-manifest references;
-- generating the illustrated manuscript PDF with `latexmk`;
-- verifying and uploading the manuscript PDF as a CI artifact.
-
-## Everett interpretation
-
-The mathematical results do **not** establish an Everett interpretation by themselves. The separate bridge assumption is:
-
-$$
-d\mu^{FP}_\pi(\omega)
-=
-\frac{S_\pi(\omega)}{E_\mu[S_\pi]}
-\,d\mu(\omega).
-$$
-
-The repository keeps measure-theoretic results, classical simulations, observer-model assumptions, and the Everett physical interpretation distinct. A concrete physical bridge must satisfy the structural and empirical criteria documented in [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md).
-
-## Falsifiability and boundaries
-
-The framework predicts no pure weighting uplift when accessibility is independent of outcome. FOSD need not hold for nonmonotone accessibility. Recognition has no effect if it changes neither trajectory utility nor accessibility. If expected accessibility is zero, the normalized first-person measure is undefined.
-
-Falsifiability is layer-specific: theorem assumptions can fail mathematically; an observer model can fail structural consistency; a physical Everett bridge is empirically falsifiable only when a concrete physical accessibility rule makes observational predictions that differ from competing accounts.
+Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/). Superseded experiment designs are kept under [`experiments/archive/`](experiments/archive/).
 
 ## Public review
 
-Use [`CONTRIBUTING.md`](CONTRIBUTING.md) and the repository issue templates for proof/counterexample reports, prior-art overlap, reproducibility failures, and Everett-bridge criticism.
+Use [`CONTRIBUTING.md`](CONTRIBUTING.md) and the issue templates for:
 
-Review stable v0.2 claims against `release/v0.2-public-review`. Review current post-v0.2 mathematics against PR #21.
+- proof or counterexample reports;
+- prior-art overlap;
+- reproducibility failures;
+- Everett-bridge criticism.
+
+The current review priority is proof and novelty review of the compressed post-v0.2 conceptual spine rather than further theorem expansion.
+
+## Repository state
+
+The repository distinguishes the stable scientific snapshot from active development:
+
+- stable v0.2 snapshot: branch `release/v0.2-public-review`, commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
+- stable snapshot ledger: [`STATUS.md`](STATUS.md);
+- current development ledger: [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md);
+- active cumulative post-v0.2 review candidate: PR #21;
+- historical development provenance: PRs #11–#20.
+
+The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged by the post-v0.2 supplementary work.
+
+## Validation
+
+GitHub Actions currently checks:
+
+- Python compilation;
+- GitHub Markdown math delimiters;
+- required repository structure;
+- E1–E5 reproduction;
+- figure regeneration and output existence;
+- experiment-manifest references;
+- manuscript LaTeX build and PDF verification.
 
 ## License
 
 This repository uses file-type split licensing:
 
-- Source code: **MIT** — [`LICENSE`](LICENSE)
-- Theory, documentation, manuscript text, and figures: **CC BY 4.0** — [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt)
-- Generated research datasets: **CC0 1.0** — [`LICENSES/CC0-1.0.txt`](LICENSES/CC0-1.0.txt)
+- source code: **MIT** — [`LICENSE`](LICENSE);
+- theory, documentation, manuscript text, and figures: **CC BY 4.0** — [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt);
+- generated research datasets: **CC0 1.0** — [`LICENSES/CC0-1.0.txt`](LICENSES/CC0-1.0.txt).
 
-See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. GitHub's repository-level license badge may show MIT because it detects the root `LICENSE`; that badge should not be read as overriding the file-type split licensing map. `CITATION.cff` intentionally does not encode the split licensing as one interchangeable license list.
+See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. GitHub's repository-level license badge may show MIT because it detects the root `LICENSE`; that does not override the file-type licensing map.
 
 ## Citation
 
-Citation metadata is provided in [`CITATION.cff`](CITATION.cff). It should be updated again when a manuscript identifier becomes available.
+Citation metadata is in [`CITATION.cff`](CITATION.cff). It should be updated when a manuscript identifier becomes available.

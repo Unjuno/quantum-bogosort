@@ -82,6 +82,16 @@ S2.3–S2.4 give calibration-error and prediction-MSE population lower bounds. S
 
 ## S2.11–S2.12: general accessibility and residual dependence
 
+For the current S2.11 statement assume:
+
+$$
+U,S\in L^2,
+\qquad
+S\ge0,
+\qquad
+0<E[S]<\infty.
+$$
+
 Let:
 
 $$
@@ -128,11 +138,11 @@ $$
 \sqrt{E[v_U(Y)]E[v_S(Y)]}.
 $$
 
-The basic residual-variance penalty is sharp under perfect conditional anti-correlation.
+The basic residual-variance penalty is sharp under perfect conditional anti-correlation. The proof-review sharpness construction uses bounded Rademacher residuals and strictly positive accessibility, so no hidden unbounded-shift assumption remains.
 
 ## S2.13: explained-variance alignment
 
-Assume:
+Assume additionally:
 
 $$
 \operatorname{Var}(U)>0,
@@ -201,7 +211,7 @@ $$
 \sqrt{(1-A_U)(1-A_S)}
 $$
 
-is sufficient for positive total covariance.
+is sufficient for positive total covariance. Because the right-hand side is nonnegative, this worst-case sufficient certificate requires positive conditional-mean correlation.
 
 If:
 
@@ -221,11 +231,29 @@ $$
 A_U=A_S=A>0,
 $$
 
-then a sufficient threshold is:
+then the primitive condition is:
+
+$$
+\rho_{ma}A>1-A.
+$$
+
+For:
+
+$$
+\rho_{ma}>-1,
+$$
+
+this is algebraically equivalent to:
 
 $$
 A>
 \frac{1}{1+\rho_{ma}}.
+$$
+
+Since `0<A<=1`, the strict symmetric worst-case certificate is feasible only when:
+
+$$
+\rho_{ma}>0.
 $$
 
 These are worst-case residual sufficient conditions inherited from S2.12, not necessary conditions.
@@ -244,7 +272,7 @@ S_\pi(\omega)\ge0,
 0<E[S_\pi]<\infty.
 $$
 
-S2 assumes score-measurable accessibility. S2.11 relaxes that assumption but retains residual dependence explicitly. S2.12 assumes square integrability. S2.13 additionally assumes nonzero total variances when normalized explained-variance quantities are used.
+S2 assumes score-measurable accessibility. S2.11 relaxes that assumption but retains residual dependence explicitly and currently uses square integrability to make the covariance decomposition unambiguous. S2.12 uses the same square-integrability basis. S2.13 additionally assumes nonzero total variances when normalized explained-variance quantities are used.
 
 S2.5 assumes independent bounded held-out evaluation. S2.6 permits training-dependent rules only with independent certification data. S2.7 assumes a finite predeclared candidate family with multiplicity accounting. S2.8 assumes a valid simultaneous five-moment confidence envelope. S2.9 assumes valid light-tail parameters. S2.10 assumes valid target-variable variance bounds and an i.i.d. block construction.
 
@@ -274,6 +302,7 @@ The repository does **not** claim that:
 - score-level alignment remains sufficient after removing `S=s(Y)` while ignoring residual dependence;
 - the S2.12 worst-case residual penalty describes the actual residual correlation in a concrete model;
 - high explained variance alone is enough when conditional means are nonpositively aligned;
+- the symmetric S2.13 threshold can be satisfied with nonpositive `rho_ma` under `0<A<=1`;
 - S2.13 is a necessary condition for positive covariance;
 - failure of a sufficient certificate implies negative covariance;
 - uncorrected model search preserves nominal confidence;

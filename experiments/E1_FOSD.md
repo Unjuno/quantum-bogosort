@@ -16,7 +16,7 @@ The theoretical benchmark is:
 $$
 E_{FP}[X]-E[X]
 =
-\frac{\operatorname{Cov}(X,S)}{E[S]}.
+\frac{\mathrm{Cov}(X,S)}{E[S]}.
 $$
 
 For FOSD, the sufficient condition is that:

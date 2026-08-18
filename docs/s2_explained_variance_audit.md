@@ -12,37 +12,37 @@ Assume `U,S` are square-integrable with positive total variances.
 
 Define:
 
-$$
+```math
 A_U
 =
 \frac{\mathrm{Var}(E[U\mid Y])}{\mathrm{Var}(U)},
-$$
+```
 
-$$
+```math
 A_S
 =
 \frac{\mathrm{Var}(E[S\mid Y])}{\mathrm{Var}(S)}.
-$$
+```
 
 The law of total variance gives:
 
-$$
+```math
 E[\mathrm{Var}(U\mid Y)]
 =
 \mathrm{Var}(U)(1-A_U),
-$$
+```
 
 and:
 
-$$
+```math
 E[\mathrm{Var}(S\mid Y)]
 =
 \mathrm{Var}(S)(1-A_S).
-$$
+```
 
 Therefore substitution into S2.12 gives:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(m(Y),a(Y))
@@ -52,7 +52,7 @@ $$
 \mathrm{Var}(S)
 (1-A_U)(1-A_S)
 }.
-$$
+```
 
 **Audit:** PASS.
 
@@ -60,21 +60,21 @@ $$
 
 When:
 
-$$
+```math
 A_UA_S>0,
-$$
+```
 
 define:
 
-$$
+```math
 \rho_{ma}
 =
 \mathrm{Corr}(m(Y),a(Y)).
-$$
+```
 
 Then:
 
-$$
+```math
 \mathrm{Cov}(m(Y),a(Y))
 =
 \rho_{ma}
@@ -83,11 +83,11 @@ A_UA_S
 \mathrm{Var}(U)
 \mathrm{Var}(S)
 }.
-$$
+```
 
 Factoring out the positive total standard-deviation product yields:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \sqrt{
@@ -99,7 +99,7 @@ $$
 -
 \sqrt{(1-A_U)(1-A_S)}
 \right].
-$$
+```
 
 **Audit:** PASS.
 
@@ -109,21 +109,21 @@ $$
 
 With:
 
-$$
+```math
 \rho_{ma}=1,
-$$
+```
 
 the positive-certificate condition is:
 
-$$
+```math
 A_UA_S>(1-A_U)(1-A_S).
-$$
+```
 
 Expanding and canceling gives:
 
-$$
+```math
 A_U+A_S>1.
-$$
+```
 
 **Audit:** PASS.
 
@@ -131,40 +131,40 @@ $$
 
 With:
 
-$$
+```math
 A_U=A_S=A>0,
-$$
+```
 
 the condition is:
 
-$$
+```math
 \rho_{ma}A>1-A.
-$$
+```
 
 If:
 
-$$
+```math
 \rho_{ma}>-1,
-$$
+```
 
 then division by `1+rho_ma` is valid and gives:
 
-$$
+```math
 A>
 \frac{1}{1+\rho_{ma}}.
-$$
+```
 
 Because:
 
-$$
+```math
 0<A\le1,
-$$
+```
 
 a strict certificate is feasible only for:
 
-$$
+```math
 \rho_{ma}>0.
-$$
+```
 
 At `rho_ma=0`, the threshold is `A>1`; for negative `rho_ma` it exceeds one; at `rho_ma=-1` the divided form is undefined.
 
@@ -174,15 +174,15 @@ At `rho_ma=0`, the threshold is `A>1`; for negative `rho_ma` it exceeds one; at 
 
 If either:
 
-$$
+```math
 A_U=0
-$$
+```
 
 or:
 
-$$
+```math
 A_S=0,
-$$
+```
 
 one conditional mean is constant and `rho_ma` may be undefined. The unnormalized S2.13 inequality remains valid.
 

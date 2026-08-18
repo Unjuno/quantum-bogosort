@@ -5,6 +5,8 @@ from urllib.parse import unquote
 ROOT = Path(__file__).resolve().parents[1]
 
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
+FENCE_RE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
+INLINE_CODE_RE = re.compile(r"(`+)(.*?)\1")
 EXTERNAL_PREFIXES = (
     "http://",
     "https://",
@@ -49,6 +51,36 @@ def normalize_repo_relative(markdown_file: Path, target: str) -> tuple[Path, str
     return resolved, relative
 
 
+def rendered_prose(text: str) -> str:
+    """Return Markdown prose with fenced and inline code removed.
+
+    Link-like examples inside literal code must not be treated as repository links.
+    """
+    output: list[str] = []
+    fence_marker: str | None = None
+
+    for line in text.splitlines():
+        stripped = line.strip()
+        if fence_marker is not None:
+            if (
+                stripped
+                and stripped[0] == fence_marker[0]
+                and set(stripped) == {fence_marker[0]}
+                and len(stripped) >= len(fence_marker)
+            ):
+                fence_marker = None
+            continue
+
+        match = FENCE_RE.match(line)
+        if match:
+            fence_marker = match.group(1)
+            continue
+
+        output.append(INLINE_CODE_RE.sub("", line))
+
+    return "\n".join(output)
+
+
 missing: list[str] = []
 checked = 0
 
@@ -56,7 +88,7 @@ for markdown_file in sorted(ROOT.rglob("*.md")):
     if ".git" in markdown_file.parts:
         continue
 
-    text = markdown_file.read_text(encoding="utf-8")
+    text = rendered_prose(markdown_file.read_text(encoding="utf-8"))
     for match in LINK_RE.finditer(text):
         target = parse_target(match.group(1))
         if is_external_or_anchor(target):
@@ -78,4 +110,4 @@ if missing:
         "Broken repository-relative Markdown links:\n" + "\n".join(missing)
     )
 
-print(f"Markdown links OK: {checked} repository-relative targets resolved.")
+print(f"Markdown links OK: {checked} rendered repository-relative targets resolved.")

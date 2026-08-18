@@ -6,29 +6,32 @@ This file records the current review and development state. It complements the f
 
 ## Source of truth
 
-- current frozen public-review snapshot: `release/v0.3-public-review`;
+- current frozen public-review snapshot: tag/Release `v0.3-public-review` at commit `58038763127258bd3e2f0d41708c4dfa01f81fd6`;
 - current review/development surface: `main`;
 - current snapshot ledger: [`STATUS.md`](STATUS.md);
 - canonical claim/theorem/evidence index: [`docs/research_map.md`](docs/research_map.md);
 - authoritative claim boundaries: [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md);
 - future work: [`ROADMAP.md`](ROADMAP.md);
-- archived v0.2 snapshot: `release/v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
+- archived v0.2 snapshot: tag/Release `v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
 
-PRs #11–#20 preserve the staged derivation history. PR #21 preserves the cumulative integration history. PRs #27–#29 preserve the pre-announcement rendering, visualization, reproducibility, and final landing-page QA history. Current authoritative statements are the files in the v0.3 snapshot and on `main`.
+PRs #11–#20 preserve the staged derivation history. PR #21 preserves the cumulative integration history. PRs #27–#29 preserve the pre-announcement rendering, visualization, reproducibility, and final landing-page QA history. Current authoritative statements are the frozen v0.3 snapshot and the files on `main`.
 
-## Branch state
+## Branch and archive state
 
-The repository currently keeps only three branches:
+The repository has a single active branch:
 
-- `main` — current review/development surface;
-- `release/v0.3-public-review` — frozen v0.3 scientific snapshot;
-- `release/v0.2-public-review` — archived v0.2 scientific snapshot.
+- `main` — current review/development surface.
 
-The two `release/*` branches are intentional immutable review snapshots, not unmerged development work. Merged/superseded `agent/*` branches have been removed. There are no active development branches outside `main`.
+Frozen scientific snapshots are archived as tags and GitHub Releases rather than as branches:
+
+- `v0.3-public-review` — frozen v0.3 snapshot;
+- `v0.2-public-review` — archived v0.2 snapshot.
+
+This keeps archival states immutable without making them look like pending or unmerged development work. Merged/superseded `agent/*` branches have also been removed.
 
 ## Post-snapshot `main` clarifications
 
-The frozen `release/v0.3-public-review` snapshot is unchanged. Subsequent `main` changes are editorial, interpretive, visualization, repository-hygiene, or CI-hardening changes rather than new theorem or experiment content.
+The frozen `v0.3-public-review` snapshot is unchanged. Subsequent `main` changes are editorial, interpretive, visualization, repository-hygiene, or CI-hardening changes rather than new theorem or experiment content.
 
 Current `main` now makes the following points explicit:
 
@@ -43,7 +46,7 @@ Current `main` now makes the following points explicit:
 - Markdown validation rejects malformed double-dollar display blocks whose delimiters are not on lines by themselves;
 - manuscript LaTeX installation is routed through explicit Ubuntu archive/security sources to reduce runner-mirror failures;
 - current public headings and research-map language avoid stale development-version labels;
-- merged/superseded development branches have been removed while frozen release branches remain preserved;
+- historical snapshots are represented by tags/Releases rather than release branches;
 - CI uses concurrency cancellation and runtime limits to prevent indefinitely stalled validation jobs.
 
 No T1–T5 theorem, E1–E5 experiment, S2-family result, or Everett-bridge status is changed by these post-snapshot clarifications.

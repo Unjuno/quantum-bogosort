@@ -35,8 +35,9 @@ def strip_comments(text: str) -> str:
     return "\n".join(lines)
 
 
-def resolve_input(source: Path, target: str) -> Path:
-    candidate = source.parent / target
+def resolve_tex_target(target: str) -> Path:
+    """Resolve TeX paths as used by CI, whose working directory is paper/."""
+    candidate = PAPER / target
     if candidate.suffix != ".tex":
         candidate = candidate.with_suffix(".tex")
     return candidate.resolve()
@@ -54,7 +55,7 @@ def collect_reachable_tex() -> list[Path]:
         ordered.append(path)
         text = strip_comments(path.read_text(encoding="utf-8"))
         for target in INPUT_RE.findall(text):
-            pending.append(resolve_input(path, target))
+            pending.append(resolve_tex_target(target))
     return ordered
 
 
@@ -100,13 +101,13 @@ def main() -> None:
         source_text[path] = text
         check_environment_balance(path, text, errors)
 
-    # Bibliography declarations in the reachable manuscript must resolve.
+    # Bibliography declarations resolve from paper/, matching latexmk's working dir.
     bib_files: list[Path] = []
     for path in reachable:
         text = strip_comments(path.read_text(encoding="utf-8"))
         for group in BIB_RE.findall(text):
             for name in (part.strip() for part in group.split(",")):
-                bib = (path.parent / name).with_suffix(".bib").resolve()
+                bib = (PAPER / name).with_suffix(".bib").resolve()
                 if not bib.exists():
                     errors.append(f"{path.relative_to(ROOT)}: missing bibliography {name}.bib")
                 else:
@@ -146,12 +147,12 @@ def main() -> None:
             if key not in labels:
                 errors.append(f"{path.relative_to(ROOT)}: unresolved reference {key}")
 
-    # Graphics in reachable manuscript sources must exist at validation time. This
-    # script runs after figures/generate_pdf_figures.py in the manuscript job.
+    # Graphics resolve from paper/, matching `working-directory: paper` in CI. The
+    # script runs after figures/generate_pdf_figures.py, so generated PDFs must exist.
     for path in reachable:
         text = strip_comments(path.read_text(encoding="utf-8"))
         for target in GRAPHICS_RE.findall(text):
-            graphic = (path.parent / target).resolve()
+            graphic = (PAPER / target).resolve()
             if not graphic.exists():
                 errors.append(f"{path.relative_to(ROOT)}: missing graphic {target}")
 

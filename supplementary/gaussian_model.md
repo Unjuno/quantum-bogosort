@@ -10,59 +10,59 @@ Let outcome `L` and score `Y` be jointly standard normal with correlation `rho`.
 
 Accessibility is:
 
-$$
+```math
 S
 =
 1
-$$
+```
 
 for:
 
-$$
+```math
 Y\ge0,
-$$
+```
 
 and:
 
-$$
+```math
 S
 =
 \lambda
-$$
+```
 
 for:
 
-$$
+```math
 Y<0.
-$$
+```
 
 ## Result
 
 The first-person mean outcome is:
 
-$$
+```math
 E_{FP}[L]
 =
 \frac{2(1-\lambda)\rho}
 {(1+\lambda)\sqrt{2\pi}}.
-$$
+```
 
 Under the provisional binary execution/leakage parameterization:
 
-$$
+```math
 \lambda
 =
 1-q(1-\alpha),
-$$
+```
 
 this becomes:
 
-$$
+```math
 E_{FP}[L]
 =
 \frac{2q(1-\alpha)\rho}
 {[2-q(1-\alpha)]\sqrt{2\pi}}.
-$$
+```
 
 ## Interpretation
 

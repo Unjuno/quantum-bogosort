@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 concurrency:
   group: validate-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -27,6 +30,10 @@ jobs:
         run: python scripts/validate_repository_structure.py
       - name: Validate repository-relative Markdown links
         run: python scripts/validate_markdown_links.py
+      - name: Render every Markdown file through GitHub GFM
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/validate_github_markdown_render.py
       - name: Run reproduction scripts
         run: |
           python experiments/exp1_fosd_and_stress.py

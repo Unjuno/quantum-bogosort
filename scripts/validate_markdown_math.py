@@ -8,6 +8,7 @@ ROOT_README = ROOT / "README.md"
 UNSUPPORTED_MATH_MACROS = {
     r"\operatorname": r"use a GitHub-safe roman form such as \mathrm{Cov}",
 }
+LEGACY_MATH_DELIMITERS = (r"\(", r"\)", r"\[", r"\]")
 errors = []
 
 
@@ -21,16 +22,20 @@ def check_unsupported_math_macros(path: Path, line_no: int, line: str) -> None:
             )
 
 
+def strip_inline_code_spans(line: str) -> str:
+    """Remove inline code before checking prose for math delimiters.
+
+    Literal documentation such as `$$` or `\operatorname` must not be treated as
+    rendered mathematics. Fenced code is handled separately by the main parser.
+    """
+    return re.sub(r"(`+)(.*?)\1", "", line)
+
+
 for path in ROOT.rglob("*.md"):
     if ".git" in path.parts:
         continue
 
     text = path.read_text(encoding="utf-8")
-
-    # Legacy LaTeX delimiters are intentionally disallowed in repository Markdown.
-    for token in (r"\(", r"\)", r"\[", r"\]"):
-        if token in text:
-            errors.append(f"{path.relative_to(ROOT)}: forbidden legacy math delimiter")
 
     in_fence = False
     fence_marker = None
@@ -79,8 +84,17 @@ for path in ROOT.rglob("*.md"):
             fence_start = line_no
             continue
 
+        rendered_line = strip_inline_code_spans(line)
+
+        # Legacy LaTeX delimiters are intentionally disallowed in rendered prose.
+        for token in LEGACY_MATH_DELIMITERS:
+            if token in rendered_line:
+                errors.append(
+                    f"{path.relative_to(ROOT)}:{line_no}: forbidden legacy math delimiter"
+                )
+
         # Single-dollar inline/display math is not used in repository Markdown.
-        for _match in re.finditer(r"(?<!\$)\$(?!\$)", line):
+        for _match in re.finditer(r"(?<!\$)\$(?!\$)", rendered_line):
             errors.append(
                 f"{path.relative_to(ROOT)}:{line_no}: single-dollar math delimiter"
             )
@@ -88,7 +102,7 @@ for path in ROOT.rglob("*.md"):
         # Although GitHub documents $$ display math, this repository standardizes on
         # fenced math because direct rendered-UI review exposed inconsistent $$
         # rendering on repository pages. Keep the syntax uniform and regression-safe.
-        if "$$" in line:
+        if "$$" in rendered_line:
             errors.append(
                 f"{path.relative_to(ROOT)}:{line_no}: use fenced ```math blocks "
                 "instead of $$ display delimiters"

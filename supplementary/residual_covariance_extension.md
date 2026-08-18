@@ -11,9 +11,9 @@ $$
 which forces all accessibility variation to be determined by the score `Y`. This makes the residual conditional covariance vanish and yields the exact projection identity:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(E[U\mid Y],s(Y)).
+\mathrm{Cov}(E[U\mid Y],s(Y)).
 $$
 
 A more general accessibility variable may contain additional branch-level randomness or structure even after conditioning on `Y`. The correct extension is obtained from the law of total covariance.
@@ -42,11 +42,11 @@ Square integrability guarantees that all covariance and residual terms below are
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 +
-E[\operatorname{Cov}(U,S\mid Y)]
+E[\mathrm{Cov}(U,S\mid Y)]
 }.
 $$
 
@@ -61,7 +61,7 @@ $$
 almost surely. Then:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))\ge0.
+\mathrm{Cov}(m(Y),a(Y))\ge0.
 $$
 
 If, for some:
@@ -73,7 +73,7 @@ $$
 the average residual conditional covariance obeys:
 
 $$
-E[\operatorname{Cov}(U,S\mid Y)]
+E[\mathrm{Cov}(U,S\mid Y)]
 \ge-\varepsilon,
 $$
 
@@ -81,9 +81,9 @@ then:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 \varepsilon
 }.
@@ -93,7 +93,7 @@ Therefore the sufficient condition:
 
 $$
 \boxed{
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 >
 \varepsilon
 }
@@ -102,7 +102,7 @@ $$
 implies:
 
 $$
-\operatorname{Cov}(U,S)>0.
+\mathrm{Cov}(U,S)>0.
 $$
 
 Under T1, this further implies:
@@ -116,21 +116,21 @@ $$
 If:
 
 $$
-E[\operatorname{Cov}(U,S\mid Y)]\ge0
+E[\mathrm{Cov}(U,S\mid Y)]\ge0
 $$
 
 and `m(Y)` and `a(Y)` are comonotone, then:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)\ge0
+\mathrm{Cov}(U,S)\ge0
 }.
 $$
 
 If either the conditional-mean covariance is strictly positive or the average residual covariance is strictly positive, then:
 
 $$
-\operatorname{Cov}(U,S)>0.
+\mathrm{Cov}(U,S)>0.
 $$
 
 ## Corollary S2.11.2 — monotone scalar conditional means
@@ -150,7 +150,7 @@ $$
 are both nondecreasing on the support of a scalar `Y`, then:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))\ge0.
+\mathrm{Cov}(m(Y),a(Y))\ge0.
 $$
 
 Thus the residual-tolerance conclusion above applies even when:
@@ -189,9 +189,9 @@ and:
 
 $$
 \boxed{
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 +
 E[\eta\xi]
 }.
@@ -202,7 +202,7 @@ Moreover:
 $$
 E[\eta\xi]
 =
-E[\operatorname{Cov}(U,S\mid Y)].
+E[\mathrm{Cov}(U,S\mid Y)].
 $$
 
 This form makes the two mechanisms explicit:
@@ -215,11 +215,11 @@ This form makes the two mechanisms explicit:
 The law of total covariance gives:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(E[U\mid Y],E[S\mid Y])
+\mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 +
-E[\operatorname{Cov}(U,S\mid Y)].
+E[\mathrm{Cov}(U,S\mid Y)].
 $$
 
 Substituting:
@@ -235,7 +235,7 @@ gives the stated identity.
 For an independent copy `Y'`, the independent-copy covariance identity gives:
 
 $$
-2\operatorname{Cov}(m(Y),a(Y))
+2\mathrm{Cov}(m(Y),a(Y))
 =
 E\!\left[
 (m(Y)-m(Y'))(a(Y)-a(Y'))
@@ -245,22 +245,22 @@ $$
 Under comonotonicity, the integrand is nonnegative almost surely, hence:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))\ge0.
+\mathrm{Cov}(m(Y),a(Y))\ge0.
 $$
 
 If the residual term satisfies:
 
 $$
-E[\operatorname{Cov}(U,S\mid Y)]
+E[\mathrm{Cov}(U,S\mid Y)]
 \ge-\varepsilon,
 $$
 
 then adding the two components yields:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))-
+\mathrm{Cov}(m(Y),a(Y))-
 \varepsilon.
 $$
 
@@ -283,9 +283,9 @@ $$
 the cross terms between `Y`-measurable conditional means and the zero-conditional-mean residuals vanish. Thus:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),a(Y))+E[\eta\xi].
+\mathrm{Cov}(m(Y),a(Y))+E[\eta\xi].
 $$
 
 Conditioning on `Y` shows:
@@ -293,7 +293,7 @@ Conditioning on `Y` shows:
 $$
 E[\eta\xi\mid Y]
 =
-\operatorname{Cov}(U,S\mid Y),
+\mathrm{Cov}(U,S\mid Y),
 $$
 
 and taking expectations gives the final equality.
@@ -331,7 +331,7 @@ $$
 Therefore:
 
 $$
-\operatorname{Cov}(m(Y),a(Y))=0,
+\mathrm{Cov}(m(Y),a(Y))=0,
 $$
 
 while:
@@ -345,7 +345,7 @@ $$
 Thus:
 
 $$
-\operatorname{Cov}(U,S)<0.
+\mathrm{Cov}(U,S)<0.
 $$
 
 Once score-measurability is removed, the residual conditional covariance cannot be ignored.

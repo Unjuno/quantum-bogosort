@@ -18,11 +18,11 @@ Do not collapse these layers. For example, failure of the Everett bridge is not 
 
 ## Current review targets
 
-- Current frozen public-review snapshot: `release/v0.3-public-review`
+- Current frozen public-review snapshot: tag/Release `v0.3-public-review`
 - Current review/development surface: `main`
 - Snapshot ledger: `STATUS.md`
 - Current review/development status: `DEVELOPMENT_STATUS.md`
-- Previous archived snapshot: `release/v0.2-public-review`
+- Previous archived snapshot: tag/Release `v0.2-public-review`
 - Historical derivation provenance: PRs #11–#21
 
 Review current mathematics against the v0.3 snapshot or `main`. Use historical PRs only when tracing derivation provenance or earlier formulations.
@@ -66,6 +66,25 @@ Please distinguish:
 
 The repository does not treat the abstract weighted measure as a derivation of Everettian physics.
 
-## Markdown mathematics
+## Markdown mathematics and rendering
 
-All mathematical expressions in GitHub Markdown files must use double-dollar display blocks. Do not use single-dollar math, parenthesis delimiters, or bracket delimiters.
+Display mathematics in repository Markdown must use GitHub fenced `math` blocks:
+
+````text
+```math
+E_{FP}[U]-E[U]
+=
+\frac{\mathrm{Cov}(U,S)}{E[S]}.
+```
+````
+
+Do not introduce single-dollar math, `$$` display delimiters, `\(...\)`, or `\[...\]` in rendered repository prose. Literal examples of these syntaxes belong inside code spans or code fences.
+
+Before committing documentation changes, run:
+
+```bash
+python scripts/validate_markdown_math.py
+python scripts/validate_markdown_links.py
+```
+
+GitHub Actions additionally sends every repository Markdown file through GitHub's own GFM rendering API and checks that source headings, tables, and images survive rendering.

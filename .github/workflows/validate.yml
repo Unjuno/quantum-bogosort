@@ -53,6 +53,11 @@ jobs:
           test -s figures/generated_pdf/fig4_interaction_sign.pdf
           test -s figures/generated_pdf/fig5_adaptation_quality.pdf
           test -s figures/generated_pdf/fig6_branch_coherence.pdf
+      - name: Verify committed SVG reproducibility
+        run: |
+          git diff --exit-code -- \
+            figures/generated/ \
+            data/processed/fig2_fosd_theorem_illustration.csv
       - name: Validate manifest references
         run: python scripts/validate_manifest.py
 
@@ -70,8 +75,21 @@ jobs:
         run: python figures/generate_pdf_figures.py
       - name: Install LaTeX toolchain
         run: |
-          timeout 10m sudo apt-get update
-          timeout 10m sudo apt-get install -y latexmk texlive-latex-base texlive-latex-recommended texlive-fonts-recommended
+          cat > /tmp/qbs-ubuntu.list <<'EOF'
+          deb https://archive.ubuntu.com/ubuntu noble main universe
+          deb https://archive.ubuntu.com/ubuntu noble-updates main universe
+          deb https://security.ubuntu.com/ubuntu noble-security main universe
+          EOF
+          APT_OPTS=(
+            -o Dir::Etc::sourcelist=/tmp/qbs-ubuntu.list
+            -o Dir::Etc::sourceparts=-
+            -o APT::Get::List-Cleanup=0
+            -o Acquire::Retries=2
+            -o Acquire::https::Timeout=30
+          )
+          timeout 5m sudo apt-get "${APT_OPTS[@]}" update
+          timeout 10m sudo apt-get "${APT_OPTS[@]}" install -y \
+            latexmk texlive-latex-base texlive-latex-recommended texlive-fonts-recommended
       - name: Build manuscript PDF
         working-directory: paper
         run: latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex

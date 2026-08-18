@@ -1,1 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="440" viewBox="0 0 720 440"><style>text{font-family:Arial,Helvetica,sans-serif;fill:#111}.axis{stroke:#222}.grid{stroke:#bbb;stroke-width:.6;stroke-dasharray:3 4}.bar{fill:#bbb;stroke:#222}</style><text x="360" y="26" text-anchor="middle" font-size="16" font-weight="600">Recognition decomposition</text><line class="axis" x1="82" y1="55" x2="82" y2="368"/><line class="axis" x1="82" y1="368" x2="696" y2="368"/><text x="18" y="220" text-anchor="middle" font-size="12" transform="rotate(-90 18 220)">FP value difference</text><line class="grid" x1="82" y1="305" x2="696" y2="305"/><line class="grid" x1="82" y1="243" x2="696" y2="243"/><line class="grid" x1="82" y1="180" x2="696" y2="180"/><line class="grid" x1="82" y1="118" x2="696" y2="118"/><rect class="bar" x="135" y="191" width="98" height="141"/><rect class="bar" x="340" y="232" width="98" height="100"/><rect class="bar" x="545" y="91" width="98" height="241"/><text x="184" y="390" text-anchor="middle">Policy</text><text x="389" y="390" text-anchor="middle">QBS</text><text x="594" y="390" text-anchor="middle">Total</text><text x="184" y="184" text-anchor="middle">0.568</text><text x="389" y="225" text-anchor="middle">0.401</text><text x="594" y="84" text-anchor="middle">0.970</text><text x="360" y="428" text-anchor="middle" font-size="10">Paired primitive randomness; total equals policy plus QBS to numerical precision.</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="440" viewBox="0 0 720 440">
+<rect x="0" y="0" width="720" height="440" fill="white"/>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#111}.axis{stroke:#222;stroke-width:1}.grid{stroke:#bbb;stroke-width:.6;stroke-dasharray:3 4}.s1{fill:none;stroke:#111;stroke-width:2.2}.s2{fill:none;stroke:#555;stroke-width:2.2;stroke-dasharray:8 5}.s3{fill:none;stroke:#888;stroke-width:2.2;stroke-dasharray:2 4}.s4{fill:none;stroke:#111;stroke-width:2.2;stroke-dasharray:12 4 2 4}.bar{fill:#bbb;stroke:#222;stroke-width:1}</style>
+<text x="360.0" y="26" text-anchor="middle" font-size="16" font-weight="600">Recognition decomposition</text>
+<line class="axis" x1="82" y1="55" x2="82" y2="368"/>
+<line class="axis" x1="82" y1="368" x2="696" y2="368"/>
+<text x="360.0" y="402" text-anchor="middle" font-size="12"></text>
+<text x="18" y="220.0" text-anchor="middle" font-size="12" transform="rotate(-90 18 220.0)">FP value difference</text>
+<line class="grid" x1="82" y1="368.0" x2="696" y2="368.0"/>
+<text x="73" y="372.0" text-anchor="end" font-size="10">-0.15</text>
+<line class="grid" x1="82" y1="305.4" x2="696" y2="305.4"/>
+<text x="73" y="309.4" text-anchor="end" font-size="10">0.11</text>
+<line class="grid" x1="82" y1="242.8" x2="696" y2="242.8"/>
+<text x="73" y="246.8" text-anchor="end" font-size="10">0.36</text>
+<line class="grid" x1="82" y1="180.2" x2="696" y2="180.2"/>
+<text x="73" y="184.2" text-anchor="end" font-size="10">0.61</text>
+<line class="grid" x1="82" y1="117.6" x2="696" y2="117.6"/>
+<text x="73" y="121.6" text-anchor="end" font-size="10">0.86</text>
+<line class="grid" x1="82" y1="55.0" x2="696" y2="55.0"/>
+<text x="73" y="59.0" text-anchor="end" font-size="10">1.12</text>
+<rect class="bar" x="135.2" y="190.8" width="98.2" height="141.1"/>
+<text x="184.3" y="390" text-anchor="middle" font-size="10">Policy</text>
+<text x="184.3" y="183.8" text-anchor="middle" font-size="10">0.568</text>
+<rect class="bar" x="339.9" y="232.2" width="98.2" height="99.6"/>
+<text x="389.0" y="390" text-anchor="middle" font-size="10">QBS</text>
+<text x="389.0" y="225.2" text-anchor="middle" font-size="10">0.401</text>
+<rect class="bar" x="544.5" y="91.1" width="98.2" height="240.8"/>
+<text x="593.7" y="390" text-anchor="middle" font-size="10">Total</text>
+<text x="593.7" y="84.1" text-anchor="middle" font-size="10">0.970</text>
+<text x="360.0" y="428" text-anchor="middle" font-size="10">Paired primitive randomness; total equals policy plus QBS to numerical precision.</text>
+</svg>

@@ -18,7 +18,8 @@ PH = H - M["t"] - M["b"]
 def start(title):
     return [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">',
-        '<style>text{font-family:Arial,Helvetica,sans-serif;fill:#111}.axis{stroke:#222;stroke-width:1}.grid{stroke:#bbb;stroke-width:.6;stroke-dasharray:3 4}.s1{fill:none;stroke:#111;stroke-width:2.2}.s2{fill:none;stroke:#555;stroke-width:2.2;stroke-dasharray:8 5}.s3{fill:none;stroke:#888;stroke-width:2.2;stroke-dasharray:2 4}.bar{fill:#bbb;stroke:#222;stroke-width:1}</style>',
+        f'<rect x="0" y="0" width="{W}" height="{H}" fill="white"/>',
+        '<style>text{font-family:Arial,Helvetica,sans-serif;fill:#111}.axis{stroke:#222;stroke-width:1}.grid{stroke:#bbb;stroke-width:.6;stroke-dasharray:3 4}.s1{fill:none;stroke:#111;stroke-width:2.2}.s2{fill:none;stroke:#555;stroke-width:2.2;stroke-dasharray:8 5}.s3{fill:none;stroke:#888;stroke-width:2.2;stroke-dasharray:2 4}.s4{fill:none;stroke:#111;stroke-width:2.2;stroke-dasharray:12 4 2 4}.bar{fill:#bbb;stroke:#222;stroke-width:1}</style>',
         f'<text x="{W/2}" y="26" text-anchor="middle" font-size="16" font-weight="600">{escape(title)}</text>',
     ]
 
@@ -168,7 +169,7 @@ def line_chart(name, title, x, xlabel, series, ylabel, note):
 def fig5():
     d = pd.read_csv(DATA / "qbs_adaptation_total_effect_summary.csv")
     x = d.adaptation_accuracy_p.to_numpy()
-    line_chart("fig5_adaptation_quality.svg", "Adaptation quality and substitution", x, "Targeting accuracy p", [("Policy effect", d.policy_effect.to_numpy(), "s1"), ("QBS after policy", d.QBS_after.to_numpy(), "s2"), ("Interaction", d.interaction.to_numpy(), "s3"), ("Total FP effect", d.total_FP_effect.to_numpy(), "s1")], "Effect size", "Toy adaptation study: total value rises while the interaction becomes more negative.")
+    line_chart("fig5_adaptation_quality.svg", "Adaptation quality and substitution", x, "Targeting accuracy p", [("Policy effect", d.policy_effect.to_numpy(), "s1"), ("QBS after policy", d.QBS_after.to_numpy(), "s2"), ("Interaction", d.interaction.to_numpy(), "s3"), ("Total FP effect", d.total_FP_effect.to_numpy(), "s4")], "Effect size", "Toy adaptation study: total value rises while the interaction becomes more negative.")
 
 
 def fig6():

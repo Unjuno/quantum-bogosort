@@ -13,7 +13,7 @@ Read the post-v0.2 predictive-alignment line in this order:
 
 The conceptual chain is:
 
-$$
+```math
 \text{predictive signal}
 \longrightarrow
 \text{conditional-mean alignment}
@@ -21,7 +21,7 @@ $$
 \text{outcome/accessibility covariance}
 \longrightarrow
 \text{first-person shift}.
-$$
+```
 
 S2.12 and S2.13 are sufficient worst-case certificates rather than necessary conditions.
 

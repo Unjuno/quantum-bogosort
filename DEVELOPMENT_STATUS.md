@@ -43,7 +43,7 @@ Current `main` now makes the following points explicit:
 - `experiments/README.md` exposes the E1–E5 H/T/D/C/U map and visual result previews;
 - a dedicated E2 predictive-alignment figure closes the previous visualization gap;
 - committed SVGs are deterministic generator outputs, checked byte-for-byte in CI and given explicit backgrounds for dark-mode readability;
-- Markdown validation rejects malformed double-dollar display blocks whose delimiters are not on lines by themselves;
+- rendered Markdown mathematics is being standardized on fenced `math` blocks, and validation rejects unsupported math syntax;
 - manuscript LaTeX installation is routed through explicit Ubuntu archive/security sources to reduce runner-mirror failures;
 - current public headings and research-map language avoid stale development-version labels;
 - historical snapshots are represented by tags/Releases rather than release branches;
@@ -53,7 +53,7 @@ No T1–T5 theorem, E1–E5 experiment, S2-family result, or Everett-bridge stat
 
 ## Pre-announcement QA status
 
-The automated/source-level pre-announcement QA is complete through merged PR #29:
+The automated/source-level pre-announcement QA is complete through merged PR #29, with additional post-PR Markdown rendering hardening on `main`:
 
 - strict GitHub Markdown display-math structure is enforced;
 - Mermaid source is present on the landing page and experiment index;
@@ -76,7 +76,7 @@ Neither set is renumbered or replaced by the supplementary work integrated in v0
 
 The supplementary line is complete through S2.13 and is presented as one conceptual spine:
 
-$$
+```math
 \text{predictive alignment}
 \longrightarrow
 \text{general accessibility}
@@ -84,7 +84,7 @@ $$
 \text{residual penalty}
 \longrightarrow
 \text{explained-variance certificate}.
-$$
+```
 
 The principal review targets are S2, S2.11, S2.12, and S2.13. S2.3–S2.10 remain technical robustness and statistical-certification layers.
 

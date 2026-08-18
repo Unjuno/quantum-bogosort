@@ -102,7 +102,7 @@ V(\tau)
 =
 E[U_{\tau}]
 +
-\frac{\operatorname{Cov}(U_{\tau},S_{\tau})}{E[S_{\tau}]}.
+\frac{\mathrm{Cov}(U_{\tau},S_{\tau})}{E[S_{\tau}]}.
 $$
 
 ## Why earlier recognition is not automatically better

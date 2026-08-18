@@ -13,17 +13,17 @@ The experiment evaluates several base distributions and monotone soft-accessibil
 
 The theoretical benchmark is:
 
-$$
+```math
 E_{FP}[X]-E[X]
 =
 \frac{\mathrm{Cov}(X,S)}{E[S]}.
-$$
+```
 
 For FOSD, the sufficient condition is that:
 
-$$
+```math
 g(x)=E[S\mid X=x]
-$$
+```
 
 is nondecreasing.
 

@@ -9,7 +9,7 @@ The post-v0.2 S2 stack should strengthen the paper without making the main text 
 
 The intended main-text spine is:
 
-$$
+```math
 \text{recognition}
 \to
 \text{policy / trajectory}
@@ -19,17 +19,17 @@ $$
 \text{accessibility alignment}
 \to
 \text{first-person conditioning}.
-$$
+```
 
 For general accessibility the central exact identity is:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 +
 E[\mathrm{Cov}(U,S\mid Y)].
-$$
+```
 
 The statistical certification machinery should support this spine without replacing it.
 
@@ -71,27 +71,27 @@ The previous main-text derivations of S2.5–S2.9 were compressed into one parag
 
 The main section now emphasizes:
 
-$$
+```math
 m(y)=E[U\mid Y=y],
-$$
+```
 
-$$
+```math
 S=s(Y),
-$$
+```
 
 and:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(m(Y),s(Y)).
-$$
+```
 
 It retains the mutual-information boundary:
 
-$$
+```math
 I(U;Y)>0
-$$
+```
 
 does not by itself imply favorable covariance.
 
@@ -99,11 +99,11 @@ does not by itself imply favorable covariance.
 
 A dedicated main-text section now follows the adaptive-agent mechanism. It introduces:
 
-$$
+```math
 m(Y)=E[U\mid Y],
 \qquad
  a(Y)=E[S\mid Y],
-$$
+```
 
 and the exact S2.11 decomposition. It then states the compact S2.12 residual-variance penalty and the S2.13 explained-variance form.
 
@@ -149,9 +149,9 @@ Recognition remains causally effective only through trajectory and/or accessibil
 
 The main text explicitly retains:
 
-$$
+```math
 E[\mathrm{Cov}(U,S\mid Y)].
-$$
+```
 
 It is not silently set to zero outside the score-measurable special case.
 
@@ -161,11 +161,11 @@ It is not silently set to zero outside the score-measurable special case.
 
 The condition:
 
-$$
+```math
 \rho_{ma}\sqrt{A_UA_S}
 >
 \sqrt{(1-A_U)(1-A_S)}
-$$
+```
 
 is stated as sufficient, not necessary.
 

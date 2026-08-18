@@ -1,15 +1,15 @@
 # S2 Stack Semantic Preservation Audit
 
-**Status:** editorial / semantic audit  
-**Scope:** post-v0.2 stacked branches only
+**Status:** historical editorial / semantic audit  
+**Scope:** pre-v0.3 post-v0.2 stacked-branch integration history
 
-This document checks that compacting the post-v0.2 status ledgers does not erase the important claim boundaries already established in the v0.2 public-review baseline.
+This document records the semantic-preservation audit performed while the S2 family was still developed through post-v0.2 stacked branches. Those branches were later consolidated and removed. The current review/development surface is `main`; frozen v0.2 and v0.3 scientific snapshots are preserved as tags/GitHub Releases. For current status, use `DEVELOPMENT_STATUS.md`, `STATUS.md`, and `docs/research_map.md`.
 
-The baseline on `main` remains frozen at:
+At the time of this audit, the baseline on `main` was the v0.2 snapshot:
 
 `7405f7408f74fa32b16d1cc9f624070cc14624ab`
 
-Therefore this audit concerns future promotion of the stacked S2 branches, not preservation of the already-public v0.2 snapshot.
+The checks below therefore describe preservation across that historical integration step. They are retained for provenance rather than as a statement that stacked development branches still exist.
 
 ## 1. Core theorem set remains unchanged
 
@@ -256,24 +256,26 @@ Earlier exploratory designs are not silently promoted into active evidence.
 
 **Audit:** PASS.
 
-## Promotion gate
+## Historical promotion gate
 
-Before merging the post-v0.2 S2 stack into any preprint branch, verify all of the following:
+At the time of the stacked-branch integration, promotion required verifying all of the following:
 
-1. `docs/s2_stack_review_map.md` still matches the intended manuscript structure;
-2. all theorem audits remain present;
-3. `docs/everett_bridge_tests.md` remains unchanged or intentionally revised;
-4. `theory/propositions_boundaries.md` remains present;
-5. E1–E5 remain the locked core experiment set unless a deliberate versioned decision changes that policy;
-6. all statistical failure-is-inconclusive language remains present;
-7. the S2.11 residual term is not dropped in the general-accessibility presentation;
-8. S2.12/S2.13 are still labeled sufficient worst-case certificates;
-9. manuscript and Markdown CI remain green.
+1. `docs/s2_stack_review_map.md` still matched the intended manuscript structure;
+2. all theorem audits remained present;
+3. `docs/everett_bridge_tests.md` remained unchanged or intentionally revised;
+4. `theory/propositions_boundaries.md` remained present;
+5. E1–E5 remained the locked core experiment set unless a deliberate versioned decision changed that policy;
+6. all statistical failure-is-inconclusive language remained present;
+7. the S2.11 residual term was not dropped in the general-accessibility presentation;
+8. S2.12/S2.13 remained labeled sufficient worst-case certificates;
+9. manuscript and Markdown CI remained green.
+
+Those branch-integration steps are historical. Current publication/review gates are tracked in `ROADMAP.md`.
 
 ## ERROR CHECK
 
 1. This is a semantic preservation audit, not an additional theorem.
-2. The frozen `main` baseline is unaffected by post-v0.2 ledger compaction.
+2. The v0.2 `main` baseline statement is explicitly historical rather than a description of current `main`.
 3. This audit identifies authoritative source files rather than duplicating every proof.
 4. It explicitly preserves both mathematical and interpretation boundaries.
-5. It should be rerun conceptually before a future stacked-PR consolidation or preprint merge.
+5. Current branch/archive state is delegated to `DEVELOPMENT_STATUS.md`; this file preserves the historical integration audit.

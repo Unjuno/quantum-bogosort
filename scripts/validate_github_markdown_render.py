@@ -18,14 +18,14 @@ ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY = os.environ.get("GITHUB_REPOSITORY", "Unjuno/quantum-bogosort")
 TOKEN = os.environ.get("GITHUB_TOKEN", "")
 API_URL = "https://api.github.com/markdown"
-API_VERSION = "2022-11-28"
+API_VERSION = "2026-03-10"
 
 HEADING_RE = re.compile(r"^\s{0,3}#{1,6}\s+\S")
 TABLE_SEPARATOR_RE = re.compile(
     r"^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*$"
 )
 IMAGE_RE = re.compile(r"!\[[^\]]*\]\([^)]+\)")
-FENCE_RE = re.compile(r"^\s*(`{3,}|~{3,})([^`]*)$")
+FENCE_RE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
 
 
 class RenderedStructure(HTMLParser):
@@ -53,16 +53,16 @@ def source_structure(text: str) -> tuple[int, int, int]:
     fence_len = 0
 
     for line in text.splitlines():
-        stripped = line.lstrip()
         match = FENCE_RE.match(line)
         if match:
             marker = match.group(1)
+            trailer = match.group(2).strip()
             char = marker[0]
             if fence_char is None:
                 fence_char = char
                 fence_len = len(marker)
                 continue
-            if char == fence_char and len(marker) >= fence_len:
+            if char == fence_char and len(marker) >= fence_len and not trailer:
                 fence_char = None
                 fence_len = 0
                 continue
@@ -92,9 +92,9 @@ def render_with_github(text: str) -> str:
     if TOKEN:
         headers["Authorization"] = f"Bearer {TOKEN}"
 
-    request = Request(API_URL, data=payload, headers=headers, method="POST")
     last_error: Exception | None = None
     for attempt in range(3):
+        request = Request(API_URL, data=payload, headers=headers, method="POST")
         try:
             with urlopen(request, timeout=30) as response:
                 if response.status != 200:

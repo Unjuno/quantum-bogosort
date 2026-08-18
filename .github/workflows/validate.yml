@@ -34,7 +34,7 @@ jobs:
           python experiments/exp3_recognition_decomposition.py
           python experiments/exp4_interaction.py
           python experiments/exp5_branch_map.py
-      - name: Regenerate publication figures
+      - name: Regenerate repository figures
         run: |
           python figures/generate_figures.py
           python figures/generate_pdf_figures.py
@@ -46,6 +46,7 @@ jobs:
           test -s figures/generated/fig4_interaction_sign.svg
           test -s figures/generated/fig5_adaptation_quality.svg
           test -s figures/generated/fig6_branch_coherence.svg
+          test -s figures/generated/fig7_predictive_alignment.svg
           test -s figures/generated_pdf/fig1_framework.pdf
           test -s figures/generated_pdf/fig2_fosd.pdf
           test -s figures/generated_pdf/fig3_recognition_decomposition.pdf

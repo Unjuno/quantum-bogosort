@@ -12,9 +12,9 @@ The adaptive-agent mechanism should not rely on an externally inserted score/out
 
 The exact question is: under what conditions does a predictive internal signal imply
 
-$$
+```math
 \mathrm{Cov}(U_T,S_t)\ge 0?
-$$
+```
 
 The relevant notion of prediction is **conditional-mean prediction**, not mutual information by itself.
 
@@ -22,58 +22,58 @@ The relevant notion of prediction is **conditional-mean prediction**, not mutual
 
 Let `U` be integrable, let `Y` be a scalar signal, and let:
 
-$$
+```math
 m(Y)=E[U\mid Y].
-$$
+```
 
 Let accessibility be score-measurable:
 
-$$
+```math
 S=s(Y)\ge 0,
-$$
+```
 
 with:
 
-$$
+```math
 0<E[S]<\infty,
 \qquad
 E[|U|S]<\infty.
-$$
+```
 
 Then the following projection identity is exact:
 
-$$
+```math
 \boxed{
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(m(Y),s(Y))
 }.
-$$
+```
 
 If versions of `m(y)` and `s(y)` are both nondecreasing on the support of `Y`, then:
 
-$$
+```math
 \boxed{
 \mathrm{Cov}(U,S)\ge 0
 }.
-$$
+```
 
 Let `Y'` be an independent copy of `Y`. The inequality is strict whenever:
 
-$$
+```math
 P\!\left(
 [m(Y)-m(Y')][s(Y)-s(Y')]>0
 \right)>0.
-$$
+```
 
 Therefore, under the weighted first-person value model:
 
-$$
+```math
 E_{FP}[U]-E[U]
 =
 \frac{\mathrm{Cov}(U,S)}{E[S]}
 \ge 0,
-$$
+```
 
 with strict uplift under the strictness condition above.
 
@@ -81,10 +81,10 @@ with strict uplift under the strictness condition above.
 
 The scalar-score monotonicity assumption can be replaced by the more general pairwise condition:
 
-$$
+```math
 [m(Y)-m(Y')][s(Y)-s(Y')]\ge0
 \quad\text{almost surely}.
-$$
+```
 
 Thus the theorem is fundamentally a comonotonicity result between conditional expected outcome and accessibility.
 
@@ -92,21 +92,21 @@ Thus the theorem is fundamentally a comonotonicity result between conditional ex
 
 If:
 
-$$
+```math
 S=r(m(Y))
-$$
+```
 
 for a nondecreasing measurable function `r`, then:
 
-$$
+```math
 \mathrm{Cov}(U,S)\ge0.
-$$
+```
 
 If `m(Y)` is nonconstant with positive probability and `r` is strictly increasing on its essential range, then:
 
-$$
+```math
 \mathrm{Cov}(U,S)>0.
-$$
+```
 
 This form does not require the raw score `Y` itself to have a globally meaningful scale; only the predicted conditional value must be ordered consistently with accessibility.
 
@@ -114,41 +114,41 @@ This form does not require the raw score `Y` itself to have a globally meaningfu
 
 Let `B` denote an internal information state and suppose the evaluation score is the posterior-mean forecast:
 
-$$
+```math
 Y=E[U\mid B].
-$$
+```
 
 Because `Y` is measurable with respect to `B`, the tower property gives:
 
-$$
+```math
 E[U\mid Y]
 =
 E[E[U\mid B]\mid Y]
 =
 E[Y\mid Y]
 =Y.
-$$
+```
 
 Therefore the conditional-mean calibration premise of S2 holds **exactly**:
 
-$$
+```math
 m(Y)=Y.
-$$
+```
 
 Hence, for every nondecreasing score-measurable accessibility map `S=s(Y)`:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(Y,s(Y))
 \ge0.
-$$
+```
 
 If `Y` is nonconstant and `s` is strictly increasing on the essential range of `Y`, then:
 
-$$
+```math
 \mathrm{Cov}(U,S)>0.
-$$
+```
 
 This corollary converts a standard posterior-mean prediction target into the directional calibration condition required by S2. It still does not prove that a learned finite model exactly equals the true posterior mean.
 
@@ -156,31 +156,31 @@ This corollary converts a standard posterior-mean prediction target into the dir
 
 Assume `U`, `Y`, and `S=s(Y)` are square-integrable and define calibration error:
 
-$$
+```math
 e(Y)=E[U\mid Y]-Y.
-$$
+```
 
 Then:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(Y,S)
 +
 \mathrm{Cov}(e(Y),S).
-$$
+```
 
 By Cauchy--Schwarz:
 
-$$
+```math
 |\mathrm{Cov}(e(Y),S)|
 \le
 \sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}.
-$$
+```
 
 Therefore:
 
-$$
+```math
 \boxed{
 \mathrm{Cov}(U,S)
 \ge
@@ -188,15 +188,15 @@ $$
 -
 \sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}
 }.
-$$
+```
 
 A sufficient robustness condition for positive covariance is:
 
-$$
+```math
 \mathrm{Cov}(Y,S)
 >
 \sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}.
-$$
+```
 
 This gives a direct quantitative target for learned agents: a positively ordered score can tolerate calibration error up to the point where the worst-case covariance perturbation exceeds the score/accessibility alignment margin.
 
@@ -204,31 +204,31 @@ This gives a direct quantitative target for learned agents: a positively ordered
 
 The calibration error in S2.3 can be upper-bounded by ordinary prediction mean-squared error. Because:
 
-$$
+```math
 e(Y)
 =
 E[U-Y\mid Y],
-$$
+```
 
 conditional Jensen gives:
 
-$$
+```math
 E[e(Y)^2]
 \le
 E[(U-Y)^2].
-$$
+```
 
 Since:
 
-$$
+```math
 \mathrm{Var}(e(Y))
 \le
 E[e(Y)^2],
-$$
+```
 
 S2.3 implies the observable/conservative bound:
 
-$$
+```math
 \boxed{
 \mathrm{Cov}(U,S)
 \ge
@@ -236,27 +236,27 @@ $$
 -
 \sqrt{E[(U-Y)^2]\mathrm{Var}(S)}
 }.
-$$
+```
 
 Therefore:
 
-$$
+```math
 \mathrm{Cov}(Y,S)
 >
 \sqrt{E[(U-Y)^2]\mathrm{Var}(S)}
-$$
+```
 
 is sufficient for positive outcome/accessibility covariance.
 
 The underlying prediction MSE decomposes exactly as:
 
-$$
+```math
 E[(U-Y)^2]
 =
 E[\mathrm{Var}(U\mid Y)]
 +
 E[e(Y)^2].
-$$
+```
 
 Hence the S2.4 certificate is intentionally conservative: ordinary prediction MSE includes irreducible conditional outcome noise in addition to calibration error. S2.3 is sharper when conditional-mean calibration error can be estimated directly.
 
@@ -264,47 +264,47 @@ Hence the S2.4 certificate is intentionally conservative: ordinary prediction MS
 
 Because `S=s(Y)` is measurable with respect to `Y`, the tower property gives:
 
-$$
+```math
 E[US]
 =
 E\!\left[E[U\mid Y]S\right]
 =
 E[m(Y)s(Y)].
-$$
+```
 
 Also:
 
-$$
+```math
 E[U]
 =
 E[m(Y)].
-$$
+```
 
 Hence:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 E[m(Y)s(Y)]-E[m(Y)]E[s(Y)]
 =
 \mathrm{Cov}(m(Y),s(Y)).
-$$
+```
 
 Now let `Y'` be an independent copy of `Y`. For integrable random variables of the required products:
 
-$$
+```math
 2\mathrm{Cov}(m(Y),s(Y))
 =
 E\!\left[
 (m(Y)-m(Y'))(s(Y)-s(Y'))
 \right].
-$$
+```
 
 If `m` and `s` are both nondecreasing, every integrand is nonnegative. Therefore:
 
-$$
+```math
 \mathrm{Cov}(U,S)\ge0.
-$$
+```
 
 If the pairwise product is strictly positive on a positive-probability event, the expectation is strictly positive.
 
@@ -312,19 +312,19 @@ If the pairwise product is strictly positive on a positive-probability event, th
 
 For `U` in `L^2`, define:
 
-$$
+```math
 M(U;Y)
 =
 \mathrm{Var}(E[U\mid Y]).
-$$
+```
 
 This quantity is zero exactly when the signal does not change the conditional mean of `U` almost surely. When `\mathrm{Var}(U)>0`, the normalized correlation-ratio form is:
 
-$$
+```math
 \eta^2(U\mid Y)
 =
 \frac{\mathrm{Var}(E[U\mid Y])}{\mathrm{Var}(U)}.
-$$
+```
 
 A positive value of `M(U;Y)` or `\eta^2(U\mid Y)` supplies the nondegeneracy needed for strict uplift when accessibility is a strictly increasing function of predicted value.
 
@@ -336,41 +336,41 @@ Positive mutual information alone does **not** imply positive outcome/accessibil
 
 Let:
 
-$$
+```math
 P(Y=0)=P(Y=1)=\frac12.
-$$
+```
 
 Conditional on `Y=0`, let `U` be `+1` or `-1` with equal probability. Conditional on `Y=1`, let `U` be `+2` or `-2` with equal probability. Then `|U|` identifies `Y`, so:
 
-$$
+```math
 I(U;Y)>0.
-$$
+```
 
 But:
 
-$$
+```math
 E[U\mid Y=0]=E[U\mid Y=1]=0.
-$$
+```
 
 Therefore:
 
-$$
+```math
 m(Y)=0
-$$
+```
 
 almost surely, and for **every** accessibility map of the form `S=s(Y)`:
 
-$$
+```math
 \mathrm{Cov}(U,S)=0.
-$$
+```
 
 Thus the chain
 
-$$
+```math
 I(Y;U)>0
 \Longrightarrow
 \mathrm{Cov}(U,S)>0
-$$
+```
 
 is false without an additional directional conditional-mean calibration assumption.
 
@@ -378,7 +378,7 @@ is false without an additional directional conditional-mean calibration assumpti
 
 The cleanest sufficient chain is now:
 
-$$
+```math
 \text{internal information }B_t
 \longrightarrow
 Y_t=E[U_T\mid B_t]
@@ -388,7 +388,7 @@ E[U_T\mid Y_t]=Y_t
 S_t=s(Y_t)\text{ monotone}
 \longrightarrow
 \mathrm{Cov}(U_T,S_t)\ge0.
-$$
+```
 
 For an approximate learned predictor, S2.3 quantifies calibration-error tolerance. S2.4 supplies a more conservative certificate using only ordinary prediction MSE and `Var(S)`.
 

@@ -36,7 +36,7 @@ The S2 family is supplementary and must not silently renumber or replace T1–T5
 The repository does not claim:
 
 $$
-\operatorname{Cov}(U,S)>0
+\mathrm{Cov}(U,S)>0
 \Longrightarrow
 U_{FP}\succeq_{\mathrm{FOSD}}U.
 $$
@@ -143,7 +143,7 @@ $$
 does not imply:
 
 $$
-\operatorname{Cov}(U,S)>0.
+\mathrm{Cov}(U,S)>0.
 $$
 
 A signal may change conditional variance while leaving:
@@ -168,7 +168,7 @@ For every sufficient finite-sample certificate in S2.5–S2.10, a nonpositive lo
 It does not imply:
 
 $$
-\operatorname{Cov}(U,S)\le0.
+\mathrm{Cov}(U,S)\le0.
 $$
 
 **Audit:** PASS.
@@ -210,7 +210,7 @@ $$
 S2.11 retains the residual term:
 
 $$
-E[\operatorname{Cov}(U,S\mid Y)].
+E[\mathrm{Cov}(U,S\mid Y)].
 $$
 
 It is not silently set to zero.

@@ -16,9 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Cancel stale PR validation run
+      - name: Force-cancel stale PR validation run
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/32154770506/cancel"
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/32154770506/force-cancel"

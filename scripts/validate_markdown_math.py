@@ -5,7 +5,21 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 ROOT_README = ROOT / "README.md"
+UNSUPPORTED_MATH_MACROS = {
+    r"\operatorname": r"use a GitHub-safe roman form such as \mathrm{Cov}",
+}
 errors = []
+
+
+def check_unsupported_math_macros(path: Path, line_no: int, line: str) -> None:
+    """Reject macros known to fail in GitHub's rendered math context."""
+    for macro, replacement_hint in UNSUPPORTED_MATH_MACROS.items():
+        if macro in line:
+            errors.append(
+                f"{path.relative_to(ROOT)}:{line_no}: GitHub-disallowed math macro "
+                f"{macro}; {replacement_hint}"
+            )
+
 
 for path in ROOT.rglob("*.md"):
     if ".git" in path.parts:
@@ -42,12 +56,14 @@ for path in ROOT.rglob("*.md"):
                 math_fence_has_content = False
                 continue
 
-            if fence_kind == "math" and stripped:
-                math_fence_has_content = True
+            if fence_kind == "math":
+                if stripped:
+                    math_fence_has_content = True
+                check_unsupported_math_macros(path, line_no, line)
             continue
 
-        # GitHub officially supports ```math fenced display blocks. Treat them as
-        # first-class math syntax rather than ordinary code fences.
+        # GitHub supports ```math fenced display blocks. Treat them as first-class
+        # math syntax rather than ordinary code fences.
         if stripped == "```math":
             in_fence = True
             fence_marker = "```"
@@ -72,8 +88,7 @@ for path in ROOT.rglob("*.md"):
             )
 
         if "$$" in line:
-            # The public landing page uses fenced math blocks because this form has
-            # been verified against the rendered GitHub UI. Do not regress it to
+            # The public landing page uses fenced math blocks. Do not regress it to
             # double-dollar blocks even though GitHub also documents that syntax.
             if path == ROOT_README:
                 errors.append(
@@ -87,6 +102,10 @@ for path in ROOT.rglob("*.md"):
                 )
                 continue
             in_dollar_math = not in_dollar_math
+            continue
+
+        if in_dollar_math:
+            check_unsupported_math_macros(path, line_no, line)
 
     if in_fence:
         kind = "math" if fence_kind == "math" else "code"
@@ -105,5 +124,5 @@ if errors:
 
 print(
     "Markdown math validation passed: root README uses fenced GitHub math blocks; "
-    "other display delimiters/fences are balanced and structurally valid."
+    "display blocks are balanced; unsupported GitHub math macros are absent."
 )

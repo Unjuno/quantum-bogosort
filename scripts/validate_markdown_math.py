@@ -9,6 +9,7 @@ UNSUPPORTED_MATH_MACROS = {
     r"\operatorname": r"use a GitHub-safe roman form such as \mathrm{Cov}",
 }
 LEGACY_MATH_DELIMITERS = (r"\(", r"\)", r"\[", r"\]")
+FENCE_RE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
 errors = []
 
 
@@ -23,12 +24,17 @@ def check_unsupported_math_macros(path: Path, line_no: int, line: str) -> None:
 
 
 def strip_inline_code_spans(line: str) -> str:
-    """Remove inline code before checking prose for math delimiters.
-
-    Literal documentation such as `$$` or `\operatorname` must not be treated as
-    rendered mathematics. Fenced code is handled separately by the main parser.
-    """
+    """Remove inline code before checking prose for math delimiters."""
     return re.sub(r"(`+)(.*?)\1", "", line)
+
+
+def closes_fence(stripped: str, marker: str) -> bool:
+    """Return whether a line closes the currently open CommonMark fence."""
+    if not stripped or stripped[0] != marker[0]:
+        return False
+    if set(stripped) != {marker[0]}:
+        return False
+    return len(stripped) >= len(marker)
 
 
 for path in ROOT.rglob("*.md"):
@@ -37,23 +43,21 @@ for path in ROOT.rglob("*.md"):
 
     text = path.read_text(encoding="utf-8")
 
-    in_fence = False
-    fence_marker = None
-    fence_kind = None
-    fence_start = None
+    fence_marker: str | None = None
+    fence_kind: str | None = None
+    fence_start: int | None = None
     math_fence_has_content = False
     math_fence_count = 0
 
     for line_no, line in enumerate(text.splitlines(), start=1):
         stripped = line.strip()
 
-        if in_fence:
-            if stripped == fence_marker:
+        if fence_marker is not None:
+            if closes_fence(stripped, fence_marker):
                 if fence_kind == "math" and not math_fence_has_content:
                     errors.append(
                         f"{path.relative_to(ROOT)}:{fence_start}: empty fenced math block"
                     )
-                in_fence = False
                 fence_marker = None
                 fence_kind = None
                 fence_start = None
@@ -66,22 +70,16 @@ for path in ROOT.rglob("*.md"):
                 check_unsupported_math_macros(path, line_no, line)
             continue
 
-        # Repository display mathematics uses GitHub fenced math blocks uniformly.
-        if stripped == "```math":
-            in_fence = True
-            fence_marker = "```"
-            fence_kind = "math"
+        fence_match = FENCE_RE.match(line)
+        if fence_match:
+            marker = fence_match.group(1)
+            info = fence_match.group(2).strip()
+            fence_marker = marker
+            fence_kind = "math" if info == "math" else "code"
             fence_start = line_no
             math_fence_has_content = False
-            math_fence_count += 1
-            continue
-
-        # Ignore literal examples and program code inside non-math fences.
-        if stripped.startswith("```") or stripped.startswith("~~~"):
-            in_fence = True
-            fence_marker = stripped[:3]
-            fence_kind = "code"
-            fence_start = line_no
+            if fence_kind == "math":
+                math_fence_count += 1
             continue
 
         rendered_line = strip_inline_code_spans(line)
@@ -108,7 +106,7 @@ for path in ROOT.rglob("*.md"):
                 "instead of $$ display delimiters"
             )
 
-    if in_fence:
+    if fence_marker is not None:
         kind = "math" if fence_kind == "math" else "code"
         errors.append(
             f"{path.relative_to(ROOT)}:{fence_start}: unclosed fenced {kind} block"

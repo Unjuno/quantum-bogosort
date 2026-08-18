@@ -38,6 +38,8 @@ R
 (U_R,S_R).
 $$
 
+In the self-referential QBS case, `R=1` may represent recognition of a QBS-type rule itself. Recognition has no privileged causal power in the formal model: it matters only through any policy change it induces and the resulting changes in `U_R` and/or `S_R`. If recognition changes neither quantity, the recognition-label null applies.
+
 ## First-person measure and value
 
 For nonnegative accessibility with positive finite mean:

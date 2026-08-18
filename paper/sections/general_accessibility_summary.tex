@@ -1,12 +1,12 @@
 \section{General Accessibility Beyond Score-Measurability}
 
-The clean S2 result assumes that accessibility is a deterministic function of the predictive score. That assumption is useful for isolating the basic mechanism, but it is stronger than necessary. Let
+The clean S2 result assumes that accessibility is a deterministic function of the predictive score. That assumption is useful for isolating the basic mechanism, but it is stronger than necessary. For the general result in this section, assume $U$ and $S$ are square-integrable, with $S\ge0$ and $0<\mathbb E[S]<\infty$. Let
 \[
 m(Y)=\mathbb E[U\mid Y],
 \qquad
 a(Y)=\mathbb E[S\mid Y].
 \]
-For a general nonnegative accessibility variable $S$, the exact law of total covariance gives
+The exact law of total covariance gives
 \[
 \operatorname{Cov}(U,S)
 =
@@ -37,7 +37,13 @@ we obtain
 \]
 The Appendix proves that this worst-case residual penalty is sharp without additional structure.
 
-For interpretation, define the fractions of total outcome and accessibility variance explained by their conditional means,
+For the normalized explained-variance interpretation, additionally assume
+\[
+\operatorname{Var}(U)>0,
+\qquad
+\operatorname{Var}(S)>0.
+\]
+Define the fractions of total outcome and accessibility variance explained by their conditional means,
 \[
 A_U
 =
@@ -47,7 +53,7 @@ A_S
 =
 \frac{\operatorname{Var}(a(Y))}{\operatorname{Var}(S)}.
 \]
-When both are positive, define
+When both explained fractions are positive, define
 \[
 \rho_{ma}
 =
@@ -70,7 +76,7 @@ Hence the sufficient condition
 >
 \sqrt{(1-A_U)(1-A_S)}
 \]
-guarantees positive outcome--accessibility covariance. Under perfectly aligned conditional means, $\rho_{ma}=1$, this simplifies to
+guarantees positive outcome--accessibility covariance. The right-hand side is nonnegative, so this worst-case certificate necessarily requires positive conditional-mean correlation. Under perfectly aligned conditional means, $\rho_{ma}=1$, it simplifies to
 \[
 A_U+A_S>1.
 \]

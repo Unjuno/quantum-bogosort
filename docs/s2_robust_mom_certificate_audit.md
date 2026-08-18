@@ -23,7 +23,7 @@ $$
 The theorem assumes explicit finite variance bounds:
 
 $$
-\operatorname{Var}(Z_j)\le v_j.
+\mathrm{Var}(Z_j)\le v_j.
 $$
 
 ## T — proof audit
@@ -33,7 +33,7 @@ $$
 For a block of size `m`:
 
 $$
-\operatorname{Var}(\bar Z_{j,r})
+\mathrm{Var}(\bar Z_{j,r})
 \le
 \frac{v_j}{m}.
 $$
@@ -102,7 +102,7 @@ No independence across the five target variables is required.
 The five robust intervals provide exactly the S2.8 inputs. Therefore:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 D_{\mathrm{MoM}}
 $$
@@ -142,7 +142,7 @@ S2.10 does **not** require only raw-variable finite variance. It requires finite
 In particular:
 
 $$
-\operatorname{Var}(S^2)<\infty
+\mathrm{Var}(S^2)<\infty
 $$
 
 requires:
@@ -154,7 +154,7 @@ $$
 Also:
 
 $$
-\operatorname{Var}((U-Y)^2)<\infty
+\mathrm{Var}((U-Y)^2)<\infty
 $$
 
 requires:
@@ -166,7 +166,7 @@ $$
 and:
 
 $$
-\operatorname{Var}(YS)<\infty
+\mathrm{Var}(YS)<\infty
 $$
 
 requires:

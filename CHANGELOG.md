@@ -27,22 +27,34 @@
   $$
   A_U+A_S>1;
   $$
-- the symmetric explained-variance threshold
+- the symmetric explained-variance threshold in its valid positive-alignment regime
   $$
   A>
   \frac{1}{1+\rho_{ma}};
   $$
-- sharp residual-variance and explained-variance theorem audits;
+- `docs/s2_stack_review_map.md` for dependency, manuscript-placement, and theorem-expansion stop rules;
+- `docs/s2_stack_semantic_audit.md` for preservation of theorem and interpretation boundaries;
+- `docs/post_v02_manuscript_compression_audit.md` for H/T/D/C/U review of the compressed manuscript structure;
+- `docs/post_v02_core_s2_proof_review.md` for a dedicated proof-review pass over S2, S2.11, S2.12, and S2.13;
+- `literature/post_v02_targeted_prior_art.md` for a narrow direct-overlap search after the general-accessibility development;
+- Garisto, Lewis, and Khawaja in the Related Work / Everett-bridge boundary literature;
 - bounded, generic-envelope, light-tail, median-of-means, residual, and explained-variance covariance lower certificates.
 
 ### Changed
 
-- the adaptive-agent mechanism now separates score-level predictive alignment from residual branch-level outcome/accessibility dependence;
+- the main manuscript is compressed around the conceptual S2 → S2.11 → S2.13 spine rather than presenting all S2 statistical layers with equal prominence;
+- detailed S2.3–S2.10 validation machinery is Appendix-first; the standalone robust-MoM summary is no longer part of the main-text sequence;
+- Abstract, Introduction, Limitations, Discussion, Related Work, and the manuscript README are synchronized to the general-accessibility / residual-dependence framing;
 - S2 is explicitly identified as the zero-residual special case of S2.11 when `S` is `Y`-measurable;
+- S2.11 now uses explicit square-integrability assumptions so every covariance and residual term is unambiguously finite;
+- the S2.11 negative-residual counterexample now uses bounded Rademacher residuals and strictly positive accessibility;
+- the S2.12 sharpness construction now uses bounded Rademacher residuals, proving equality in the worst-case conditional Cauchy--Schwarz bound while preserving positive accessibility;
+- the S2.13 symmetric divided threshold now states that division requires `rho_ma>-1` and that a feasible strict certificate under `0<A<=1` requires `rho_ma>0`;
 - S2.12 replaces an abstract residual `epsilon` by a conservative variance-based penalty;
 - S2.13 expresses that penalty through explained fractions `A_U`, `A_S` and conditional-mean correlation `rho_ma`;
 - S2.13 explicitly remains a sufficient worst-case certificate rather than a necessary condition;
-- the statistical certification layer remains separated from the QBS covariance-composition layer through S2.8;
+- observer-selection and Everett self-location prior art is expanded to make the physical bridge and novelty boundary more conservative;
+- future S2 theorem/statistical expansion is deferred by default unless review identifies a specific need;
 - uncorrected model search, post-hoc candidate invention, invalid tail/variance inputs, and ignored residual dependence remain outside the stated guarantees;
 - no sixth core experiment is introduced by the S2 theorem stack;
 - the core five theorem set remains unchanged.

@@ -14,7 +14,17 @@ This file records the current review and development state. It complements the f
 - future work: [`ROADMAP.md`](ROADMAP.md);
 - archived v0.2 snapshot: `release/v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
 
-PRs #11–#20 preserve the staged derivation history. PR #21 preserves the cumulative integration history. Current authoritative statements are the files in the v0.3 snapshot and on `main`.
+PRs #11–#20 preserve the staged derivation history. PR #21 preserves the cumulative integration history. PRs #27–#29 preserve the pre-announcement rendering, visualization, reproducibility, and final landing-page QA history. Current authoritative statements are the files in the v0.3 snapshot and on `main`.
+
+## Branch state
+
+The repository currently keeps only three branches:
+
+- `main` — current review/development surface;
+- `release/v0.3-public-review` — frozen v0.3 scientific snapshot;
+- `release/v0.2-public-review` — archived v0.2 scientific snapshot.
+
+The two `release/*` branches are intentional immutable review snapshots, not unmerged development work. Merged/superseded `agent/*` branches have been removed. There are no active development branches outside `main`.
 
 ## Post-snapshot `main` clarifications
 
@@ -26,26 +36,30 @@ Current `main` now makes the following points explicit:
 - future accessibility can reweight present self-location under the same first-person change of measure;
 - this present-self-location statement is conditioning/change of measure, not backward causation or objective-probability modification;
 - a favorable present self-location shift additionally requires alignment between expected future accessibility and the relevant favorability/utility statistic;
-- the root README includes a Mermaid dependency diagram and direct previews of the committed theorem/simulation SVG figures;
-- `experiments/README.md` now exposes the E1–E5 H/T/D/C/U map and visual result previews;
-- Markdown validation now rejects malformed double-dollar display blocks whose delimiters are not on lines by themselves;
+- the root README states the self-referential motivating question, includes a Mermaid dependency diagram, and exposes direct previews for every locked experiment family E1–E5;
+- `experiments/README.md` exposes the E1–E5 H/T/D/C/U map and visual result previews;
+- a dedicated E2 predictive-alignment figure closes the previous visualization gap;
+- committed SVGs are deterministic generator outputs, checked byte-for-byte in CI and given explicit backgrounds for dark-mode readability;
+- Markdown validation rejects malformed double-dollar display blocks whose delimiters are not on lines by themselves;
+- manuscript LaTeX installation is routed through explicit Ubuntu archive/security sources to reduce runner-mirror failures;
 - current public headings and research-map language avoid stale development-version labels;
 - merged/superseded development branches have been removed while frozen release branches remain preserved;
 - CI uses concurrency cancellation and runtime limits to prevent indefinitely stalled validation jobs.
 
 No T1–T5 theorem, E1–E5 experiment, S2-family result, or Everett-bridge status is changed by these post-snapshot clarifications.
 
-## Broad-announcement readiness
+## Pre-announcement QA status
 
-The repository is **not yet marked ready for broad announcement**. The remaining presentation gate is a direct GitHub-UI visual pass after the current README/figure changes, including:
+The automated/source-level pre-announcement QA is complete through merged PR #29:
 
-1. display-math rendering;
-2. Mermaid rendering;
-3. SVG visibility and sizing;
-4. desktop/mobile readability;
-5. confirmation of the latest `main` validation run.
+- strict GitHub Markdown display-math structure is enforced;
+- Mermaid source is present on the landing page and experiment index;
+- every locked experiment family E1–E5 has a direct SVG review route;
+- visual results link back to their experiment cards and provenance;
+- committed SVGs are deterministically reproducible;
+- manuscript PDF validation passed on the merged visual-QA line.
 
-These are presentation/reproducibility checks, not new-theory requirements.
+The repository is **not yet marked ready for broad announcement** because one presentation gate remains intentionally human-facing: directly inspect the rendered GitHub UI on desktop/mobile and confirm display math, Mermaid rendering, SVG sizing/readability, and overall landing-page flow. This is a presentation check, not a new-theory requirement.
 
 ## Locked core
 
@@ -83,7 +97,7 @@ The corrections concern explicit square-integrability assumptions, bounded posit
 
 ## Computational status
 
-E1–E5 remain locked and reproducible under GitHub Actions. CI also validates Markdown math delimiters, repository-relative Markdown links, repository structure, manifest references, figure generation, manuscript build, and PDF output.
+E1–E5 remain locked and reproducible under GitHub Actions. CI validates Markdown math structure, repository-relative Markdown links, repository structure, E1–E5 reproduction, deterministic committed SVG regeneration, manifest references, manuscript build, and PDF output.
 
 No sixth core experiment is planned by default.
 
@@ -103,7 +117,7 @@ The repository does not claim that an external random-number generator becomes o
 
 Work should now prioritize:
 
-1. complete the broad-announcement visual QA gate;
+1. direct human GitHub-UI visual inspection before broad announcement;
 2. external/public proof review of S2, S2.11, S2.12, and S2.13;
 3. prior-art and novelty review of the combined recognition-dependent architecture;
 4. manuscript claim consistency and compression;

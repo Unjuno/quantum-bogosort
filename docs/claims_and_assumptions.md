@@ -48,6 +48,28 @@ I
 \left[Q(U_1,S_1)-Q(U_1,S_0)\right].
 $$
 
+## Present self-location under future accessibility
+
+Let `Z` denote a present state or present trajectory descriptor and let `S_T` denote accessibility determined over its future continuation. Restricting the same normalized weighted measure to the present state gives:
+
+$$
+P_{FP}(Z\in A)
+=
+\frac{E[\mathbf 1_{\{Z\in A\}}S_T]}{E[S_T]}.
+$$
+
+For a discrete present state:
+
+$$
+P_{FP}(Z=z)
+=
+\frac{E[S_T\mid Z=z]P(Z=z)}{E[S_T]}.
+$$
+
+This is an exact change-of-measure consequence once the weighted first-person measure is adopted. It means that differential expected future accessibility can reweight present self-location. It does **not** imply backward causation or a causal change in the base law of `Z`.
+
+A favorable or upward self-location shift requires an additional alignment between the relevant favorability/utility statistic and expected future accessibility. Future accessibility that varies across present states is sufficient for reweighting, but not by itself for a favorable direction.
+
 ## S2 predictive-alignment family
 
 For:
@@ -294,6 +316,8 @@ This is not derived from unitary quantum mechanics, decoherence, observer dynami
 The repository does **not** claim that:
 
 - an external RNG becomes objectively biased toward favorable outcomes;
+- future accessibility by itself guarantees a favorable present self-location shift without an alignment between accessibility and the relevant favorability/utility statistic;
+- the present-self-location identity implies backward causation;
 - the weighting identities establish quantum immortality;
 - every recognition-dependent policy is beneficial;
 - positive correlation alone implies FOSD;
@@ -311,6 +335,7 @@ The repository does **not** claim that:
 ## Failure conditions
 
 - outcome/accessibility independence gives zero pure weighting uplift in expectation;
+- constant expected future accessibility across present states gives no present self-location reweighting from future accessibility;
 - nonmonotone conditional accessibility can break FOSD;
 - dependence without conditional-mean prediction can defeat S2;
 - a sufficiently negative S2.11 residual term can overturn score-level alignment;

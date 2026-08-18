@@ -86,8 +86,9 @@ def check_math_structure(path: Path, start_line: int, lines: list[str]) -> None:
             + ", ".join(env_stack)
         )
 
-    left_count = len(re.findall(r"\\left(?=\\|\.|\s|\(|\[|\{)", text))
-    right_count = len(re.findall(r"\\right(?=\\|\.|\s|\)|\]|\})", text))
+    # Count common MathJax delimiters, including raw vertical bars such as \left|x\right|.
+    left_count = len(re.findall(r"\\left(?=\\|\.|\s|\(|\[|\{|\|)", text))
+    right_count = len(re.findall(r"\\right(?=\\|\.|\s|\)|\]|\}|\|)", text))
     if left_count != right_count:
         errors.append(
             f"{path.relative_to(ROOT)}:{start_line}: \\left/\\right count mismatch "

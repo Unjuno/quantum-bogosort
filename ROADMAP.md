@@ -1,103 +1,73 @@
 # QBS Research Roadmap
 
-This roadmap turns the public repository into the source of truth for the theory, experiments, and manuscript.
+This file tracks future work. Completed theorem details belong in [`docs/research_map.md`](docs/research_map.md) and current state belongs in [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md).
 
-## Completed repository foundations
+## Current phase
 
-- [x] Publish core theorem set T1–T5.
-- [x] Publish E1–E5 reproduction code and outputs.
-- [x] Add CI for Markdown math delimiters, Python, E1–E5, manifest validation, figures, repository structure, and manuscript PDF build.
-- [x] Maintain canonical `STATUS.md`, notation, claims ledger, and research map.
-- [x] Split supplementary topics and create H/T/D/C/U experiment cards.
-- [x] Build historical experiment archive policy.
-- [x] Build initial/extended prior-art ledgers and narrow novelty claims.
-- [x] Produce six publication figures and integrate them into the manuscript.
-- [x] Integrate complete T1–T5 proofs and validate the illustrated manuscript by CI.
-- [x] Specify Everett bridge support / constraint / rejection criteria.
-- [x] Complete v0.2 repository/manuscript audit.
+The project is in post-v0.2 public/preprint review preparation.
 
-## Public-review path
+The locked core remains T1–T5 and E1–E5. The supplementary line is complete through S2.13. The default next step is review quality, not theorem expansion.
 
-- [x] Keep GitHub Issues open for proof corrections, counterexamples, prior art, and implementation bugs.
-- [x] Integrate major repository corrections through CI-gated PRs.
-- [ ] Create a formal GitHub Release/tag for `v0.2-public-review` when release-write access is available.
-- [ ] Collect public review and revise the repository/manuscript.
+## Immediate review gates
+
+- [ ] Obtain external/public proof review of S2, S2.11, S2.12, and S2.13.
+- [ ] Collect concrete counterexamples, assumption objections, or boundary-condition corrections if reviewers identify them.
+- [ ] Obtain focused prior-art review of the combined recognition-dependent architecture.
+- [ ] Review whether S2.13 should remain in the manuscript main text.
+- [ ] Decide whether all S2.5–S2.10 material belongs in the paper Appendix or partly in repository-only supplementary material.
+- [ ] Review the Everett accessibility bridge independently from the abstract covariance mathematics.
+
+## Repository and reproducibility gates
+
+- [ ] Keep PR #21 CI-green after editorial cleanup.
+- [ ] Keep the root README, research map, claim ledger, notation, development status, and roadmap free of conflicting source-of-truth roles.
+- [ ] Validate important repository-relative Markdown links in CI.
+- [ ] Keep E1–E5 as the locked reproducibility suite unless a review identifies a concrete missing core test.
+- [ ] Preserve deterministic figure regeneration and manuscript PDF verification.
+
+## Publication gates
+
+- [ ] Resolve review-driven mathematical or citation corrections.
+- [ ] Freeze the post-v0.2 manuscript candidate after substantive review stabilizes.
+- [ ] Finalize author/citation metadata for the preprint version.
+- [ ] Decide the preprint version identifier and update `CITATION.cff` consistently.
+- [ ] Create a formal GitHub Release/tag for `v0.2-public-review` if release-write access becomes available and it remains useful for archival clarity.
 - [ ] Prepare `v1.0-preprint` only after review-driven revisions stabilize.
+- [ ] Add DOI/arXiv metadata only when an identifier actually exists.
 
-## Post-v0.2 theorem development
+## Deferred mathematical work
 
-- [x] S2 predictive-calibration alignment.
-- [x] S2.2 posterior-mean self-calibration.
-- [x] S2.3 approximate-calibration robustness.
-- [x] S2.4 prediction-MSE population certificate.
-- [x] S2.5 bounded held-out finite-sample certification.
-- [x] S2.6 validity after arbitrary independent training.
-- [x] S2.7 finite predeclared candidate post-selection validity.
-- [x] S2.8 generic five-moment confidence-envelope composition.
-- [x] S2.9 light-tail sub-Gaussian/Bernstein instantiation.
-- [x] S2.10 robust median-of-means instantiation.
-- [x] S2.11 residual conditional-covariance extension beyond `S=s(Y)`.
-- [x] S2.12 sharp residual-variance certificate using conditional Cauchy--Schwarz.
-- [x] S2.13 explained-variance / correlation-ratio form of the residual certificate.
-- [x] Derive the perfect conditional-mean alignment simplification:
-  $$
-  A_U+A_S>1.
-  $$
-- [x] Derive the symmetric explained-variance threshold in its valid positive-alignment regime:
-  $$
-  A>
-  \frac{1}{1+\rho_{ma}}.
-  $$
+The following are not automatic next steps:
 
-### Deferred unless review demands them
+- finite-sample confidence bounds for the S2.13 explained-variance quantities;
+- more explicit Orlicz/mgf sufficient conditions for S2.9;
+- robust estimators that weaken S2.10 higher-moment requirements;
+- infinite or certification-data-dependent candidate classes;
+- an additional held-out certificate experiment;
+- a stronger recognition-time ordering theorem.
 
-- [ ] Finite-sample confidence bounds for `A_U`, `A_S`, and `rho_ma`.
-- [ ] Explicit Orlicz/mgf sufficient conditions for the S2.9 Bernstein parameters.
-- [ ] Robust estimators that weaken S2.10's higher-moment requirements.
-- [ ] Infinite or certification-data-dependent candidate classes.
-- [ ] A held-out certificate experiment.
+Pursue one of these only if it removes a material modeling assumption, answers a concrete review objection, introduces a genuinely useful operational quantity, or materially sharpens an existing result under motivated assumptions.
 
-These are no longer automatic next steps. The theorem-expansion stop rule in `docs/s2_stack_review_map.md` applies.
+## Novelty gate
 
-## Post-v0.2 manuscript, proof, and novelty review
+The project should continue to avoid novelty claims for standard components by themselves, including normalized weighting, covariance identities, total covariance, standard concentration inequalities, observer selection, or self-location.
 
-- [x] Build the S2 stack dependency / editorial review map.
-- [x] Add a semantic-preservation audit for future stack consolidation.
-- [x] Compress the main manuscript to the conceptual S2 → S2.11 → S2.13 spine.
-- [x] Demote detailed S2.3–S2.10 statistical machinery to Appendix-first status.
-- [x] Synchronize Abstract, Introduction, Limitations, Discussion, and manuscript README.
-- [x] Add a H/T/D/C/U manuscript-compression audit.
-- [x] Run a targeted post-v0.2 prior-art search around observer selection, self-location, policy choice, and Everettian credence.
-- [x] Add Garisto, Lewis, and Khawaja to the manuscript's prior-art boundary.
-- [x] Complete a dedicated proof review of S2, S2.11, S2.12, and S2.13.
-- [x] Tighten S2.11 to explicit square-integrability assumptions.
-- [x] Replace S2.11/S2.12 sharpness prose with bounded Rademacher constructions that preserve positive accessibility.
-- [x] Clarify the domain and feasibility of the symmetric S2.13 threshold.
-- [ ] Obtain external proof review of S2, S2.11, S2.12, and S2.13.
-- [ ] Decide whether S2.13 remains in main text after external/public review.
-- [ ] Decide whether all S2.5–S2.10 results belong in the paper Appendix or partly in repository-only supplementary material.
+The novelty hypothesis remains provisional and concerns the combined recognition-dependent architecture and its decompositions. A limited prior-art search is not evidence that no structural duplicate exists.
 
-## Current stacked review sequence
+## Everett bridge gate
 
-The v0.2 public-review baseline remains fixed at merge commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
+The physical bridge remains open. Future work on it should ask whether a concrete accessibility rule:
 
-1. PR #11 — S2 through S2.3.
-2. PR #12 — S2.4 prediction-MSE certificate.
-3. PR #13 — S2.5 bounded finite-sample certificate.
-4. PR #15 — S2.6–S2.7 selection validity.
-5. PR #16 — S2.8 generic confidence-envelope composition.
-6. PR #17 — S2.9 light-tail instantiation.
-7. PR #18 — S2.10 robust median-of-means instantiation.
-8. PR #19 — S2.11 residual conditional-covariance extension.
-9. PR #20 — S2.12 residual-variance certificate.
-10. PR #21 — S2.13 explained-variance certificate plus manuscript compression / proof review architecture.
+- has a defensible physical derivation;
+- respects relabeling and coarse-graining requirements;
+- is sequentially coherent;
+- is compatible with established operational quantum statistics unless explicit new physics is proposed;
+- yields empirical or structural consequences that distinguish it from competing accounts.
 
-## Current focus
+Do not treat statistical success inside the abstract model as validation of this physical bridge.
 
-Do not add another abstract S2 theorem by default. The next gate is review quality:
+## Stop rule
 
-1. keep PR #21 CI-green;
-2. preserve the three proof-review corrections through any future rebase/squash;
-3. incorporate concrete public-review objections if they appear;
-4. defer new statistical machinery unless a reviewer identifies a specific need;
-5. preserve the Everett bridge as a separate physical question.
+Do not add S2.14 or a sixth core experiment by default.
+
+The next high-value work is external review, correction, compression, and publication readiness.

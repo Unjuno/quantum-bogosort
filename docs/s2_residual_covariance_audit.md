@@ -6,21 +6,21 @@
 
 S2.11 should remove the strong assumption:
 
-$$
+```math
 S=s(Y)
-$$
+```
 
 without discarding residual accessibility/outcome dependence that remains after conditioning on `Y`.
 
 For the theorem statement used in the repository, assume:
 
-$$
+```math
 U,S\in L^2,
 \qquad
 S\ge0,
 \qquad
 0<E[S]<\infty.
-$$
+```
 
 Square integrability is a simple sufficient condition ensuring every covariance and residual product below is finite.
 
@@ -28,15 +28,15 @@ Square integrability is a simple sufficient condition ensuring every covariance 
 
 Let:
 
-$$
+```math
 m(Y)=E[U\mid Y],
 \qquad
 a(Y)=E[S\mid Y].
-$$
+```
 
 The law of total covariance gives:
 
-$$
+```math
 \boxed{
 \mathrm{Cov}(U,S)
 =
@@ -44,7 +44,7 @@ $$
 +
 E[\mathrm{Cov}(U,S\mid Y)]
 }.
-$$
+```
 
 **Audit:** PASS.
 
@@ -52,11 +52,11 @@ $$
 
 For an independent copy `Y'`:
 
-$$
+```math
 2\mathrm{Cov}(m(Y),a(Y))
 =
 E[(m(Y)-m(Y'))(a(Y)-a(Y'))].
-$$
+```
 
 If `m` and `a` are comonotone, the integrand is nonnegative almost surely.
 
@@ -66,24 +66,24 @@ If `m` and `a` are comonotone, the integrand is nonnegative almost surely.
 
 If:
 
-$$
+```math
 E[\mathrm{Cov}(U,S\mid Y)]
 \ge-\varepsilon,
-$$
+```
 
 then:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(m(Y),a(Y))-\varepsilon.
-$$
+```
 
 Thus:
 
-$$
+```math
 \mathrm{Cov}(m(Y),a(Y))>\varepsilon
-$$
+```
 
 is sufficient for positive total covariance.
 
@@ -93,33 +93,33 @@ is sufficient for positive total covariance.
 
 Define:
 
-$$
+```math
 \eta=U-m(Y),
 \qquad
 \xi=S-a(Y).
-$$
+```
 
 Then:
 
-$$
+```math
 E[\eta\mid Y]=E[\xi\mid Y]=0,
-$$
+```
 
 and:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(m(Y),a(Y))+E[\eta\xi].
-$$
+```
 
 Conditioning on `Y` gives:
 
-$$
+```math
 E[\eta\xi\mid Y]
 =
 \mathrm{Cov}(U,S\mid Y).
-$$
+```
 
 **Audit:** PASS.
 
@@ -129,37 +129,37 @@ A previous draft described arbitrary centered residuals and then said a sufficie
 
 Let `Y` be constant and let `eta` be Rademacher:
 
-$$
+```math
 P(\eta=1)=P(\eta=-1)=\frac12.
-$$
+```
 
 Set:
 
-$$
+```math
 U=\eta,
 \qquad
 S=M-\eta,
 \qquad
 M>1.
-$$
+```
 
 Then `S>0` almost surely, the conditional means are constant, and the centered accessibility residual is:
 
-$$
+```math
 \xi=-\eta.
-$$
+```
 
 Hence:
 
-$$
+```math
 \mathrm{Cov}(m(Y),a(Y))=0,
-$$
+```
 
 but:
 
-$$
+```math
 E[\eta\xi]=-1<0.
-$$
+```
 
 **Audit:** PASS. This establishes the required counterexample without any hidden boundedness assumption.
 
@@ -167,21 +167,21 @@ $$
 
 S2 is recovered when:
 
-$$
+```math
 S=s(Y),
-$$
+```
 
 because then:
 
-$$
+```math
 a(Y)=S
-$$
+```
 
 and:
 
-$$
+```math
 \mathrm{Cov}(U,S\mid Y)=0
-$$
+```
 
 almost surely.
 

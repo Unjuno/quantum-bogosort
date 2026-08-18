@@ -4,7 +4,7 @@
 
 S2.12 gives the general-accessibility lower bound:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(E[U\mid Y],E[S\mid Y])
@@ -13,7 +13,7 @@ $$
 E[\mathrm{Var}(U\mid Y)]
 E[\mathrm{Var}(S\mid Y)]
 }.
-$$
+```
 
 The residual-variance terms can be rewritten using the law of total variance. This produces a normalized certificate in terms of how much variance the signal `Y` explains in outcome and accessibility, together with the correlation between the two conditional means.
 
@@ -21,59 +21,59 @@ The residual-variance terms can be rewritten using the law of total variance. Th
 
 Assume `U` and `S` are square-integrable with:
 
-$$
+```math
 S\ge0,
 \qquad
 0<E[S]<\infty,
-$$
+```
 
 and:
 
-$$
+```math
 \mathrm{Var}(U)>0,
 \qquad
 \mathrm{Var}(S)>0.
-$$
+```
 
 Let:
 
-$$
+```math
 m(Y)=E[U\mid Y],
-$$
+```
 
-$$
+```math
 a(Y)=E[S\mid Y].
-$$
+```
 
 Define explained-variance fractions:
 
-$$
+```math
 A_U
 =
 \frac{\mathrm{Var}(m(Y))}
 {\mathrm{Var}(U)},
-$$
+```
 
 and:
 
-$$
+```math
 A_S
 =
 \frac{\mathrm{Var}(a(Y))}
 {\mathrm{Var}(S)}.
-$$
+```
 
 By the law of total variance:
 
-$$
+```math
 0\le A_U\le1,
 \qquad
 0\le A_S\le1.
-$$
+```
 
 Then S2.12 implies:
 
-$$
+```math
 \boxed{
 \mathrm{Cov}(U,S)
 \ge
@@ -85,27 +85,27 @@ $$
 (1-A_U)(1-A_S)
 }
 }.
-$$
+```
 
 If:
 
-$$
+```math
 A_U>0,
 \qquad
 A_S>0,
-$$
+```
 
 define the conditional-mean correlation:
 
-$$
+```math
 \rho_{ma}
 =
 \mathrm{Corr}(m(Y),a(Y)).
-$$
+```
 
 Then:
 
-$$
+```math
 \mathrm{Cov}(m(Y),a(Y))
 =
 \rho_{ma}
@@ -114,11 +114,11 @@ $$
 \mathrm{Var}(S)
 A_UA_S
 }.
-$$
+```
 
 Therefore:
 
-$$
+```math
 \boxed{
 \mathrm{Cov}(U,S)
 \ge
@@ -132,23 +132,23 @@ $$
 \sqrt{(1-A_U)(1-A_S)}
 \right]
 }.
-$$
+```
 
 Consequently, the sufficient condition:
 
-$$
+```math
 \boxed{
 \rho_{ma}\sqrt{A_UA_S}
 >
 \sqrt{(1-A_U)(1-A_S)}
 }
-$$
+```
 
 implies:
 
-$$
+```math
 \mathrm{Cov}(U,S)>0.
-$$
+```
 
 Under T1, this implies positive first-person mean uplift.
 
@@ -156,13 +156,13 @@ Under T1, this implies positive first-person mean uplift.
 
 When:
 
-$$
+```math
 A_UA_S>0,
-$$
+```
 
 a sufficient condition is:
 
-$$
+```math
 \boxed{
 \rho_{ma}
 >
@@ -171,7 +171,7 @@ $$
 {A_UA_S}
 }
 }.
-$$
+```
 
 This form makes the tradeoff explicit:
 
@@ -185,25 +185,25 @@ Because the right-hand side is nonnegative, this sufficient condition necessaril
 
 If:
 
-$$
+```math
 \rho_{ma}=1,
-$$
+```
 
 then the sufficient condition becomes:
 
-$$
+```math
 A_UA_S
 >
 (1-A_U)(1-A_S).
-$$
+```
 
 After cancellation:
 
-$$
+```math
 \boxed{
 A_U+A_S>1
 }.
-$$
+```
 
 Thus under perfectly positively correlated conditional means, explaining more than one unit of variance fraction in total across outcome and accessibility is sufficient to overcome the worst-case residual anti-correlation allowed by S2.12.
 
@@ -211,95 +211,95 @@ Thus under perfectly positively correlated conditional means, explaining more th
 
 If:
 
-$$
+```math
 A_U=A_S=A,
-$$
+```
 
 with:
 
-$$
+```math
 A>0,
-$$
+```
 
 then the sufficient condition is:
 
-$$
+```math
 \rho_{ma}A
 >
 1-A.
-$$
+```
 
 When:
 
-$$
+```math
 \rho_{ma}>-1,
-$$
+```
 
 this is algebraically equivalent to:
 
-$$
+```math
 \boxed{
 A
 >
 \frac{1}{1+\rho_{ma}}
 }.
-$$
+```
 
 Because:
 
-$$
+```math
 0<A\le1,
-$$
+```
 
 the strict certificate is feasible only when:
 
-$$
+```math
 \rho_{ma}>0.
-$$
+```
 
 At `rho_ma=0`, the divided threshold is `A>1`, which is impossible. For `rho_ma<0`, the threshold exceeds one, and for `rho_ma=-1` the divided form is undefined. For:
 
-$$
+```math
 \rho_{ma}=1,
-$$
+```
 
 this reduces to:
 
-$$
+```math
 A>\frac12.
-$$
+```
 
 ## D — proof
 
 The law of total variance gives:
 
-$$
+```math
 \mathrm{Var}(U)
 =
 \mathrm{Var}(E[U\mid Y])
 +
 E[\mathrm{Var}(U\mid Y)].
-$$
+```
 
 Therefore:
 
-$$
+```math
 E[\mathrm{Var}(U\mid Y)]
 =
 \mathrm{Var}(U)(1-A_U).
-$$
+```
 
 Similarly:
 
-$$
+```math
 E[\mathrm{Var}(S\mid Y)]
 =
 \mathrm{Var}(S)(1-A_S).
-$$
+```
 
 Substituting these identities into the coarser S2.12 bound yields:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(m(Y),a(Y))
@@ -309,33 +309,33 @@ $$
 \mathrm{Var}(S)
 (1-A_U)(1-A_S)
 }.
-$$
+```
 
 When:
 
-$$
+```math
 A_UA_S>0,
-$$
+```
 
 we have:
 
-$$
+```math
 \mathrm{Var}(m(Y))
 =
 A_U\mathrm{Var}(U),
-$$
+```
 
 and:
 
-$$
+```math
 \mathrm{Var}(a(Y))
 =
 A_S\mathrm{Var}(S).
-$$
+```
 
 By the definition of `rho_ma`:
 
-$$
+```math
 \mathrm{Cov}(m(Y),a(Y))
 =
 \rho_{ma}
@@ -344,16 +344,16 @@ A_UA_S
 \mathrm{Var}(U)
 \mathrm{Var}(S)
 }.
-$$
+```
 
 Factoring out:
 
-$$
+```math
 \sqrt{
 \mathrm{Var}(U)
 \mathrm{Var}(S)
 }
-$$
+```
 
 gives the normalized certificate.
 
@@ -365,15 +365,15 @@ The perfect-alignment corollary follows by elementary expansion and cancellation
 
 If:
 
-$$
+```math
 A_U=0
-$$
+```
 
 or:
 
-$$
+```math
 A_S=0,
-$$
+```
 
 then the normalized correlation `rho_ma` may be undefined because one conditional mean is constant. The unnormalized S2.13 bound remains valid and should be used instead.
 
@@ -385,9 +385,9 @@ Actual residual covariance may be much less negative than the S2.12 worst case. 
 
 Large `A_U` and `A_S` alone do not guarantee positive covariance if:
 
-$$
+```math
 \rho_{ma}\le0.
-$$
+```
 
 Indeed, the normalized worst-case certificate itself cannot be strictly positive when `rho_ma<=0` because its first term is nonpositive and its residual penalty is nonnegative.
 

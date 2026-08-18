@@ -9,21 +9,21 @@ The adaptive-agent mechanism needs a rigorous step from an internally generated 
 
 Let:
 
-$$
+```math
 m(Y)=E[U\mid Y],
 \qquad
 S=s(Y)\ge0.
-$$
+```
 
 The intended implication is:
 
-$$
+```math
 \text{ordered conditional-mean prediction}
 +
 \text{ordered accessibility}
 \Longrightarrow
 \mathrm{Cov}(U,S)\ge0.
-$$
+```
 
 ## T — theorem audit
 
@@ -31,21 +31,21 @@ $$
 
 Because `S=s(Y)` is measurable with respect to `Y`:
 
-$$
+```math
 E[US]
 =
 E[E[U\mid Y]S].
-$$
+```
 
 Therefore:
 
-$$
+```math
 \boxed{
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(E[U\mid Y],s(Y))
 }.
-$$
+```
 
 **Audit:** PASS.
 
@@ -53,11 +53,11 @@ $$
 
 For an independent copy `Y'`:
 
-$$
+```math
 2\mathrm{Cov}(m(Y),s(Y))
 =
 E[(m(Y)-m(Y'))(s(Y)-s(Y'))].
-$$
+```
 
 If the two factors always have the same sign, the integrand is nonnegative almost surely.
 
@@ -67,15 +67,15 @@ If the two factors always have the same sign, the integrand is nonnegative almos
 
 If:
 
-$$
+```math
 P((m(Y)-m(Y'))(s(Y)-s(Y'))>0)>0,
-$$
+```
 
 then the nonnegative integrand is strictly positive on a positive-probability set, hence:
 
-$$
+```math
 \mathrm{Cov}(U,S)>0.
-$$
+```
 
 **Audit:** PASS.
 
@@ -83,17 +83,17 @@ $$
 
 Given:
 
-$$
+```math
 0<E[S]<\infty,
-$$
+```
 
 T1 gives:
 
-$$
+```math
 E_{FP}[U]-E[U]
 =
 \frac{\mathrm{Cov}(U,S)}{E[S]}.
-$$
+```
 
 Thus S2 supplies a sufficient condition for nonnegative or strict first-person mean uplift.
 
@@ -103,19 +103,19 @@ Thus S2 supplies a sufficient condition for nonnegative or strict first-person m
 
 If an internal information state `B` generates the score:
 
-$$
+```math
 Y=E[U\mid B],
-$$
+```
 
 then `Y` is `B`-measurable and the tower property gives:
 
-$$
+```math
 E[U\mid Y]
 =
 E[E[U\mid B]\mid Y]
 =E[Y\mid Y]
 =Y.
-$$
+```
 
 Hence a true posterior-mean score satisfies the S2 conditional-mean calibration premise exactly.
 
@@ -125,43 +125,43 @@ Hence a true posterior-mean score satisfies the S2 conditional-mean calibration 
 
 Define:
 
-$$
+```math
 e(Y)=E[U\mid Y]-Y.
-$$
+```
 
 Then:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(Y,S)+\mathrm{Cov}(e(Y),S).
-$$
+```
 
 Cauchy--Schwarz gives:
 
-$$
+```math
 |\mathrm{Cov}(e(Y),S)|
 \le
 \sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}.
-$$
+```
 
 Therefore:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(Y,S)
 -
 \sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}.
-$$
+```
 
 The strict inequality:
 
-$$
+```math
 \mathrm{Cov}(Y,S)
 >
 \sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}
-$$
+```
 
 is sufficient for positive outcome/accessibility covariance.
 
@@ -171,29 +171,29 @@ is sufficient for positive outcome/accessibility covariance.
 
 The S2.3 calibration variance may be difficult to estimate directly. Since:
 
-$$
+```math
 e(Y)=E[U-Y\mid Y],
-$$
+```
 
 conditional Jensen gives:
 
-$$
+```math
 E[e(Y)^2]
 \le
 E[(U-Y)^2].
-$$
+```
 
 Also:
 
-$$
+```math
 \mathrm{Var}(e(Y))
 \le
 E[e(Y)^2].
-$$
+```
 
 Substituting into S2.3 yields:
 
-$$
+```math
 \boxed{
 \mathrm{Cov}(U,S)
 \ge
@@ -201,15 +201,15 @@ $$
 -
 \sqrt{E[(U-Y)^2]\mathrm{Var}(S)}
 }.
-$$
+```
 
 Therefore:
 
-$$
+```math
 \mathrm{Cov}(Y,S)
 >
 \sqrt{E[(U-Y)^2]\mathrm{Var}(S)}
-$$
+```
 
 is sufficient for strict positive outcome/accessibility covariance.
 
@@ -217,21 +217,21 @@ is sufficient for strict positive outcome/accessibility covariance.
 
 The prediction MSE decomposes exactly as:
 
-$$
+```math
 E[(U-Y)^2]
 =
 E[\mathrm{Var}(U\mid Y)]
 +
 E[e(Y)^2].
-$$
+```
 
 To verify this, write:
 
-$$
+```math
 U-Y
 =
 (U-E[U\mid Y])+e(Y).
-$$
+```
 
 The cross term has conditional expectation zero given `Y`, so the squared-error expectation separates into conditional variance plus squared calibration error.
 
@@ -264,29 +264,29 @@ If `Y=0`, let `U` be `+1` or `-1` equally likely. If `Y=1`, let `U` be `+2` or `
 
 Then `|U|` determines `Y`, so:
 
-$$
+```math
 I(U;Y)>0.
-$$
+```
 
 But:
 
-$$
+```math
 E[U\mid Y]=0
-$$
+```
 
 almost surely. Therefore, for every `S=s(Y)`:
 
-$$
+```math
 \mathrm{Cov}(U,S)=0.
-$$
+```
 
 Hence:
 
-$$
+```math
 I(U;Y)>0
 \not\Rightarrow
 \mathrm{Cov}(U,S)>0.
-$$
+```
 
 **Audit:** PASS; this blocks an overstrong information-theoretic claim.
 
@@ -294,17 +294,17 @@ $$
 
 Suppose the score is perfectly calibrated, so:
 
-$$
+```math
 e(Y)=0,
-$$
+```
 
 but the future outcome has large irreducible conditional variance. Then S2.2/S2.3 may certify positive covariance from score ordering while:
 
-$$
+```math
 E[(U-Y)^2]
 =
 E[\mathrm{Var}(U\mid Y)]
-$$
+```
 
 is large enough that the S2.4 inequality does not certify positivity.
 
@@ -316,13 +316,13 @@ Therefore failure of the MSE certificate means only that this **sufficient lower
 
 For general `S` not measurable with respect to `Y`:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 +
 E[\mathrm{Cov}(U,S\mid Y)].
-$$
+```
 
 S2 controls only the first term unless score-measurability sets the second term to zero.
 

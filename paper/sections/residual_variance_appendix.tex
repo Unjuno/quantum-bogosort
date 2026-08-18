@@ -91,4 +91,20 @@ so
 \]
 
 \paragraph{Sharpness.}
-The conditional Cauchy--Schwarz penalty is sharp. With constant $Y$ and centered residuals $\xi=-c\eta$ for $c>0$, the residual covariance equals the negative conditional standard-deviation product. Adding a sufficiently large constant to $S$ preserves nonnegativity without changing covariance. Thus conditional variances alone cannot yield a uniformly tighter universal residual lower bound.
+The conditional Cauchy--Schwarz penalty is sharp while preserving nonnegative accessibility. Let $Y$ be constant and let $\eta$ be Rademacher, with $P(\eta=1)=P(\eta=-1)=1/2$. For $c>0$, set
+\[
+U=\eta,
+\qquad
+S=M-c\eta,
+\qquad
+M>c.
+\]
+Then $S>0$ almost surely and the centered accessibility residual is $\xi=-c\eta$. Hence
+\[
+\operatorname{Cov}(U,S\mid Y)=-c,
+\]
+while
+\[
+\sqrt{\operatorname{Var}(U\mid Y)\operatorname{Var}(S\mid Y)}=c.
+\]
+Thus equality holds in the negative conditional Cauchy--Schwarz bound, so conditional variances alone cannot yield a uniformly tighter universal residual lower bound.

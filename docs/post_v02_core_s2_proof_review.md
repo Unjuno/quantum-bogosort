@@ -66,9 +66,9 @@ $$
 Thus the covariance projection identity is well-defined:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),s(Y)).
+\mathrm{Cov}(m(Y),s(Y)).
 $$
 
 The independent-copy identity used for comonotonicity is also legitimate because the required products are integrable.
@@ -140,7 +140,7 @@ $$
 almost surely and:
 
 $$
-\operatorname{Cov}(U,S)=-1.
+\mathrm{Cov}(U,S)=-1.
 $$
 
 This proves the same boundary claim without any hidden boundedness assumption.
@@ -152,21 +152,21 @@ This proves the same boundary claim without any hidden boundedness assumption.
 Conditional Cauchy--Schwarz gives, almost surely:
 
 $$
-\operatorname{Cov}(U,S\mid Y)
+\mathrm{Cov}(U,S\mid Y)
 \ge
 -
 \sqrt{
-\operatorname{Var}(U\mid Y)
-\operatorname{Var}(S\mid Y)
+\mathrm{Var}(U\mid Y)
+\mathrm{Var}(S\mid Y)
 }.
 $$
 
 Under `U,S in L^2`, the conditional variance terms have finite expectations. Therefore S2.11 yields:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 E[\sqrt{v_U(Y)v_S(Y)}].
 $$
@@ -200,15 +200,15 @@ $$
 almost surely and:
 
 $$
-\operatorname{Cov}(U,S\mid Y)=-c
+\mathrm{Cov}(U,S\mid Y)=-c
 $$
 
 while:
 
 $$
 \sqrt{
-\operatorname{Var}(U\mid Y)
-\operatorname{Var}(S\mid Y)
+\mathrm{Var}(U\mid Y)
+\mathrm{Var}(S\mid Y)
 }=c.
 $$
 
@@ -221,9 +221,9 @@ Thus the universal negative conditional Cauchy--Schwarz penalty is genuinely sha
 Assume:
 
 $$
-\operatorname{Var}(U)>0,
+\mathrm{Var}(U)>0,
 \qquad
-\operatorname{Var}(S)>0.
+\mathrm{Var}(S)>0.
 $$
 
 Define:
@@ -231,11 +231,11 @@ Define:
 $$
 A_U
 =
-\frac{\operatorname{Var}(E[U\mid Y])}{\operatorname{Var}(U)},
+\frac{\mathrm{Var}(E[U\mid Y])}{\mathrm{Var}(U)},
 \qquad
 A_S
 =
-\frac{\operatorname{Var}(E[S\mid Y])}{\operatorname{Var}(S)}.
+\frac{\mathrm{Var}(E[S\mid Y])}{\mathrm{Var}(S)}.
 $$
 
 Total variance gives:
@@ -247,13 +247,13 @@ $$
 When `A_U A_S>0`, the conditional-mean correlation is well-defined and:
 
 $$
-\operatorname{Cov}(m,a)
+\mathrm{Cov}(m,a)
 =
 \rho_{ma}
 \sqrt{
 A_UA_S
-\operatorname{Var}(U)
-\operatorname{Var}(S)
+\mathrm{Var}(U)
+\mathrm{Var}(S)
 }.
 $$
 
@@ -319,7 +319,7 @@ $$
 the residual accessibility term vanishes and:
 
 $$
-\operatorname{Cov}(U,S\mid Y)=0.
+\mathrm{Cov}(U,S\mid Y)=0.
 $$
 
 Therefore S2 is exactly recovered from S2.11.

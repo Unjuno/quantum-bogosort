@@ -1,8 +1,15 @@
-# QBS Research Status
+# QBS Research Status — Stable v0.2 Snapshot
 
 **Snapshot date:** 2026-08-17
 
-This file is the canonical status ledger for the Quantum Bogosort research repository. It distinguishes proved mathematics, simulation-supported mechanisms, interpretation-level assumptions, and open problems.
+This file records the frozen v0.2 public-review scientific state. It is not the current post-v0.2 development ledger.
+
+For current work, see `DEVELOPMENT_STATUS.md` and the active cumulative review PR #21.
+
+The exact v0.2 snapshot is preserved at:
+
+- branch: `release/v0.2-public-review`
+- commit: `7405f7408f74fa32b16d1cc9f624070cc14624ab`
 
 ## Core mathematical results
 
@@ -56,7 +63,7 @@ All five experiments are rerun by GitHub Actions.
 | Archived experiment promotion before v0.2 | NOT REQUIRED; NONE USED AS NEW ACTIVE EVIDENCE |
 | Bridge support / constraint / rejection criteria | DOCUMENTED |
 | Post-layout claim consistency audit | PASS |
-| Final v0.2 repository release audit | PASS PENDING THIS PR CI |
+| Final v0.2 repository release audit | PASS |
 
 ## Interpretation-level claims
 
@@ -70,7 +77,9 @@ All five experiments are rerun by GitHub Actions.
 | Shared recognition/shared latent structure can increase cross-branch decision correlation | THEOREM UNDER EXPLICIT HIERARCHICAL ASSUMPTIONS + SIMULATION |
 | External random generators become objectively lucky | NOT CLAIMED |
 
-## Open problems after v0.2
+## Open problems as of the v0.2 snapshot
+
+These items record the state of the project at the frozen v0.2 snapshot. Some have since been addressed in post-v0.2 development; see `DEVELOPMENT_STATUS.md` and PR #21.
 
 1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics.
 2. Strengthen the adaptive-agent information-theoretic mechanism into a theorem with explicit sufficient conditions linking predictive information to positive accessibility covariance.
@@ -80,6 +89,8 @@ All five experiments are rerun by GitHub Actions.
 
 ## Release state
 
-Repository snapshot: **v0.2 — Public Review**.
+Scientific snapshot: **v0.2 — Public Review**.
 
-The substantive v0.2 manuscript-readiness gates are complete. `docs/v0.2_release_audit.md` records the final audit. After this release-audit PR passes CI and merges, the repository itself is the v0.2 public-review snapshot. A formal GitHub Release/tag remains a hosting-layer action separate from the scientific audit.
+The substantive v0.2 manuscript-readiness gates and final repository audit passed before the snapshot was fixed at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
+
+A formal GitHub Release/tag remains a hosting-layer action separate from the scientific snapshot. Until a tag can be created through the available tooling, branch `release/v0.2-public-review` is the stable repository reference.

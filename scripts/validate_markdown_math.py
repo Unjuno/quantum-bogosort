@@ -5,8 +5,8 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 ROOT_README = ROOT / "README.md"
-UNSUPPORTED_MATH_MACROS = {
-    r"\operatorname": r"use a GitHub-safe roman form such as \mathrm{Cov}",
+REPOSITORY_DISALLOWED_MATH_MACROS = {
+    r"\operatorname": r"use the repository convention \mathrm{Cov}, \mathrm{Var}, etc.",
 }
 LEGACY_MATH_DELIMITERS = (r"\(", r"\)", r"\[", r"\]")
 FENCE_RE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
@@ -14,12 +14,12 @@ BEGIN_END_RE = re.compile(r"\\(begin|end)\{([^{}]+)\}")
 errors = []
 
 
-def check_unsupported_math_macros(path: Path, line_no: int, line: str) -> None:
-    """Reject macros known to fail in GitHub's rendered math context."""
-    for macro, replacement_hint in UNSUPPORTED_MATH_MACROS.items():
+def check_disallowed_math_macros(path: Path, line_no: int, line: str) -> None:
+    """Enforce repository math-macro conventions in rendered Markdown."""
+    for macro, replacement_hint in REPOSITORY_DISALLOWED_MATH_MACROS.items():
         if macro in line:
             errors.append(
-                f"{path.relative_to(ROOT)}:{line_no}: GitHub-disallowed math macro "
+                f"{path.relative_to(ROOT)}:{line_no}: repository-disallowed math macro "
                 f"{macro}; {replacement_hint}"
             )
 
@@ -139,7 +139,7 @@ for path in ROOT.rglob("*.md"):
                 math_lines.append(line)
                 if stripped:
                     math_fence_has_content = True
-                check_unsupported_math_macros(path, line_no, line)
+                check_disallowed_math_macros(path, line_no, line)
             continue
 
         fence_match = FENCE_RE.match(line)
@@ -194,6 +194,6 @@ if errors:
 
 print(
     "Markdown math validation passed: repository display math uses fenced GitHub "
-    "math blocks; fences and TeX grouping/environments are balanced; unsupported "
-    "GitHub math macros are absent."
+    "math blocks; fences and TeX grouping/environments are balanced; repository "
+    "math-macro conventions are satisfied."
 )

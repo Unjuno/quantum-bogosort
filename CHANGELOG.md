@@ -17,7 +17,8 @@
 - hardened `scripts/validate_markdown_math.py` so double-dollar display delimiters must be balanced and placed on delimiter-only lines, preventing display openers and expressions from sharing a line;
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
 - removed public repository-process wording that depended on tool availability;
-- removed merged/superseded development branches while preserving `main` and the frozen release snapshots;
+- removed merged/superseded development branches;
+- migrated the frozen v0.2 and v0.3 review snapshots from `release/*` branches to immutable `v0.2-public-review` and `v0.3-public-review` tags/GitHub Releases, leaving `main` as the only active branch;
 - added CI concurrency cancellation and runtime limits so stalled validation jobs cannot remain indefinitely in progress;
 - routed manuscript LaTeX installation through explicit Ubuntu archive/security sources so transient Azure runner-mirror failures do not masquerade as manuscript build failures.
 
@@ -29,7 +30,7 @@
 - the visualization layer presents existing model structure and existing committed experiment outputs; it does not add new physical evidence;
 - the present-self-location identities are direct consequences of the already-defined first-person weighted measure, not a new physical bridge claim;
 - the Everett accessibility bridge remains physically open;
-- `release/v0.3-public-review` remains the frozen v0.3 scientific snapshot.
+- tag/Release `v0.3-public-review` remains the frozen v0.3 scientific snapshot at commit `58038763127258bd3e2f0d41708c4dfa01f81fd6`.
 
 ## v0.3 — Public Review — 2026-08-18
 

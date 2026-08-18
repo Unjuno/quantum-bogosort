@@ -108,7 +108,7 @@ $$
 Hence:
 
 $$
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 \ge
 \widehat C-5B_YB_S\tau.
 $$
@@ -168,7 +168,7 @@ $$
 Therefore:
 
 $$
-\operatorname{Var}(S)
+\mathrm{Var}(S)
 =
 E[S^2]-E[S]^2
 $$
@@ -184,7 +184,7 @@ $$
 Popoviciu independently gives:
 
 $$
-\operatorname{Var}(S)\le\frac{B_S^2}{4}.
+\mathrm{Var}(S)\le\frac{B_S^2}{4}.
 $$
 
 The minimum of valid upper bounds remains a valid upper bound.
@@ -196,17 +196,17 @@ The minimum of valid upper bounds remains a valid upper bound.
 S2.4 gives:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 -
-\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
+\sqrt{E[(U-Y)^2]\mathrm{Var}(S)}.
 $$
 
 Replacing the positive first term by its lower bound and the nonnegative terms under the square root by upper bounds gives:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 D_L.
 $$
@@ -226,13 +226,13 @@ For the first-person value shift:
 $$
 \Delta_{FP}
 =
-\frac{\operatorname{Cov}(U,S)}{E[S]}.
+\frac{\mathrm{Cov}(U,S)}{E[S]}.
 $$
 
 When `D_L>0`, use:
 
 $$
-\operatorname{Cov}(U,S)\ge D_L
+\mathrm{Cov}(U,S)\ge D_L
 $$
 
 and:
@@ -270,9 +270,9 @@ almost surely, where:
 $$
 D_*
 =
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 -
-\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
+\sqrt{E[(U-Y)^2]\mathrm{Var}(S)}.
 $$
 
 If `D_*>0`, eventual positive certification follows.
@@ -310,7 +310,7 @@ $$
 the theorem is inconclusive. It does not imply:
 
 $$
-\operatorname{Cov}(U,S)\le0.
+\mathrm{Cov}(U,S)\le0.
 $$
 
 **Audit:** PASS; one-sided certificate interpretation is explicit.

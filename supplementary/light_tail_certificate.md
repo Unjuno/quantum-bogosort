@@ -4,7 +4,7 @@
 
 S2.8 reduces finite-sample certification to a simultaneous confidence envelope for five population moments:
 
-$$
+```math
 E[Y],
 \qquad
 E[S],
@@ -14,7 +14,7 @@ E[YS],
 E[S^2],
 \qquad
 E[(U-Y)^2].
-$$
+```
 
 S2.5 supplies these envelopes under boundedness via Hoeffding. This note gives an unbounded light-tail instantiation using sub-Gaussian concentration for the first moments and Bernstein/sub-exponential concentration for the product and squared quantities.
 
@@ -24,13 +24,13 @@ The QBS composition step remains S2.8. S2.9 only supplies one statistically vali
 
 Let:
 
-$$
+```math
 R=U-Y.
-$$
+```
 
 For an i.i.d. sample of size `n`, write empirical averages as:
 
-$$
+```math
 \bar Y,
 \qquad
 \bar S,
@@ -40,20 +40,20 @@ $$
 \overline{S^2},
 \qquad
 \overline{R^2}.
-$$
+```
 
 ### Sub-Gaussian mean control
 
 A centered random variable `X-E[X]` is said here to have sub-Gaussian mean parameter `sigma_X` when its i.i.d. sample mean satisfies, for every `t>0`:
 
-$$
+```math
 P\!\left(
 |\bar X-E[X]|>
 \sigma_X\sqrt{\frac{2t}{n}}
 \right)
 \le
 2e^{-t}.
-$$
+```
 
 This is the only sub-Gaussian property used below.
 
@@ -61,7 +61,7 @@ This is the only sub-Gaussian property used below.
 
 A random variable `W` is said here to have Bernstein mean parameters `(v_W,b_W)` when, for every `t>0`:
 
-$$
+```math
 P\!\left(
 |\bar W-E[W]|>
 \sqrt{\frac{2v_Wt}{n}}
@@ -70,7 +70,7 @@ P\!\left(
 \right)
 \le
 2e^{-t}.
-$$
+```
 
 This is a standard sub-exponential/Bernstein-type concentration form. Stating the required tail property directly avoids ambiguity across competing parameterizations of the phrase `sub-exponential`. A separate application may derive valid `(v_W,b_W)` from Orlicz norms, mgf bounds, or a specific parametric model.
 
@@ -78,57 +78,57 @@ This is a standard sub-exponential/Bernstein-type concentration form. Stating th
 
 Assume:
 
-$$
+```math
 S\ge0,
 \qquad
 0<E[S]<\infty.
-$$
+```
 
 Assume `Y` and `S` have sub-Gaussian mean parameters:
 
-$$
+```math
 \sigma_Y,
 \qquad
 \sigma_S.
-$$
+```
 
 Assume the three derived variables:
 
-$$
+```math
 YS,
 \qquad
 S^2,
 \qquad
 R^2=(U-Y)^2
-$$
+```
 
 have Bernstein mean parameters:
 
-$$
+```math
 (v_{YS},b_{YS}),
 \qquad
 (v_{S^2},b_{S^2}),
 \qquad
 (v_{R^2},b_{R^2}).
-$$
+```
 
 For confidence level:
 
-$$
+```math
 0<\delta<1,
-$$
+```
 
 define:
 
-$$
+```math
 t_\delta
 =
 \log\frac{10}{\delta}.
-$$
+```
 
 Define the radii:
 
-$$
+```math
 r_Y
 =
 \sigma_Y\sqrt{\frac{2t_\delta}{n}},
@@ -136,77 +136,77 @@ r_Y
 r_S
 =
 \sigma_S\sqrt{\frac{2t_\delta}{n}},
-$$
+```
 
-$$
+```math
 r_{YS}
 =
 \sqrt{\frac{2v_{YS}t_\delta}{n}}
 +
 \frac{b_{YS}t_\delta}{n},
-$$
+```
 
-$$
+```math
 r_{S^2}
 =
 \sqrt{\frac{2v_{S^2}t_\delta}{n}}
 +
 \frac{b_{S^2}t_\delta}{n},
-$$
+```
 
 and:
 
-$$
+```math
 r_{R^2}
 =
 \sqrt{\frac{2v_{R^2}t_\delta}{n}}
 +
 \frac{b_{R^2}t_\delta}{n}.
-$$
+```
 
 Construct the S2.8 input envelopes:
 
-$$
+```math
 L_Y=\bar Y-r_Y,
 \qquad
 U_Y=\bar Y+r_Y,
-$$
+```
 
-$$
+```math
 L_S=\bar S-r_S,
 \qquad
 U_S=\bar S+r_S,
-$$
+```
 
-$$
+```math
 L_{YS}
 =
 \overline{YS}-r_{YS},
-$$
+```
 
-$$
+```math
 U_{S^2}
 =
 \overline{S^2}+r_{S^2},
-$$
+```
 
 and:
 
-$$
+```math
 U_M
 =
 \overline{R^2}+r_{R^2}.
-$$
+```
 
 Let:
 
-$$
+```math
 L_S^+
 =
 \max\{0,L_S\},
-$$
+```
 
-$$
+```math
 P_U
 =
 \max\left\{
@@ -215,36 +215,36 @@ L_YU_S,
 U_YL_S^+,
 U_YU_S
 \right\},
-$$
+```
 
-$$
+```math
 C_L
 =
 L_{YS}-P_U,
-$$
+```
 
-$$
+```math
 V_U
 =
 \max\left\{
 0,
 U_{S^2}-(L_S^+)^2
 \right\},
-$$
+```
 
 and finally:
 
-$$
+```math
 \boxed{
 D_{\mathrm{LT}}
 =
 C_L-\sqrt{U_MV_U}
 }.
-$$
+```
 
 Then:
 
-$$
+```math
 \boxed{
 P\!\left(
 \mathrm{Cov}(U,S)
@@ -254,32 +254,32 @@ D_{\mathrm{LT}}
 \ge
 1-\delta
 }.
-$$
+```
 
 Therefore:
 
-$$
+```math
 D_{\mathrm{LT}}>0
-$$
+```
 
 certifies positive population outcome/accessibility covariance with confidence at least `1-delta`.
 
 If, on the same simultaneous event, the reported upper mean bound satisfies:
 
-$$
+```math
 0<U_S<\infty,
-$$
+```
 
 then T1 gives:
 
-$$
+```math
 \boxed{
 E_{FP}[U]-E[U]
 \ge
 \frac{D_{\mathrm{LT}}}{U_S}
 >0
 }.
-$$
+```
 
 ## D — proof
 
@@ -287,47 +287,47 @@ $$
 
 Each of the two sub-Gaussian mean bounds fails with probability at most:
 
-$$
+```math
 2e^{-t_\delta}
 =
 \frac{\delta}{5}.
-$$
+```
 
 Each of the three Bernstein mean bounds also fails with probability at most:
 
-$$
+```math
 \frac{\delta}{5}.
-$$
+```
 
 A union bound over the five events gives simultaneous coverage at least:
 
-$$
+```math
 1-\delta.
-$$
+```
 
 On this event:
 
-$$
+```math
 L_Y\le E[Y]\le U_Y,
-$$
+```
 
-$$
+```math
 L_S\le E[S]\le U_S,
-$$
+```
 
-$$
+```math
 E[YS]\ge L_{YS},
-$$
+```
 
-$$
+```math
 E[S^2]\le U_{S^2},
-$$
+```
 
 and:
 
-$$
+```math
 E[(U-Y)^2]\le U_M.
-$$
+```
 
 These are exactly the five input envelopes required by S2.8.
 
@@ -335,11 +335,11 @@ These are exactly the five input envelopes required by S2.8.
 
 S2.8 deterministically transforms every valid simultaneous event of the form above into:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 D_{\mathrm{LT}}.
-$$
+```
 
 Therefore the lower bound holds with probability at least `1-delta`.
 
@@ -349,51 +349,51 @@ The positive-certificate and first-person conclusions are exactly the correspond
 
 Suppose `K` candidate predictor/accessibility rules are fixed independently of the certification sample. Give candidate `k` a predeclared failure budget:
 
-$$
+```math
 \delta_k>0,
 \qquad
 \sum_{k=1}^K\delta_k\le\delta.
-$$
+```
 
 Apply S2.9 to candidate `k` using:
 
-$$
+```math
 t_k
 =
 \log\frac{10}{\delta_k}.
-$$
+```
 
 Then, with probability at least `1-delta`, every candidate's light-tail certificate is simultaneously valid. Any data-dependent choice among those predeclared candidates therefore inherits its corresponding lower bound, exactly as in S2.7.
 
 For equal allocation:
 
-$$
+```math
 \delta_k=\frac{\delta}{K},
-$$
+```
 
 the common logarithmic factor becomes:
 
-$$
+```math
 \log\frac{10K}{\delta}.
-$$
+```
 
 ## Corollary S2.9.2 — relation to S2.5
 
 S2.5 and S2.9 are parallel instantiations of S2.8:
 
-$$
+```math
 \text{bounded Hoeffding envelopes}
 \longrightarrow
 \text{S2.8}
-$$
+```
 
 versus:
 
-$$
+```math
 \text{light-tail sub-Gaussian/Bernstein envelopes}
 \longrightarrow
 \text{S2.8}.
-$$
+```
 
 Neither dominates the other uniformly. The bounded version uses deterministic ranges; the light-tail version permits unbounded variables when valid concentration parameters are available.
 
@@ -403,13 +403,13 @@ Neither dominates the other uniformly. The bounded version uses deterministic ra
 
 Sub-Gaussian control of `Y` and `S` alone is not, by itself, the full input to this theorem. The proof explicitly requires valid concentration parameters for:
 
-$$
+```math
 YS,
 \qquad
 S^2,
 \qquad
 (U-Y)^2.
-$$
+```
 
 In many standard light-tail models these derived variables are sub-exponential, but the constants depend on the precise norm or mgf convention. S2.9 therefore takes their Bernstein parameters as explicit inputs rather than silently assuming universal constants.
 
@@ -425,9 +425,9 @@ Finite variance alone does not imply the sub-Gaussian/Bernstein concentration as
 
 If:
 
-$$
+```math
 D_{\mathrm{LT}}\le0,
-$$
+```
 
 S2.9 does not certify positive covariance at the selected confidence level. This is not evidence that the true covariance is nonpositive.
 

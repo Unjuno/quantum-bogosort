@@ -6,17 +6,17 @@ Ordinary policy improvement and QBS conditioning need not add independently. The
 
 For a fixed selector:
 
-$$
+```math
 D=U_1-U_0,
-$$
+```
 
 and:
 
-$$
+```math
 I
 =
 \frac{\mathrm{Cov}(D,S)}{E[S]}.
-$$
+```
 
 If ordinary adaptation preferentially rescues low-accessibility bad states, the interaction should be nonpositive.
 
@@ -38,27 +38,27 @@ Compare observed interaction with the exact covariance prediction.
 
 Allow policy to change both outcome and selector map. Decompose:
 
-$$
+```math
 I
 =
 I_{target}+I_{map},
-$$
+```
 
 where:
 
-$$
+```math
 I_{target}
 =
 \frac{\mathrm{Cov}(D,S_0)}{E[S_0]},
-$$
+```
 
 and:
 
-$$
+```math
 I_{map}
 =
 Q(U_1,S_1)-Q(U_1,S_0).
-$$
+```
 
 ## D — Data / Result
 

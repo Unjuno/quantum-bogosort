@@ -8,12 +8,13 @@ This file records the current post-v0.2 research state. It does not duplicate th
 
 - stable v0.2 scientific snapshot: branch `release/v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
 - stable snapshot ledger: [`STATUS.md`](STATUS.md);
-- current cumulative post-v0.2 review candidate: PR #21;
+- current integrated post-v0.2 review surface: `main`;
+- post-v0.2 integration merge commit: `042fb12d070a51b37310792b882136a0ea6a58f8`;
 - canonical claim/theorem/evidence index: [`docs/research_map.md`](docs/research_map.md);
 - authoritative claim boundaries: [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md);
 - future work: [`ROADMAP.md`](ROADMAP.md).
 
-PRs #11–#20 are historical development provenance and are superseded for current review by PR #21.
+PRs #11–#20 preserve the staged derivation history. PR #21 is the cumulative integration PR that brought the corrected post-v0.2 review candidate onto `main`.
 
 ## Locked core
 
@@ -57,7 +58,7 @@ The central covariance identities and inequalities are unchanged.
 
 ## Computational status
 
-E1–E5 remain locked and reproducible under GitHub Actions. CI also validates Markdown math delimiters, repository structure, manifest references, figure generation, manuscript build, and PDF output.
+E1–E5 remain locked and reproducible under GitHub Actions. CI also validates Markdown math delimiters, repository-relative Markdown links, repository structure, manifest references, figure generation, manuscript build, and PDF output.
 
 No sixth core experiment is planned by default.
 
@@ -95,4 +96,4 @@ Do not add another S2-numbered theorem by default. Add new mathematical machiner
 
 ## Historical provenance
 
-PRs #11–#20 preserve the derivation path but are not authoritative current statements when later proof reviews corrected assumptions or boundary constructions. PR #21 is the single cumulative current review surface.
+PRs #11–#20 preserve the staged derivation path and earlier review surfaces. PR #21 preserves the cumulative integration history. Current authoritative post-v0.2 statements are the files on `main`.

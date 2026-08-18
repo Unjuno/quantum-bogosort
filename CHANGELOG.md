@@ -10,7 +10,7 @@
 - aligned manuscript recognition wording with an information-state / policy-selection interpretation to avoid implying a privileged physical causal role for recognition itself;
 - added a Mermaid dependency diagram to the root README and an experiment/theorem Mermaid map to `experiments/README.md`;
 - embedded the committed SVG theorem/simulation figures directly into the root README, experiment index, and figure-provenance page so results are visually inspectable without opening raw CSV files;
-- hardened `scripts/validate_markdown_math.py` so double-dollar display delimiters must be balanced and placed on delimiter-only lines, preventing GitHub-rendering failures such as `$$ expression` on one line;
+- hardened `scripts/validate_markdown_math.py` so double-dollar display delimiters must be balanced and placed on delimiter-only lines, preventing display openers and expressions from sharing a line;
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
 - removed public repository-process wording that depended on tool availability;
 - removed merged/superseded development branches while preserving `main` and the frozen release snapshots;

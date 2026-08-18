@@ -31,6 +31,12 @@ flowchart LR
 
 Monotone accessibility produces the theorem-predicted CDF ordering; the nonmonotone control shows why positive mean uplift alone is not enough for FOSD.
 
+### E2 — Learned predictive alignment
+
+[![Interaction-capable, misspecified, and random evaluators across noise levels](../figures/generated/fig7_predictive_alignment.svg)](E2_LEARNED_AGENT.md)
+
+The interaction-capable evaluator retains substantial score/outcome correlation as noise rises, while the misspecified linear evaluator and random control remain near zero. This is the classical toy-model mechanism behind the predictive-alignment line, not evidence for an Everett bridge.
+
 ### E3 — Recognition decomposition
 
 [![Policy, QBS, and total recognition effects](../figures/generated/fig3_recognition_decomposition.svg)](E3_RECOGNITION.md)
@@ -43,13 +49,17 @@ The paired experiment separates the ordinary policy/trajectory term from the fir
 
 Rescue-bad, neutral, and amplify-good policies demonstrate that the policy-QBS interaction sign is structure-dependent rather than universally positive or negative.
 
-### E4/E5 — Adaptation quality and branch coherence
+### E4 — Adaptation quality
 
 [![Adaptation quality sweep](../figures/generated/fig5_adaptation_quality.svg)](E4_INTERACTION.md)
 
+This sweep keeps policy effect, post-policy QBS contribution, interaction, and total first-person effect visually separate.
+
+### E5 — Branch coherence
+
 [![Cross-copy action correlation and first-person gain](../figures/generated/fig6_branch_coherence.svg)](E5_BRANCH_MAP.md)
 
-The final two figures separate targeting quality, total first-person effect, and cross-copy coherence instead of treating them as one quantity.
+The branch-coherence plot separates cross-copy action-correlation change from single-observer first-person gain.
 
 ## Reproduction
 

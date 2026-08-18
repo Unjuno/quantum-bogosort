@@ -32,12 +32,12 @@ E4 tests the exact sign identity for fixed accessibility and the generalized tar
 \label{fig:interaction-sign}
 \end{figure}
 
-The broader adaptation sweep in Figure~\ref{fig:adaptation-substitution} shows that increasing ordinary targeting accuracy can increase total first-person value even while making the policy--selection interaction more negative. This is the expected substitution pattern when ordinary adaptation increasingly rescues states that the selector would otherwise downweight.
+The broader adaptation sweep in Figure~\ref{fig:adaptation-substitution} is generated from the locked E4 adaptation summary rather than from the current \texttt{exp4\_interaction.py} reproduction output. It shows that increasing ordinary targeting accuracy can increase total first-person value even while making the policy--selection interaction more negative. This is the expected substitution pattern when ordinary adaptation increasingly rescues states that the selector would otherwise downweight.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.84\linewidth]{../figures/generated_pdf/fig5_adaptation_quality.pdf}
-\caption{Classical adaptation-quality sweep associated with the E4 interaction mechanism. Better targeting raises the ordinary policy effect and total first-person effect, while the marginal post-policy QBS contribution falls and the interaction becomes more negative. The result demonstrates partial substitution, not a universal law about adaptation.}
+\caption{Classical adaptation-quality sweep associated with the E4 interaction mechanism, generated from the locked historical adaptation summary. The current E4 reproduction script covers the fixed-selector and general selector-map identities, not this sweep. Better targeting raises the ordinary policy effect and total first-person effect, while the marginal post-policy QBS contribution falls and the interaction becomes more negative. The result demonstrates partial substitution, not a universal law about adaptation.}
 \label{fig:adaptation-substitution}
 \end{figure}
 
@@ -54,4 +54,4 @@ Figure~\ref{fig:branch-coherence} emphasizes the main distinction: cross-copy ac
 \label{fig:branch-coherence}
 \end{figure}
 
-\paragraph{Reproducibility.} All five scripts are executed by GitHub Actions. Locked historical summaries and current reproduction outputs are stored in the repository. The figure PDFs are generated from committed source data before the LaTeX build. The experiments are formal-model stress tests and mechanism demonstrations, not empirical tests of Everettian observer selection.
+\paragraph{Reproducibility.} All five scripts are executed by GitHub Actions. Locked historical summaries and current reproduction outputs are stored in the repository and are not interchangeable provenance classes. The figure PDFs are generated from committed source data before the LaTeX build; figure-level provenance is recorded in the repository figure index. The experiments are formal-model stress tests and mechanism demonstrations, not empirical tests of Everettian observer selection.

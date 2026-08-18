@@ -247,7 +247,7 @@ Then:
 $$
 \boxed{
 P\!\left(
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 D_{\mathrm{LT}}
 \right)
@@ -336,7 +336,7 @@ These are exactly the five input envelopes required by S2.8.
 S2.8 deterministically transforms every valid simultaneous event of the form above into:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 D_{\mathrm{LT}}.
 $$

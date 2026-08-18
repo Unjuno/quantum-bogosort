@@ -39,7 +39,7 @@ The repository-wide claim boundary is [`../docs/claims_and_assumptions.md`](../d
 
 Repository completeness does not imply equal manuscript prominence. The current main text presents one conceptual spine:
 
-$$
+```math
 \text{S2 predictive alignment}
 \longrightarrow
 \text{S2.11 general accessibility}
@@ -47,7 +47,7 @@ $$
 \text{S2.12 residual penalty}
 \longrightarrow
 \text{S2.13 explained-variance interpretation}.
-$$
+```
 
 S2.2 appears as the posterior-mean calibration corollary.
 
@@ -66,12 +66,12 @@ No new S2-numbered theorem should be added by default. New theorem work should r
 
 The S2 family concerns probability, prediction, accessibility variables, and statistical certification. It does not derive the physical bridge:
 
-$$
+```math
 d\mu^{FP}_\pi(\omega)
 =
 \frac{S_\pi(\omega)}{E[S_\pi]}
 \,d\mu(\omega)
-$$
+```
 
 from Everettian quantum mechanics. The bridge remains a separate physical assumption and review target.
 
@@ -100,7 +100,7 @@ GitHub Actions performs figure generation and LaTeX/PDF validation automatically
 
 ## Current review state
 
-The current frozen public-review snapshot is `release/v0.3-public-review`. The previous v0.2 snapshot remains archived at `release/v0.2-public-review`.
+The current frozen public-review snapshot is tag/Release `v0.3-public-review`. The previous v0.2 snapshot remains archived at tag/Release `v0.2-public-review`.
 
 The manuscript files on `main` are the current review/development surface. Historical PRs #11–#21 remain available for derivation provenance only.
 

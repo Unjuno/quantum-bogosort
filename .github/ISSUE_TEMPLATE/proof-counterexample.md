@@ -12,7 +12,7 @@ Theorem/corollary/proposition ID:
 
 File and section:
 
-Stable v0.2 or active PR #21:
+Stable v0.2 snapshot or current `main`:
 
 ## Exact claim disputed
 

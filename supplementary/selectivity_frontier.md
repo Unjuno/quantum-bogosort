@@ -20,16 +20,16 @@ This is compatible with the FOSD theorem. The theorem compares the base measure 
 
 A useful constrained formulation is:
 
-$$
+```math
 \max_{S\in\mathcal S}
 V_{FP}(S)
-$$
+```
 
 subject to:
 
-$$
+```math
 E[S]\ge m_{min},
-$$
+```
 
 where `m_min` is a minimum accessible-measure requirement.
 

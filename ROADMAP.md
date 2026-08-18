@@ -1,10 +1,10 @@
 # QBS Research Roadmap
 
-This file tracks future work. Completed theorem details belong in [`docs/research_map.md`](docs/research_map.md) and current state belongs in [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md).
+This file tracks future work. Completed theorem details belong in [`docs/research_map.md`](docs/research_map.md), the frozen snapshot belongs in [`STATUS.md`](STATUS.md), and current review state belongs in [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md).
 
 ## Current phase
 
-The project is in post-v0.2 public/preprint review preparation.
+The project is in **v0.3 public review / preprint preparation**.
 
 The locked core remains T1–T5 and E1–E5. The supplementary line is complete through S2.13. The default next step is review quality, not theorem expansion.
 
@@ -19,21 +19,21 @@ The locked core remains T1–T5 and E1–E5. The supplementary line is complete 
 
 ## Repository and reproducibility gates
 
-- [ ] Keep PR #21 CI-green after editorial cleanup.
-- [ ] Keep the root README, research map, claim ledger, notation, development status, and roadmap free of conflicting source-of-truth roles.
-- [ ] Validate important repository-relative Markdown links in CI.
+- [ ] Keep `main` CI-green after review-driven editorial or scientific corrections.
+- [ ] Keep README, research map, claim ledger, notation, status, and roadmap free of conflicting source-of-truth roles.
+- [x] Validate repository-relative Markdown links in CI.
 - [ ] Keep E1–E5 as the locked reproducibility suite unless a review identifies a concrete missing core test.
 - [ ] Preserve deterministic figure regeneration and manuscript PDF verification.
+- [ ] Remove merged/superseded `agent/*` branches when a branch-delete interface is available; retain `main` and release snapshot branches.
 
 ## Publication gates
 
 - [ ] Resolve review-driven mathematical or citation corrections.
-- [ ] Freeze the post-v0.2 manuscript candidate after substantive review stabilizes.
+- [ ] Freeze the manuscript candidate after substantive review stabilizes.
 - [ ] Finalize author/citation metadata for the preprint version.
-- [ ] Decide the preprint version identifier and update `CITATION.cff` consistently.
-- [ ] Create a formal GitHub Release/tag for `v0.2-public-review` if release-write access becomes available and it remains useful for archival clarity.
 - [ ] Prepare `v1.0-preprint` only after review-driven revisions stabilize.
 - [ ] Add DOI/arXiv metadata only when an identifier actually exists.
+- [ ] Create formal GitHub Release/tag objects for public-review snapshots if release-write access becomes available and archival value justifies them.
 
 ## Deferred mathematical work
 

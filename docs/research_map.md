@@ -1,8 +1,8 @@
 # QBS Research Map
 
-This document links claims to proofs, experiments, statistical validation, and interpretation status.
+This is the canonical index from QBS claims to theorem sources, experiments, manuscript material, and interpretation status.
 
-## Core causal structure
+## 1. Core architecture
 
 $$
 R
@@ -12,198 +12,166 @@ R
 (U_R,S_R).
 $$
 
-Policies are compared on common primitive randomness whenever paired counterfactuals are used.
+For a policy `pi` with nonnegative accessibility and positive finite expected accessibility:
 
-## Claim-to-evidence map
+$$
+V_{FP}(\pi)
+=
+\frac{E_\mu[U_\pi S_\pi]}{E_\mu[S_\pi]}.
+$$
 
-| Claim | Type | Mathematical source | Computational source | Interpretation status |
+The repository separates three questions:
+
+1. what follows mathematically from the weighted-measure model;
+2. what is reproduced in classical simulations or statistically certified under stated assumptions;
+3. whether a physical Everett model supplies the proposed accessibility map.
+
+## 2. Core theorem map: T1–T5
+
+| ID | Claim | Type | Primary source | Computational check |
 |---|---|---|---|---|
-| FP mean shift equals normalized outcome/accessibility covariance | Exact theorem | T1 | E1 | Measure-theoretic |
-| Tail shift has the same covariance form | Exact theorem | T2 | E1 | Measure-theoretic |
-| Monotone conditional accessibility implies FOSD | Exact theorem | T3 | E1 | Measure-theoretic |
-| Recognition effect decomposes into trajectory and conditioning terms | Exact theorem | T4 | E3 | Policy model |
-| Policy–QBS interaction decomposes into targeting and selector-map effects | Exact theorem | T5 | E4 | Policy model |
-| Adaptive rescue can make policy and QBS partially substitutive | Exact sufficient condition + simulation | C5.1 | E4 | Agent mechanism |
-| Conditional-mean alignment plus score-measurable accessibility implies nonnegative covariance | Exact supplementary theorem | S2 | E2/E3 illustrate premises | Agent mechanism |
-| Posterior-mean scores self-calibrate | Exact corollary | S2.2 | none required | Agent inference |
-| Calibration error / prediction MSE yield population sufficient bounds | Exact sufficient bounds | S2.3–S2.4 | none required | Agent-learning layer |
-| Bounded independent held-out data can certify covariance | Exact finite-sample theorem | S2.5 | none required | Statistical validation |
-| Independent training and finite candidate selection can preserve coverage | Exact validity theorems | S2.6–S2.7 | none required | Statistical validation |
-| Any valid five-moment simultaneous envelope composes into a certificate | Exact composition theorem | S2.8 | none required | Statistical validation |
-| Light-tail envelopes instantiate S2.8 | Exact instantiation | S2.9 | none required | Statistical validation |
-| Median-of-means envelopes instantiate S2.8 | Exact robust instantiation | S2.10 | none required | Statistical validation |
-| General accessibility decomposes into conditional-mean alignment plus residual conditional covariance | Exact extension | S2.11 | future model diagnostics | Agent / observer model |
-| Conditional variances give a sharp universal lower bound on the residual term | Exact lower certificate | S2.12 | future variance diagnostics | Agent / observer model |
-| Explained-variance fractions and conditional-mean correlation reparameterize the residual certificate | Exact normalized certificate | S2.13 | future predictive diagnostics | Agent / observer model |
-| Shared recognition can create cross-copy decision coherence under hierarchical assumptions | Exact supplementary theorem + simulation | S1 | E5 | Hierarchical branch model |
-| Everett self-location follows the QBS accessibility bridge | Assumption | bridge documents | none establishes it physically | Open physical mapping |
+| T1 | FP mean shift equals normalized outcome/accessibility covariance | EXACT THEOREM | [`theory/core_theorems.md`](../theory/core_theorems.md) | E1 |
+| T2 | Tail shift has the same covariance form | EXACT THEOREM | [`theory/core_theorems.md`](../theory/core_theorems.md) | E1 |
+| T3 | Monotone conditional accessibility implies FOSD | EXACT THEOREM | [`theory/core_theorems.md`](../theory/core_theorems.md) | E1 |
+| T4 | Recognition decomposes into trajectory and conditioning effects | EXACT THEOREM | [`theory/core_theorems.md`](../theory/core_theorems.md) | E3 |
+| T5 | Policy–QBS interaction decomposes into targeting and selector-map effects | EXACT THEOREM | [`theory/core_theorems.md`](../theory/core_theorems.md) | E4 |
 
-## Main value decomposition
+The locked core theorem set stops at T5.
 
-$$
-V_1-V_0
-=
-E[U_1-U_0]
-+
-Q(U_1,S_1)-Q(U_0,S_0),
-$$
+## 3. Core experiment map: E1–E5
 
-where:
+| ID | Purpose | Evidence class | Card |
+|---|---|---|---|
+| E1 | covariance, tail shift, FOSD, independence null, nonmonotone counterexample | CLASSICAL SIMULATION | [`experiments/E1_FOSD.md`](../experiments/E1_FOSD.md) |
+| E2 | endogenous predictive alignment in a minimal learned agent | CLASSICAL SIMULATION | [`experiments/E2_LEARNED_AGENT.md`](../experiments/E2_LEARNED_AGENT.md) |
+| E3 | paired recognition decomposition and recognition-label null | CLASSICAL SIMULATION | [`experiments/E3_RECOGNITION.md`](../experiments/E3_RECOGNITION.md) |
+| E4 | fixed/changing-selector interaction decomposition | CLASSICAL SIMULATION | [`experiments/E4_INTERACTION.md`](../experiments/E4_INTERACTION.md) |
+| E5 | marginal FP uplift versus cross-copy policy coherence | CLASSICAL SIMULATION | [`experiments/E5_BRANCH_MAP.md`](../experiments/E5_BRANCH_MAP.md) |
+
+These simulations reproduce the formal structure. They are not empirical evidence for an Everettian accessibility law.
+
+## 4. Supplementary conceptual spine
+
+The post-v0.2 line should be read as one argument:
 
 $$
-Q(U,S)
-=
-\frac{\operatorname{Cov}(U,S)}{E[S]}.
+\text{predictive signal}
+\longrightarrow
+\text{conditional-mean alignment}
+\longrightarrow
+\text{outcome/accessibility covariance}
+\longrightarrow
+\text{first-person shift}.
 $$
 
-## Predictive alignment and statistical chain
+The principal conceptual results are:
 
-For:
+| ID | Role | Type | Primary source |
+|---|---|---|---|
+| S2 | score-measurable accessibility projects covariance onto conditional means | EXACT SUPPLEMENTARY THEOREM | [`supplementary/adaptive_agent.md`](../supplementary/adaptive_agent.md) |
+| S2.2 | posterior-mean scores self-calibrate | EXACT COROLLARY | [`supplementary/adaptive_agent.md`](../supplementary/adaptive_agent.md) |
+| S2.11 | general accessibility equals conditional-mean alignment plus residual conditional covariance | EXACT SUPPLEMENTARY THEOREM | [`supplementary/residual_covariance_extension.md`](../supplementary/residual_covariance_extension.md) |
+| S2.12 | conditional variances give a sharp universal worst-case residual penalty | SUFFICIENT LOWER CERTIFICATE | [`supplementary/residual_variance_certificate.md`](../supplementary/residual_variance_certificate.md) |
+| S2.13 | explained-variance fractions and conditional-mean correlation reparameterize S2.12 | SUFFICIENT NORMALIZED CERTIFICATE | [`supplementary/explained_variance_certificate.md`](../supplementary/explained_variance_certificate.md) |
 
-$$
-m(Y)=E[U\mid Y],
-\qquad
-S=s(Y),
-$$
-
-S2 gives:
+The central general-accessibility identity is:
 
 $$
 \operatorname{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),s(Y)).
-$$
-
-S2.2 gives posterior-mean calibration. S2.3–S2.4 give calibration/MSE population bounds. S2.5–S2.10 supply bounded, selection-safe, generic-envelope, light-tail, and MoM finite-sample layers.
-
-## General accessibility and residual structure
-
-Define:
-
-$$
-m(Y)=E[U\mid Y],
-\qquad
-a(Y)=E[S\mid Y].
-$$
-
-S2.11 gives:
-
-$$
-\operatorname{Cov}(U,S)
-=
-\operatorname{Cov}(m(Y),a(Y))
+\operatorname{Cov}(E[U\mid Y],E[S\mid Y])
 +
 E[\operatorname{Cov}(U,S\mid Y)].
 $$
 
-S2.12 bounds the unknown residual term by conditional variances:
+S2.12 and S2.13 are sufficient worst-case certificates. Failure of either certificate does not imply negative total covariance.
+
+## 5. Statistical certification layer
+
+S2.3–S2.10 support the conceptual spine but are not separate conceptual pillars.
+
+| IDs | Role | Type | Primary source |
+|---|---|---|---|
+| S2.3–S2.4 | calibration-error and prediction-MSE population robustness | SUFFICIENT POPULATION BOUNDS | [`supplementary/adaptive_agent.md`](../supplementary/adaptive_agent.md) |
+| S2.5 | bounded independent-held-out finite-sample certificate | STATISTICAL CERTIFICATE | [`supplementary/finite_sample_certificate.md`](../supplementary/finite_sample_certificate.md) |
+| S2.6–S2.7 | independent training and multiplicity-corrected finite candidate selection | STATISTICAL VALIDITY | [`supplementary/selection_validity.md`](../supplementary/selection_validity.md) |
+| S2.8 | generic simultaneous moment-envelope composition | STATISTICAL CERTIFICATE | [`supplementary/confidence_envelope_certificate.md`](../supplementary/confidence_envelope_certificate.md) |
+| S2.9 | sub-Gaussian/Bernstein light-tail instantiation | STATISTICAL INSTANTIATION | [`supplementary/light_tail_certificate.md`](../supplementary/light_tail_certificate.md) |
+| S2.10 | median-of-means finite-moment instantiation | ROBUST STATISTICAL INSTANTIATION | [`supplementary/robust_mom_certificate.md`](../supplementary/robust_mom_certificate.md) |
+
+Training/certification leakage, uncorrected model selection, or invalid moment assumptions invalidate the corresponding finite-sample guarantee.
+
+## 6. Other supplementary results
+
+| ID/topic | Role | Source |
+|---|---|---|
+| S1 | hierarchical recognition can produce nonnegative cross-copy action covariance under the stated conditional-independence structure | [`supplementary/branch_recognition.md`](../supplementary/branch_recognition.md) |
+| recognition time | recognition as a stopping-time extension; no universal early-recognition ordering theorem | [`supplementary/recognition_time.md`](../supplementary/recognition_time.md) |
+| repeated filtering | repeated adverse-trigger accessibility identities | [`supplementary/repeated_filtering.md`](../supplementary/repeated_filtering.md) |
+| selectivity frontier | tradeoff between selectivity, prediction quality, and accessible measure | [`supplementary/selectivity_frontier.md`](../supplementary/selectivity_frontier.md) |
+
+The complete supplementary index is [`supplementary/README.md`](../supplementary/README.md).
+
+## 7. First-person shift versus objective chance
+
+QBS changes the first-person weighting in the model when accessibility and outcome are aligned. The base measure itself is not thereby changed.
+
+A convenient summary is:
 
 $$
-\operatorname{Cov}(U,S)
-\ge
-\operatorname{Cov}(m(Y),a(Y))
--
-\sqrt{E[v_U(Y)]E[v_S(Y)]}.
+\text{base chance unchanged}
+\qquad\text{while}\qquad
+\text{first-person trajectory weight changes}.
 $$
 
-## Explained-variance form: S2.13
+Thus a favorable first-person shift is a statement about the observer-conditioned distribution, not a claim that an external random-number generator becomes causally biased.
 
-Define:
+Canonical terminology is maintained in [`docs/notation.md`](notation.md).
+
+## 8. Everett bridge
+
+The physical bridge is a separate model assumption:
 
 $$
-A_U
+d\mu^{FP}_\pi(\omega)
 =
-\frac{\operatorname{Var}(m(Y))}{\operatorname{Var}(U)},
-\qquad
-A_S
-=
-\frac{\operatorname{Var}(a(Y))}{\operatorname{Var}(S)}.
+\frac{S_\pi(\omega)}{E_\mu[S_\pi]}
+\,d\mu(\omega).
 $$
 
-When both explained fractions are positive, define:
+The abstract change-of-measure mathematics is exact after the model is defined. A physical Everett interpretation additionally requires an independent account of why observer persistence or self-location induces the proposed `S_pi`.
 
-$$
-\rho_{ma}
-=
-\operatorname{Corr}(m(Y),a(Y)).
-$$
+See [`docs/everett_bridge_tests.md`](everett_bridge_tests.md) for support, constraint, and rejection criteria.
 
-Then:
+## 9. Claim boundaries
 
-$$
-\operatorname{Cov}(U,S)
-\ge
-\sqrt{\operatorname{Var}(U)\operatorname{Var}(S)}
-\left[
-\rho_{ma}\sqrt{A_UA_S}
--
-\sqrt{(1-A_U)(1-A_S)}
-\right].
-$$
+The authoritative classification of theorem claims, simulations, assumptions, bridge claims, and non-claims is [`docs/claims_and_assumptions.md`](claims_and_assumptions.md).
 
-Thus:
+Important boundaries include:
 
-$$
-\rho_{ma}\sqrt{A_UA_S}
->
-\sqrt{(1-A_U)(1-A_S)}
-$$
+- positive covariance does not by itself imply FOSD;
+- pure reweighting does not create support absent from the fixed-policy base measure;
+- zero expected accessibility makes the normalized FP measure undefined;
+- mutual information alone does not imply positive QBS covariance;
+- S2.11 requires the residual conditional-covariance term outside score-measurable accessibility;
+- statistical certification does not establish the Everett bridge.
 
-is sufficient for positive total covariance.
+## 10. Manuscript and proof-review path
 
-For:
+The manuscript is in [`paper/`](../paper/). The current main-text S2 presentation is intentionally compressed to the conceptual spine, while S2.3–S2.10 are Appendix-first.
 
-$$
-\rho_{ma}=1,
-$$
+The dedicated post-v0.2 proof review is [`docs/post_v02_core_s2_proof_review.md`](post_v02_core_s2_proof_review.md). The editorial dependency map is [`docs/s2_stack_review_map.md`](s2_stack_review_map.md).
 
-this simplifies to:
+## 11. Current open research questions
 
-$$
-A_U+A_S>1.
-$$
+The current review gate is external proof, novelty, and physical-bridge scrutiny rather than automatic theorem expansion.
 
-For:
+Open questions include:
 
-$$
-A_U=A_S=A,
-$$
+- what physical mechanism, if any, induces the Everett accessibility map;
+- whether the current S2.13 explained-variance summary should remain in the manuscript main text after review;
+- whether some S2.5–S2.10 material belongs only in repository supplementary material;
+- whether reviewers identify a concrete need for stronger finite-sample or model-selection theory;
+- under what motivated assumptions recognition time admits a useful ordering theorem.
 
-the sufficient threshold is:
-
-$$
-A>
-\frac{1}{1+\rho_{ma}}.
-$$
-
-This is a worst-case residual certificate, not a necessary condition.
-
-## What E1–E5 establish
-
-- **E1:** weighting/FOSD, independence null, nonmonotone counterexample.
-- **E2:** endogenous predictive ordering in a minimal learned agent.
-- **E3:** paired recognition decomposition.
-- **E4:** policy–QBS interaction decomposition.
-- **E5:** marginal FP uplift versus cross-copy coherence.
-
-These are classical simulations of the formal structure, not evidence that the Everett bridge is physically correct.
-
-## Current unresolved questions
-
-- What physical mechanism, if any, induces the Everett accessibility map?
-- How can `A_U`, `A_S`, and `rho_ma` be estimated with finite-sample confidence in learned-agent models?
-- Can robust estimators weaken S2.10's higher-moment requirements?
-- What explicit Orlicz/mgf assumptions give convenient S2.9 constants?
-- How should certification extend to infinite/data-dependent candidate classes?
-- Under what assumptions can recognition time be ordered?
-
-## Failure structure
-
-- independence gives zero pure weighting uplift;
-- nonmonotone conditional accessibility can break FOSD;
-- dependence without conditional-mean ordering is insufficient for S2;
-- negative residual dependence can overturn score-level alignment;
-- S2.12/S2.13 can be conservative because they use worst-case residual penalties;
-- statistical certificate failure is inconclusive;
-- invalid concentration/moment assumptions invalidate their finite-sample certificate;
-- rejecting the Everett bridge removes the physical interpretation but not the abstract mathematical results.
+Future work is tracked in [`ROADMAP.md`](../ROADMAP.md). Current state is tracked in [`DEVELOPMENT_STATUS.md`](../DEVELOPMENT_STATUS.md).

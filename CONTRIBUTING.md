@@ -16,24 +16,25 @@ Identify which layer the concern applies to:
 
 Do not collapse these layers. For example, failure of the Everett bridge is not by itself a counterexample to the abstract covariance identity.
 
-## Current and stable review targets
+## Current review targets
 
-- Stable v0.2 snapshot: `release/v0.2-public-review`
-- Stable status ledger: `STATUS.md`
-- Current integrated post-v0.2 review surface: `main`
-- Current development status: `DEVELOPMENT_STATUS.md`
-- Historical development provenance: PRs #11–#21
+- Current frozen public-review snapshot: `release/v0.3-public-review`
+- Current review/development surface: `main`
+- Snapshot ledger: `STATUS.md`
+- Current review/development status: `DEVELOPMENT_STATUS.md`
+- Previous archived snapshot: `release/v0.2-public-review`
+- Historical derivation provenance: PRs #11–#21
 
-Review current post-v0.2 mathematics against `main`. Use the historical PRs only when tracing derivation provenance or earlier formulations.
+Review current mathematics against the v0.3 snapshot or `main`. Use historical PRs only when tracing derivation provenance or earlier formulations.
 
 ## Proof or counterexample reports
 
 Please include:
 
-- exact theorem/corollary identifier;
+- exact theorem/corollary/proposition identifier;
 - file and section;
 - assumptions being used;
-- the exact implication or equality you dispute;
+- the exact implication, equality, inequality, assumption, or boundary condition you dispute;
 - a derivation, counterexample, or smallest failing case when possible;
 - whether the issue affects the central result or only a boundary condition.
 
@@ -64,3 +65,7 @@ Please distinguish:
 - empirical rejection of a concrete physical prediction.
 
 The repository does not treat the abstract weighted measure as a derivation of Everettian physics.
+
+## Markdown mathematics
+
+All mathematical expressions in GitHub Markdown files must use double-dollar display blocks. Do not use single-dollar math, parenthesis delimiters, or bracket delimiters.

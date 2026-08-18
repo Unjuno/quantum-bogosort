@@ -10,47 +10,47 @@ This note formalizes that timing variable without claiming that earlier recognit
 
 Let:
 
-$$
+```math
 (\Omega,\mathcal F,(\mathcal F_t)_{t\ge0},\mu)
-$$
+```
 
 be a filtered probability space. Let `C_t` be an adapted recognition-confidence process:
 
-$$
+```math
 C_t
 \in
 \mathcal F_t.
-$$
+```
 
 Fix an activation threshold `kappa`. Define recognition time by:
 
-$$
+```math
 \tau_{\mathrm{rec}}
 =
 \inf\{t\ge0:C_t\ge\kappa\}.
-$$
+```
 
 If for each `t` the event:
 
-$$
+```math
 \{C_t\ge\kappa\}
-$$
+```
 
 is measurable with respect to:
 
-$$
+```math
 \mathcal F_t,
-$$
+```
 
 then `tau_rec` is a stopping time because:
 
-$$
+```math
 \{\tau_{\mathrm{rec}}\le t\}
 =
 \bigcup_{s\le t}\{C_s\ge\kappa\}
 \in
 \mathcal F_t
-$$
+```
 
 in discrete time, with the usual right-continuity/measurability qualifications in continuous time.
 
@@ -58,62 +58,62 @@ in discrete time, with the usual right-continuity/measurability qualifications i
 
 Let `pi_0` denote the baseline policy and `pi_1` the recognition-dependent policy. Define the sequential policy by:
 
-$$
+```math
 \pi_t^{(\tau)}
 =
 \begin{cases}
 \pi_0, & t<\tau_{\mathrm{rec}},\\
 \pi_1, & t\ge\tau_{\mathrm{rec}}.
 \end{cases}
-$$
+```
 
 The resulting trajectory utility and accessibility are functions of the stopping rule:
 
-$$
+```math
 U_{\tau}
 =
 U(\pi^{(\tau)},\omega),
-$$
+```
 
-$$
+```math
 S_{\tau}
 =
 S(\pi^{(\tau)},\omega).
-$$
+```
 
 The first-person value of a recognition-time rule is therefore:
 
-$$
+```math
 V(\tau)
 =
 \frac{E[U_{\tau}S_{\tau}]}{E[S_{\tau}]},
-$$
+```
 
 whenever:
 
-$$
+```math
 0<E[S_{\tau}]<\infty.
-$$
+```
 
 The covariance decomposition applies to each fixed admissible stopping rule:
 
-$$
+```math
 V(\tau)
 =
 E[U_{\tau}]
 +
 \frac{\mathrm{Cov}(U_{\tau},S_{\tau})}{E[S_{\tau}]}.
-$$
+```
 
 ## Why earlier recognition is not automatically better
 
 There is no general theorem that:
 
-$$
+```math
 \tau_1<\tau_2
 \quad\Longrightarrow\quad
 V(\tau_1)\ge V(\tau_2).
-$$
+```
 
 Earlier activation can have competing consequences:
 
@@ -147,24 +147,24 @@ For v0.2:
 
 A useful future result would identify sufficient conditions under which an earlier stopping rule dominates a later one. Such conditions would likely require a pathwise or conditional advantage of the post-recognition policy, together with controlled selector changes. One possible target is to find assumptions implying:
 
-$$
+```math
 E[U_{\tau_1}-U_{\tau_2}]\ge0
-$$
+```
 
 and:
 
-$$
+```math
 Q(U_{\tau_1},S_{\tau_1})
 -
 Q(U_{\tau_2},S_{\tau_2})
 \ge0,
-$$
+```
 
 which would imply:
 
-$$
+```math
 V(\tau_1)\ge V(\tau_2).
-$$
+```
 
 The point of the future theorem would be to make the assumptions explicit rather than infer timing monotonicity from exploratory simulations.
 

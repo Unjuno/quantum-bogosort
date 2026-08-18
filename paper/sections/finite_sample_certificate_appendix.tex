@@ -1,0 +1,234 @@
+\section{Supplementary Corollary S2.5: Finite-Sample Held-Out Certificate}
+
+S2.4 gives the population lower bound
+\[
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(Y,S)
+-
+\sqrt{\mathbb E[(U-Y)^2]\operatorname{Var}(S)}.
+\]
+This section converts that result into a high-probability certificate from independent held-out data.
+
+Let
+\[
+(U_i,Y_i,S_i)_{i=1}^n
+\]
+be i.i.d. held-out observations. The predictor and accessibility rule are assumed fixed before this evaluation sample is drawn, or equivalently the result is applied conditionally on an independently trained fixed model. Assume
+\[
+|Y|\le B_Y,
+\qquad
+0\le S\le B_S,
+\qquad
+|U-Y|\le B_R,
+\]
+with $B_S>0$ and $0<\mathbb E[S]$.
+
+For $0<\delta<1$, define
+\[
+\tau_{n,\delta}
+=
+\sqrt{\frac{\log(10/\delta)}{2n}}.
+\]
+Let
+\[
+\bar Y=\frac1n\sum_iY_i,
+\qquad
+\bar S=\frac1n\sum_iS_i,
+\]
+\[
+\overline{YS}=\frac1n\sum_iY_iS_i,
+\qquad
+\overline{S^2}=\frac1n\sum_iS_i^2,
+\]
+and
+\[
+\widehat M
+=
+\frac1n\sum_i(U_i-Y_i)^2.
+\]
+Define
+\[
+\widehat C
+=
+\overline{YS}-\bar Y\bar S,
+\]
+\[
+C_L
+=
+\widehat C-5B_YB_S\tau_{n,\delta},
+\]
+\[
+M_U
+=
+\min\left\{
+B_R^2,
+\widehat M+B_R^2\tau_{n,\delta}
+\right\},
+\]
+and
+\[
+V_U
+=
+\min\left\{
+\frac{B_S^2}{4},
+\max\left[
+0,
+\overline{S^2}
++B_S^2\tau_{n,\delta}
+-
+\left(\max\{0,\bar S-B_S\tau_{n,\delta}\}\right)^2
+\right]
+\right\}.
+\]
+Finally let
+\[
+D_L=C_L-\sqrt{M_UV_U}.
+\]
+
+\begin{corollary}[Finite-sample held-out certificate]
+With probability at least $1-\delta$ over the held-out sample,
+\[
+\operatorname{Cov}(U,S)\ge D_L.
+\]
+Consequently, if the realized sample satisfies $D_L>0$, then positive population outcome--accessibility covariance is certified at confidence at least $1-\delta$. Under the QBS weighted-measure model, the same event gives
+\[
+\mathbb E_{\mathrm{FP}}[U]-\mathbb E[U]
+\ge
+\frac{D_L}{B_S}>0.
+\]
+\end{corollary}
+
+\begin{proof}
+Hoeffding's inequality and the definition of $\tau_{n,\delta}$ imply that each of the following five two-sided deviations fails with probability at most $\delta/5$:
+\[
+|\mathbb E[Y]-\bar Y|
+\le
+2B_Y\tau_{n,\delta},
+\]
+\[
+|\mathbb E[S]-\bar S|
+\le
+B_S\tau_{n,\delta},
+\]
+\[
+|\mathbb E[YS]-\overline{YS}|
+\le
+2B_YB_S\tau_{n,\delta},
+\]
+\[
+|\mathbb E[S^2]-\overline{S^2}|
+\le
+B_S^2\tau_{n,\delta},
+\]
+and
+\[
+\left|
+\mathbb E[(U-Y)^2]-\widehat M
+\right|
+\le
+B_R^2\tau_{n,\delta}.
+\]
+A union bound gives a simultaneous event of probability at least $1-\delta$.
+
+On this event,
+\[
+\mathbb E[YS]
+\ge
+\overline{YS}-2B_YB_S\tau_{n,\delta}.
+\]
+Furthermore,
+\[
+\mathbb E[Y]\mathbb E[S]-\bar Y\bar S
+=
+(\mathbb E[Y]-\bar Y)\mathbb E[S]
++
+\bar Y(\mathbb E[S]-\bar S).
+\]
+Using $\mathbb E[S]\le B_S$ and $|\bar Y|\le B_Y$ gives
+\[
+\mathbb E[Y]\mathbb E[S]
+\le
+\bar Y\bar S+3B_YB_S\tau_{n,\delta}.
+\]
+Thus
+\[
+\operatorname{Cov}(Y,S)
+\ge
+C_L.
+\]
+
+The squared-residual deviation and the deterministic bound $(U-Y)^2\le B_R^2$ imply
+\[
+\mathbb E[(U-Y)^2]\le M_U.
+\]
+For the accessibility variance,
+\[
+\mathbb E[S^2]
+\le
+\overline{S^2}+B_S^2\tau_{n,\delta}
+\]
+and nonnegativity gives
+\[
+\mathbb E[S]
+\ge
+\max\{0,\bar S-B_S\tau_{n,\delta}\}.
+\]
+Therefore the moment expression in $V_U$ is an upper bound on $\operatorname{Var}(S)$. Popoviciu's inequality independently gives
+\[
+\operatorname{Var}(S)\le\frac{B_S^2}{4},
+\]
+so
+\[
+\operatorname{Var}(S)\le V_U.
+\]
+
+Applying S2.4 then yields
+\[
+\operatorname{Cov}(U,S)
+\ge
+C_L-\sqrt{M_UV_U}
+=
+D_L.
+\]
+This proves the population covariance certificate.
+
+If $D_L>0$, T1 gives
+\[
+\mathbb E_{\mathrm{FP}}[U]-\mathbb E[U]
+=
+\frac{\operatorname{Cov}(U,S)}{\mathbb E[S]}.
+\]
+Because $\mathbb E[S]\le B_S$ and the certified covariance lower bound is positive,
+\[
+\mathbb E_{\mathrm{FP}}[U]-\mathbb E[U]
+\ge
+\frac{D_L}{B_S}.
+\]
+\end{proof}
+
+\begin{corollary}[Consistency]
+Under the boundedness assumptions above, define the population S2.4 margin
+\[
+D_*
+=
+\operatorname{Cov}(Y,S)
+-
+\sqrt{\mathbb E[(U-Y)^2]\operatorname{Var}(S)}.
+\]
+If $D_*>0$, then for every fixed $\delta\in(0,1)$,
+\[
+D_L\to D_*
+\]
+almost surely as $n\to\infty$. Hence $D_L>0$ eventually almost surely.
+\end{corollary}
+
+\begin{proof}
+All empirical moments entering $C_L$, $M_U$, and $V_U$ converge almost surely to their population values by the strong law of large numbers, while $\tau_{n,\delta}\to0$. The deterministic caps in $M_U$ and $V_U$ remain valid and converge to quantities no smaller than the corresponding population moments; because the empirical moment-based bounds converge exactly to the relevant population quantities, $D_L\to D_*$. Strict positivity of $D_*$ therefore implies eventual positivity.
+\end{proof}
+
+\subsection{Boundary conditions}
+
+The confidence statement requires an independent held-out sample relative to model/accessibility selection. Reusing the same observations for training, model selection, threshold tuning, and certification invalidates the stated guarantee unless that adaptivity is accounted for separately.
+
+The boundedness constants must also be valid before certification. Unbounded or heavy-tailed settings require different concentration tools. Finally, $D_L\le0$ is inconclusive: S2.5 is a sufficient certificate and inherits the conservatism of S2.4 with respect to irreducible conditional outcome variance.

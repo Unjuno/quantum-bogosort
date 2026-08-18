@@ -20,6 +20,8 @@ jobs:
         run: python scripts/validate_markdown_math.py
       - name: Validate research repository structure
         run: python scripts/validate_repository_structure.py
+      - name: Validate repository-relative Markdown links
+        run: python scripts/validate_markdown_links.py
       - name: Run reproduction scripts
         run: |
           python experiments/exp1_fosd_and_stress.py

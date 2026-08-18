@@ -2,69 +2,97 @@
 
 **Updated:** 2026-08-18
 
-This file records the active research state. It is intentionally separate from `STATUS.md`, which records the stable v0.2 public-review snapshot.
+This file records the current post-v0.2 research state. It does not duplicate the stable v0.2 snapshot ledger or the detailed theorem map.
 
-## Stable scientific snapshot
+## Source of truth
 
-The frozen v0.2 public-review snapshot is preserved at:
+- stable v0.2 scientific snapshot: branch `release/v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
+- stable snapshot ledger: [`STATUS.md`](STATUS.md);
+- current cumulative post-v0.2 review candidate: PR #21;
+- canonical claim/theorem/evidence index: [`docs/research_map.md`](docs/research_map.md);
+- authoritative claim boundaries: [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md);
+- future work: [`ROADMAP.md`](ROADMAP.md).
 
-- branch: `release/v0.2-public-review`
-- commit: `7405f7408f74fa32b16d1cc9f624070cc14624ab`
+PRs #11–#20 are historical development provenance and are superseded for current review by PR #21.
 
-The stable snapshot contains the locked core theorem set T1–T5, core experiments E1–E5, the v0.2 manuscript, figures, audits, and the physically open Everett bridge.
+## Locked core
 
-## Active post-v0.2 candidate
+The core theorem set remains T1–T5.
 
-The single active post-v0.2 review candidate is:
+The core experiment set remains E1–E5.
 
-- PR #21 — `Consolidate post-v0.2 theory stack into the preprint review candidate`
+Neither set is renumbered or replaced by post-v0.2 supplementary work.
 
-PR #21 is based directly on `main` and contains the cumulative post-v0.2 development.
+## Current post-v0.2 result
 
-The main new mathematical line is the supplementary predictive-alignment family S2 through S2.13. It includes:
+The supplementary line is complete through S2.13 and is presented as one conceptual spine:
 
-- conditional-mean predictive alignment;
-- posterior-mean self-calibration;
-- calibration-error and prediction-MSE robustness;
-- finite-sample and selection-safe statistical certificates;
-- generic confidence-envelope composition;
-- light-tail and robust finite-moment instantiations;
-- exact general-accessibility decomposition with residual conditional covariance;
-- residual-variance and explained-variance sufficient certificates.
+$$
+\text{predictive alignment}
+\longrightarrow
+\text{general accessibility}
+\longrightarrow
+\text{residual penalty}
+\longrightarrow
+\text{explained-variance certificate}.
+$$
 
-The locked core theorem set T1–T5 is unchanged.
+The principal review targets are S2, S2.11, S2.12, and S2.13. S2.3–S2.10 remain technical robustness and statistical-certification layers.
 
-The locked core experiments E1–E5 are unchanged.
+For theorem statements, assumptions, proof sources, and evidence classes, use [`docs/research_map.md`](docs/research_map.md) rather than this status file.
 
-The Everett accessibility bridge remains physically open and is not inferred from the supplementary mathematics or statistical certificates.
+## Proof-review status
 
-## Historical stacked PRs
+[`docs/post_v02_core_s2_proof_review.md`](docs/post_v02_core_s2_proof_review.md) records the dedicated second-pass review of S2, S2.11, S2.12, and S2.13.
 
-PRs #11–#20 are development history. Their cumulative content is superseded for active review by PR #21.
+Result: **PASS WITH THREE CORRECTIONS APPLIED**.
 
-They are retained to preserve the derivation path, but reviewers should not treat an older PR body as the current statement when a later proof audit corrected wording or boundary conditions.
+The corrections concern:
 
-## Current review priorities
+1. explicit square-integrability assumptions for S2.11;
+2. bounded Rademacher counterexample/sharpness constructions for S2.11–S2.12;
+3. the domain and feasibility of the symmetric S2.13 threshold.
 
-Review the active candidate in this order:
+The central covariance identities and inequalities are unchanged.
 
-1. S2, S2.11, S2.12, and S2.13 proofs and boundary conditions;
-2. manuscript claim consistency;
-3. statistical certificate assumptions and selection leakage boundaries;
-4. prior-art overlap;
-5. separation of mathematical results from the Everett physical bridge.
+## Computational status
 
-## Stop rule
+E1–E5 remain locked and reproducible under GitHub Actions. CI also validates Markdown math delimiters, repository structure, manifest references, figure generation, manuscript build, and PDF output.
 
-Do not add another supplementary theorem number by default.
+No sixth core experiment is planned by default.
 
-A new theorem should be added only if it removes a material modeling assumption, closes a concrete review-identified gap, introduces a genuinely new operational quantity, or materially sharpens an existing result under motivated assumptions.
+## Manuscript state
 
-## Source-of-truth rule
+The post-v0.2 main text is compressed to:
 
-Use:
+1. S2 predictive alignment;
+2. S2.2 posterior-mean calibration;
+3. S2.11 general accessibility;
+4. compact S2.12 residual penalty;
+5. S2.13 explained-variance interpretation.
 
-- `STATUS.md` for the stable v0.2 snapshot;
-- this file for current post-v0.2 development;
-- PR #21 for the active cumulative diff;
-- `docs/claims_and_assumptions.md` for the formal separation of mathematical results, simulations, model assumptions, Everett bridge assumptions, and explicit non-claims.
+Detailed S2.3–S2.10 machinery is Appendix-first. The manuscript compression audit and targeted prior-art audit are integrated.
+
+## Physical interpretation status
+
+The abstract weighted-measure mathematics and statistical certificates do not establish an Everettian accessibility law.
+
+The Everett accessibility bridge remains a separate physical open problem. See [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md).
+
+The repository does not claim that an external random-number generator becomes objectively biased. Favorable QBS effects are first-person measure shifts under the model, not causal changes in the base measure.
+
+## Current review gates
+
+Work should now prioritize:
+
+1. external/public proof review of S2, S2.11, S2.12, and S2.13;
+2. prior-art and novelty review of the combined recognition-dependent architecture;
+3. manuscript claim consistency and compression;
+4. statistical-certificate assumption review, including leakage and selection boundaries;
+5. independent scrutiny of the Everett accessibility bridge.
+
+Do not add another S2-numbered theorem by default. Add new mathematical machinery only in response to a concrete modeling gap or review-identified need.
+
+## Historical provenance
+
+PRs #11–#20 preserve the derivation path but are not authoritative current statements when later proof reviews corrected assumptions or boundary constructions. PR #21 is the single cumulative current review surface.

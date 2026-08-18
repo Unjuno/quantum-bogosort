@@ -1,0 +1,148 @@
+\section{Robust Median-of-Means Instantiation}
+
+This section records Corollary S2.10, a robust finite-moment instantiation of the generic S2.8 confidence-envelope certificate.
+
+Define
+\[
+Z_1=Y,
+\qquad
+Z_2=S,
+\qquad
+Z_3=YS,
+\qquad
+Z_4=S^2,
+\qquad
+Z_5=(U-Y)^2.
+\]
+Assume $S\ge0$, $0<\mathbb E[S]<\infty$, and
+\[
+\operatorname{Var}(Z_j)\le v_j<\infty,
+\qquad j=1,\ldots,5.
+\]
+
+Choose an odd integer $b$ satisfying
+\[
+b\ge8\log\frac{5}{\delta},
+\qquad
+b\le n,
+\]
+and set
+\[
+m=\left\lfloor\frac{n}{b}\right\rfloor.
+\]
+Use the first $bm$ held-out observations and split them into $b$ disjoint blocks of size $m$. For target $Z_j$, let $\bar Z_{j,r}$ be the mean in block $r$ and define
+\[
+\widetilde\mu_j
+=
+\operatorname{median}
+\left(
+\bar Z_{j,1},\ldots,\bar Z_{j,b}
+\right).
+\]
+Set
+\[
+r_j=2\sqrt{\frac{v_j}{m}}.
+\]
+
+\begin{corollary}[Median-of-means S2.8 instantiation]
+With probability at least $1-\delta$,
+\[
+|\widetilde\mu_j-\mathbb E[Z_j]|
+\le r_j,
+\qquad
+j=1,\ldots,5.
+\]
+Define
+\[
+L_Y=\widetilde\mu_1-r_1,
+\quad U_Y=\widetilde\mu_1+r_1,
+\quad
+L_S=\widetilde\mu_2-r_2,
+\quad U_S=\widetilde\mu_2+r_2,
+\]
+\[
+L_{YS}=\widetilde\mu_3-r_3,
+\quad
+U_{S^2}=\widetilde\mu_4+r_4,
+\quad
+U_M=\widetilde\mu_5+r_5.
+\]
+Let
+\[
+L_S^+=\max\{0,L_S\},
+\quad
+U_{S^2}^+=\max\{0,U_{S^2}\},
+\quad
+U_M^+=\max\{0,U_M\}.
+\]
+Let
+\[
+P_U=
+\max\{L_YL_S^+,L_YU_S,U_YL_S^+,U_YU_S\},
+\]
+\[
+C_L=L_{YS}-P_U,
+\qquad
+V_U=\max\{0,U_{S^2}^+-(L_S^+)^2\},
+\]
+and
+\[
+D_{\rm MoM}=C_L-\sqrt{U_M^+V_U}.
+\]
+Then
+\[
+P\!\left(
+\operatorname{Cov}(U,S)\ge D_{\rm MoM}
+\right)
+\ge1-\delta.
+\]
+If $D_{\rm MoM}>0$ and $0<U_S<\infty$ on the simultaneous event, then
+\[
+\mathbb E_{\rm FP}[U]-\mathbb E[U]
+\ge
+\frac{D_{\rm MoM}}{U_S}>0.
+\]
+\end{corollary}
+
+\begin{proof}
+Fix target $Z_j$. A block mean satisfies
+\[
+\operatorname{Var}(\bar Z_{j,r})
+\le\frac{v_j}{m}.
+\]
+By Chebyshev,
+\[
+P\!\left(
+|\bar Z_{j,r}-\mathbb E[Z_j]|>
+2\sqrt{\frac{v_j}{m}}
+\right)
+\le\frac14.
+\]
+Call such a block bad. If the median-of-means estimator lies outside the interval of radius $r_j$, at least half the $b$ blocks must be bad. The block indicators are independent across disjoint i.i.d. blocks and have means at most $1/4$. Hoeffding therefore gives
+\[
+P\!\left(
+|\widetilde\mu_j-\mathbb E[Z_j]|>r_j
+\right)
+\le
+\exp\left(-\frac{b}{8}\right)
+\le
+\frac{\delta}{5}.
+\]
+A union bound over the five target variables gives simultaneous coverage at least $1-\delta$. The resulting intervals are exactly the S2.8 inputs, so S2.8 yields
+\[
+\operatorname{Cov}(U,S)
+\ge D_{\rm MoM}
+\]
+on the simultaneous event. The first-person lower bound follows from T1 and $\mathbb E[S]\le U_S$ when the certified covariance lower bound is positive.
+\end{proof}
+
+\paragraph{Moment requirement.}
+This result requires finite variance of all five target variables. In particular,
+\[
+\operatorname{Var}(S^2)<\infty
+\]
+requires a finite fourth moment of $S$, while
+\[
+\operatorname{Var}((U-Y)^2)<\infty
+\]
+requires a finite fourth moment of the prediction residual. Likewise, $\operatorname{Var}(YS)<\infty$ requires $\mathbb E[Y^2S^2]<\infty$. The theorem therefore must not be summarized as assuming only finite variance of the raw variables.

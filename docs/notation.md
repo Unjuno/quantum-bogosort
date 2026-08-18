@@ -1,6 +1,6 @@
-# QBS Notation
+# QBS Notation and Terminology
 
-This document fixes notation used across theorem notes, experiment cards, and the manuscript.
+This document fixes notation and terminology used across theorem notes, experiment cards, repository documentation, and the manuscript.
 
 ## Base probability structure
 
@@ -24,7 +24,7 @@ for the history generated under recognition state `R` from the same primitive re
 | Symbol | Meaning |
 |---|---|
 | `R` | recognition state, typically 0 or 1 |
-| `pi_R` | policy available/used under recognition state `R` |
+| `pi_R` | policy available or used under recognition state `R` |
 | `U_R` | outcome or utility induced by `pi_R` |
 | `S_R` | observer-indexed accessibility weight induced under `pi_R` |
 
@@ -70,6 +70,56 @@ Q(U,S)
 \frac{\operatorname{Cov}(U,S)}{E[S]}.
 $$
 
+## Canonical terminology
+
+### Base measure / objective chance
+
+`mu` is the base probability or branch measure used by the model before first-person accessibility reweighting.
+
+A QBS first-person shift does not by itself change `mu`. When the repository says that objective or base chance is unchanged, it means that the underlying base measure has not been causally modified by the reweighting operation.
+
+### Accessibility
+
+`S` is a nonnegative observer-indexed weight. Mathematically it controls the Radon–Nikodym-style reweighting from the base measure to the normalized first-person measure.
+
+Accessibility is not automatically a physical Everett quantity. A physical interpretation requires the separate bridge discussed in `docs/everett_bridge_tests.md`.
+
+### First-person uplift
+
+First-person uplift means that an outcome statistic is larger under the first-person measure than under the base measure. For the mean:
+
+$$
+E_{FP}[U]-E[U]
+=
+\frac{\operatorname{Cov}(U,S)}{E[S]}.
+$$
+
+This is a distributional statement about observer-conditioned weighting.
+
+### Trajectory reweighting
+
+Trajectory reweighting means replacing the base weighting of histories by normalized accessibility-weighted histories. It does not create histories outside the support of the fixed-policy base measure.
+
+### Self-location
+
+Self-location refers to indexical uncertainty about which observer/history position within the modeled collection is the first-person position. In QBS, accessibility can change the normalized measure used for that indexical weighting.
+
+### Effective or indexical luck
+
+If informal language such as `effective luck` or `indexical luck` is used, it refers only to a favorable first-person distributional shift: the observer-conditioned measure places greater weight on favorable accessible trajectories.
+
+It must not be read as a claim that the objective/base probability law or an external random-number generator is causally biased toward favorable outcomes.
+
+A compact distinction is:
+
+$$
+\text{objective/base chance unchanged}
+\qquad\neq\qquad
+\text{first-person trajectory weight unchanged}.
+$$
+
+QBS can change the second quantity under its assumptions without claiming a causal change in the first.
+
 ## Policy interaction notation
 
 Policy improvement:
@@ -102,6 +152,44 @@ I
 \frac{\operatorname{Cov}(D,S)}{E[S]}.
 $$
 
+## Predictive-alignment notation
+
+For a signal `Y`:
+
+$$
+m(Y)=E[U\mid Y],
+\qquad
+a(Y)=E[S\mid Y].
+$$
+
+Conditional residual variances are:
+
+$$
+v_U(Y)=\operatorname{Var}(U\mid Y),
+\qquad
+v_S(Y)=\operatorname{Var}(S\mid Y).
+$$
+
+Explained-variance fractions are:
+
+$$
+A_U
+=
+\frac{\operatorname{Var}(m(Y))}{\operatorname{Var}(U)},
+\qquad
+A_S
+=
+\frac{\operatorname{Var}(a(Y))}{\operatorname{Var}(S)}.
+$$
+
+When both explained fractions are positive:
+
+$$
+\rho_{ma}
+=
+\operatorname{Corr}(m(Y),a(Y)).
+$$
+
 ## Adaptive-agent notation
 
 | Symbol | Meaning |
@@ -111,17 +199,7 @@ $$
 | `Y_t` | evaluation or recognition signal derived from the internal model |
 | `U_T` | future outcome at horizon `T` |
 
-Predictive-information direction:
-
-$$
-I(B_t;X_t)>0,
-$$
-
-and when the environment has temporal structure:
-
-$$
-I(X_t;U_T)>0.
-$$
+Mutual information can quantify predictive dependence, but positive mutual information alone is not sufficient for positive outcome/accessibility covariance.
 
 ## Repeated-filter notation
 
@@ -160,6 +238,6 @@ $$
 P(R=1).
 $$
 
-## Convention
+## Markdown convention
 
-Markdown math in this repository uses double-dollar display blocks only. Inline symbols are written as code spans or moved into display blocks.
+Markdown math in this repository uses double-dollar display blocks only. Inline mathematical symbols are written as code spans or moved into display blocks.

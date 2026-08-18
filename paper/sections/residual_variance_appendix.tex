@@ -1,0 +1,110 @@
+\section{Residual-Variance Certificate}
+
+This section records Supplementary Theorem S2.12, a variance-based lower certificate for the residual term in S2.11.
+
+Let
+\[
+m(Y)=\mathbb E[U\mid Y],
+\qquad
+a(Y)=\mathbb E[S\mid Y],
+\]
+\[
+v_U(Y)=\operatorname{Var}(U\mid Y),
+\qquad
+v_S(Y)=\operatorname{Var}(S\mid Y).
+\]
+Assume $U$ and $S$ are square-integrable, with $S\ge0$ and $0<\mathbb E[S]<\infty$.
+
+\begin{theorem}[Residual-variance lower certificate]
+The total covariance satisfies
+\[
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\mathbb E\!\left[
+\sqrt{v_U(Y)v_S(Y)}
+\right].
+\]
+Furthermore,
+\[
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\sqrt{
+\mathbb E[v_U(Y)]
+\mathbb E[v_S(Y)]
+}.
+\]
+Hence either conditional-mean alignment margin exceeding the corresponding residual-variance penalty is sufficient for positive total covariance.
+\end{theorem}
+
+\begin{proof}
+S2.11 gives
+\[
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(m(Y),a(Y))
++
+\mathbb E[\operatorname{Cov}(U,S\mid Y)].
+\]
+Conditional Cauchy--Schwarz implies
+\[
+\operatorname{Cov}(U,S\mid Y)
+\ge
+-
+\sqrt{
+\operatorname{Var}(U\mid Y)
+\operatorname{Var}(S\mid Y)
+}.
+\]
+Taking expectations yields the first lower bound. Applying ordinary Cauchy--Schwarz to $\sqrt{v_U(Y)}$ and $\sqrt{v_S(Y)}$ gives
+\[
+\mathbb E[\sqrt{v_U(Y)v_S(Y)}]
+\le
+\sqrt{\mathbb E[v_U(Y)]\mathbb E[v_S(Y)]},
+\]
+which yields the second bound.
+\end{proof}
+
+\paragraph{Residual-energy form.}
+With
+\[
+\eta=U-m(Y),
+\qquad
+\xi=S-a(Y),
+\]
+we have
+\[
+\mathbb E[v_U(Y)]=\mathbb E[\eta^2],
+\qquad
+\mathbb E[v_S(Y)]=\mathbb E[\xi^2],
+\]
+so
+\[
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\sqrt{\mathbb E[\eta^2]\mathbb E[\xi^2]}.
+\]
+
+\paragraph{Sharpness.}
+The conditional Cauchy--Schwarz penalty is sharp while preserving nonnegative accessibility. Let $Y$ be constant and let $\eta$ be Rademacher, with $P(\eta=1)=P(\eta=-1)=1/2$. For $c>0$, set
+\[
+U=\eta,
+\qquad
+S=M-c\eta,
+\qquad
+M>c.
+\]
+Then $S>0$ almost surely and the centered accessibility residual is $\xi=-c\eta$. Hence
+\[
+\operatorname{Cov}(U,S\mid Y)=-c,
+\]
+while
+\[
+\sqrt{\operatorname{Var}(U\mid Y)\operatorname{Var}(S\mid Y)}=c.
+\]
+Thus equality holds in the negative conditional Cauchy--Schwarz bound, so conditional variances alone cannot yield a uniformly tighter universal residual lower bound.

@@ -1,0 +1,125 @@
+\section{Supplementary Corollary S2.8: Generic Confidence-Envelope Certificate}
+
+S2.5 uses bounded observations and Hoeffding concentration. The covariance-composition argument itself only requires simultaneous confidence envelopes for a small collection of population moments.
+
+Assume $S\ge0$, $0<\mathbb E[S]<\infty$, and finite required moments. Suppose a statistical procedure produces random bounds such that, with probability at least $1-\delta$,
+\[
+L_Y\le\mathbb E[Y]\le U_Y,
+\qquad
+L_S\le\mathbb E[S]\le U_S,
+\]
+\[
+\mathbb E[YS]\ge L_{YS},
+\qquad
+\mathbb E[S^2]\le U_{S^2},
+\qquad
+\mathbb E[(U-Y)^2]\le U_M.
+\]
+Define
+\[
+L_S^+=\max\{0,L_S\}
+\]
+and
+\[
+P_U
+=
+\max\{L_YL_S^+,L_YU_S,U_YL_S^+,U_YU_S\}.
+\]
+Let
+\[
+C_L=L_{YS}-P_U,
+\qquad
+V_U=\max\{0,U_{S^2}-(L_S^+)^2\},
+\]
+and define
+\[
+D_{\mathrm{env}}
+=
+C_L-\sqrt{U_MV_U}.
+\]
+
+\begin{corollary}[Generic confidence-envelope certificate]
+Under the simultaneous confidence event,
+\[
+\operatorname{Cov}(U,S)
+\ge
+D_{\mathrm{env}}.
+\]
+Consequently,
+\[
+P\!\left(
+\operatorname{Cov}(U,S)
+\ge D_{\mathrm{env}}
+\right)
+\ge1-\delta.
+\]
+If $D_{\mathrm{env}}>0$ and $0<U_S<\infty$, then on the same event
+\[
+\mathbb E_{\mathrm{FP}}[U]-\mathbb E[U]
+\ge
+\frac{D_{\mathrm{env}}}{U_S}
+>0.
+\]
+\end{corollary}
+
+\begin{proof}
+On the simultaneous confidence event,
+\[
+\operatorname{Cov}(Y,S)
+=
+\mathbb E[YS]-\mathbb E[Y]\mathbb E[S].
+\]
+Because $S\ge0$,
+\[
+\mathbb E[S]\in[L_S^+,U_S].
+\]
+The bilinear map $(a,b)\mapsto ab$ achieves its maximum over the rectangle
+\[
+[L_Y,U_Y]\times[L_S^+,U_S]
+\]
+at a corner, so
+\[
+\mathbb E[Y]\mathbb E[S]
+\le P_U.
+\]
+Hence
+\[
+\operatorname{Cov}(Y,S)
+\ge L_{YS}-P_U
+=C_L.
+\]
+Furthermore,
+\[
+\operatorname{Var}(S)
+=
+\mathbb E[S^2]-\mathbb E[S]^2
+\le
+U_{S^2}-(L_S^+)^2
+\le V_U,
+\]
+where the outer maximum only enforces a nonnegative reported envelope outside the simultaneous-validity event. Also
+\[
+\mathbb E[(U-Y)^2]\le U_M.
+\]
+S2.4 therefore gives
+\[
+\operatorname{Cov}(U,S)
+\ge
+C_L-\sqrt{U_MV_U}
+=D_{\mathrm{env}}.
+\]
+The coverage statement follows from the assumed probability of the simultaneous event. If $D_{\mathrm{env}}>0$, then T1 and $\mathbb E[S]\le U_S$ give
+\[
+\mathbb E_{\mathrm{FP}}[U]-\mathbb E[U]
+=
+\frac{\operatorname{Cov}(U,S)}{\mathbb E[S]}
+\ge
+\frac{D_{\mathrm{env}}}{U_S}.
+\]
+\end{proof}
+
+\subsection{Modularity}
+
+S2.5 is one instantiation of this result using bounded Hoeffding envelopes. Any alternative procedure that genuinely supplies the required simultaneous moment coverage can be substituted without changing the covariance-composition proof. Possible statistical layers include sub-Gaussian or sub-exponential concentration, empirical Bernstein bounds, robust mean estimators, or confidence sequences, subject to their own assumptions and coverage guarantees.
+
+The theorem does not assert that any particular statistical method is valid outside its assumptions. It only composes a valid simultaneous moment envelope into a covariance lower certificate.

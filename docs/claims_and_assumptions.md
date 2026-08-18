@@ -1,12 +1,8 @@
 # Claims, Assumptions, and Non-Claims
 
-This document prevents theorem statements, simulation results, and Everett interpretation claims from being conflated.
+This document prevents theorem statements, simulation results, statistical validation results, and Everett interpretation claims from being conflated.
 
-## Exact mathematical claims
-
-### Mean-shift identity
-
-For integrable outcome `X` and nonnegative accessibility `S` with positive finite mean:
+## Core exact claims
 
 $$
 E_{FP}[X]-E[X]
@@ -14,19 +10,11 @@ E_{FP}[X]-E[X]
 \frac{\operatorname{Cov}(X,S)}{E[S]}.
 $$
 
-Therefore positive mean uplift is equivalent to positive covariance under the weighted-measure model.
-
-### Tail identity
-
-For threshold `c`:
-
 $$
 P_{FP}(X\ge c)-P(X\ge c)
 =
 \frac{\operatorname{Cov}(\mathbf 1_{\{X\ge c\}},S)}{E[S]}.
 $$
-
-### FOSD condition
 
 If:
 
@@ -37,30 +25,20 @@ $$
 is nondecreasing, then:
 
 $$
-F_{FP}(c)\le F(c)
+F_{FP}(c)\le F(c).
 $$
 
-for every threshold `c`.
-
-### Recognition decomposition
+Recognition and interaction decompose as:
 
 $$
 V_1-V_0
 =
 E[U_1-U_0]
 +
-Q(U_1,S_1)-Q(U_0,S_0).
+Q(U_1,S_1)-Q(U_0,S_0),
 $$
 
-### Interaction decomposition
-
-With:
-
-$$
-D=U_1-U_0,
-$$
-
-we have:
+and:
 
 $$
 I
@@ -70,35 +48,233 @@ I
 \left[Q(U_1,S_1)-Q(U_1,S_0)\right].
 $$
 
-These are probability identities conditional on the model definitions. They do not by themselves imply Everettian physics.
+## S2 predictive-alignment family
+
+For:
+
+$$
+m(Y)=E[U\mid Y],
+\qquad
+S=s(Y),
+$$
+
+S2 gives:
+
+$$
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(m(Y),s(Y)).
+$$
+
+If:
+
+$$
+Y=E[U\mid B],
+$$
+
+S2.2 gives:
+
+$$
+E[U\mid Y]=Y.
+$$
+
+S2.3–S2.4 give calibration-error and prediction-MSE population lower bounds. S2.5–S2.10 provide bounded, selection-safe, generic-envelope, light-tail, and robust finite-moment finite-sample certification layers under their stated assumptions.
+
+## S2.11–S2.12: general accessibility and residual dependence
+
+For the current S2.11 statement assume:
+
+$$
+U,S\in L^2,
+\qquad
+S\ge0,
+\qquad
+0<E[S]<\infty.
+$$
+
+Let:
+
+$$
+m(Y)=E[U\mid Y],
+\qquad
+a(Y)=E[S\mid Y].
+$$
+
+Then:
+
+$$
+\operatorname{Cov}(U,S)
+=
+\operatorname{Cov}(m(Y),a(Y))
++
+E[\operatorname{Cov}(U,S\mid Y)].
+$$
+
+With:
+
+$$
+v_U(Y)=\operatorname{Var}(U\mid Y),
+\qquad
+v_S(Y)=\operatorname{Var}(S\mid Y),
+$$
+
+S2.12 gives:
+
+$$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+E[\sqrt{v_U(Y)v_S(Y)}],
+$$
+
+and:
+
+$$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\sqrt{E[v_U(Y)]E[v_S(Y)]}.
+$$
+
+The basic residual-variance penalty is sharp under perfect conditional anti-correlation. The proof-review sharpness construction uses bounded Rademacher residuals and strictly positive accessibility, so no hidden unbounded-shift assumption remains.
+
+## S2.13: explained-variance alignment
+
+Assume additionally:
+
+$$
+\operatorname{Var}(U)>0,
+\qquad
+\operatorname{Var}(S)>0.
+$$
+
+Define:
+
+$$
+A_U
+=
+\frac{\operatorname{Var}(m(Y))}{\operatorname{Var}(U)},
+\qquad
+A_S
+=
+\frac{\operatorname{Var}(a(Y))}{\operatorname{Var}(S)}.
+$$
+
+Then:
+
+$$
+\operatorname{Cov}(U,S)
+\ge
+\operatorname{Cov}(m(Y),a(Y))
+-
+\sqrt{
+\operatorname{Var}(U)
+\operatorname{Var}(S)
+(1-A_U)(1-A_S)
+}.
+$$
+
+When:
+
+$$
+A_UA_S>0,
+$$
+
+define:
+
+$$
+\rho_{ma}
+=
+\operatorname{Corr}(m(Y),a(Y)).
+$$
+
+Then:
+
+$$
+\operatorname{Cov}(U,S)
+\ge
+\sqrt{\operatorname{Var}(U)\operatorname{Var}(S)}
+\left[
+\rho_{ma}\sqrt{A_UA_S}
+-
+\sqrt{(1-A_U)(1-A_S)}
+\right].
+$$
+
+Therefore:
+
+$$
+\rho_{ma}\sqrt{A_UA_S}
+>
+\sqrt{(1-A_U)(1-A_S)}
+$$
+
+is sufficient for positive total covariance. Because the right-hand side is nonnegative, this worst-case sufficient certificate requires positive conditional-mean correlation.
+
+If:
+
+$$
+\rho_{ma}=1,
+$$
+
+this simplifies to:
+
+$$
+A_U+A_S>1.
+$$
+
+If:
+
+$$
+A_U=A_S=A>0,
+$$
+
+then the primitive condition is:
+
+$$
+\rho_{ma}A>1-A.
+$$
+
+For:
+
+$$
+\rho_{ma}>-1,
+$$
+
+this is algebraically equivalent to:
+
+$$
+A>
+\frac{1}{1+\rho_{ma}}.
+$$
+
+Since `0<A<=1`, the strict symmetric worst-case certificate is feasible only when:
+
+$$
+\rho_{ma}>0.
+$$
+
+These are worst-case residual sufficient conditions inherited from S2.12, not necessary conditions.
 
 ## Simulation-supported claims
 
-The repository simulations support the following model-level statements:
+E1–E5 classically demonstrate the formal mechanisms: weighting/FOSD, learned predictive ordering, paired recognition decomposition, policy–QBS interaction, and cross-copy coherence. They do not establish Everettian physics or automatically satisfy any finite-sample certificate.
 
-1. Monotone outcome-aligned accessibility produces the predicted FOSD direction across several toy base distributions.
-2. A minimal learned agent can generate predictive outcome/accessibility alignment when its model class can represent the relevant structure.
-3. Recognition effects can be numerically decomposed into ordinary trajectory changes and first-person conditioning changes on paired primitive randomness.
-4. Adaptive rescue policies can reduce the marginal QBS contribution by rescuing branches that a selector would otherwise downweight.
-5. Shared recognition and shared environmental structure can increase cross-copy action correlation without proportionally changing single-observer FP uplift.
+## Model and statistical assumptions
 
-These are classical simulations of the formal structure, not empirical evidence for Everettian observer selection.
-
-## Model assumptions
-
-The formal model assumes that policy-dependent accessibility can be represented by a nonnegative measurable weight:
+The abstract weighted measure requires:
 
 $$
-S_\pi(\omega)\ge0.
-$$
-
-The normalized FP measure requires:
-
-$$
+S_\pi(\omega)\ge0,
+\qquad
 0<E[S_\pi]<\infty.
 $$
 
-The common-randomness comparison additionally assumes policies can be evaluated on the same primitive sample space.
+S2 assumes score-measurable accessibility. S2.11 relaxes that assumption but retains residual dependence explicitly and currently uses square integrability to make the covariance decomposition unambiguous. S2.12 uses the same square-integrability basis. S2.13 additionally assumes nonzero total variances when normalized explained-variance quantities are used.
+
+S2.5 assumes independent bounded held-out evaluation. S2.6 permits training-dependent rules only with independent certification data. S2.7 assumes a finite predeclared candidate family with multiplicity accounting. S2.8 assumes a valid simultaneous five-moment confidence envelope. S2.9 assumes valid light-tail parameters. S2.10 assumes valid target-variable variance bounds and an i.i.d. block construction.
 
 ## Everett bridge assumption
 
@@ -111,62 +287,34 @@ d\mu^{FP}_\pi(\omega)
 \,d\mu(\omega).
 $$
 
-The repository does not currently derive this rule from unitary quantum mechanics, decoherence, observer dynamics, or the Born rule. Establishing, replacing, or rejecting this bridge remains a physical open problem.
-
-The detailed bridge criteria are in `docs/everett_bridge_tests.md`.
-
-### Bridge status levels
-
-- **Abstract change of measure:** exact once `S_pi` is specified.
-- **Observer-model bridge:** requires an independent account of why observer persistence or self-location induces `S_pi`.
-- **Physical Everett bridge:** additionally requires a defensible relation to branch amplitude, decoherence, Born-rule probability, and operational quantum predictions.
-
-The current project is not claiming the third level as established.
-
-### Structural constraints on a candidate physical bridge
-
-A candidate should satisfy:
-
-- nonnegativity and finite positive normalization;
-- absolute continuity with respect to the stated base measure;
-- invariance under physically equivalent relabeling or redundant branch bookkeeping;
-- consistent aggregation under coarse graining;
-- sequentially coherent observer conditioning;
-- compatibility with no-signaling and established operational quantum statistics unless explicit new physics is proposed;
-- independence from post-hoc utility fitting.
-
-### Layer-specific falsifiability
-
-The phrase "falsifiable QBS" is too coarse unless a layer is named.
-
-- theorem assumptions can fail mathematically;
-- a proposed observer model can fail structural consistency tests;
-- a physical Everett bridge is empirically falsifiable only if a concrete physical `S_pi` generates observational predictions that differ from competing physical accounts.
-
-If all operational predictions remain identical to standard Everettian quantum mechanics, the bridge may be interpretively underdetermined rather than independently empirically testable.
+This is not derived from unitary quantum mechanics, decoherence, observer dynamics, or the Born rule.
 
 ## Non-claims
 
 The repository does **not** claim that:
 
-- an external random-number generator becomes objectively biased toward favorable outcomes;
-- the mathematical weighting identities establish quantum immortality;
-- every recognition-dependent policy is rational or beneficial;
+- an external RNG becomes objectively biased toward favorable outcomes;
+- the weighting identities establish quantum immortality;
+- every recognition-dependent policy is beneficial;
 - positive correlation alone implies FOSD;
-- pure reweighting creates outcomes absent from the fixed-policy support;
-- negative policy–QBS interaction means either policy effect is itself negative;
-- the classical simulations prove an Everett interpretation;
-- internal consistency of a weighted measure confirms the Everett bridge;
-- a utility-favoring accessibility function is physical merely because it produces favorable first-person statistics.
+- mutual information alone implies positive accessibility covariance;
+- adaptation automatically learns the true posterior mean;
+- score-level alignment remains sufficient after removing `S=s(Y)` while ignoring residual dependence;
+- the S2.12 worst-case residual penalty describes the actual residual correlation in a concrete model;
+- high explained variance alone is enough when conditional means are nonpositively aligned;
+- the symmetric S2.13 threshold can be satisfied with nonpositive `rho_ma` under `0<A<=1`;
+- S2.13 is a necessary condition for positive covariance;
+- failure of a sufficient certificate implies negative covariance;
+- uncorrected model search preserves nominal confidence;
+- a statistical certificate establishes the Everett accessibility bridge.
 
-## Falsification / failure conditions
-
-The formal conclusions weaken or fail when their assumptions are violated:
+## Failure conditions
 
 - outcome/accessibility independence gives zero pure weighting uplift in expectation;
 - nonmonotone conditional accessibility can break FOSD;
-- no change in trajectory or accessibility gives zero recognition effect;
+- dependence without conditional-mean prediction can defeat S2;
+- a sufficiently negative S2.11 residual term can overturn score-level alignment;
+- large unexplained variance can make S2.12/S2.13 inconclusive;
+- invalid concentration, tail, variance, or model-selection assumptions invalidate their corresponding statistical certificates;
 - zero expected accessibility makes the normalized FP measure undefined;
-- arbitrary-label dependence or inconsistent coarse graining counts against a proposed physical bridge;
-- operational predictions conflicting with established quantum statistics count empirically against a concrete physical accessibility model;
-- rejecting the Everett bridge removes the physical Everett interpretation while leaving the measure-theoretic identities intact.
+- rejecting the Everett bridge removes the physical interpretation while leaving the abstract mathematical/statistical results intact.

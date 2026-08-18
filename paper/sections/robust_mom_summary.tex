@@ -1,0 +1,39 @@
+\subsection{Robust finite-moment certification}
+
+Corollary S2.10 provides a robust alternative to the bounded S2.5 and light-tail S2.9 constructions. Define the five S2.8 target variables
+\[
+Z_1=Y_t,
+\qquad
+Z_2=S_t,
+\qquad
+Z_3=Y_tS_t,
+\qquad
+Z_4=S_t^2,
+\qquad
+Z_5=(U_T-Y_t)^2.
+\]
+Assume each target has a valid population variance upper bound
+\[
+\operatorname{Var}(Z_j)\le v_j<\infty.
+\]
+Split an independent held-out sample into an odd number of blocks satisfying
+\[
+b\ge8\log\frac{5}{\delta},
+\]
+and let
+\[
+m=\left\lfloor\frac{n}{b}\right\rfloor.
+\]
+For target $Z_j$, the median-of-means estimator has radius
+\[
+r_j=2\sqrt{\frac{v_j}{m}}.
+\]
+Chebyshev bounds each block's bad probability by $1/4$, block-level Hoeffding makes the MoM failure probability at most $\exp(-b/8)$, and a union bound over the five targets gives a simultaneous S2.8 confidence envelope with probability at least $1-\delta$. The resulting robust lower margin $D_{\rm MoM}$ satisfies
+\[
+P\!\left(
+\operatorname{Cov}(U_T,S_t)\ge D_{\rm MoM}
+\right)
+\ge1-\delta.
+\]
+
+This construction does not require exponential tails, but its assumptions are not equivalent to finite variance of the raw variables. Finite variance of $S_t^2$ and $(U_T-Y_t)^2$ entails fourth-moment-type conditions, while finite variance of $Y_tS_t$ requires $\mathbb E[Y_t^2S_t^2]<\infty$. The robust certificate is therefore an alternative statistical instantiation of S2.8, not a claim that all heavy-tailed settings are covered under only second moments of the raw variables.

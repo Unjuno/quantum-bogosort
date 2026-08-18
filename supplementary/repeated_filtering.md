@@ -40,7 +40,7 @@ Differentiating with respect to log selectivity gives:
 $$
 \frac{dV}{d\log\lambda}
 =
-\operatorname{Cov}_{\lambda}(U,N_B),
+\mathrm{Cov}_{\lambda}(U,N_B),
 $$
 
 where the covariance is evaluated under the normalized measure induced by the current value of `lambda`.

@@ -8,7 +8,7 @@ The project is in **v0.3 public review / preprint preparation**.
 
 The locked core remains T1–T5 and E1–E5. The supplementary line is complete through S2.13. The default next step is review quality, not theorem expansion.
 
-The automated/source-level presentation QA is complete through merged PR #29. Broad announcement remains gated on a direct human inspection of the rendered GitHub landing page.
+Source-level presentation QA now includes the post-PR GitHub math-rendering fixes: the root README uses fenced `math` blocks, GitHub-disallowed `\operatorname` is removed from rendered Markdown mathematics, and CI rejects its reintroduction. Broad announcement remains gated on a direct human inspection of the rendered GitHub landing page and the final `main` validation state.
 
 ## Immediate review gates
 
@@ -24,7 +24,7 @@ The automated/source-level presentation QA is complete through merged PR #29. Br
 - [ ] Keep `main` CI-green after review-driven editorial or scientific corrections.
 - [ ] Keep README, research map, claim ledger, notation, status, and roadmap free of conflicting source-of-truth roles.
 - [x] Validate repository-relative Markdown links in CI.
-- [x] Enforce delimiter-only, balanced double-dollar math blocks in repository Markdown.
+- [x] Enforce balanced supported display-math structure in repository Markdown; require fenced `math` blocks in the root README and reject GitHub-disallowed `\operatorname` inside rendered math.
 - [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
 - [x] Provide a dedicated visual route for every locked experiment family E1–E5, including E2 predictive alignment.
 - [x] Require committed SVGs to match deterministic generator output byte-for-byte.

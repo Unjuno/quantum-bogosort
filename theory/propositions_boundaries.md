@@ -73,7 +73,7 @@ $$
 then:
 
 $$
-\operatorname{Cov}(X,S)=0,
+\mathrm{Cov}(X,S)=0,
 $$
 
 and therefore:
@@ -85,7 +85,7 @@ $$
 Likewise, for every tail threshold:
 
 $$
-\operatorname{Cov}(\mathbf 1_{\{X\ge c\}},S)=0.
+\mathrm{Cov}(\mathbf 1_{\{X\ge c\}},S)=0.
 $$
 
 Thus selection alone does not imply improved first-person outcomes; alignment to outcomes is required.

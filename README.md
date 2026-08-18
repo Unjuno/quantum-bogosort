@@ -22,7 +22,7 @@ $$
 0<E_\mu[S_\pi]<\infty,
 $$
 
-the first-person value is:
+define:
 
 $$
 V_{FP}(\pi)
@@ -64,21 +64,21 @@ The locked core theorem set is T1–T5:
 
 See [`theory/core_theorems.md`](theory/core_theorems.md) and the canonical [`docs/research_map.md`](docs/research_map.md).
 
-### Post-v0.2 supplementary line
+### Supplementary predictive-alignment line
 
 The current supplementary argument is organized around one conceptual spine:
 
 $$
-\text{predictive alignment}
+\text{predictive signal}
 \longrightarrow
-\text{general accessibility}
+\text{conditional-mean alignment}
 \longrightarrow
-\text{residual penalty}
+\text{outcome/accessibility covariance}
 \longrightarrow
-\text{explained-variance certificate}.
+\text{first-person shift}.
 $$
 
-Its principal results are S2, S2.11, S2.12, and S2.13. S2.3–S2.10 provide calibration, finite-sample, selection-validity, light-tail, and robust statistical certification machinery. See [`supplementary/README.md`](supplementary/README.md).
+Its principal results are S2, S2.11, S2.12, and S2.13. S2.3–S2.10 provide calibration, finite-sample, selection-validity, light-tail, and robust statistical-certification machinery. See [`supplementary/README.md`](supplementary/README.md).
 
 ### Reproducible simulations
 
@@ -92,7 +92,7 @@ The locked core experiment suite is E1–E5:
 
 These are classical simulations of the formal model.
 
-## What remains open
+## Interpretation boundary
 
 The mathematical weighting results do not by themselves derive an Everettian physical interpretation. The separate bridge assumption is:
 
@@ -103,9 +103,9 @@ d\mu^{FP}_\pi(\omega)
 \,d\mu(\omega).
 $$
 
-A concrete physical account must explain why an Everettian observer should be described by the proposed accessibility map. The structural and empirical review criteria are in [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md).
+A concrete physical account must explain why an Everettian observer should be described by the proposed accessibility map. Structural and empirical review criteria are in [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md).
 
-The repository also does not claim that statistical covariance certification establishes Everettian observer selection, that positive correlation alone implies FOSD, or that external random generators become objectively lucky. The complete claim boundary is maintained in [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md).
+The repository does not claim that statistical covariance certification establishes Everettian observer selection, that positive correlation alone implies FOSD, or that external random generators become objectively lucky. The complete claim boundary is maintained in [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md).
 
 ## Where to read next
 
@@ -119,7 +119,8 @@ The repository also does not claim that statistical covariance certification est
 | Review the Everett bridge | [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md) |
 | Read the manuscript | [`paper/`](paper/) |
 | Review prior art and novelty boundaries | [`literature/`](literature/) |
-| See the current post-v0.2 state | [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md) |
+| See current review/development state | [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md) |
+| See the frozen snapshot ledger | [`STATUS.md`](STATUS.md) |
 
 ## Reproduce E1–E5
 
@@ -140,31 +141,26 @@ Historical locked summaries and current reproduction outputs are stored in [`dat
 
 ## Public review
 
-Use [`CONTRIBUTING.md`](CONTRIBUTING.md) and the issue templates for:
+Use [`CONTRIBUTING.md`](CONTRIBUTING.md) and the issue templates for proof/counterexample reports, prior-art overlap, reproducibility failures, and Everett-bridge criticism.
 
-- proof or counterexample reports;
-- prior-art overlap;
-- reproducibility failures;
-- Everett-bridge criticism.
-
-The current review priority is proof and novelty review of the compressed post-v0.2 conceptual spine rather than further theorem expansion.
+The current review priority is external proof, novelty, manuscript, statistical-assumption, and Everett-bridge scrutiny rather than automatic theorem expansion.
 
 ## Repository state
 
-The repository distinguishes the frozen v0.2 snapshot from the current integrated review state:
+The current public-review snapshot is **v0.3-public-review**.
 
-- stable v0.2 snapshot: branch `release/v0.2-public-review`, commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
-- stable snapshot ledger: [`STATUS.md`](STATUS.md);
-- current integrated post-v0.2 review surface: `main`;
-- post-v0.2 integration merge commit: `042fb12d070a51b37310792b882136a0ea6a58f8`;
-- current development ledger: [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md);
-- historical development provenance: PRs #11–#21.
+- current frozen snapshot: `release/v0.3-public-review`;
+- current review/development surface: `main`;
+- current snapshot ledger: [`STATUS.md`](STATUS.md);
+- current development/review ledger: [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md);
+- previous frozen snapshot: `release/v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
+- historical derivation provenance: PRs #11–#21.
 
-The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged by the post-v0.2 supplementary work.
+The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged in v0.3. The principal v0.3 addition is the integrated S2 predictive-alignment/general-accessibility/certification line plus its proof, manuscript, prior-art, and repository-structure audits.
 
 ## Validation
 
-GitHub Actions currently checks:
+GitHub Actions checks:
 
 - Python compilation;
 - GitHub Markdown math delimiters;
@@ -187,4 +183,4 @@ See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. GitHub's r
 
 ## Citation
 
-`CITATION.cff` currently describes the frozen v0.2 public-review snapshot. It should receive a new version only when the next formal repository/manuscript version is designated.
+Citation metadata is in [`CITATION.cff`](CITATION.cff) and tracks the current public-review snapshot.

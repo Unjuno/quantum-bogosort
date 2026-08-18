@@ -80,7 +80,7 @@ A QBS first-person shift does not by itself change `mu`. When the repository say
 
 ### Accessibility
 
-`S` is a nonnegative observer-indexed weight. Mathematically it controls the Radon–Nikodym-style reweighting from the base measure to the normalized first-person measure.
+`S` is a nonnegative observer-indexed weight. Mathematically it controls the reweighting from the base measure to the normalized first-person measure.
 
 Accessibility is not automatically a physical Everett quantity. A physical interpretation requires the separate bridge discussed in `docs/everett_bridge_tests.md`.
 
@@ -104,11 +104,13 @@ Trajectory reweighting means replacing the base weighting of histories by normal
 
 Self-location refers to indexical uncertainty about which observer/history position within the modeled collection is the first-person position. In QBS, accessibility can change the normalized measure used for that indexical weighting.
 
-### Effective or indexical luck
+## Informal interpretation only: effective or indexical luck
 
-If informal language such as `effective luck` or `indexical luck` is used, it refers only to a favorable first-person distributional shift: the observer-conditioned measure places greater weight on favorable accessible trajectories.
+`effective luck` and `indexical luck` are **not formal QBS variables or theorem names**. If used in explanatory prose, they are shorthand for a favorable first-person distributional shift: the observer-conditioned measure places greater weight on favorable accessible trajectories.
 
-It must not be read as a claim that the objective/base probability law or an external random-number generator is causally biased toward favorable outcomes.
+Formal writing should prefer `first-person uplift`, `trajectory reweighting`, `first-person measure`, or `self-location` as appropriate.
+
+The informal language must not be read as a claim that the objective/base probability law or an external random-number generator is causally biased toward favorable outcomes.
 
 A compact distinction is:
 

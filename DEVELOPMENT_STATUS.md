@@ -1,20 +1,20 @@
-# QBS Development Status
+# QBS Current Research Status
 
 **Updated:** 2026-08-18
 
-This file records the current post-v0.2 research state. It does not duplicate the stable v0.2 snapshot ledger or the detailed theorem map.
+This file records the current review and development state. It complements the frozen snapshot ledger in [`STATUS.md`](STATUS.md) and the future-work ledger in [`ROADMAP.md`](ROADMAP.md).
 
 ## Source of truth
 
-- stable v0.2 scientific snapshot: branch `release/v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
-- stable snapshot ledger: [`STATUS.md`](STATUS.md);
-- current integrated post-v0.2 review surface: `main`;
-- post-v0.2 integration merge commit: `042fb12d070a51b37310792b882136a0ea6a58f8`;
+- current frozen public-review snapshot: `release/v0.3-public-review`;
+- current review/development surface: `main`;
+- current snapshot ledger: [`STATUS.md`](STATUS.md);
 - canonical claim/theorem/evidence index: [`docs/research_map.md`](docs/research_map.md);
 - authoritative claim boundaries: [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md);
-- future work: [`ROADMAP.md`](ROADMAP.md).
+- future work: [`ROADMAP.md`](ROADMAP.md);
+- archived v0.2 snapshot: `release/v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
 
-PRs #11–#20 preserve the staged derivation history. PR #21 is the cumulative integration PR that brought the corrected post-v0.2 review candidate onto `main`.
+PRs #11–#20 preserve the staged derivation history. PR #21 preserves the cumulative integration history. Current authoritative statements are the files in the v0.3 snapshot and on `main`.
 
 ## Locked core
 
@@ -22,9 +22,9 @@ The core theorem set remains T1–T5.
 
 The core experiment set remains E1–E5.
 
-Neither set is renumbered or replaced by post-v0.2 supplementary work.
+Neither set is renumbered or replaced by the supplementary work integrated in v0.3.
 
-## Current post-v0.2 result
+## Current supplementary result
 
 The supplementary line is complete through S2.13 and is presented as one conceptual spine:
 
@@ -48,13 +48,7 @@ For theorem statements, assumptions, proof sources, and evidence classes, use [`
 
 Result: **PASS WITH THREE CORRECTIONS APPLIED**.
 
-The corrections concern:
-
-1. explicit square-integrability assumptions for S2.11;
-2. bounded Rademacher counterexample/sharpness constructions for S2.11–S2.12;
-3. the domain and feasibility of the symmetric S2.13 threshold.
-
-The central covariance identities and inequalities are unchanged.
+The corrections concern explicit square-integrability assumptions, bounded positive-accessibility counterexample/sharpness constructions, and the valid domain of the symmetric S2.13 threshold. The central covariance identities and inequalities are unchanged.
 
 ## Computational status
 
@@ -64,15 +58,7 @@ No sixth core experiment is planned by default.
 
 ## Manuscript state
 
-The post-v0.2 main text is compressed to:
-
-1. S2 predictive alignment;
-2. S2.2 posterior-mean calibration;
-3. S2.11 general accessibility;
-4. compact S2.12 residual penalty;
-5. S2.13 explained-variance interpretation.
-
-Detailed S2.3–S2.10 machinery is Appendix-first. The manuscript compression audit and targeted prior-art audit are integrated.
+The main text is compressed to the conceptual S2 line, with detailed S2.3–S2.10 machinery Appendix-first. The manuscript compression audit, proof review, and targeted prior-art audit are integrated.
 
 ## Physical interpretation status
 
@@ -93,7 +79,3 @@ Work should now prioritize:
 5. independent scrutiny of the Everett accessibility bridge.
 
 Do not add another S2-numbered theorem by default. Add new mathematical machinery only in response to a concrete modeling gap or review-identified need.
-
-## Historical provenance
-
-PRs #11–#20 preserve the staged derivation path and earlier review surfaces. PR #21 preserves the cumulative integration history. Current authoritative post-v0.2 statements are the files on `main`.

@@ -83,16 +83,7 @@ GitHub-readable SVG previews are committed under `../figures/generated/`. LaTeX 
 python ../figures/generate_pdf_figures.py
 ```
 
-The manuscript currently places:
-
-- Figure 1: QBS recognition/policy/trajectory/accessibility schematic;
-- Figure 2: FOSD theorem-boundary illustration;
-- Figure 3: E3 paired recognition decomposition;
-- Figure 4: E4 interaction-sign control;
-- Figure 5: adaptation-quality / substitution sweep;
-- Figure 6: E5 branch coherence versus marginal FP uplift.
-
-Captions state whether each figure is a mathematical schematic, theorem illustration, or classical simulation.
+The manuscript currently places six figures covering the QBS framework, FOSD boundary, recognition decomposition, interaction sign, adaptation quality, and branch coherence. Captions identify whether each figure is a mathematical schematic, theorem illustration, or classical simulation.
 
 ## Local build
 
@@ -109,9 +100,9 @@ GitHub Actions performs figure generation and LaTeX/PDF validation automatically
 
 ## Current review state
 
-The stable v0.2 scientific snapshot is preserved at `release/v0.2-public-review`.
+The current frozen public-review snapshot is `release/v0.3-public-review`. The previous v0.2 snapshot remains archived at `release/v0.2-public-review`.
 
-The cumulative post-v0.2 review candidate was integrated into `main` through PR #21. PRs #11–#21 remain available as development provenance; the manuscript files on `main` are now the current review surface.
+The manuscript files on `main` are the current review/development surface. Historical PRs #11–#21 remain available for derivation provenance only.
 
 Current manuscript decisions are review-driven:
 

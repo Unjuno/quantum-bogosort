@@ -48,11 +48,30 @@ This roadmap turns the public repository into the source of truth for the theory
   A>
   \frac{1}{1+\rho_{ma}}.
   $$
-- [ ] Develop finite-sample confidence bounds for `A_U`, `A_S`, and `rho_ma` in concrete agent models.
-- [ ] Derive explicit Orlicz/mgf sufficient conditions for the S2.9 Bernstein parameters.
-- [ ] Explore robust estimators that weaken S2.10's higher-moment requirements.
-- [ ] Extend finite-candidate selection validity to infinite or certification-data-dependent classes.
-- [ ] Add a held-out certificate experiment only if review requires direct empirical evaluation.
+
+### Deferred unless review demands them
+
+- [ ] Finite-sample confidence bounds for `A_U`, `A_S`, and `rho_ma`.
+- [ ] Explicit Orlicz/mgf sufficient conditions for the S2.9 Bernstein parameters.
+- [ ] Robust estimators that weaken S2.10's higher-moment requirements.
+- [ ] Infinite or certification-data-dependent candidate classes.
+- [ ] A held-out certificate experiment.
+
+These are no longer automatic next steps. The theorem-expansion stop rule in `docs/s2_stack_review_map.md` applies.
+
+## Post-v0.2 manuscript and novelty review
+
+- [x] Build the S2 stack dependency / editorial review map.
+- [x] Add a semantic-preservation audit for future stack consolidation.
+- [x] Compress the main manuscript to the conceptual S2 → S2.11 → S2.13 spine.
+- [x] Demote detailed S2.3–S2.10 statistical machinery to Appendix-first status.
+- [x] Synchronize Abstract, Introduction, Limitations, Discussion, and manuscript README.
+- [x] Add a H/T/D/C/U manuscript-compression audit.
+- [x] Run a targeted post-v0.2 prior-art search around observer selection, self-location, policy choice, and Everettian credence.
+- [x] Add Garisto, Lewis, and Khawaja to the manuscript's prior-art boundary.
+- [ ] Obtain external or dedicated proof review of S2, S2.11, S2.12, and S2.13.
+- [ ] Decide whether S2.13 remains in main text after review.
+- [ ] Decide whether all S2.5–S2.10 results belong in the paper Appendix or partly in repository-only supplementary material.
 
 ## Current stacked review sequence
 
@@ -67,8 +86,14 @@ The v0.2 public-review baseline remains fixed at merge commit `7405f7408f74fa32b
 7. PR #18 — S2.10 robust median-of-means instantiation.
 8. PR #19 — S2.11 residual conditional-covariance extension.
 9. PR #20 — S2.12 residual-variance certificate.
-10. Current branch — S2.13 explained-variance certificate.
+10. PR #21 — S2.13 explained-variance certificate plus manuscript compression / review architecture.
 
 ## Current focus
 
-The next useful step is statistical rather than another abstract identity: construct a finite-sample certificate for the explained-variance quantities in S2.13, or wait for public review if that added complexity is not demanded. Another toy experiment is not added by default.
+Do not add another abstract S2 theorem by default. The next gate is review quality:
+
+1. keep PR #21 CI-green;
+2. inspect proof and claim boundaries rather than expanding the theorem stack;
+3. incorporate concrete public-review objections if they appear;
+4. defer new statistical machinery unless a reviewer identifies a specific need;
+5. preserve the Everett bridge as a separate physical question.

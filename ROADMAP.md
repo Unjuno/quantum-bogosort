@@ -24,7 +24,6 @@ The locked core remains T1–T5 and E1–E5. The supplementary line is complete 
 - [x] Validate repository-relative Markdown links in CI.
 - [ ] Keep E1–E5 as the locked reproducibility suite unless a review identifies a concrete missing core test.
 - [ ] Preserve deterministic figure regeneration and manuscript PDF verification.
-- [ ] Remove merged/superseded `agent/*` branches when a branch-delete interface is available; retain `main` and release snapshot branches.
 
 ## Publication gates
 
@@ -33,7 +32,7 @@ The locked core remains T1–T5 and E1–E5. The supplementary line is complete 
 - [ ] Finalize author/citation metadata for the preprint version.
 - [ ] Prepare `v1.0-preprint` only after review-driven revisions stabilize.
 - [ ] Add DOI/arXiv metadata only when an identifier actually exists.
-- [ ] Create formal GitHub Release/tag objects for public-review snapshots if release-write access becomes available and archival value justifies them.
+- [ ] Create formal GitHub Release/tag objects when archival release packaging is warranted.
 
 ## Deferred mathematical work
 

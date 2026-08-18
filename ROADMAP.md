@@ -43,7 +43,7 @@ This roadmap turns the public repository into the source of truth for the theory
   $$
   A_U+A_S>1.
   $$
-- [x] Derive the symmetric explained-variance threshold:
+- [x] Derive the symmetric explained-variance threshold in its valid positive-alignment regime:
   $$
   A>
   \frac{1}{1+\rho_{ma}}.
@@ -59,7 +59,7 @@ This roadmap turns the public repository into the source of truth for the theory
 
 These are no longer automatic next steps. The theorem-expansion stop rule in `docs/s2_stack_review_map.md` applies.
 
-## Post-v0.2 manuscript and novelty review
+## Post-v0.2 manuscript, proof, and novelty review
 
 - [x] Build the S2 stack dependency / editorial review map.
 - [x] Add a semantic-preservation audit for future stack consolidation.
@@ -69,8 +69,12 @@ These are no longer automatic next steps. The theorem-expansion stop rule in `do
 - [x] Add a H/T/D/C/U manuscript-compression audit.
 - [x] Run a targeted post-v0.2 prior-art search around observer selection, self-location, policy choice, and Everettian credence.
 - [x] Add Garisto, Lewis, and Khawaja to the manuscript's prior-art boundary.
-- [ ] Obtain external or dedicated proof review of S2, S2.11, S2.12, and S2.13.
-- [ ] Decide whether S2.13 remains in main text after review.
+- [x] Complete a dedicated proof review of S2, S2.11, S2.12, and S2.13.
+- [x] Tighten S2.11 to explicit square-integrability assumptions.
+- [x] Replace S2.11/S2.12 sharpness prose with bounded Rademacher constructions that preserve positive accessibility.
+- [x] Clarify the domain and feasibility of the symmetric S2.13 threshold.
+- [ ] Obtain external proof review of S2, S2.11, S2.12, and S2.13.
+- [ ] Decide whether S2.13 remains in main text after external/public review.
 - [ ] Decide whether all S2.5–S2.10 results belong in the paper Appendix or partly in repository-only supplementary material.
 
 ## Current stacked review sequence
@@ -86,14 +90,14 @@ The v0.2 public-review baseline remains fixed at merge commit `7405f7408f74fa32b
 7. PR #18 — S2.10 robust median-of-means instantiation.
 8. PR #19 — S2.11 residual conditional-covariance extension.
 9. PR #20 — S2.12 residual-variance certificate.
-10. PR #21 — S2.13 explained-variance certificate plus manuscript compression / review architecture.
+10. PR #21 — S2.13 explained-variance certificate plus manuscript compression / proof review architecture.
 
 ## Current focus
 
 Do not add another abstract S2 theorem by default. The next gate is review quality:
 
 1. keep PR #21 CI-green;
-2. inspect proof and claim boundaries rather than expanding the theorem stack;
+2. preserve the three proof-review corrections through any future rebase/squash;
 3. incorporate concrete public-review objections if they appear;
 4. defer new statistical machinery unless a reviewer identifies a specific need;
 5. preserve the Everett bridge as a separate physical question.

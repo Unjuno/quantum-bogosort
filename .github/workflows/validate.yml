@@ -80,6 +80,8 @@ jobs:
         run: pip install -r requirements.txt
       - name: Generate manuscript figure PDFs
         run: python figures/generate_pdf_figures.py
+      - name: Validate LaTeX render dependencies
+        run: python scripts/validate_latex_sources.py
       - name: Install LaTeX toolchain
         run: |
           cat > /tmp/qbs-ubuntu.list <<'EOF'

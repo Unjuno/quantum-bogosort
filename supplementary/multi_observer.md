@@ -8,12 +8,12 @@ A common confusion is to treat different observers' first-person probabilities a
 
 For observer index `i`, let `S_i` be that observer's accessibility weight. Define the observer-specific first-person measure by:
 
-$$
+```math
 d\mu_i^{FP}
 =
 \frac{S_i}{E[S_i]}
 \,d\mu.
-$$
+```
 
 ## Result
 

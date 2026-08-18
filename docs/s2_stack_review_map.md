@@ -22,11 +22,11 @@ $$
 For the general-accessibility model, the exact decomposition is:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(E[U\mid Y],E[S\mid Y])
+\mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 +
-E[\operatorname{Cov}(U,S\mid Y)].
+E[\mathrm{Cov}(U,S\mid Y)].
 $$
 
 This decomposition should be the main conceptual endpoint of the S2 development.
@@ -44,9 +44,9 @@ S=s(Y),
 $$
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(E[U\mid Y],s(Y)).
+\mathrm{Cov}(E[U\mid Y],s(Y)).
 $$
 
 Role: establishes the basic conditional-mean mechanism.
@@ -66,21 +66,21 @@ Role: connects a standard posterior-mean predictor to the S2 premise.
 **S2.3 — Calibration-error robustness**
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 -
-\sqrt{\operatorname{Var}(e(Y))\operatorname{Var}(S)}.
+\sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}.
 $$
 
 **S2.4 — Prediction-MSE certificate**
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 -
-\sqrt{E[(U-Y)^2]\operatorname{Var}(S)}.
+\sqrt{E[(U-Y)^2]\mathrm{Var}(S)}.
 $$
 
 Role: quantitative robustness; mainly appendix/statistical material.
@@ -114,11 +114,11 @@ These are validation technology, not part of the conceptual definition of QBS.
 **S2.11 — Residual conditional-covariance extension**
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 +
-E[\operatorname{Cov}(U,S\mid Y)],
+E[\mathrm{Cov}(U,S\mid Y)],
 $$
 
 where:
@@ -134,9 +134,9 @@ Role: removes the restrictive assumption that accessibility is a deterministic f
 **S2.12 — Residual-variance certificate**
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(m(Y),a(Y))
+\mathrm{Cov}(m(Y),a(Y))
 -
 \sqrt{E[v_U(Y)]E[v_S(Y)]}.
 $$
@@ -150,11 +150,11 @@ Define:
 $$
 A_U
 =
-\frac{\operatorname{Var}(m(Y))}{\operatorname{Var}(U)},
+\frac{\mathrm{Var}(m(Y))}{\mathrm{Var}(U)},
 \qquad
 A_S
 =
-\frac{\operatorname{Var}(a(Y))}{\operatorname{Var}(S)}.
+\frac{\mathrm{Var}(a(Y))}{\mathrm{Var}(S)}.
 $$
 
 When both are positive:
@@ -162,15 +162,15 @@ When both are positive:
 $$
 \rho_{ma}
 =
-\operatorname{Corr}(m(Y),a(Y)).
+\mathrm{Corr}(m(Y),a(Y)).
 $$
 
 Then:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\sqrt{\operatorname{Var}(U)\operatorname{Var}(S)}
+\sqrt{\mathrm{Var}(U)\mathrm{Var}(S)}
 \left[
 \rho_{ma}\sqrt{A_UA_S}
 -

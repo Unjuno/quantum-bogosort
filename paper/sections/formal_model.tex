@@ -32,6 +32,20 @@ V_R
 \frac{\mathbb E_\mu[U_RS_R]}{\mathbb E_\mu[S_R]}.
 \]
 
+The same change of measure applies to a present-state descriptor when accessibility is determined over a future continuation. Let $Z$ denote a present state and let $S_T$ denote future-continuation accessibility. Then
+\[
+P_{\mathrm{FP}}(Z\in A)
+=
+\frac{\mathbb E[\mathbf 1_{\{Z\in A\}}S_T]}{\mathbb E[S_T]},
+\]
+and, for a discrete state,
+\[
+P_{\mathrm{FP}}(Z=z)
+=
+\frac{\mathbb E[S_T\mid Z=z]P(Z=z)}{\mathbb E[S_T]}.
+\]
+Thus differential expected future accessibility can reweight present self-location. This is a conditioning/change-of-measure statement; it does not imply backward causation or a causal modification of the base law of $Z$.
+
 For paired counterfactual comparisons, the preferred representation uses a common primitive realization $z$ and policy-dependent histories $\omega_R(z)$. This prevents a recognition comparison from being confused with a comparison of unrelated Monte Carlo samples.
 
 Define the normalized covariance contribution

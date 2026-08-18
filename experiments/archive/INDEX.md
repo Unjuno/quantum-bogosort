@@ -96,11 +96,11 @@ An early probabilistic-execution sweep left the selector active when execution s
 
 **Status:** SUPERSEDED and must not be cited. The corrected design uses:
 
-$$
+```math
 S_q
 =
 1-q(1-S_{\mathrm{full}}),
-$$
+```
 
 so `q=0` reproduces the baseline policy/accessibility state and `q=1` gives full recognition-dependent policy plus selector.
 

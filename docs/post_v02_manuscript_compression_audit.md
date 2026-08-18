@@ -24,11 +24,11 @@ $$
 For general accessibility the central exact identity is:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(E[U\mid Y],E[S\mid Y])
+\mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 +
-E[\operatorname{Cov}(U,S\mid Y)].
+E[\mathrm{Cov}(U,S\mid Y)].
 $$
 
 The statistical certification machinery should support this spine without replacing it.
@@ -82,9 +82,9 @@ $$
 and:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 =
-\operatorname{Cov}(m(Y),s(Y)).
+\mathrm{Cov}(m(Y),s(Y)).
 $$
 
 It retains the mutual-information boundary:
@@ -150,7 +150,7 @@ Recognition remains causally effective only through trajectory and/or accessibil
 The main text explicitly retains:
 
 $$
-E[\operatorname{Cov}(U,S\mid Y)].
+E[\mathrm{Cov}(U,S\mid Y)].
 $$
 
 It is not silently set to zero outside the score-measurable special case.

@@ -15,7 +15,7 @@ and:
 $$
 I
 =
-\frac{\operatorname{Cov}(D,S)}{E[S]}.
+\frac{\mathrm{Cov}(D,S)}{E[S]}.
 $$
 
 If ordinary adaptation preferentially rescues low-accessibility bad states, the interaction should be nonpositive.
@@ -49,7 +49,7 @@ where:
 $$
 I_{target}
 =
-\frac{\operatorname{Cov}(D,S_0)}{E[S_0]},
+\frac{\mathrm{Cov}(D,S_0)}{E[S_0]},
 $$
 
 and:

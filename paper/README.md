@@ -10,12 +10,13 @@ This directory contains the evolving QBS manuscript source for public technical 
 4. Formal Model
 5. Main Theorems
 6. Adaptive-Agent Mechanism
-7. Experiments
-8. Everett Interpretation
-9. Limitations and Falsifiability
-10. Discussion
-11. Appendices
-12. References
+7. General Accessibility Beyond Score-Measurability
+8. Experiments
+9. Everett Interpretation
+10. Limitations and Falsifiability
+11. Discussion
+12. Appendices
+13. References
 
 ## Writing rule
 
@@ -33,25 +34,27 @@ The manuscript must not state a simulation-supported classical mechanism or a st
 
 ## S2 theorem-stack editorial policy
 
-The repository contains a deliberately modular post-v0.2 S2 theorem stack. Repository completeness does **not** imply that every theorem should receive equal prominence in the paper.
+The repository contains a deliberately modular post-v0.2 S2 theorem stack. Repository completeness does **not** imply equal manuscript prominence.
 
-The current editorial recommendation is:
+The current main-text implementation is:
 
-### Main-text candidates
+- **S2** — predictive conditional-mean alignment, in the Adaptive-Agent section;
+- **S2.2** — posterior-mean self-calibration, as the clean inference corollary;
+- **S2.11** — exact general-accessibility / residual covariance decomposition, in a dedicated short section;
+- **S2.13** — explained-variance form, used as the interpretable sufficient-condition summary.
 
-- **S2** — predictive conditional-mean alignment;
-- **S2.2** — posterior-mean self-calibration;
-- **S2.11** — exact general-accessibility / residual covariance decomposition;
-- **S2.13** — explained-variance form, if it materially improves interpretation.
+The main text also states the compact S2.12 worst-case residual penalty because S2.13 depends on it, but its sharpness argument and full derivation remain Appendix material.
 
-### Appendix-first results
+Appendix-first statistical machinery remains:
 
 - S2.3–S2.4 — calibration/MSE robustness;
 - S2.5–S2.7 — held-out and selection-safe finite-sample validity;
 - S2.8–S2.10 — generic, light-tail, and robust confidence-envelope machinery;
-- S2.12 — worst-case residual-variance certificate.
+- S2.12 — full residual-variance proof and sharpness analysis.
 
-The rationale and dependency graph are maintained in `../docs/s2_stack_review_map.md`.
+The previous standalone robust-MoM summary is no longer included in the main-text sequence. Its theorem and proof remain available in the Appendix and supplementary notes.
+
+The dependency graph and editorial rationale are maintained in `../docs/s2_stack_review_map.md`. Semantic preservation requirements for any future stack consolidation are maintained in `../docs/s2_stack_semantic_audit.md`.
 
 A new S2-numbered theorem should not be added by default. New theorem work should be driven by a material modeling gap, a concrete review objection, a genuinely new operational quantity, or a substantial sharpening under motivated assumptions.
 
@@ -102,4 +105,4 @@ GitHub Actions performs the same figure-generation and LaTeX/PDF validation auto
 
 ## Current status
 
-The v0.2 public-review baseline on `main` remains frozen. Post-v0.2 S2 developments are kept in stacked review PRs so proof review, statistical-validity review, and manuscript editorial decisions can be made separately before any later preprint merge.
+The v0.2 public-review baseline on `main` remains frozen. Post-v0.2 S2 developments are kept in stacked review PRs. PR #21 now contains both the S2.13 result and the first manuscript-level compression pass that implements the review map rather than merely describing it.

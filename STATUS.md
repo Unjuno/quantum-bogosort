@@ -2,7 +2,7 @@
 
 **Snapshot date:** 2026-08-18
 
-This is the canonical status ledger for the Quantum Bogosort repository. It separates proved mathematics, statistical validation results, simulation evidence, and the physically open Everett bridge.
+This is the canonical status ledger for the Quantum Bogosort repository. It separates proved mathematics, statistical validation results, simulation evidence, editorial review state, and the physically open Everett bridge.
 
 ## Release baseline
 
@@ -37,9 +37,9 @@ Post-v0.2 theorem work is intentionally kept in stacked review PRs rather than m
 | S2.8 | Generic simultaneous-confidence-envelope composition | PROVED | `supplementary/confidence_envelope_certificate.md` |
 | S2.9 | Light-tail sub-Gaussian/Bernstein instantiation | PROVED | `supplementary/light_tail_certificate.md` |
 | S2.10 | Robust median-of-means instantiation | PROVED | `supplementary/robust_mom_certificate.md` |
-| S2.11 | Residual conditional-covariance extension beyond `S=s(Y)` | PROVED | `supplementary/residual_covariance_extension.md` |
-| S2.12 | Residual-variance lower certificate | PROVED | `supplementary/residual_variance_certificate.md` |
-| S2.13 | Explained-variance alignment certificate | PROVED | `supplementary/explained_variance_certificate.md` |
+| S2.11 | Residual conditional-covariance extension beyond `S=s(Y)` | PROVED / PROOF-REVIEWED | `supplementary/residual_covariance_extension.md` |
+| S2.12 | Residual-variance lower certificate | PROVED / PROOF-REVIEWED | `supplementary/residual_variance_certificate.md` |
+| S2.13 | Explained-variance alignment certificate | PROVED / PROOF-REVIEWED | `supplementary/explained_variance_certificate.md` |
 | P1 | Costless recognition has nonnegative option value | PROVED | `theory/propositions_boundaries.md` |
 | P2 | Pure reweighting cannot create support | PROVED | `theory/propositions_boundaries.md` |
 
@@ -64,6 +64,16 @@ $$
 S2.2 gives posterior-mean self-calibration. S2.3–S2.4 provide population robustness bounds. S2.5–S2.10 provide bounded, selection-safe, generic-envelope, light-tail, and robust finite-moment statistical certification layers.
 
 ## General accessibility: S2.11–S2.12
+
+The current S2.11 statement uses:
+
+$$
+U,S\in L^2,
+\qquad
+S\ge0,
+\qquad
+0<E[S]<\infty.
+$$
 
 Define:
 
@@ -98,7 +108,7 @@ $$
 \ge
 \operatorname{Cov}(m(Y),a(Y))
 -
-E[\sqrt{v_U(Y)v_S(Y)}].
+E[\sqrt{v_U(Y)v_S(Y)}],
 $$
 
 and the simpler bound:
@@ -110,6 +120,8 @@ $$
 -
 \sqrt{E[v_U(Y)]E[v_S(Y)]}.
 $$
+
+The dedicated proof review replaces earlier informal constant-shift counterexamples by bounded Rademacher constructions that maintain strictly positive accessibility and still attain the negative conditional Cauchy--Schwarz bound.
 
 ## Explained-variance certificate: S2.13
 
@@ -184,7 +196,7 @@ $$
 \sqrt{(1-A_U)(1-A_S)}
 $$
 
-is sufficient for positive total covariance.
+is sufficient for positive total covariance. This worst-case sufficient certificate necessarily requires positive conditional-mean correlation.
 
 For perfectly aligned conditional means:
 
@@ -201,19 +213,37 @@ $$
 For symmetric explained variance:
 
 $$
-A_U=A_S=A,
+A_U=A_S=A>0,
 $$
 
-the sufficient threshold is:
+the primitive condition is:
 
 $$
-\boxed{
+\rho_{ma}A>1-A.
+$$
+
+When `rho_ma>-1`, this is algebraically equivalent to:
+
+$$
 A>
-\frac{1}{1+\rho_{ma}}
-}.
+\frac{1}{1+\rho_{ma}}.
 $$
+
+Under `0<A<=1`, a strict symmetric certificate is feasible only for `rho_ma>0`.
 
 S2.13 remains a worst-case residual certificate inherited from S2.12; it is sufficient, not necessary.
+
+## Core S2 proof-review state
+
+`docs/post_v02_core_s2_proof_review.md` completed a dedicated second-pass review of S2, S2.11, S2.12, and S2.13.
+
+Result: **PASS WITH THREE CORRECTIONS**.
+
+1. S2.11 moment assumptions were made explicit as square integrability.
+2. S2.11/S2.12 counterexample and sharpness constructions were made bounded and compatible with strictly positive accessibility.
+3. S2.13 symmetric-threshold denominator and feasibility conditions were made explicit.
+
+The central identities and inequalities were unchanged.
 
 ## Core computational results
 
@@ -234,7 +264,11 @@ All five core experiments are rerun by GitHub Actions. The S2 theorem stack does
 | Six GitHub-readable SVG figures | COMMITTED / REGENERATED IN CI |
 | Six manuscript PDF figures | GENERATED IN CI |
 | T1–T5 proof appendix | INTEGRATED |
-| S2.* supplementary appendices | STACKED REVIEW BRANCHES |
+| S2 main-text conceptual spine | IMPLEMENTED ON PR #21 |
+| S2.3–S2.10 statistical machinery | APPENDIX-FIRST |
+| Post-v0.2 manuscript compression audit | PASS |
+| Post-v0.2 core S2 proof review | PASS WITH CORRECTIONS |
+| Targeted post-v0.2 prior-art audit | INTEGRATED |
 | Markdown `$$ ... $$` delimiter validation | CI ENFORCED |
 | E1–E5 reproduction | CI ENFORCED |
 | Repository structure validation | CI ENFORCED |
@@ -252,16 +286,14 @@ All five core experiments are rerun by GitHub Actions. The S2 theorem stack does
 | A passed statistical certificate establishes Everettian observer selection | NOT CLAIMED |
 | External random generators become objectively lucky | NOT CLAIMED |
 
-## Open problems after S2.13
+## Current review gates
 
-1. Derive, constrain, or reject a concrete physical Everett accessibility map from observer/branch physics.
-2. Develop finite-sample confidence bounds for the explained-variance quantities `A_U`, `A_S`, and `rho_ma` in specific agent models.
-3. Derive explicit Orlicz/mgf sufficient conditions for S2.9 product/square Bernstein parameters.
-4. Explore robust estimators that weaken S2.10's fourth-moment-type requirements.
-5. Extend selection validity to infinite or certification-data-dependent candidate classes.
-6. Add a held-out certificate experiment only if public review requires it.
-7. Continue novelty/prior-art search when review identifies a specific overlap question.
-8. Develop a recognition-time ordering theorem only under explicit pathwise or conditional-advantage assumptions.
+1. Keep PR #21 CI-green after the proof-review corrections and Related Work expansion.
+2. Obtain external/public proof review of the compressed S2 spine.
+3. Decide whether S2.13 remains in main text after review.
+4. Decide whether all S2.5–S2.10 results remain in the paper Appendix or partly move to repository-only supplementary material.
+5. Add new theorem/statistical layers only in response to a concrete review-identified need.
+6. Keep the Everett accessibility bridge as a separate physical problem.
 
 ## Current stacked review sequence
 
@@ -274,4 +306,4 @@ All five core experiments are rerun by GitHub Actions. The S2 theorem stack does
 7. PR #18 — S2.10 robust median-of-means instantiation.
 8. PR #19 — S2.11 residual conditional-covariance extension.
 9. PR #20 — S2.12 residual-variance certificate.
-10. Current branch — S2.13 explained-variance certificate.
+10. PR #21 — S2.13 explained-variance certificate plus manuscript compression, prior-art, and proof-review integration.

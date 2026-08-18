@@ -9,7 +9,7 @@ This review is separate from the original theorem audits. Its purpose is to re-c
 
 The manuscript now emphasizes the chain:
 
-$$
+```math
 \text{S2 predictive alignment}
 \longrightarrow
 \text{S2.11 general accessibility}
@@ -17,7 +17,7 @@ $$
 \text{S2.12 residual penalty}
 \longrightarrow
 \text{S2.13 explained-variance form}.
-$$
+```
 
 The review asks whether each step remains valid under assumptions stated explicitly enough for a standalone mathematical reading.
 
@@ -25,51 +25,51 @@ The review asks whether each step remains valid under assumptions stated explici
 
 S2 assumes:
 
-$$
+```math
 S=s(Y)\ge0,
 \qquad
 0<E[S]<\infty,
 \qquad
 E[|U|S]<\infty,
-$$
+```
 
 with integrable `U`, and defines:
 
-$$
+```math
 m(Y)=E[U\mid Y].
-$$
+```
 
 Because `S` is `Y`-measurable,
 
-$$
+```math
 E[US]=E[m(Y)S].
-$$
+```
 
 Moreover conditional Jensen gives:
 
-$$
+```math
 |m(Y)|
 \le
 E[|U|\mid Y],
-$$
+```
 
 so:
 
-$$
+```math
 E[|m(Y)|S]
 \le
 E[E[|U|\mid Y]S]
 =
 E[|U|S]<\infty.
-$$
+```
 
 Thus the covariance projection identity is well-defined:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(m(Y),s(Y)).
-$$
+```
 
 The independent-copy identity used for comonotonicity is also legitimate because the required products are integrable.
 
@@ -81,9 +81,9 @@ The independent-copy identity used for comonotonicity is also legitimate because
 
 An earlier S2.11 draft stated that the "moments required below" were finite and highlighted:
 
-$$
+```math
 E[|US|]<\infty.
-$$
+```
 
 That wording was mathematically serviceable only if interpreted as including every moment needed by the total-covariance decomposition, but it was unnecessarily ambiguous. In particular, the theorem should not require a reader to infer separate finiteness of the covariance components.
 
@@ -91,15 +91,15 @@ That wording was mathematically serviceable only if interpreted as including eve
 
 S2.11 now assumes explicitly:
 
-$$
+```math
 U,S\in L^2.
-$$
+```
 
 This guarantees:
 
-$$
+```math
 E[|US|]<\infty
-$$
+```
 
 by Cauchy--Schwarz and ensures all covariance, conditional-mean, and residual terms used in the theorem are finite.
 
@@ -107,9 +107,9 @@ by Cauchy--Schwarz and ensures all covariance, conditional-mean, and residual te
 
 The earlier counterexample said to choose centered residuals with:
 
-$$
+```math
 \xi=-\eta
-$$
+```
 
 and add a sufficiently large constant to accessibility. For an arbitrary unbounded residual, no finite constant need make accessibility nonnegative almost surely.
 
@@ -117,31 +117,31 @@ and add a sufficiently large constant to accessibility. For an arbitrary unbound
 
 The counterexample now uses a Rademacher residual:
 
-$$
+```math
 P(\eta=1)=P(\eta=-1)=\frac12,
-$$
+```
 
 with:
 
-$$
+```math
 U=\eta,
 \qquad
 S=M-\eta,
 \qquad
 M>1.
-$$
+```
 
 Then:
 
-$$
+```math
 S>0
-$$
+```
 
 almost surely and:
 
-$$
+```math
 \mathrm{Cov}(U,S)=-1.
-$$
+```
 
 This proves the same boundary claim without any hidden boundedness assumption.
 
@@ -151,7 +151,7 @@ This proves the same boundary claim without any hidden boundedness assumption.
 
 Conditional Cauchy--Schwarz gives, almost surely:
 
-$$
+```math
 \mathrm{Cov}(U,S\mid Y)
 \ge
 -
@@ -159,25 +159,25 @@ $$
 \mathrm{Var}(U\mid Y)
 \mathrm{Var}(S\mid Y)
 }.
-$$
+```
 
 Under `U,S in L^2`, the conditional variance terms have finite expectations. Therefore S2.11 yields:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(m(Y),a(Y))
 -
 E[\sqrt{v_U(Y)v_S(Y)}].
-$$
+```
 
 Outer Cauchy--Schwarz gives:
 
-$$
+```math
 E[\sqrt{v_Uv_S}]
 \le
 \sqrt{E[v_U]E[v_S]}.
-$$
+```
 
 The direction of the resulting lower bound is correct: replacing the residual penalty by a larger upper bound makes the covariance lower certificate weaker.
 
@@ -185,32 +185,32 @@ The direction of the resulting lower bound is correct: replacing the residual pe
 
 The same boundedness issue identified for S2.11 appeared in the earlier S2.12 sharpness prose. It is now replaced by:
 
-$$
+```math
 U=\eta,
 \qquad
 S=M-c\eta,
-$$
+```
 
 where `eta` is Rademacher, `c>0`, and `M>c`. Then:
 
-$$
+```math
 S>0
-$$
+```
 
 almost surely and:
 
-$$
+```math
 \mathrm{Cov}(U,S\mid Y)=-c
-$$
+```
 
 while:
 
-$$
+```math
 \sqrt{
 \mathrm{Var}(U\mid Y)
 \mathrm{Var}(S\mid Y)
 }=c.
-$$
+```
 
 Thus the universal negative conditional Cauchy--Schwarz penalty is genuinely sharp within the nonnegative-accessibility model.
 
@@ -220,15 +220,15 @@ Thus the universal negative conditional Cauchy--Schwarz penalty is genuinely sha
 
 Assume:
 
-$$
+```math
 \mathrm{Var}(U)>0,
 \qquad
 \mathrm{Var}(S)>0.
-$$
+```
 
 Define:
 
-$$
+```math
 A_U
 =
 \frac{\mathrm{Var}(E[U\mid Y])}{\mathrm{Var}(U)},
@@ -236,17 +236,17 @@ A_U
 A_S
 =
 \frac{\mathrm{Var}(E[S\mid Y])}{\mathrm{Var}(S)}.
-$$
+```
 
 Total variance gives:
 
-$$
+```math
 0\le A_U,A_S\le1.
-$$
+```
 
 When `A_U A_S>0`, the conditional-mean correlation is well-defined and:
 
-$$
+```math
 \mathrm{Cov}(m,a)
 =
 \rho_{ma}
@@ -255,7 +255,7 @@ A_UA_S
 \mathrm{Var}(U)
 \mathrm{Var}(S)
 }.
-$$
+```
 
 Substitution into S2.12 gives the stated normalized lower bound.
 
@@ -263,40 +263,40 @@ Substitution into S2.12 gives the stated normalized lower bound.
 
 For:
 
-$$
+```math
 A_U=A_S=A>0,
-$$
+```
 
 the sufficient condition is:
 
-$$
+```math
 \rho_{ma}A>1-A.
-$$
+```
 
 The divided form:
 
-$$
+```math
 A>
 \frac{1}{1+\rho_{ma}}
-$$
+```
 
 requires:
 
-$$
+```math
 \rho_{ma}>-1.
-$$
+```
 
 Because:
 
-$$
+```math
 A\le1,
-$$
+```
 
 the strict worst-case certificate is feasible only if:
 
-$$
+```math
 \rho_{ma}>0.
-$$
+```
 
 At zero correlation it would require `A>1`; for negative correlation it is impossible under `A<=1`; at `rho_ma=-1` the divided form is undefined.
 
@@ -312,15 +312,15 @@ The theorem source, Appendix, and audit now state this domain explicitly. The pr
 
 When:
 
-$$
+```math
 S=s(Y),
-$$
+```
 
 the residual accessibility term vanishes and:
 
-$$
+```math
 \mathrm{Cov}(U,S\mid Y)=0.
-$$
+```
 
 Therefore S2 is exactly recovered from S2.11.
 
@@ -342,9 +342,9 @@ S2.13 is a reparameterization of the coarser S2.12 bound using total-variance fr
 
 Positive covariance implies positive first-person mean shift only after:
 
-$$
+```math
 0<E[S]<\infty.
-$$
+```
 
 This condition is retained in the main S2.11–S2.13 presentation.
 

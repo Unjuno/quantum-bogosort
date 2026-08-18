@@ -18,18 +18,34 @@ PRs #11–#20 preserve the staged derivation history. PR #21 preserves the cumul
 
 ## Post-snapshot `main` clarifications
 
-The frozen `release/v0.3-public-review` snapshot is unchanged. Subsequent `main` changes are editorial, interpretive, repository-hygiene, or CI-hardening changes rather than new theorem or experiment content.
+The frozen `release/v0.3-public-review` snapshot is unchanged. Subsequent `main` changes are editorial, interpretive, visualization, repository-hygiene, or CI-hardening changes rather than new theorem or experiment content.
 
 Current `main` now makes the following points explicit:
 
 - recognition may include recognition of a QBS-type rule itself, while recognition has no privileged causal power beyond the policy and trajectory/accessibility changes it induces;
 - future accessibility can reweight present self-location under the same first-person change of measure;
 - this present-self-location statement is conditioning/change of measure, not backward causation or objective-probability modification;
+- a favorable present self-location shift additionally requires alignment between expected future accessibility and the relevant favorability/utility statistic;
+- the root README includes a Mermaid dependency diagram and direct previews of the committed theorem/simulation SVG figures;
+- `experiments/README.md` now exposes the E1–E5 H/T/D/C/U map and visual result previews;
+- Markdown validation now rejects malformed double-dollar display blocks whose delimiters are not on lines by themselves;
 - current public headings and research-map language avoid stale development-version labels;
 - merged/superseded development branches have been removed while frozen release branches remain preserved;
 - CI uses concurrency cancellation and runtime limits to prevent indefinitely stalled validation jobs.
 
 No T1–T5 theorem, E1–E5 experiment, S2-family result, or Everett-bridge status is changed by these post-snapshot clarifications.
+
+## Broad-announcement readiness
+
+The repository is **not yet marked ready for broad announcement**. The remaining presentation gate is a direct GitHub-UI visual pass after the current README/figure changes, including:
+
+1. display-math rendering;
+2. Mermaid rendering;
+3. SVG visibility and sizing;
+4. desktop/mobile readability;
+5. confirmation of the latest `main` validation run.
+
+These are presentation/reproducibility checks, not new-theory requirements.
 
 ## Locked core
 
@@ -87,10 +103,11 @@ The repository does not claim that an external random-number generator becomes o
 
 Work should now prioritize:
 
-1. external/public proof review of S2, S2.11, S2.12, and S2.13;
-2. prior-art and novelty review of the combined recognition-dependent architecture;
-3. manuscript claim consistency and compression;
-4. statistical-certificate assumption review, including leakage and selection boundaries;
-5. independent scrutiny of the Everett accessibility bridge.
+1. complete the broad-announcement visual QA gate;
+2. external/public proof review of S2, S2.11, S2.12, and S2.13;
+3. prior-art and novelty review of the combined recognition-dependent architecture;
+4. manuscript claim consistency and compression;
+5. statistical-certificate assumption review, including leakage and selection boundaries;
+6. independent scrutiny of the Everett accessibility bridge.
 
 Do not add another S2-numbered theorem by default. Add new mathematical machinery only in response to a concrete modeling gap or review-identified need.

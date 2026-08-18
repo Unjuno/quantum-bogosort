@@ -284,9 +284,3 @@ The illustrated manuscript continues to build under CI.
 PRs #11–#20 are closed as historical and superseded for active review by PR #21.
 
 They remain useful for provenance but are not authoritative current statements when later proof reviews corrected assumptions or boundary constructions.
-
-## Research-integrity rule
-
-See `docs/research_integrity.md`.
-
-Mathematical corrections, interpretation changes, and non-scientific operational constraints must remain distinguishable in the repository record.

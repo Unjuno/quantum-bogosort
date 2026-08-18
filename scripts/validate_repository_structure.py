@@ -32,6 +32,7 @@ required = [
     "figures/generated/fig1_framework.svg", "figures/generated/fig2_fosd.svg",
     "figures/generated/fig3_recognition_decomposition.svg", "figures/generated/fig4_interaction_sign.svg",
     "figures/generated/fig5_adaptation_quality.svg", "figures/generated/fig6_branch_coherence.svg",
+    "figures/generated/fig7_predictive_alignment.svg",
 ]
 
 missing = [path for path in required if not (ROOT / path).exists()]

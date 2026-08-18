@@ -136,7 +136,7 @@ Then:
 $$
 \boxed{
 P\!\left(
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 D_{\mathrm{env}}
 \right)
@@ -182,7 +182,7 @@ All statements below are on the simultaneous event `E`.
 Write:
 
 $$
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 =
 E[YS]-E[Y]E[S].
 $$
@@ -222,7 +222,7 @@ $$
 Hence:
 
 $$
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 \ge
 L_{YS}-P_U
 =
@@ -234,7 +234,7 @@ $$
 Because:
 
 $$
-\operatorname{Var}(S)
+\mathrm{Var}(S)
 =
 E[S^2]-E[S]^2,
 $$
@@ -250,7 +250,7 @@ $$
 we obtain:
 
 $$
-\operatorname{Var}(S)
+\mathrm{Var}(S)
 \le
 U_{S^2}-(L_S^+)^2.
 $$
@@ -258,7 +258,7 @@ $$
 On the simultaneous-validity event this right-hand side is nonnegative. The explicit outer `max` merely keeps the reported numerical envelope nonnegative even on samples outside the confidence event. Thus:
 
 $$
-\operatorname{Var}(S)
+\mathrm{Var}(S)
 \le
 V_U.
 $$
@@ -278,19 +278,19 @@ $$
 S2.4 states:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
-\operatorname{Cov}(Y,S)
+\mathrm{Cov}(Y,S)
 -
 \sqrt{
-E[(U-Y)^2]\operatorname{Var}(S)
+E[(U-Y)^2]\mathrm{Var}(S)
 }.
 $$
 
 Substituting the simultaneous lower and upper envelopes gives:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 C_L-\sqrt{U_MV_U}
 =
@@ -302,7 +302,7 @@ Because `P(E)>=1-delta`, the claimed coverage follows.
 If `D_env>0`, then on `E`:
 
 $$
-\operatorname{Cov}(U,S)>0.
+\mathrm{Cov}(U,S)>0.
 $$
 
 Finally, when `E[S]<=U_S` and `D_env>0`:
@@ -310,7 +310,7 @@ Finally, when `E[S]<=U_S` and `D_env>0`:
 $$
 E_{FP}[U]-E[U]
 =
-\frac{\operatorname{Cov}(U,S)}{E[S]}
+\frac{\mathrm{Cov}(U,S)}{E[S]}
 \ge
 \frac{D_{\mathrm{env}}}{U_S}.
 $$

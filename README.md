@@ -215,12 +215,15 @@ The current review priority is external proof, novelty, manuscript, statistical-
 
 The frozen scientific public-review snapshot is **v0.3-public-review**. The default `main` branch is the current review/development surface and may contain post-snapshot editorial, interpretive, repository-hygiene, visualization, or CI-hardening clarifications. Those changes are tracked in [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md) and [`CHANGELOG.md`](CHANGELOG.md).
 
+The two `release/*` branches are intentional frozen scientific snapshots, not pending or unmerged development branches. Merged/superseded work branches are removed; new review/development changes land on `main`.
+
 - current frozen snapshot: `release/v0.3-public-review`;
 - current review/development surface: `main`;
 - current snapshot ledger: [`STATUS.md`](STATUS.md);
 - current development/review ledger: [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md);
 - previous frozen snapshot: `release/v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
-- historical derivation provenance: PRs #11–#21.
+- historical derivation provenance: PRs #11–#21;
+- post-snapshot rendering/visualization/reproducibility QA provenance: PRs #27–#29.
 
 The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged in v0.3. The principal v0.3 addition is the integrated S2 predictive-alignment/general-accessibility/certification line plus its proof, manuscript, prior-art, and repository-structure audits.
 

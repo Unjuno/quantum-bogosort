@@ -53,6 +53,11 @@ jobs:
           test -s figures/generated_pdf/fig4_interaction_sign.pdf
           test -s figures/generated_pdf/fig5_adaptation_quality.pdf
           test -s figures/generated_pdf/fig6_branch_coherence.pdf
+      - name: Verify committed SVG reproducibility
+        run: |
+          git diff --exit-code -- \
+            figures/generated/ \
+            data/processed/fig2_fosd_theorem_illustration.csv
       - name: Validate manifest references
         run: python scripts/validate_manifest.py
 

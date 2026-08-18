@@ -1,8 +1,8 @@
 # Manuscript Source
 
-This directory contains the evolving QBS manuscript source for public technical review and later preprint preparation.
+This directory contains the evolving QBS manuscript source for technical review and later preprint preparation.
 
-## Structure
+## Manuscript structure
 
 1. Abstract
 2. Introduction
@@ -18,45 +18,49 @@ This directory contains the evolving QBS manuscript source for public technical 
 12. Appendices
 13. References
 
-## Writing rule
+## Claim discipline
 
-Every substantive statement should be identifiable as one of:
+Substantive statements should remain identifiable as one of:
 
-- theorem / proposition,
-- simulation result,
-- model assumption,
-- statistical validation result,
-- Everett bridge assumption,
-- interpretation,
+- exact theorem or proposition;
+- sufficient condition;
+- statistical certificate;
+- classical simulation result;
+- model assumption;
+- Everett bridge assumption;
+- interpretation;
 - open problem.
 
-The manuscript must not state a simulation-supported classical mechanism or a statistical covariance certificate as an Everettian physical result.
+The manuscript must not promote a classical simulation or a statistical covariance certificate into an Everettian physical result.
 
-## S2 theorem-stack editorial policy
+The repository-wide claim boundary is [`../docs/claims_and_assumptions.md`](../docs/claims_and_assumptions.md).
 
-The repository contains a deliberately modular post-v0.2 S2 theorem stack. Repository completeness does **not** imply equal manuscript prominence.
+## Main-text S2 presentation
 
-The current main-text implementation is:
+Repository completeness does not imply equal manuscript prominence. The current main text presents one conceptual spine:
 
-- **S2** — predictive conditional-mean alignment, in the Adaptive-Agent section;
-- **S2.2** — posterior-mean self-calibration, as the clean inference corollary;
-- **S2.11** — exact general-accessibility / residual covariance decomposition, in a dedicated short section;
-- **S2.13** — explained-variance form, used as the interpretable sufficient-condition summary.
+$$
+\text{S2 predictive alignment}
+\longrightarrow
+\text{S2.11 general accessibility}
+\longrightarrow
+\text{S2.12 residual penalty}
+\longrightarrow
+\text{S2.13 explained-variance interpretation}.
+$$
 
-The main text also states the compact S2.12 worst-case residual penalty because S2.13 depends on it, but its sharpness argument and full derivation remain Appendix material.
+S2.2 appears as the posterior-mean calibration corollary.
 
-Appendix-first statistical machinery remains:
+Detailed statistical machinery is Appendix-first:
 
 - S2.3–S2.4 — calibration/MSE robustness;
 - S2.5–S2.7 — held-out and selection-safe finite-sample validity;
 - S2.8–S2.10 — generic, light-tail, and robust confidence-envelope machinery;
 - S2.12 — full residual-variance proof and sharpness analysis.
 
-The previous standalone robust-MoM summary is no longer included in the main-text sequence. Its theorem and proof remain available in the Appendix and supplementary notes.
+The dependency and editorial map is [`../docs/s2_stack_review_map.md`](../docs/s2_stack_review_map.md). The dedicated proof review is [`../docs/post_v02_core_s2_proof_review.md`](../docs/post_v02_core_s2_proof_review.md).
 
-The dependency graph and editorial rationale are maintained in `../docs/s2_stack_review_map.md`. Semantic preservation requirements for any future stack consolidation are maintained in `../docs/s2_stack_semantic_audit.md`.
-
-A new S2-numbered theorem should not be added by default. New theorem work should be driven by a material modeling gap, a concrete review objection, a genuinely new operational quantity, or a substantial sharpening under motivated assumptions.
+No new S2-numbered theorem should be added by default. New theorem work should respond to a material modeling gap or concrete review objection.
 
 ## Interpretation boundary
 
@@ -69,7 +73,7 @@ d\mu^{FP}_\pi(\omega)
 \,d\mu(\omega)
 $$
 
-from Everettian quantum mechanics. The bridge remains a separate assumption and review target.
+from Everettian quantum mechanics. The bridge remains a separate physical assumption and review target.
 
 ## Figures
 
@@ -88,7 +92,7 @@ The manuscript currently places:
 - Figure 5: adaptation-quality / substitution sweep;
 - Figure 6: E5 branch coherence versus marginal FP uplift.
 
-Captions explicitly state whether each figure is a mathematical schematic, theorem illustration, or classical simulation.
+Captions state whether each figure is a mathematical schematic, theorem illustration, or classical simulation.
 
 ## Local build
 
@@ -101,8 +105,17 @@ cd paper
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-GitHub Actions performs the same figure-generation and LaTeX/PDF validation automatically and uploads `paper/main.pdf` as an artifact.
+GitHub Actions performs figure generation and LaTeX/PDF validation automatically and uploads `paper/main.pdf` as an artifact.
 
-## Current status
+## Current review state
 
-The v0.2 public-review baseline on `main` remains frozen. Post-v0.2 S2 developments are kept in stacked review PRs. PR #21 now contains both the S2.13 result and the first manuscript-level compression pass that implements the review map rather than merely describing it.
+The stable v0.2 scientific snapshot is preserved at `release/v0.2-public-review`.
+
+PR #21 is the single cumulative post-v0.2 review candidate. Historical PRs #11–#20 preserve development provenance but are not the current manuscript-review surface.
+
+Current manuscript decisions are review-driven:
+
+1. verify S2, S2.11, S2.12, and S2.13 under external proof review;
+2. decide whether S2.13 remains in the main text;
+3. decide whether some S2.5–S2.10 material moves from the paper Appendix to repository-only supplementary material;
+4. preserve the Everett bridge as a separate physical question.

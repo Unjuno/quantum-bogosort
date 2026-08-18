@@ -370,25 +370,13 @@ In particular:
 \mathrm{Var}(S^2)<\infty
 ```
 
-requires:
-
-```math
-E[S^4]<\infty.
-```
-
-Also:
+requires a finite fourth moment of `S`, and:
 
 ```math
 \mathrm{Var}((U-Y)^2)<\infty
 ```
 
-requires:
-
-```math
-E[(U-Y)^4]<\infty,
-```
-
-and:
+requires a finite fourth moment of the prediction residual. Likewise:
 
 ```math
 \mathrm{Var}(YS)<\infty

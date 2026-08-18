@@ -9,7 +9,7 @@ The S2 family now contains several logically distinct layers. They should not al
 
 The shortest conceptual chain is:
 
-$$
+```math
 \text{predictive signal}
 \longrightarrow
 \text{conditional-mean alignment}
@@ -17,17 +17,17 @@ $$
 \text{outcome/accessibility covariance}
 \longrightarrow
 \text{first-person mean shift}.
-$$
+```
 
 For the general-accessibility model, the exact decomposition is:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(E[U\mid Y],E[S\mid Y])
 +
 E[\mathrm{Cov}(U,S\mid Y)].
-$$
+```
 
 This decomposition should be the main conceptual endpoint of the S2 development.
 
@@ -39,25 +39,25 @@ This decomposition should be the main conceptual endpoint of the S2 development.
 
 For score-measurable accessibility:
 
-$$
+```math
 S=s(Y),
-$$
+```
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(E[U\mid Y],s(Y)).
-$$
+```
 
 Role: establishes the basic conditional-mean mechanism.
 
 **S2.2 — Posterior-mean self-calibration**
 
-$$
+```math
 Y=E[U\mid B]
 \Longrightarrow
 E[U\mid Y]=Y.
-$$
+```
 
 Role: connects a standard posterior-mean predictor to the S2 premise.
 
@@ -65,23 +65,23 @@ Role: connects a standard posterior-mean predictor to the S2 premise.
 
 **S2.3 — Calibration-error robustness**
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(Y,S)
 -
 \sqrt{\mathrm{Var}(e(Y))\mathrm{Var}(S)}.
-$$
+```
 
 **S2.4 — Prediction-MSE certificate**
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(Y,S)
 -
 \sqrt{E[(U-Y)^2]\mathrm{Var}(S)}.
-$$
+```
 
 Role: quantitative robustness; mainly appendix/statistical material.
 
@@ -113,33 +113,33 @@ These are validation technology, not part of the conceptual definition of QBS.
 
 **S2.11 — Residual conditional-covariance extension**
 
-$$
+```math
 \mathrm{Cov}(U,S)
 =
 \mathrm{Cov}(m(Y),a(Y))
 +
 E[\mathrm{Cov}(U,S\mid Y)],
-$$
+```
 
 where:
 
-$$
+```math
 m(Y)=E[U\mid Y],
 \qquad
 a(Y)=E[S\mid Y].
-$$
+```
 
 Role: removes the restrictive assumption that accessibility is a deterministic function of the score.
 
 **S2.12 — Residual-variance certificate**
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(m(Y),a(Y))
 -
 \sqrt{E[v_U(Y)]E[v_S(Y)]}.
-$$
+```
 
 Role: worst-case residual penalty when only unexplained conditional variation is controlled.
 
@@ -147,7 +147,7 @@ Role: worst-case residual penalty when only unexplained conditional variation is
 
 Define:
 
-$$
+```math
 A_U
 =
 \frac{\mathrm{Var}(m(Y))}{\mathrm{Var}(U)},
@@ -155,19 +155,19 @@ A_U
 A_S
 =
 \frac{\mathrm{Var}(a(Y))}{\mathrm{Var}(S)}.
-$$
+```
 
 When both are positive:
 
-$$
+```math
 \rho_{ma}
 =
 \mathrm{Corr}(m(Y),a(Y)).
-$$
+```
 
 Then:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \sqrt{\mathrm{Var}(U)\mathrm{Var}(S)}
@@ -176,7 +176,7 @@ $$
 -
 \sqrt{(1-A_U)(1-A_S)}
 \right].
-$$
+```
 
 Role: interpretable summary of the worst-case residual certificate.
 
@@ -221,13 +221,13 @@ The following are **not** strong standalone novelty claims:
 
 The potential contribution is the structured use of these tools inside the recognition-dependent QBS framework:
 
-$$
+```math
 R
 \to
 \pi_R
 \to
 (U_R,S_R),
-$$
+```
 
 with explicit separation of:
 
@@ -242,20 +242,20 @@ with explicit separation of:
 
 S2 through S2.13 are probability/statistical results. They do not derive:
 
-$$
+```math
 d\mu^{FP}
 \propto
 S\,d\mu
-$$
+```
 
 from quantum mechanics.
 
 A theorem can establish a statement of the form:
 
-$$
+```math
 \text{if accessibility has property }P,
 \text{ then FP value has property }Q.
-$$
+```
 
 It cannot establish that Everettian observer self-location actually supplies that accessibility variable without a separate physical bridge.
 

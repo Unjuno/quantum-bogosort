@@ -64,9 +64,3 @@ Please distinguish:
 - empirical rejection of a concrete physical prediction.
 
 The repository does not treat the abstract weighted measure as a derivation of Everettian physics.
-
-## Research-integrity rule
-
-See `docs/research_integrity.md`.
-
-Mathematical corrections, interpretive changes, and non-scientific operational constraints must remain distinguishable in the research record.

@@ -18,8 +18,6 @@ The repository intentionally separates the frozen public-review snapshot from cu
 
 The locked core theorem set T1–T5 and locked core experiments E1–E5 remain unchanged by the post-v0.2 supplementary stack.
 
-For the rule separating mathematical corrections, interpretation changes, and non-scientific operational constraints, see [`docs/research_integrity.md`](docs/research_integrity.md).
-
 ## Repository map
 
 For the stable v0.2 state, start with:
@@ -37,7 +35,6 @@ Repository-wide references:
 - [`ROADMAP.md`](ROADMAP.md) — public-review and manuscript milestones.
 - [`docs/research_map.md`](docs/research_map.md) — claim-to-proof-to-experiment map.
 - [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md) — theorem / simulation / bridge-assumption separation.
-- [`docs/research_integrity.md`](docs/research_integrity.md) — separation rules for mathematics, interpretation, and operational constraints.
 - [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md) — support, constraint, and rejection criteria for a physical Everett bridge.
 - [`docs/manuscript_claim_audit.md`](docs/manuscript_claim_audit.md) — manuscript claim and figure-caption audit.
 - [`docs/notation.md`](docs/notation.md) — shared notation.

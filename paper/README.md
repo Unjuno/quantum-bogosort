@@ -111,7 +111,7 @@ GitHub Actions performs figure generation and LaTeX/PDF validation automatically
 
 The stable v0.2 scientific snapshot is preserved at `release/v0.2-public-review`.
 
-PR #21 is the single cumulative post-v0.2 review candidate. Historical PRs #11–#20 preserve development provenance but are not the current manuscript-review surface.
+The cumulative post-v0.2 review candidate was integrated into `main` through PR #21. PRs #11–#21 remain available as development provenance; the manuscript files on `main` are now the current review surface.
 
 Current manuscript decisions are review-driven:
 

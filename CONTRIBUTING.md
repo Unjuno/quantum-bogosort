@@ -16,15 +16,15 @@ Identify which layer the concern applies to:
 
 Do not collapse these layers. For example, failure of the Everett bridge is not by itself a counterexample to the abstract covariance identity.
 
-## Active and stable review targets
+## Current and stable review targets
 
 - Stable v0.2 snapshot: `release/v0.2-public-review`
 - Stable status ledger: `STATUS.md`
+- Current integrated post-v0.2 review surface: `main`
 - Current development status: `DEVELOPMENT_STATUS.md`
-- Active cumulative post-v0.2 candidate: PR #21
-- Historical development stack: PRs #11–#20
+- Historical development provenance: PRs #11–#21
 
-Review current post-v0.2 mathematics against PR #21, not an isolated historical stacked PR.
+Review current post-v0.2 mathematics against `main`. Use the historical PRs only when tracing derivation provenance or earlier formulations.
 
 ## Proof or counterexample reports
 

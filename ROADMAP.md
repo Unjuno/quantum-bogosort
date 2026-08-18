@@ -28,6 +28,8 @@ Source-level presentation QA now includes repository-wide GitHub rendering harde
 - [x] Standardize repository Markdown display mathematics on balanced fenced `math` blocks; reject legacy display/inline delimiters outside literal code examples and enforce repository math-macro conventions.
 - [x] Validate brace balance, TeX environment balance, and common `\left`/`\right` pairing inside fenced Markdown math blocks.
 - [x] Add CI rendering of every Markdown file through GitHub's own GFM REST renderer with source/render structure checks for headings, tables, and images.
+- [x] Validate all committed SVGs as XML/browser assets, including viewBox/size, explicit background, forbidden active elements/external hrefs, and non-finite attributes.
+- [x] Validate manuscript LaTeX input, bibliography/citation, label/reference, environment, and generated-graphic dependencies before PDF compilation.
 - [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
 - [x] Provide a dedicated visual route for every locked experiment family E1–E5, including E2 predictive alignment.
 - [x] Require committed SVGs to match deterministic generator output byte-for-byte.

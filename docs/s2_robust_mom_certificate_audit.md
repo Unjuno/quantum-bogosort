@@ -8,7 +8,7 @@ S2.10 should instantiate S2.8 without boundedness or exponential-tail assumption
 
 Define:
 
-$$
+```math
 Z_1=Y,
 \qquad
 Z_2=S,
@@ -18,13 +18,13 @@ Z_3=YS,
 Z_4=S^2,
 \qquad
 Z_5=(U-Y)^2.
-$$
+```
 
 The theorem assumes explicit finite variance bounds:
 
-$$
+```math
 \mathrm{Var}(Z_j)\le v_j.
-$$
+```
 
 ## T — proof audit
 
@@ -32,22 +32,22 @@ $$
 
 For a block of size `m`:
 
-$$
+```math
 \mathrm{Var}(\bar Z_{j,r})
 \le
 \frac{v_j}{m}.
-$$
+```
 
 Chebyshev gives:
 
-$$
+```math
 P\!\left(
 |\bar Z_{j,r}-E[Z_j]|>
 2\sqrt{\frac{v_j}{m}}
 \right)
 \le
 \frac14.
-$$
+```
 
 **Audit:** PASS.
 
@@ -55,33 +55,33 @@ $$
 
 Let `b` be an odd number of independent blocks. If the MoM estimator is outside the radius:
 
-$$
+```math
 r_j=2\sqrt{\frac{v_j}{m}},
-$$
+```
 
 at least half of the blocks must be bad.
 
 The bad-block indicators are independent across disjoint i.i.d. blocks and have expectations at most `1/4`. Hoeffding gives:
 
-$$
+```math
 P\!\left(
 B_j\ge\frac{b}{2}
 \right)
 \le
 \exp\left(-\frac{b}{8}\right).
-$$
+```
 
 Thus choosing:
 
-$$
+```math
 b\ge8\log\frac{5}{\delta}
-$$
+```
 
 makes the failure probability for one target at most:
 
-$$
+```math
 \frac{\delta}{5}.
-$$
+```
 
 **Audit:** PASS.
 
@@ -89,9 +89,9 @@ $$
 
 A union bound over the five MoM estimators gives simultaneous coverage at least:
 
-$$
+```math
 1-\delta.
-$$
+```
 
 No independence across the five target variables is required.
 
@@ -101,11 +101,11 @@ No independence across the five target variables is required.
 
 The five robust intervals provide exactly the S2.8 inputs. Therefore:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 D_{\mathrm{MoM}}
-$$
+```
 
 on the simultaneous event.
 
@@ -115,23 +115,23 @@ on the simultaneous event.
 
 If:
 
-$$
+```math
 D_{\mathrm{MoM}}>0
-$$
+```
 
 and:
 
-$$
+```math
 E[S]\le U_S,
-$$
+```
 
 then T1 gives:
 
-$$
+```math
 E_{FP}[U]-E[U]
 \ge
 \frac{D_{\mathrm{MoM}}}{U_S}.
-$$
+```
 
 **Audit:** PASS.
 
@@ -141,39 +141,39 @@ S2.10 does **not** require only raw-variable finite variance. It requires finite
 
 In particular:
 
-$$
+```math
 \mathrm{Var}(S^2)<\infty
-$$
+```
 
 requires:
 
-$$
+```math
 E[S^4]<\infty.
-$$
+```
 
 Also:
 
-$$
+```math
 \mathrm{Var}((U-Y)^2)<\infty
-$$
+```
 
 requires:
 
-$$
+```math
 E[(U-Y)^4]<\infty,
-$$
+```
 
 and:
 
-$$
+```math
 \mathrm{Var}(YS)<\infty
-$$
+```
 
 requires:
 
-$$
+```math
 E[Y^2S^2]<\infty.
-$$
+```
 
 This limitation is explicitly stated in the theorem.
 

@@ -35,7 +35,7 @@ $$
 Assume the five target variables have finite variances bounded by known constants:
 
 $$
-\operatorname{Var}(Z_j)\le v_j<\infty,
+\mathrm{Var}(Z_j)\le v_j<\infty,
 \qquad
 j=1,\ldots,5.
 $$
@@ -71,7 +71,7 @@ be the mean in block `r`, and define the median-of-means estimator:
 $$
 \widetilde\mu_j
 =
-\operatorname{median}
+\mathrm{median}
 \left(
 \bar Z_{j,1},\ldots,\bar Z_{j,b}
 \right).
@@ -189,7 +189,7 @@ Then:
 $$
 \boxed{
 P\!\left(
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 D_{\mathrm{MoM}}
 \right)
@@ -229,13 +229,13 @@ $$
 Fix target `Z_j` with:
 
 $$
-\operatorname{Var}(Z_j)\le v_j.
+\mathrm{Var}(Z_j)\le v_j.
 $$
 
 A block mean has variance at most:
 
 $$
-\operatorname{Var}(\bar Z_{j,r})
+\mathrm{Var}(\bar Z_{j,r})
 \le
 \frac{v_j}{m}.
 $$
@@ -313,7 +313,7 @@ This simultaneous event supplies exactly the five confidence envelopes required 
 On the simultaneous event, S2.8 gives:
 
 $$
-\operatorname{Cov}(U,S)
+\mathrm{Cov}(U,S)
 \ge
 D_{\mathrm{MoM}}.
 $$
@@ -367,19 +367,19 @@ $$
 In particular:
 
 $$
-\operatorname{Var}(S^2)<\infty
+\mathrm{Var}(S^2)<\infty
 $$
 
 requires a finite fourth moment of `S`, and:
 
 $$
-\operatorname{Var}((U-Y)^2)<\infty
+\mathrm{Var}((U-Y)^2)<\infty
 $$
 
 requires a finite fourth moment of the prediction residual. Likewise:
 
 $$
-\operatorname{Var}(YS)<\infty
+\mathrm{Var}(YS)<\infty
 $$
 
 requires:

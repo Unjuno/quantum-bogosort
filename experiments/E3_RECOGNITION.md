@@ -10,19 +10,19 @@ The experiment uses paired counterfactual simulation on common primitive random 
 
 The benchmark decomposition is:
 
-$$
+```math
 V_1-V_0
 =
 E[U_1-U_0]
 +
 Q(U_1,S_1)-Q(U_0,S_0).
-$$
+```
 
 For the baseline with no pre-recognition selector:
 
-$$
+```math
 S_0\equiv1.
-$$
+```
 
 ## D — Data / Result
 
@@ -43,21 +43,21 @@ The numerical decomposition closes to floating-point precision. The paired recog
 
 The recognition-label null is essential. A mere label change with:
 
-$$
+```math
 U_1=U_0
-$$
+```
 
 and:
 
-$$
+```math
 S_1=S_0
-$$
+```
 
 must imply:
 
-$$
+```math
 V_1-V_0=0.
-$$
+```
 
 ## U — Uncertainty / Interpretation Boundary
 

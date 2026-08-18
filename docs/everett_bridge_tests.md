@@ -4,12 +4,12 @@
 
 The abstract QBS theorems require only a base measure and a nonnegative accessibility weight. An Everettian physical interpretation requires the additional bridge:
 
-$$
+```math
 d\mu^{FP}_\pi(\omega)
 =
 \frac{S_\pi(\omega)}{E_\mu[S_\pi]}
 \,d\mu(\omega).
-$$
+```
 
 This document states what would count as progress toward a physically serious bridge and what would count against it.
 
@@ -21,9 +21,9 @@ The bridge must not be described as an empirically confirmed physical law merely
 
 At the mathematical level, `S_pi` is simply a nonnegative measurable weight with:
 
-$$
+```math
 0<E[S_\pi]<\infty.
-$$
+```
 
 This level is exact once the definitions are adopted.
 
@@ -45,15 +45,15 @@ A candidate physical `S_pi` should satisfy at least the following constraints.
 
 ### 2.1 Nonnegativity and normalizability
 
-$$
+```math
 S_\pi(\omega)\ge0,
-$$
+```
 
 and:
 
-$$
+```math
 0<E_\mu[S_\pi]<\infty.
-$$
+```
 
 Failure makes the normalized first-person measure invalid.
 
@@ -61,9 +61,9 @@ Failure makes the normalized first-person measure invalid.
 
 The QBS bridge as currently written implies:
 
-$$
+```math
 \mu^{FP}_\pi\ll\mu.
-$$
+```
 
 A candidate implementation that assigns positive first-person probability to an event of zero base measure is incompatible with the present bridge and must either be rejected or formulated as a different model.
 
@@ -77,17 +77,17 @@ If a branch is subdivided into mathematically redundant labels without a physica
 
 For a coarse event `A` decomposed into physically meaningful disjoint subevents:
 
-$$
+```math
 A=\bigcup_i A_i,
-$$
+```
 
 first-person mass should aggregate consistently:
 
-$$
+```math
 \mu^{FP}(A)
 =
 \sum_i\mu^{FP}(A_i)
-$$
+```
 
 for countable disjoint decompositions in the probability space.
 
@@ -99,9 +99,9 @@ Accessibility must not be defined as a monotone function of the outcome utility 
 
 A physically meaningful bridge should specify `S_pi` from observer/branch physics or an independently motivated self-location rule. Otherwise:
 
-$$
+```math
 S=f(U)
-$$
+```
 
 is only a selection model, not an explanation of why Everettian self-location follows that selection.
 
@@ -152,15 +152,15 @@ A particular physical bridge should be rejected or revised if any of the followi
 
 ### 4.1 Non-normalizability
 
-$$
+```math
 E[S_\pi]=0
-$$
+```
 
 or:
 
-$$
+```math
 E[S_\pi]=\infty
-$$
+```
 
 in the domain where a normalized first-person distribution is claimed.
 

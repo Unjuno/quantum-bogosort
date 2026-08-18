@@ -35,7 +35,7 @@ $$
 where:
 
 $$
-C(t)=\operatorname{Cov}(U,S_t).
+C(t)=\mathrm{Cov}(U,S_t).
 $$
 
 Therefore:

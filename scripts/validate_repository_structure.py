@@ -24,7 +24,7 @@ required = [
     "supplementary/residual_variance_certificate.md", "supplementary/explained_variance_certificate.md",
     "supplementary/evidence_activation.md", "supplementary/recognition_time.md",
     "supplementary/selectivity_frontier.md", "supplementary/branch_recognition.md",
-    "literature/prior_art.md", "literature/extended_prior_art.md",
+    "literature/prior_art.md", "literature/extended_prior_art.md", "literature/post_v02_targeted_prior_art.md",
     "paper/README.md", "paper/main.tex", "paper/references.bib",
     "figures/README.md", "figures/generate_figures.py", "figures/generate_pdf_figures.py",
     "figures/generated/fig1_framework.svg", "figures/generated/fig2_fosd.svg",

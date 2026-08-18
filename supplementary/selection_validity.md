@@ -67,8 +67,10 @@ C(T)\ge D_L(T)
 \right)
 \ge
 1-\delta
-}.
+}
 $$
+
+almost surely in `T`.
 
 Consequently, by taking expectations over training randomness:
 

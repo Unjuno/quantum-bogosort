@@ -4,14 +4,15 @@
 
 This file records the current frozen public-review scientific snapshot.
 
-The v0.3 snapshot is preserved at:
+The v0.3 snapshot is preserved as:
 
-- branch: `release/v0.3-public-review`
+- tag/Release: `v0.3-public-review`
+- commit: `58038763127258bd3e2f0d41708c4dfa01f81fd6`
 - current review/development surface: `main`
 
-The previous v0.2 snapshot remains archived at:
+The previous v0.2 snapshot remains archived as:
 
-- branch: `release/v0.2-public-review`
+- tag/Release: `v0.2-public-review`
 - commit: `7405f7408f74fa32b16d1cc9f624070cc14624ab`
 
 For current review priorities and future work, see [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md) and [`ROADMAP.md`](ROADMAP.md).
@@ -108,5 +109,7 @@ This bridge remains physically open. The repository does not claim that an exter
 ## Release state
 
 Scientific snapshot: **v0.3 — Public Review**.
+
+The repository uses `main` as its only active branch. Frozen review snapshots are archived as tags/GitHub Releases, so archival versions are separated from ongoing review work without appearing as unmerged branches.
 
 The previous v0.2 snapshot remains preserved for archival comparison. Historical PRs #11–#21 preserve the derivation path of the post-v0.2 work; current authoritative statements are the files in the v0.3 snapshot and on `main`.

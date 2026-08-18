@@ -43,9 +43,11 @@ Current `main` now makes the following points explicit:
 - `experiments/README.md` exposes the E1–E5 H/T/D/C/U map and visual result previews;
 - a dedicated E2 predictive-alignment figure closes the previous visualization gap;
 - committed SVGs are deterministic generator outputs, checked byte-for-byte in CI and given explicit backgrounds for dark-mode readability;
-- repository Markdown display mathematics is standardized on fenced `math` blocks, and local validation rejects unsupported or legacy math syntax;
+- repository Markdown display mathematics is standardized on fenced `math` blocks, and local validation rejects repository-disallowed or legacy math syntax while checking structural TeX balance inside each math block;
 - every repository Markdown source has been inspected in the current rendering audit, including issue templates, status/governance pages, canonical docs, experiment cards, audit pages, literature notes, paper README, supplementary notes, and theory pages;
 - CI now includes a GitHub-native GFM rendering check that submits every repository Markdown file to GitHub's Markdown REST renderer and verifies preservation of expected headings, tables, and images;
+- all seven committed SVG files are now validated as XML/browser assets for viewBox/size, explicit background, active/external content, and non-finite attributes;
+- manuscript LaTeX sources are now preflighted for input paths, environments, bibliography/citation keys, labels/references, and generated graphics before `latexmk` runs;
 - contributor guidance now points to snapshot tags/Releases rather than removed release branches and matches the fenced-math policy;
 - historical stacked-branch review pages are labeled or worded so they are not mistaken for current branch state;
 - manuscript LaTeX installation is routed through explicit Ubuntu archive/security sources to reduce runner-mirror failures;
@@ -57,25 +59,34 @@ No T1–T5 theorem, E1–E5 experiment, S2-family result, or Everett-bridge stat
 
 ## Pre-announcement QA status
 
-The current source-level rendering audit inspected all 66 repository Markdown files rather than only representative entry pages. The audit covered display-math fences, code-fence balance, Mermaid blocks, Markdown tables, images and relative paths, issue-template front matter, public-state routing language, and the seven committed SVG sources plus their deterministic generator.
+The current source-level rendering audit inspected all 66 repository Markdown files rather than only representative entry pages. It also inspected the rendering pipeline and publication sources: the validation workflow, experiment/figure/validation Python scripts, all seven committed SVG sources, `paper/main.tex`, every file under `paper/sections/`, the standalone `theory/core_theorems.tex`, bibliography metadata, manifest/configuration inputs, and figure-generation code.
 
-Source findings corrected during this pass include stale release-branch references, obsolete double-dollar contribution guidance, historical stacked-branch wording that could be read as current state, and the absence of any GitHub-native renderer test in CI.
+The audit covered display-math fences and TeX structure, code-fence balance, Mermaid blocks, Markdown tables, images and relative paths, issue-template front matter, public-state routing language, SVG XML/browser safety, manuscript input/figure/citation/reference relationships, and deterministic figure generation.
+
+Source findings corrected during this pass include stale release-branch references, obsolete double-dollar contribution guidance, historical stacked-branch wording that could be read as current state, a fixed-three-backtick assumption in the Markdown validator, literal-code false positives in the link validator, insufficient structural checks inside Markdown math, the absence of any GitHub-native renderer test in CI, the absence of SVG XML/browser validation, and the absence of a LaTeX dependency/reference preflight.
 
 The repository-validation workflow is now configured to:
 
-- enforce repository-wide fenced display-math syntax;
-- validate repository-relative Markdown links;
+- enforce repository-wide fenced display-math syntax and structural TeX balance;
+- validate repository-relative Markdown links in rendered prose rather than literal code examples;
 - validate required repository structure;
 - render every Markdown file through GitHub's own GFM REST renderer and verify that source headings, tables, and images survive rendering;
 - reproduce E1–E5;
-- regenerate and byte-compare committed SVGs;
+- regenerate, structurally validate, and byte-compare committed SVGs;
 - validate manifest references.
 
-The new GitHub-renderer step has been added to `main`, but its latest push-run result must still be confirmed before it is marked PASS. This distinction is deliberate: source inspection and CI configuration are complete, while final execution evidence and browser-level visual inspection remain release gates.
+The manuscript workflow is now configured to:
+
+- generate the PDF figures;
+- preflight all LaTeX source relationships, citation keys, labels/references, environments, and graphics;
+- build the manuscript PDF with `latexmk`;
+- verify and upload the resulting PDF.
+
+These new/strengthened checks have been added to `main`, but the latest push-run result must still be confirmed before they are marked PASS. This distinction is deliberate: source inspection and CI configuration are complete, while final execution evidence and browser-level visual inspection remain release gates.
 
 The repository is **not yet marked ready for broad announcement**. Remaining presentation gates are:
 
-1. confirm the latest `main` validation run, including the new GitHub-renderer step;
+1. confirm the latest `main` validation run, including the GitHub-renderer, SVG, and LaTeX preflight steps;
 2. directly inspect rendered GitHub pages on desktop/mobile, not only the root README, with representative theory, experiment, canonical-doc, supplementary, and audit pages included;
 3. confirm MathJax output, Mermaid rendering, SVG sizing/readability, tables, and overall navigation in the actual GitHub UI.
 
@@ -117,7 +128,7 @@ The corrections concern explicit square-integrability assumptions, bounded posit
 
 ## Computational status
 
-E1–E5 remain the locked reproducibility suite. The validation workflow is configured to check Markdown syntax and GitHub GFM rendering, repository-relative links, repository structure, E1–E5 reproduction, deterministic committed SVG regeneration, manifest references, manuscript build, and PDF output.
+E1–E5 remain the locked reproducibility suite. The validation workflow is configured to check Markdown syntax and GitHub GFM rendering, repository-relative links, repository structure, E1–E5 reproduction, deterministic and structurally valid committed SVG regeneration, manifest references, LaTeX source dependencies, manuscript build, and PDF output.
 
 The latest post-audit `main` workflow result is intentionally not recorded as green until the corresponding Actions run is directly confirmed.
 
@@ -139,7 +150,7 @@ The repository does not claim that an external random-number generator becomes o
 
 Work should now prioritize:
 
-1. confirmation of the latest `main` Actions run including repository-wide GitHub Markdown rendering;
+1. confirmation of the latest `main` Actions run including repository-wide GitHub Markdown rendering, SVG validation, and LaTeX preflight;
 2. direct human GitHub-UI visual inspection of representative linked pages before broad announcement;
 3. external/public proof review of S2, S2.11, S2.12, and S2.13;
 4. prior-art and novelty review of the combined recognition-dependent architecture;

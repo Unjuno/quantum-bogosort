@@ -33,7 +33,7 @@ required = [
     "figures/generated/fig3_recognition_decomposition.svg", "figures/generated/fig4_interaction_sign.svg",
     "figures/generated/fig5_adaptation_quality.svg", "figures/generated/fig6_branch_coherence.svg",
     "figures/generated/fig7_predictive_alignment.svg",
-    "scripts/validate_github_markdown_render.py",
+    "scripts/validate_github_markdown_render.py", "scripts/validate_latex_sources.py",
 ]
 
 missing = [path for path in required if not (ROOT / path).exists()]

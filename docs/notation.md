@@ -13,9 +13,9 @@ This document fixes notation and terminology used across theorem notes, experime
 
 The preferred paired-counterfactual representation is:
 
-$$
+```math
 \omega_R(z)
-$$
+```
 
 for the history generated under recognition state `R` from the same primitive realization `z`.
 
@@ -30,13 +30,13 @@ for the history generated under recognition state `R` from the same primitive re
 
 Core causal structure:
 
-$$
+```math
 R
 \longrightarrow
 \pi_R
 \longrightarrow
 (U_R,S_R).
-$$
+```
 
 In the self-referential QBS case, `R=1` may represent recognition of a QBS-type rule itself. Recognition has no privileged causal power in the formal model: it matters only through any policy change it induces and the resulting changes in `U_R` and/or `S_R`. If recognition changes neither quantity, the recognition-label null applies.
 
@@ -44,33 +44,33 @@ In the self-referential QBS case, `R=1` may represent recognition of a QBS-type 
 
 For nonnegative accessibility with positive finite mean:
 
-$$
+```math
 0<E[S_\pi]<\infty,
-$$
+```
 
 define:
 
-$$
+```math
 \mu^{FP}_\pi(A)
 =
 \frac{E_\mu[\mathbf 1_A S_\pi]}{E_\mu[S_\pi]}.
-$$
+```
 
 First-person value:
 
-$$
+```math
 V_{FP}(\pi)
 =
 \frac{E_\mu[U_\pi S_\pi]}{E_\mu[S_\pi]}.
-$$
+```
 
 Normalized covariance contribution:
 
-$$
+```math
 Q(U,S)
 =
 \frac{\mathrm{Cov}(U,S)}{E[S]}.
-$$
+```
 
 ## Canonical terminology
 
@@ -90,11 +90,11 @@ Accessibility is not automatically a physical Everett quantity. A physical inter
 
 First-person uplift means that an outcome statistic is larger under the first-person measure than under the base measure. For the mean:
 
-$$
+```math
 E_{FP}[U]-E[U]
 =
 \frac{\mathrm{Cov}(U,S)}{E[S]}.
-$$
+```
 
 This is a distributional statement about observer-conditioned weighting.
 
@@ -110,19 +110,19 @@ Self-location refers to indexical uncertainty about which observer/history posit
 
 Let `Z` denote a present state or present trajectory descriptor, and let `S_T` denote an accessibility weight determined over the future continuation of the trajectory. The first-person probability of a present event is the direct restriction of the same weighted measure:
 
-$$
+```math
 P_{FP}(Z\in A)
 =
 \frac{E[\mathbf 1_{\{Z\in A\}}S_T]}{E[S_T]}.
-$$
+```
 
 For a discrete present state:
 
-$$
+```math
 P_{FP}(Z=z)
 =
 \frac{E[S_T\mid Z=z]P(Z=z)}{E[S_T]}.
-$$
+```
 
 Therefore future accessibility can reweight present self-location whenever expected future accessibility differs across present states. This is a conditioning/change-of-measure statement, not backward causation: the base probability law for `Z` is not thereby changed.
 
@@ -136,11 +136,11 @@ The informal language must not be read as a claim that the objective/base probab
 
 A compact distinction is:
 
-$$
+```math
 \text{objective/base chance unchanged}
 \qquad\neq\qquad
 \text{first-person trajectory weight unchanged}.
-$$
+```
 
 QBS can change the second quantity under its assumptions without claiming a causal change in the first.
 
@@ -148,55 +148,55 @@ QBS can change the second quantity under its assumptions without claiming a caus
 
 Policy improvement:
 
-$$
+```math
 D
 =
 U_1-U_0.
-$$
+```
 
 QBS interaction change:
 
-$$
+```math
 I
 =
 Q(U_1,S_1)-Q(U_0,S_0).
-$$
+```
 
 For a fixed selector:
 
-$$
+```math
 S_1=S_0=S,
-$$
+```
 
 so:
 
-$$
+```math
 I
 =
 \frac{\mathrm{Cov}(D,S)}{E[S]}.
-$$
+```
 
 ## Predictive-alignment notation
 
 For a signal `Y`:
 
-$$
+```math
 m(Y)=E[U\mid Y],
 \qquad
 a(Y)=E[S\mid Y].
-$$
+```
 
 Conditional residual variances are:
 
-$$
+```math
 v_U(Y)=\mathrm{Var}(U\mid Y),
 \qquad
 v_S(Y)=\mathrm{Var}(S\mid Y).
-$$
+```
 
 Explained-variance fractions are:
 
-$$
+```math
 A_U
 =
 \frac{\mathrm{Var}(m(Y))}{\mathrm{Var}(U)},
@@ -204,15 +204,15 @@ A_U
 A_S
 =
 \frac{\mathrm{Var}(a(Y))}{\mathrm{Var}(S)}.
-$$
+```
 
 When both explained fractions are positive:
 
-$$
+```math
 \rho_{ma}
 =
 \mathrm{Corr}(m(Y),a(Y)).
-$$
+```
 
 ## Adaptive-agent notation
 
@@ -234,34 +234,34 @@ Mutual information can quantify predictive dependence, but positive mutual infor
 
 Repeated accessibility:
 
-$$
+```math
 S
 =
 \lambda^{N_B}.
-$$
+```
 
 ## Branch-correlation notation
 
 For branch/copy indices `i` and `j`:
 
-$$
+```math
 \mathrm{Corr}(R_i,R_j)
-$$
+```
 
 measures recognition correlation, while:
 
-$$
+```math
 \mathrm{Corr}(A_i,A_j)
-$$
+```
 
 measures realized action correlation.
 
 These are distinct from marginal recognition prevalence:
 
-$$
+```math
 P(R=1).
-$$
+```
 
 ## Markdown convention
 
-The public root README uses fenced `math` blocks for display mathematics. Other repository Markdown may use delimiter-only `$$` display blocks. Inline mathematical symbols are written as code spans or moved into display blocks. GitHub-disallowed macros such as `\operatorname` are not used in Markdown; named quantities use safe roman forms such as `\mathrm{Cov}`, `\mathrm{Var}`, and `\mathrm{Corr}`.
+Repository Markdown uses fenced `math` blocks for display mathematics. Inline mathematical symbols are written as code spans or moved into display blocks. GitHub-disallowed macros such as `\operatorname` are not used in Markdown; named quantities use safe roman forms such as `\mathrm{Cov}`, `\mathrm{Var}`, and `\mathrm{Corr}`.

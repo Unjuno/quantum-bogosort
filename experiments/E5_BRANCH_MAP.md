@@ -29,13 +29,13 @@ P(R=1),
 $$
 
 $$
-\operatorname{Corr}(R_i,R_j),
+\mathrm{Corr}(R_i,R_j),
 $$
 
 and:
 
 $$
-\operatorname{Corr}(A_i,A_j).
+\mathrm{Corr}(A_i,A_j).
 $$
 
 ## D — Data / Result

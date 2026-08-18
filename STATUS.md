@@ -34,7 +34,7 @@ The locked core theorem set remains T1–T5.
 
 The integrated supplementary line is complete through S2.13 and should be read as one conceptual chain:
 
-$$
+```math
 \text{predictive signal}
 \longrightarrow
 \text{conditional-mean alignment}
@@ -42,7 +42,7 @@ $$
 \text{outcome/accessibility covariance}
 \longrightarrow
 \text{first-person shift}.
-$$
+```
 
 Principal results:
 
@@ -89,12 +89,12 @@ The abstract weighted-measure mathematics is distinct from the Everett physical 
 
 A separate physical interpretation assumes:
 
-$$
+```math
 d\mu^{FP}_\pi(\omega)
 =
 \frac{S_\pi(\omega)}{E_\mu[S_\pi]}
 \,d\mu(\omega).
-$$
+```
 
 This bridge remains physically open. The repository does not claim that an external random-number generator becomes objectively biased, that statistical certification establishes Everettian observer selection, or that the weighting identities establish quantum immortality.
 

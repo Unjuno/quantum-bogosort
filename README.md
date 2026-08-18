@@ -1,20 +1,45 @@
 # Quantum Bogosort (QBS)
 
-**Status:** v0.2 — Public Review
+**Stable scientific snapshot:** v0.2 — Public Review
+
+**Active post-v0.2 review candidate:** PR #21
 
 Formal theory and reproducible simulations of recognition-activated Quantum Bogosort, including policy-dependent trajectories, observer-indexed accessibility, and cross-branch decision correlations.
 
+## Stable snapshot versus active development
+
+The repository intentionally separates the frozen public-review snapshot from current research development.
+
+- Frozen v0.2 snapshot: branch `release/v0.2-public-review`, commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`.
+- Stable snapshot ledger: [`STATUS.md`](STATUS.md).
+- Current post-v0.2 ledger: [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md).
+- Active cumulative post-v0.2 diff: PR #21, `Consolidate post-v0.2 theory stack into the preprint review candidate`.
+- Historical stacked development: PRs #11–#20. These preserve provenance but are superseded for active review by PR #21.
+
+The locked core theorem set T1–T5 and locked core experiments E1–E5 remain unchanged by the post-v0.2 supplementary stack.
+
+For the rule separating mathematical corrections, interpretation changes, and non-scientific operational constraints, see [`docs/research_integrity.md`](docs/research_integrity.md).
+
 ## Repository map
 
-For the current state of the research, start with:
+For the stable v0.2 state, start with:
 
-- [`STATUS.md`](STATUS.md) — canonical ledger of proved, simulated, assumed, open, and non-claimed results.
+- [`STATUS.md`](STATUS.md) — stable v0.2 ledger of proved, simulated, assumed, open, and non-claimed results.
+- [`docs/v0.2_release_audit.md`](docs/v0.2_release_audit.md) — final v0.2 public-review release audit.
+
+For current post-v0.2 work, start with:
+
+- [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md) — current development and review routing.
+- PR #21 — the single active cumulative post-v0.2 review candidate.
+
+Repository-wide references:
+
 - [`ROADMAP.md`](ROADMAP.md) — public-review and manuscript milestones.
 - [`docs/research_map.md`](docs/research_map.md) — claim-to-proof-to-experiment map.
 - [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md) — theorem / simulation / bridge-assumption separation.
+- [`docs/research_integrity.md`](docs/research_integrity.md) — separation rules for mathematics, interpretation, and operational constraints.
 - [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md) — support, constraint, and rejection criteria for a physical Everett bridge.
 - [`docs/manuscript_claim_audit.md`](docs/manuscript_claim_audit.md) — manuscript claim and figure-caption audit.
-- [`docs/v0.2_release_audit.md`](docs/v0.2_release_audit.md) — final v0.2 public-review release audit.
 - [`docs/notation.md`](docs/notation.md) — shared notation.
 - [`theory/`](theory/) — core theorem statements and proofs.
 - [`experiments/`](experiments/) — E1–E5 cards and reproducible code.
@@ -23,6 +48,7 @@ For the current state of the research, start with:
 - [`paper/`](paper/) — illustrated manuscript source.
 - [`figures/README.md`](figures/README.md) — publication figures and provenance.
 - [`CHANGELOG.md`](CHANGELOG.md) — public research-package changes.
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — public review and issue-reporting guide.
 
 ## Core model
 
@@ -111,6 +137,8 @@ Secondary results are indexed in [`supplementary/README.md`](supplementary/READM
 
 The recognition-time note explicitly does **not** claim that earlier recognition is universally better.
 
+Post-v0.2 supplementary theorem development is reviewed cumulatively in PR #21 rather than through the historical stacked PRs one by one.
+
 ## Manuscript, figures, and literature
 
 The evolving illustrated manuscript is in [`paper/`](paper/). It contains Abstract, Introduction, Related Work, Formal Model, Main Theorems, Adaptive-Agent Mechanism, Experiments, Everett Interpretation, Limitations/Falsifiability, Discussion, a full proof appendix, and bibliography.
@@ -157,7 +185,9 @@ Falsifiability is layer-specific: theorem assumptions can fail mathematically; a
 
 ## Public review
 
-Corrections, counterexamples, prior-art pointers, implementation bugs, and challenges to the Everett bridge assumption are welcome through GitHub Issues. The intended sequence is v0.2 public review, revision, manuscript stabilization, and then later arXiv preparation.
+Use [`CONTRIBUTING.md`](CONTRIBUTING.md) and the repository issue templates for proof/counterexample reports, prior-art overlap, reproducibility failures, and Everett-bridge criticism.
+
+Review stable v0.2 claims against `release/v0.2-public-review`. Review current post-v0.2 mathematics against PR #21.
 
 ## License
 
@@ -167,7 +197,7 @@ This repository uses file-type split licensing:
 - Theory, documentation, manuscript text, and figures: **CC BY 4.0** — [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt)
 - Generated research datasets: **CC0 1.0** — [`LICENSES/CC0-1.0.txt`](LICENSES/CC0-1.0.txt)
 
-See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. `CITATION.cff` intentionally does not encode the split licensing as one interchangeable license list.
+See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. GitHub's repository-level license badge may show MIT because it detects the root `LICENSE`; that badge should not be read as overriding the file-type split licensing map. `CITATION.cff` intentionally does not encode the split licensing as one interchangeable license list.
 
 ## Citation
 

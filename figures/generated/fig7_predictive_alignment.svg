@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="440" viewBox="0 0 720 440">
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#111}.axis{stroke:#222;stroke-width:1}.grid{stroke:#bbb;stroke-width:.6;stroke-dasharray:3 4}.s1{fill:none;stroke:#111;stroke-width:2.2}.s2{fill:none;stroke:#555;stroke-width:2.2;stroke-dasharray:8 5}.s3{fill:none;stroke:#888;stroke-width:2.2;stroke-dasharray:2 4}.bar{fill:#bbb;stroke:#222;stroke-width:1}</style>
+<text x="360.0" y="26" text-anchor="middle" font-size="16" font-weight="600">Learned predictive alignment under noise</text>
+<line class="axis" x1="82" y1="55" x2="82" y2="368"/>
+<line class="axis" x1="82" y1="368" x2="696" y2="368"/>
+<text x="360.0" y="402" text-anchor="middle" font-size="12">Environment noise sigma</text>
+<text x="18" y="220.0" text-anchor="middle" font-size="12" transform="rotate(-90 18 220.0)">Mean score-outcome correlation</text>
+<line class="grid" x1="82" y1="368.0" x2="696" y2="368.0"/>
+<text x="73" y="372.0" text-anchor="end" font-size="10">-0.12</text>
+<line class="grid" x1="82" y1="305.4" x2="696" y2="305.4"/>
+<text x="73" y="309.4" text-anchor="end" font-size="10">0.12</text>
+<line class="grid" x1="82" y1="242.8" x2="696" y2="242.8"/>
+<text x="73" y="246.8" text-anchor="end" font-size="10">0.36</text>
+<line class="grid" x1="82" y1="180.2" x2="696" y2="180.2"/>
+<text x="73" y="184.2" text-anchor="end" font-size="10">0.60</text>
+<line class="grid" x1="82" y1="117.6" x2="696" y2="117.6"/>
+<text x="73" y="121.6" text-anchor="end" font-size="10">0.85</text>
+<line class="grid" x1="82" y1="55.0" x2="696" y2="55.0"/>
+<text x="73" y="59.0" text-anchor="end" font-size="10">1.09</text>
+<polyline class="s1" points="82.0,85.3 169.7,105.1 345.1,153.6 696.0,220.8"/>
+<circle cx="82.0" cy="85.3" r="2.5" fill="#222"/>
+<circle cx="169.7" cy="105.1" r="2.5" fill="#222"/>
+<circle cx="345.1" cy="153.6" r="2.5" fill="#222"/>
+<circle cx="696.0" cy="220.8" r="2.5" fill="#222"/>
+<polyline class="s2" points="82.0,337.7 169.7,337.6 345.1,336.9 696.0,337.6"/>
+<circle cx="82.0" cy="337.7" r="2.5" fill="#222"/>
+<circle cx="169.7" cy="337.6" r="2.5" fill="#222"/>
+<circle cx="345.1" cy="336.9" r="2.5" fill="#222"/>
+<circle cx="696.0" cy="337.6" r="2.5" fill="#222"/>
+<polyline class="s3" points="82.0,337.5 169.7,337.1 345.1,337.2 696.0,337.3"/>
+<circle cx="82.0" cy="337.5" r="2.5" fill="#222"/>
+<circle cx="169.7" cy="337.1" r="2.5" fill="#222"/>
+<circle cx="345.1" cy="337.2" r="2.5" fill="#222"/>
+<circle cx="696.0" cy="337.3" r="2.5" fill="#222"/>
+<text x="82.0" y="388" text-anchor="middle" font-size="9">0.25</text>
+<text x="169.7" y="388" text-anchor="middle" font-size="9">0.50</text>
+<text x="345.1" y="388" text-anchor="middle" font-size="9">1.00</text>
+<text x="696.0" y="388" text-anchor="middle" font-size="9">2.00</text>
+<line class="s1" x1="475" y1="62" x2="503" y2="62"/>
+<text x="511" y="66" font-size="10">Interaction-capable</text>
+<line class="s2" x1="475" y1="80" x2="503" y2="80"/>
+<text x="511" y="84" font-size="10">Misspecified linear</text>
+<line class="s3" x1="475" y1="98" x2="503" y2="98"/>
+<text x="511" y="102" font-size="10">Random control</text>
+<text x="360.0" y="428" text-anchor="middle" font-size="10">E2 toy model: the representable interaction structure retains predictive alignment as noise rises.</text>
+</svg>

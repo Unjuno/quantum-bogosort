@@ -8,45 +8,45 @@ S2.12 should replace the abstract residual tolerance in S2.11 by a universal con
 
 Assume:
 
-$$
+```math
 U,S\in L^2,
 \qquad
 S\ge0,
 \qquad
 0<E[S]<\infty.
-$$
+```
 
 ## T — conditional Cauchy--Schwarz audit
 
 For every conditioning state `Y`, conditional Cauchy--Schwarz gives:
 
-$$
+```math
 |\mathrm{Cov}(U,S\mid Y)|
 \le
 \sqrt{
 \mathrm{Var}(U\mid Y)
 \mathrm{Var}(S\mid Y)
 }.
-$$
+```
 
 Therefore:
 
-$$
+```math
 \mathrm{Cov}(U,S\mid Y)
 \ge
 -
 \sqrt{v_U(Y)v_S(Y)}.
-$$
+```
 
 Substitution into S2.11 yields:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(m(Y),a(Y))
 -
 E[\sqrt{v_U(Y)v_S(Y)}].
-$$
+```
 
 **Audit:** PASS.
 
@@ -54,21 +54,21 @@ $$
 
 Because `v_U(Y)` and `v_S(Y)` are nonnegative:
 
-$$
+```math
 E[\sqrt{v_U(Y)v_S(Y)}]
 \le
 \sqrt{E[v_U(Y)]E[v_S(Y)]}.
-$$
+```
 
 Replacing the tighter penalty by this larger upper bound gives the weaker but valid lower certificate:
 
-$$
+```math
 \mathrm{Cov}(U,S)
 \ge
 \mathrm{Cov}(m(Y),a(Y))
 -
 \sqrt{E[v_U(Y)]E[v_S(Y)]}.
-$$
+```
 
 **Audit:** PASS. The inequality direction is correct.
 
@@ -76,25 +76,25 @@ $$
 
 With:
 
-$$
+```math
 \eta=U-E[U\mid Y],
-$$
+```
 
-$$
+```math
 \xi=S-E[S\mid Y],
-$$
+```
 
 we have:
 
-$$
+```math
 E[\eta^2]=E[\mathrm{Var}(U\mid Y)],
-$$
+```
 
 and:
 
-$$
+```math
 E[\xi^2]=E[\mathrm{Var}(S\mid Y)].
-$$
+```
 
 **Audit:** PASS.
 
@@ -104,42 +104,42 @@ A previous draft stated the sharpness construction for arbitrary centered residu
 
 Let `Y` be constant, let `eta` be Rademacher, and for `c>0` set:
 
-$$
+```math
 U=\eta,
-$$
+```
 
-$$
+```math
 S=M-c\eta,
 \qquad
 M>c.
-$$
+```
 
 Then:
 
-$$
+```math
 S>0
-$$
+```
 
 almost surely and:
 
-$$
+```math
 \xi=-c\eta.
-$$
+```
 
 Thus:
 
-$$
+```math
 \mathrm{Cov}(U,S\mid Y)=-c,
-$$
+```
 
 while:
 
-$$
+```math
 \sqrt{
 \mathrm{Var}(U\mid Y)
 \mathrm{Var}(S\mid Y)
 }=c.
-$$
+```
 
 Equality holds in the negative conditional Cauchy--Schwarz bound.
 

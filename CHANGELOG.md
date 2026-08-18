@@ -1,5 +1,24 @@
 # Changelog
 
+## Unreleased — `main`
+
+### Changed
+
+- clarified that recognition may include recognition of a QBS-type rule itself, while recognition has no privileged causal power beyond the policy and trajectory/accessibility changes it induces;
+- exposed present self-location under future accessibility directly in the root README;
+- made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
+- removed public repository-process wording that depended on tool availability;
+- removed merged/superseded development branches while preserving `main` and the frozen release snapshots;
+- added CI concurrency cancellation and runtime limits so stalled manuscript-toolchain provisioning cannot remain indefinitely in progress.
+
+### Scientific scope
+
+- no T1–T5 theorem statement is changed;
+- no E1–E5 experiment result is changed;
+- no S2-family theorem or statistical certificate is changed;
+- the Everett accessibility bridge remains physically open;
+- `release/v0.3-public-review` remains the frozen v0.3 scientific snapshot.
+
 ## v0.3 — Public Review — 2026-08-18
 
 ### Added

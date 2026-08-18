@@ -56,7 +56,7 @@ This file records the main literature families relevant to QBS and the current n
 
 **Relation to QBS:** this is historical background for extreme observer-selection intuitions.
 
-**Difference:** the present QBS project abstracts away from harmful implementations and studies general termination/accessibility mathematics and policy dependence.
+**Difference:** QBS abstracts the thought experiment into general termination/accessibility mathematics and policy dependence.
 
 ### Jacques Mallah
 

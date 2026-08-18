@@ -124,7 +124,25 @@ $$
 \text{first-person trajectory weight changes}.
 $$
 
-Thus a favorable first-person shift is a statement about the observer-conditioned distribution, not a claim that an external random-number generator becomes causally biased.
+The same change of measure can be applied to a present state when accessibility is determined over a future continuation. Let `Z` denote a present state and `S_T` future accessibility. Then:
+
+$$
+P_{FP}(Z\in A)
+=
+\frac{E[\mathbf 1_{\{Z\in A\}}S_T]}{E[S_T]}.
+$$
+
+For a discrete present state:
+
+$$
+P_{FP}(Z=z)
+=
+\frac{E[S_T\mid Z=z]P(Z=z)}{E[S_T]}.
+$$
+
+Thus differential future accessibility can reweight present self-location toward states associated with higher expected future accessibility. This is a conditioning/change-of-measure statement, not backward causation or a causal change in the base probability law.
+
+A favorable first-person shift is therefore a statement about the observer-conditioned distribution, not a claim that an external random-number generator becomes causally biased.
 
 Canonical terminology is maintained in [`docs/notation.md`](notation.md).
 

@@ -214,13 +214,13 @@ See:
 - `literature/extended_prior_art.md`
 - `paper/references.bib`
 
-## 7. Current project decision
+## 7. Current project status
 
-For v0.2, the Everett-QBS bridge is retained as:
+The Everett-QBS bridge is retained as:
 
 **A CLEARLY LABELED CONDITIONAL INTERPRETATION, NOT A DERIVED PHYSICAL RESULT.**
 
-A future version may strengthen, replace, or reject the bridge without invalidating T1–T5 or the classical E1–E5 simulations.
+A future revision may strengthen, replace, or reject the bridge without invalidating T1–T5 or the classical E1–E5 simulations.
 
 ## ERROR CHECK
 

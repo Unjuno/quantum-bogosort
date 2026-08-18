@@ -104,6 +104,26 @@ Trajectory reweighting means replacing the base weighting of histories by normal
 
 Self-location refers to indexical uncertainty about which observer/history position within the modeled collection is the first-person position. In QBS, accessibility can change the normalized measure used for that indexical weighting.
 
+### Present self-location under future accessibility
+
+Let `Z` denote a present state or present trajectory descriptor, and let `S_T` denote an accessibility weight determined over the future continuation of the trajectory. The first-person probability of a present event is the direct restriction of the same weighted measure:
+
+$$
+P_{FP}(Z\in A)
+=
+\frac{E[\mathbf 1_{\{Z\in A\}}S_T]}{E[S_T]}.
+$$
+
+For a discrete present state:
+
+$$
+P_{FP}(Z=z)
+=
+\frac{E[S_T\mid Z=z]P(Z=z)}{E[S_T]}.
+$$
+
+Therefore future accessibility can reweight present self-location whenever expected future accessibility differs across present states. This is a conditioning/change-of-measure statement, not backward causation: the base probability law for `Z` is not thereby changed.
+
 ## Informal interpretation only: effective or indexical luck
 
 `effective luck` and `indexical luck` are **not formal QBS variables or theorem names**. If used in explanatory prose, they are shorthand for a favorable first-person distributional shift: the observer-conditioned measure places greater weight on favorable accessible trajectories.

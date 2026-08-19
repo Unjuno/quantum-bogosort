@@ -20,7 +20,14 @@ def split_entries(text: str) -> list[tuple[str, str, str]]:
     while True:
         match = ENTRY_START_RE.search(text, pos)
         if not match:
+            if text[pos:].strip():
+                raise ValueError(f"unsupported text outside BibTeX entries: {text[pos:].strip()!r}")
             break
+        if text[pos:match.start()].strip():
+            raise ValueError(
+                "unsupported text between BibTeX entries: "
+                f"{text[pos:match.start()].strip()!r}"
+            )
         entry_type, key = match.groups()
         brace_start = text.find("{", match.start())
         depth = 0

@@ -9,6 +9,7 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "experiments" / "manifest.csv"
 DATA_RELATIVE = Path("data") / "processed"
+DATA = ROOT / DATA_RELATIVE
 CURRENT_NAME_RE = re.compile(r"^e[1-5]_.+\.csv$")
 
 
@@ -47,7 +48,7 @@ def main() -> None:
     if missing:
         raise SystemExit("Missing reproduction outputs:\n" + "\n".join(missing))
 
-    tracked_data = git_output("ls-files", "--", DATA_RELATIVE.as_posix())
+    tracked_data = set(git_output("ls-files", "--", DATA_RELATIVE.as_posix()))
     tracked_current = {
         path
         for path in tracked_data
@@ -92,13 +93,19 @@ def main() -> None:
             "byte-identical reproduction contract; see git diff above."
         )
 
-    untracked = git_output(
-        "ls-files", "--others", "--exclude-standard", "--", DATA_RELATIVE.as_posix()
-    )
-    if untracked:
+    # Compare the actual filesystem with Git's tracked set rather than asking Git only
+    # for non-ignored files; an ignored debug/log artifact in data/processed is still
+    # an undeclared side effect of an experiment run.
+    present_data = {
+        path.relative_to(ROOT).as_posix()
+        for path in DATA.rglob("*")
+        if path.is_file()
+    }
+    extra_files = sorted(present_data - tracked_data)
+    if extra_files:
         raise SystemExit(
-            "Experiment execution produced undeclared/untracked processed-data files:\n"
-            + "\n".join(untracked)
+            "Experiment execution produced undeclared processed-data files "
+            "(including ignored files):\n" + "\n".join(extra_files)
         )
 
     print(

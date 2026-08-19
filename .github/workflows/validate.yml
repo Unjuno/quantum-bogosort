@@ -78,6 +78,7 @@ jobs:
           git diff --exit-code -- \
             figures/generated/ \
             data/processed/fig2_fosd_theorem_illustration.csv
+          git diff --exit-code
 
   manuscript-build:
     runs-on: ubuntu-24.04

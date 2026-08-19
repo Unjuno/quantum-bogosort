@@ -88,13 +88,21 @@ P_{FP}(Z\in A)
 \frac{E[\mathbf 1_{\{Z\in A\}}S_T]}{E[S_T]}.
 ```
 
-For a discrete present state:
+For a discrete atom with positive base probability:
+
+```math
+P(Z=z)>0,
+```
+
+we may write:
 
 ```math
 P_{FP}(Z=z)
 =
 \frac{E[S_T\mid Z=z]P(Z=z)}{E[S_T]}.
 ```
+
+If `P(Z=z)=0`, absolute continuity of the weighted measure gives `P_FP(Z=z)=0`; no pointwise value of `E[S_T\mid Z=z]` at that null atom is required.
 
 This is an exact change-of-measure consequence once the weighted first-person measure is adopted. It means that differential expected future accessibility can reweight present self-location. It does **not** imply backward causation or a causal change in the base law of `Z`.
 

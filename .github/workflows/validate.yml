@@ -35,7 +35,7 @@ jobs:
         run: python scripts/validate_repository_structure.py
       - name: Validate locked T1-T5 canonical theorem body
         run: python scripts/validate_core_theorem_lock.py
-      - name: Validate S2.8-S2.10 cross-surface consistency
+      - name: Validate supplementary theorem and domain consistency
         run: python scripts/validate_supplementary_consistency.py
       - name: Validate citation metadata
         run: python scripts/validate_citation_metadata.py

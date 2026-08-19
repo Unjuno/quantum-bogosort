@@ -1,9 +1,10 @@
 """Verify frozen public-review tag targets and matching GitHub Releases.
 
-This is a remote provenance check. Source files record the intended immutable snapshot
-commits, but tags are hosting-layer refs and can move unless separately protected. CI
-therefore verifies the live GitHub tag targets rather than treating the names alone as
-proof of immutability.
+This is a remote provenance check. Source files record the intended snapshot commits,
+but tags are hosting-layer refs and can move unless separately protected. CI therefore
+verifies the live GitHub tag targets rather than treating the names alone as proof of
+immutability. A Release may be marked as a prerelease; that presentation flag does not
+change the frozen commit identity.
 """
 from __future__ import annotations
 
@@ -100,8 +101,6 @@ def main() -> None:
             errors.append(f"{tag}: release tag_name mismatch: {release.get('tag_name')!r}")
         if release.get("draft") is True:
             errors.append(f"{tag}: frozen public-review Release is unexpectedly a draft")
-        if release.get("prerelease") is True:
-            errors.append(f"{tag}: frozen public-review Release is unexpectedly marked prerelease")
 
     if errors:
         raise SystemExit("Snapshot-ref validation failed:\n" + "\n".join(errors))

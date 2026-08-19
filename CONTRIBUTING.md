@@ -38,6 +38,8 @@ Please include:
 - a derivation, counterexample, or smallest failing case when possible;
 - whether the issue affects the central result or only a boundary condition.
 
+The compact standalone canonical T1–T5 body is `theory/core_theorems.tex`. Its theorem/proof/boundary content is locked to the frozen v0.3 snapshot except for the deliberate version-neutral document title. A substantive change requires explicit scientific review, not a repository-QA edit.
+
 ## Reproducibility reports
 
 Please include:
@@ -80,13 +82,16 @@ E_{FP}[U]-E[U]
 
 Do not introduce single-dollar math, `$$` display delimiters, `\(...\)`, or `\[...\]` in rendered repository prose. Literal examples of these syntaxes belong inside code spans or code fences.
 
-Before committing documentation, metadata, or repository-structure changes, run:
+Repository-relative Markdown links currently must not use local `#fragment` or `?query` suffixes. The validator deliberately rejects them until a GitHub-compatible heading-slug/query validator is implemented, rather than silently validating only the file part of a potentially broken anchor.
+
+Before committing documentation, metadata, theory, or repository-structure changes, run:
 
 ```bash
 python scripts/validate_runtime_contract.py
 python scripts/validate_markdown_math.py
 python scripts/validate_markdown_links.py
 python scripts/validate_repository_structure.py
+python scripts/validate_core_theorem_lock.py
 python scripts/validate_citation_metadata.py
 python scripts/validate_bibliography_metadata.py
 python scripts/validate_license_map.py
@@ -95,10 +100,11 @@ python scripts/validate_manifest.py
 python scripts/validate_svg_sources.py
 ```
 
-The GitHub-GFM API validator requires network access and is run by Actions with the scoped workflow token:
+The GitHub-GFM renderer and live frozen-tag/Release checks require network access and are run by Actions with the scoped workflow token:
 
 ```bash
 python scripts/validate_github_markdown_render.py
+python scripts/validate_snapshot_refs.py
 ```
 
 For manuscript-source changes, generate the PDF figures before the LaTeX dependency preflight:
@@ -119,7 +125,7 @@ python experiments/exp5_branch_map.py
 python scripts/validate_reproduction_outputs.py
 ```
 
-The reproduction validator is manifest-driven. It requires the tracked E1–E5 current CSV set to match the manifest, requires current outputs to remain byte-identical to `HEAD`, rejects changes to any tracked repository content during experiment execution, and rejects undeclared generated files under `data/processed/`, including ignored files. The workflow's final clean-worktree step separately rejects any remaining tracked diff and any nonignored untracked artifact anywhere in the checkout.
+The manifest validator fixes the canonical E1–E5 locked/current file mappings, experiment-card theory routing, and all 16 frozen historical CSV Git blob identities. The reproduction validator is manifest-driven: it requires the tracked E1–E5 current CSV set to match the manifest, requires current outputs to remain byte-identical to `HEAD`, rejects changes to tracked repository content during experiment execution, and rejects undeclared generated files under `data/processed/`, including ignored files.
 
 For figure changes, regenerate both the public SVGs and the gitignored manuscript PDF figures before validating the exact output sets:
 
@@ -135,4 +141,6 @@ test -z "$(git ls-files --others --exclude-standard)"
 
 GitHub Actions additionally sends every repository Markdown file through GitHub's GFM rendering API and checks that expected source headings, tables, inline images, and fenced blocks survive server-side GFM conversion. This structural check complements, but does not replace, direct browser inspection of GitHub's MathJax, Mermaid, SVG sizing, and page layout.
 
-The `validate` workflow is also configured with `workflow_dispatch`, so repository maintainers can use **Actions → validate → Run workflow** on `main` to repeat the complete CI audit without creating a dummy commit. The workflow's reusable Actions are pinned to full commit SHAs, checkout credentials are not persisted into later steps, and the workflow token is read-only; update these constraints deliberately rather than weakening them incidentally.
+The repository-validation job also runs `scripts/validate_worktree_artifacts.py` at the end. That check uses an **exact CI-only ignored-artifact allowlist** derived from the Python files compiled by the workflow plus the six generated manuscript PDFs. Do not treat it as a normal local-development check in a checkout containing an ignored `.venv/` or other deliberate local tooling; its purpose is to prove that the clean Actions checkout produced only the ignored artifacts expected from validation itself.
+
+The `validate` workflow is configured with `workflow_dispatch`, so repository maintainers can use **Actions → validate → Run workflow** on `main` to repeat the complete CI audit without creating a dummy commit. The workflow's reusable Actions are pinned to audited full commit SHAs, checkout credentials are not persisted into later steps, and the workflow token is read-only; update these constraints deliberately rather than weakening them incidentally.

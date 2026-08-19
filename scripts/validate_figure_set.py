@@ -24,8 +24,11 @@ EXPECTED_PDFS = {
 
 
 def check_exact(directory: Path, expected: set[str], label: str, errors: list[str]) -> None:
-    if not directory.is_dir():
-        errors.append(f"missing {label} directory: {directory.relative_to(ROOT)}")
+    if directory.is_symlink() or not directory.is_dir():
+        errors.append(
+            f"missing/invalid {label} directory: {directory.relative_to(ROOT)} "
+            "(real directory required)"
+        )
         return
 
     entries = {path.name for path in directory.iterdir()}
@@ -36,9 +39,16 @@ def check_exact(directory: Path, expected: set[str], label: str, errors: list[st
     if extra:
         errors.append(f"{label}: unexpected generated entry/entries: " + ", ".join(extra))
 
-    non_files = sorted(name for name in expected if not (directory / name).is_file())
-    if non_files:
-        errors.append(f"{label}: expected path is not a regular file: " + ", ".join(non_files))
+    invalid_files = sorted(
+        name
+        for name in expected
+        if (directory / name).is_symlink() or not (directory / name).is_file()
+    )
+    if invalid_files:
+        errors.append(
+            f"{label}: expected path is not a nonsymlink regular file: "
+            + ", ".join(invalid_files)
+        )
 
 
 def main() -> None:
@@ -50,7 +60,7 @@ def main() -> None:
         raise SystemExit("Figure-set validation failed:\n" + "\n".join(errors))
 
     print(
-        "Figure-set validation passed: exact "
+        "Figure-set validation passed: exact nonsymlink regular-file "
         f"{len(EXPECTED_SVGS)}-SVG public set and {len(EXPECTED_PDFS)}-PDF manuscript set present."
     )
 

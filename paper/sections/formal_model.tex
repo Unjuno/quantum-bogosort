@@ -13,13 +13,15 @@ where $U_R:\Omega\to\mathbb R$ is trajectory utility and $S_R:\Omega\to[0,\infty
 \label{fig:qbs-framework}
 \end{figure}
 
-We assume
+For each recognition state we assume
 \[
 0<\mathbb E_\mu[S_R]<\infty,
 \qquad
+\mathbb E_\mu[|U_R|]<\infty,
+\qquad
 \mathbb E_\mu[|U_R|S_R]<\infty.
 \]
-The first-person measure is
+The separate base and weighted integrability conditions ensure that both ordinary expectations and covariance contributions are finite; neither condition implies the other in general. The first-person measure is
 \[
 \mu_R^{\mathrm{FP}}(A)
 =
@@ -55,3 +57,9 @@ Q(U,S)
 \frac{\operatorname{Cov}(U,S)}{\mathbb E[S]}.
 \]
 The formal development distinguishes changes in the trajectory utility map from changes in the accessibility map. In particular, recognition need not merely reweight a fixed set of realized utilities: a changed policy may induce $U_1\neq U_0$ on the same primitive sample space.
+
+For the general selector-changing interaction decomposition, which introduces the intermediate cross term $Q(U_1,S_0)$, we additionally assume
+\[
+\mathbb E_\mu[|U_1|S_0]<\infty.
+\]
+When $S_1=S_0$, this cross-integrability condition is already included in the state-1 weighted-integrability assumption above.

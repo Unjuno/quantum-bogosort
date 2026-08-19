@@ -52,7 +52,21 @@ A provisional toy parameterization used in exploratory experiments is:
 1-q(1-\alpha),
 ```
 
-where `q` is an execution-strength parameter and `alpha` is residual leakage/accessibility in the downweighted class.
+with:
+
+```math
+0\le q\le1,
+\qquad
+0\le\alpha\le1.
+```
+
+Here `q` is an execution-strength parameter and `alpha` is residual leakage/accessibility in the downweighted class. These parameter bounds imply:
+
+```math
+0\le\lambda\le1,
+```
+
+so the resulting selector remains nonnegative and no larger than the favorable-class weight.
 
 At:
 
@@ -66,7 +80,7 @@ we obtain:
 \lambda=1,
 ```
 
-so there is no weighting effect.
+so there is no weighting effect. At `q=1`, the downweighted-class accessibility is `lambda=alpha`.
 
 ## Interpretation
 
@@ -78,4 +92,4 @@ The model has only two outcome classes and does not represent trajectory changes
 
 ## Status
 
-**EXACT within the binary weighting model. Physical interpretation OPEN.**
+**EXACT within the stated binary weighting and parameter domains. Physical interpretation OPEN.**

@@ -11,8 +11,12 @@ Assume:
 ```math
 0<E_\mu[S_\pi]<\infty,
 \qquad
+E_\mu[|U_\pi|]<\infty,
+\qquad
 E_\mu[|U_\pi|S_\pi]<\infty.
 ```
+
+The separate base-integrability and weighted-integrability conditions are both needed when covariance decompositions are used: neither one implies the other in general. Theorem 5 additionally states the cross-integrability needed for its intermediate `Q(U_1,S_0)` term.
 
 Define the first-person measure by:
 

@@ -48,7 +48,7 @@ Please include:
 - experiment ID;
 - whether the failure reproduces on a clean environment.
 
-Core experiments E1–E5 are expected to run under GitHub Actions. The repository pins the Python package versions used for byte-level reproduction; install `requirements.txt` rather than substituting newer dependency versions when checking committed-output identity.
+Core experiments E1–E5 are expected to run under GitHub Actions. The repository pins the primary Python package versions used for byte-level reproduction; install `requirements.txt` rather than substituting newer dependency versions when checking committed-output identity.
 
 ## Prior-art reports
 
@@ -80,15 +80,23 @@ E_{FP}[U]-E[U]
 
 Do not introduce single-dollar math, `$$` display delimiters, `\(...\)`, or `\[...\]` in rendered repository prose. Literal examples of these syntaxes belong inside code spans or code fences.
 
-Before committing documentation or repository-structure changes, run:
+Before committing documentation, metadata, or repository-structure changes, run:
 
 ```bash
+python scripts/validate_runtime_contract.py
 python scripts/validate_markdown_math.py
 python scripts/validate_markdown_links.py
 python scripts/validate_repository_structure.py
+python scripts/validate_citation_metadata.py
 python scripts/validate_issue_templates.py
 python scripts/validate_manifest.py
 python scripts/validate_svg_sources.py
+```
+
+The GitHub-GFM API validator requires network access and is run by Actions with the scoped workflow token:
+
+```bash
+python scripts/validate_github_markdown_render.py
 ```
 
 For manuscript-source changes, generate the PDF figures before the LaTeX dependency preflight:
@@ -98,7 +106,7 @@ python figures/generate_pdf_figures.py
 python scripts/validate_latex_sources.py
 ```
 
-For experiment changes, run the locked suite and then verify both declared output identity and the cleanliness of the complete processed-data tree:
+For experiment changes, run the locked suite and then verify declared output identity plus tracked-repository cleanliness:
 
 ```bash
 python experiments/exp1_fosd_and_stress.py
@@ -109,7 +117,7 @@ python experiments/exp5_branch_map.py
 python scripts/validate_reproduction_outputs.py
 ```
 
-The reproduction validator is manifest-driven. It requires the tracked E1–E5 current CSV set to match the manifest, requires current outputs to remain byte-identical to `HEAD`, rejects changes to locked historical processed data, and rejects undeclared generated files under `data/processed/`.
+The reproduction validator is manifest-driven. It requires the tracked E1–E5 current CSV set to match the manifest, requires current outputs to remain byte-identical to `HEAD`, rejects changes to any tracked repository content during experiment execution, and rejects undeclared generated files under `data/processed/`, including ignored files.
 
 For figure changes, regenerate and validate the committed SVGs separately:
 
@@ -117,8 +125,9 @@ For figure changes, regenerate and validate the committed SVGs separately:
 python figures/generate_figures.py
 python scripts/validate_svg_sources.py
 git diff --exit-code -- figures/generated/ data/processed/fig2_fosd_theorem_illustration.csv
+git diff --exit-code
 ```
 
-GitHub Actions additionally sends every repository Markdown file through GitHub's GFM rendering API and checks that source headings, tables, and images survive the GFM conversion. This API structure check complements, but does not replace, direct browser inspection of GitHub's MathJax, Mermaid, SVG sizing, and page layout.
+GitHub Actions additionally sends every repository Markdown file through GitHub's GFM rendering API and checks that source headings, tables, images, and fenced blocks survive the server-side GFM conversion. This structural check complements, but does not replace, direct browser inspection of GitHub's MathJax, Mermaid, SVG sizing, and page layout.
 
-The `validate` workflow is also configured with `workflow_dispatch`, so repository maintainers can use **Actions → validate → Run workflow** on `main` to repeat the complete CI audit without creating a dummy commit. The workflow's reusable Actions are pinned to full commit SHAs; update those pins deliberately rather than replacing them with mutable major-version tags.
+The `validate` workflow is also configured with `workflow_dispatch`, so repository maintainers can use **Actions → validate → Run workflow** on `main` to repeat the complete CI audit without creating a dummy commit. The workflow's reusable Actions are pinned to full commit SHAs, checkout credentials are not persisted into later steps, and the workflow token is read-only; update these constraints deliberately rather than weakening them incidentally.

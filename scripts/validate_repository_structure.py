@@ -9,6 +9,7 @@ required = [
     ".github/workflows/validate.yml",
     "docs/research_map.md", "docs/notation.md", "docs/claims_and_assumptions.md",
     "docs/everett_bridge_tests.md", "docs/manuscript_claim_audit.md", "docs/v0.2_release_audit.md",
+    "docs/pre_announcement_execution_audit_2026-08-19.md",
     "docs/s2_stack_review_map.md", "docs/s2_stack_semantic_audit.md",
     "docs/post_v02_manuscript_compression_audit.md", "docs/post_v02_core_s2_proof_review.md",
     "docs/s2_adaptive_alignment_audit.md", "docs/s2_finite_sample_certificate_audit.md",

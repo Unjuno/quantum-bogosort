@@ -1,17 +1,21 @@
-"""Lock audited S2.8--S2.10 boundary corrections across public/manuscript surfaces.
+"""Lock audited supplementary boundary corrections across public/manuscript surfaces.
 
 These checks are deliberately narrow. They do not attempt to re-prove the supplementary
-results. They prevent three concrete defects found during the pre-announcement audit from
-silently reappearing in only one representation:
+results. They prevent concrete defects found during the pre-announcement audit from
+silently reappearing:
 
 * S2.8: the generic random certificate must be real-valued off the confidence event via
   ``U_M^+ = max(0,U_M)``;
 * S2.9: the custom concentration-parameter domain must make all radii real/nonnegative;
 * S2.10: the proof must separate the zero-variance boundary from the positive-variance
-  Chebyshev step.
+  Chebyshev step;
+* recognition time: the confidence process must be typed as adapted/measurable, the
+  continuous-time hitting statement must carry path/measurability hypotheses, and the FP
+  stopping-rule value must satisfy the full T1 base/weighted integrability domain.
 
-Each correction must be present in the canonical supplementary note, compiled manuscript
-appendix, and corresponding theorem-audit record.
+The S2.8--S2.10 corrections must be present in the canonical supplementary note, compiled
+manuscript appendix, and corresponding theorem-audit record. The recognition-time note is
+repository-only and is locked directly at its canonical source.
 """
 from __future__ import annotations
 
@@ -68,9 +72,16 @@ REQUIRED_SNIPPETS: dict[Path, tuple[str, ...]] = {
     ),
     ROOT / "docs/s2_robust_mom_certificate_audit.md": (
         "zero-variance",
-        "If:",
         r"\mathrm{Var}(Z_j)=0",
         "FOUND AND CORRECTED",
+    ),
+    ROOT / "supplementary/recognition_time.md": (
+        r"C_t:\Omega\to\mathbb R",
+        r"\mathcal F_t`-measurable",
+        "continuous sample paths",
+        "FP-admissible",
+        r"E[|U_{\tau}|]<\infty",
+        r"E[|U_{\tau}|S_{\tau}]<\infty",
     ),
 }
 
@@ -129,8 +140,9 @@ def main() -> None:
 
     print(
         "Supplementary consistency validation passed: S2.8 off-event totality, "
-        "S2.9 nonnegative concentration-parameter domain, and S2.10 zero-variance "
-        f"boundary remain synchronized across {len(REQUIRED_SNIPPETS)} source/manuscript/audit surfaces."
+        "S2.9 nonnegative concentration-parameter domain, S2.10 zero-variance boundary, "
+        "and recognition-time measurability/FP-admissibility remain locked across "
+        f"{len(REQUIRED_SNIPPETS)} audited surfaces."
     )
 
 

@@ -4,7 +4,7 @@
 
 Ordinary policy improvement and QBS conditioning need not add independently. Their interaction is governed by where policy improvement is concentrated relative to accessibility.
 
-For a fixed selector:
+For a fixed selector, under the T4/T5 domain conditions,
 
 ```math
 D=U_1-U_0,
@@ -36,7 +36,23 @@ Compare observed interaction with the exact covariance prediction.
 
 ### Changing-selector decomposition
 
-Allow policy to change both outcome and selector map. Decompose:
+Allow policy to change both outcome and selector map. In addition to the per-state T4 conditions,
+
+```math
+0<E[S_R]<\infty,
+\qquad
+E[|U_R|]<\infty,
+\qquad
+E[|U_R|S_R]<\infty,
+```
+
+general T5 also requires the cross-integrability condition
+
+```math
+E[|U_1|S_0]<\infty,
+```
+
+so that the intermediate quantity `Q(U_1,S_0)` is defined. Decompose:
 
 ```math
 I
@@ -83,7 +99,7 @@ Negative interaction is not a universal QBS law. It arises when policy improveme
 
 A negative interaction does not imply that either ordinary adaptation or QBS conditioning is harmful. Both component effects can be positive while partially substituting for one another.
 
-The adaptive-rescue result is a sufficient-condition theorem under explicit monotonicity assumptions, not a universal statement about all adaptive agents.
+The adaptive-rescue result is a sufficient-condition theorem under explicit monotonicity and integrability assumptions, not a universal statement about all adaptive agents.
 
 ## ERROR CHECK
 

@@ -2,7 +2,7 @@ Creative Commons Attribution 4.0 International (CC BY 4.0)
 
 LICENSING NOTICE
 
-Manuscript text, theoretical notes, documentation, and figures in this repository are licensed under CC BY 4.0 unless a file states otherwise.
+Manuscript text, theoretical notes, Markdown/LaTeX documentation, bibliography/citation metadata, experiment provenance metadata, and committed figures in this repository are licensed under CC BY 4.0 unless a file states otherwise. See LICENSES/README.md for the path-explicit repository map.
 
 Canonical legal code:
 https://creativecommons.org/licenses/by/4.0/legalcode

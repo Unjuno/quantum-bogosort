@@ -42,19 +42,31 @@ In the self-referential QBS case, `R=1` may represent recognition of a QBS-type 
 
 ## First-person measure and value
 
-For nonnegative accessibility with positive finite mean:
+The normalized first-person **measure** needs only nonnegative accessibility with positive finite mean:
 
 ```math
-0<E[S_\pi]<\infty,
+S_\pi\ge0,
+\qquad
+0<E[S_\pi]<\infty.
 ```
 
-define:
+Then:
 
 ```math
 \mu^{FP}_\pi(A)
 =
 \frac{E_\mu[\mathbf 1_A S_\pi]}{E_\mu[S_\pi]}.
 ```
+
+To use a finite first-person **value** together with the ordinary-mean/covariance decomposition, also require:
+
+```math
+E[|U_\pi|]<\infty,
+\qquad
+E[|U_\pi|S_\pi]<\infty.
+```
+
+These are separate conditions; neither base integrability nor weighted integrability implies the other in general.
 
 First-person value:
 
@@ -70,6 +82,12 @@ Normalized covariance contribution:
 Q(U,S)
 =
 \frac{\mathrm{Cov}(U,S)}{E[S]}.
+```
+
+For the general selector-changing T5 decomposition, the intermediate term `Q(U_1,S_0)` additionally requires:
+
+```math
+E[|U_1|S_0]<\infty.
 ```
 
 ## Canonical terminology
@@ -88,7 +106,7 @@ Accessibility is not automatically a physical Everett quantity. A physical inter
 
 ### First-person uplift
 
-First-person uplift means that an outcome statistic is larger under the first-person measure than under the base measure. For the mean:
+First-person uplift means that an outcome statistic is larger under the first-person measure than under the base measure. For an outcome satisfying the base and weighted integrability conditions:
 
 ```math
 E_{FP}[U]-E[U]
@@ -175,6 +193,8 @@ I
 =
 \frac{\mathrm{Cov}(D,S)}{E[S]}.
 ```
+
+For a changing selector, the general T5 decomposition also uses `Q(U_1,S_0)` and therefore requires the cross-integrability condition stated above.
 
 ## Predictive-alignment notation
 

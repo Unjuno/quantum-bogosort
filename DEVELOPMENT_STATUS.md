@@ -2,57 +2,62 @@
 
 **Updated:** 2026-08-19
 
-This file records the current review/development state. The frozen scientific snapshot is tracked separately in [`STATUS.md`](STATUS.md); future work and release gates are tracked in [`ROADMAP.md`](ROADMAP.md).
+This file is the concise source of truth for the current review/development state. Frozen snapshot identity is recorded in [`STATUS.md`](STATUS.md); detailed audit history is recorded in the four pre-announcement audit files; future release work is tracked in [`ROADMAP.md`](ROADMAP.md).
 
-## Source of truth
+## Public source of truth
 
+- current development/review branch: `main`;
 - frozen v0.3 public-review snapshot: tag/Release `v0.3-public-review` at commit `58038763127258bd3e2f0d41708c4dfa01f81fd6`;
-- current review/development surface: `main`;
 - archived v0.2 snapshot: tag/Release `v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
-- canonical claim/theorem/evidence index: [`docs/research_map.md`](docs/research_map.md);
+- canonical claim/theorem/evidence map: [`docs/research_map.md`](docs/research_map.md);
 - authoritative claim boundaries: [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md);
 - execution/reproduction audit: [`docs/pre_announcement_execution_audit_2026-08-19.md`](docs/pre_announcement_execution_audit_2026-08-19.md);
 - validator/Actions/governance audit: [`docs/pre_announcement_validator_audit_2026-08-19.md`](docs/pre_announcement_validator_audit_2026-08-19.md);
-- bibliography/prior-art truth audit: [`docs/pre_announcement_bibliography_audit_2026-08-19.md`](docs/pre_announcement_bibliography_audit_2026-08-19.md).
+- bibliography/prior-art truth audit: [`docs/pre_announcement_bibliography_audit_2026-08-19.md`](docs/pre_announcement_bibliography_audit_2026-08-19.md);
+- mathematical-domain audit: [`docs/pre_announcement_mathematical_domain_audit_2026-08-19.md`](docs/pre_announcement_mathematical_domain_audit_2026-08-19.md).
 
-The repository has one active branch, `main`. The v0.2 and v0.3 tags were re-resolved during this audit and still point to the exact commits above. They are described as **frozen, commit-pinned snapshots**, not as platform-immutable tags unless a tag ruleset is actually confirmed.
+The frozen tags are treated as commit-pinned historical snapshots. They are not described as platform-immutable unless a GitHub tag ruleset is actually configured and verified.
 
 ## Scientific state
 
-The locked core theorem set remains **T1–T5** in identity, numbering, proof structure, sign conclusions, and physical-boundary content. The frozen v0.3 snapshot itself remains untouched. Current `main` contains four explicitly reviewed textual/domain corrections to the standalone canonical TeX source: a version-neutral title, explicit base-integrability in the policy setup, explicit base-integrability for the generic T1 outcome, and T5 cross-integrability for the intermediate `Q(U_1,S_0)` term. These close definition-domain gaps; they do not alter the algebraic identities or their proof steps.
+The core theorem family remains **T1–T5** and the core experiment family remains **E1–E5**. The supplementary numbered line remains complete through **S2.13**.
 
-The locked core experiment set remains **E1–E5**. The supplementary line remains complete through **S2.13**.
+Recognition is an information/policy-selection state. It has no privileged physical causal power merely by being recognized. A recognition-dependent policy can causally change trajectories and can change the modeled accessibility map. The base probability law itself is not changed by QBS weighting.
 
-The conceptual supplementary spine remains:
+The first-person measure is a normalized change of measure. Future accessibility can reweight present self-location, but favorable/upward reweighting requires alignment with the favorability/utility statistic. The Everett accessibility bridge remains a separate unresolved physical assumption.
 
-```math
-\text{predictive alignment}
-\longrightarrow
-\text{general accessibility}
-\longrightarrow
-\text{residual penalty}
-\longrightarrow
-\text{explained-variance certificate}.
-```
+### Current-main T1–T5 domain corrections
 
-Recognition is treated as an information/policy state, not as a privileged physical cause. Future accessibility may reweight present self-location under the first-person change of measure; favorable/upward reweighting additionally requires alignment with the relevant favorability statistic. The base probability law remains fixed.
+The frozen v0.3 snapshot is untouched. Current `main` preserves T1–T5 identity, numbering, algebraic proof structure, sign/FOSD conclusions, support/extinction boundaries, and Everett-bridge statement while making the required domains explicit.
 
-The Everett accessibility bridge remains a separate physical open problem. Nothing in the validator/reproducibility or bibliography work establishes an Everettian accessibility law or objective random-generator bias.
+The compact canonical `theory/core_theorems.tex` differs from frozen v0.3 in exactly four audited textual locations:
 
-## Pre-announcement audit state
+1. a version-neutral document title;
+2. explicit base integrability `E_mu[|U_pi|] < infinity` in the policy setup;
+3. the complete generic T1 domain `S >= 0`, `0 < E[S] < infinity`, `E[|X|] < infinity`, and `E[|X|S] < infinity`;
+4. T5 cross-integrability `E[|U_1|S_0] < infinity`, required because the proof introduces `Q(U_1,S_0)`.
 
-Four complementary passes have now been performed.
+`scripts/validate_core_theorem_lock.py` normalizes exactly those four changes and then requires byte identity with the frozen v0.3 canonical TeX blob `82986d7197e79446d6574aab538d1edaeff47eb6`. It also requires the same T1/T4/T5 domain assumptions across nine theory, experiment-card, and manuscript surfaces.
 
-### Pass 1 — source, execution, and reproduction
+### Supplementary-domain corrections
 
-The first pass inspected the complete repository Markdown surface plus experiment, figure, validator, SVG, manuscript, bibliography, manifest, and configuration sources. A commit-fixed reconstructed worktree executed E1–E5 successfully. At that pass:
+The deeper mathematical audit also corrected several boundary/domain defects without changing the intended on-domain conclusions:
 
-- all twelve current E1–E5 reproduction CSVs matched their committed Git blob identities, subject only to the intentional E5 current-schema rename described below;
-- all seven committed SVGs regenerated byte-for-byte;
-- SVG structural validation passed;
-- manifest and reproduction validators were negative-tested with a byte mutation and a broken `LOCK` state.
+- **S2.8:** the generic confidence certificate now uses `U_M^+ = max(0,U_M)` so the reported random statistic remains real-valued even outside the simultaneous confidence event; on the event, `U_M^+ = U_M`, so the bound and coverage are unchanged;
+- **S2.9:** sub-Gaussian/Bernstein concentration parameters are explicitly nonnegative, making all radii real/nonnegative by definition;
+- **S2.10:** the zero-variance case `v_j=0` is handled separately: the target is almost surely constant, so the MoM error is exactly zero; Chebyshev is used only for `v_j>0`;
+- **recognition time:** `C_t` is correctly typed as an adapted real random variable, continuous-time hitting is conditioned on standard path/measurability hypotheses, and FP stopping-rule values require the full T1 base/weighted integrability domain;
+- **repeated filtering:** the sensitivity derivative explicitly requires the weighted moments and dominated-differentiation regularity needed to interchange differentiation and expectation;
+- **binary soft-QBS:** `p`, `lambda`, `q`, and `alpha` domains are explicit and the zero-normalization corner `(p,lambda)=(0,0)` is excluded;
+- **Gaussian toy:** `rho`, `lambda`, `q`, and `alpha` domains are explicit and positive normalization/denominator is guaranteed.
 
-The pass found that byte-level output checks were being requested while numerical dependencies had only lower bounds. The primary reproduction contract is now:
+`scripts/validate_supplementary_consistency.py` locks these corrections across the relevant supplementary, manuscript, and theorem-audit surfaces.
+
+The main S1, S2/S2.3/S2.4, S2.5–S2.7, and S2.11–S2.13 arguments were rechecked for the same class of domain/sign/coverage failure and no additional correction was identified in that pass.
+
+## Reproducibility state
+
+The primary byte-reproduction environment is fixed to:
 
 - Ubuntu 24.04;
 - Python 3.11.15;
@@ -60,138 +65,87 @@ The pass found that byte-level output checks were being requested while numerica
 - pandas 3.0.5;
 - Matplotlib 3.11.1.
 
-The primary package pins are exact; the repository does **not** claim that every transitive wheel is cryptographically locked. Byte-level output identity remains the executable contract. A later audit considered a complete transitive lock, but deferred it until a successful final Actions run can provide the actual resolved environment rather than guessing a dependency set that might itself change committed bytes.
+The first execution audit locally reconstructed the commit-fixed executable subset because normal network cloning was unavailable in the audit runtime. Under that reconstruction:
 
-The current E5 rho-sweep field formerly named `recognition_corr_increment` was corrected to `action_corr_increment`; the values and Figure 6 are unchanged. Locked historical schemas were not rewritten.
+- E1–E5 executed successfully;
+- all twelve current reproduction CSVs matched their committed identities, except for the intentional E5 current-schema correction already committed to `main`;
+- all seven committed SVGs regenerated byte-for-byte;
+- manifest and reproduction negative tests rejected deliberate corruption.
 
-### Pass 2 — validators, workflow, metadata, and false-PASS paths
+The current E5 rho-sweep field is `action_corr_increment`; its numerical series and Figure 6 are unchanged. Locked historical schemas were not rewritten.
 
-The second pass audited the auditing machinery itself. It corrected or strengthened the following:
+Current CI additionally locks all sixteen historical E1–E5 CSVs to their frozen v0.3 Git blob identities, validates manifest/card/theorem routing, rejects experiment side effects outside the declared current outputs, and rejects undeclared ignored/nonignored worktree artifacts.
 
-- processed-data validation rejects mutation of tracked repository content during E1–E5 execution and rejects undeclared generated files under `data/processed/`, including ignored files;
-- manifest validation enforces exact E1–E5 ID/order, `LOCK`, canonical locked/current file mappings, uniqueness, provenance separation, and exact `linked_theorems` routing;
-- the manifest validator also parses each card's exact `## Linked theory` section and checks theorem/corollary tokens plus routed Markdown sources, closing a false-PASS where the card could drift to a nonexistent theorem while the manifest stayed unchanged;
-- all 16 locked historical E1–E5 CSVs are now **content-locked** to their frozen v0.3 Git blob identities, checking both committed `HEAD` blobs and actual working-tree hashes; this catches both committed historical-data rewrites and dirty local rewrites;
-- E1–E5 scripts contain executable regression guards for the identities, nulls, sign/counterexample controls, predictive-alignment behavior, and branch-coherence contrasts described by their experiment cards;
-- the E3 inert recognition-label null evaluates identical trajectory/accessibility arrays through the general first-person weighted-value path while preserving the committed exact-zero result;
-- issue-template front matter is validated for GitHub chooser compatibility;
-- the repository structure validator explicitly requires core theory, split-license/configuration, consolidated/archive provenance, audit, experiment, figure, and validator sources;
-- [`supplementary/research_notes.md`](supplementary/research_notes.md) is explicitly retained and linked as a historical consolidated note rather than a current source of truth;
-- the math, link, and GFM source scanners share CommonMark's zero-to-three-space fence boundary;
-- relative Markdown targets that escape the repository root fail validation; linked-image outer targets and reference-style definitions are checked; because the repository has no current local fragment/query links and no GitHub-slug validator, local `#fragment`/`?query` targets are rejected rather than silently validating only their file component;
-- all repository Markdown is submitted to GitHub's GFM REST renderer in CI and checked for heading/table/inline-image preservation;
-- SVG validation rejects DTD/entities, active/animation elements, event handlers, non-fragment hrefs, active/external CSS references, malformed/non-finite numeric attributes, and backgrounds that fail to cover the full viewBox;
-- the exact generated figure contract is seven public SVGs plus six manuscript PDF figures; Figure 7 is intentionally repository-review-only and is not a manuscript PDF figure;
-- LaTeX preflight resolves compiled references only within the graph reachable from `paper/main.tex`;
-- `paper/sections/robust_mom_summary.tex` is explicitly locked as the sole intentionally uncompiled manuscript source, with `robust_mom_certificate_appendix.tex` providing the compiled robust-MoM treatment;
-- standalone canonical `theory/core_theorems.tex` is executable-locked to the frozen v0.3 theorem/proof/boundary body after exactly four approved normalizations: version-neutral title, setup base-integrability, T1 base-integrability, and T5 cross-integrability; any additional theorem/proof/boundary drift fails CI;
-- the theorem lock also requires the approved domain assumptions to remain explicit across the rendered theory pages, formal model, manuscript theorem section, and proof appendix;
-- `scripts/validate_runtime_contract.py` cross-checks `.python-version`, exact primary package pins/installed versions, runner choice, required workflow jobs/commands, manual dispatch, full-SHA Action pins, checkout credential isolation, theorem-lock invocation, and final worktree checks;
-- a real self-failure in that runtime validator was caught during review: its `python-version` / `runs-on` regexes initially lacked `re.MULTILINE`; the parser was corrected before treating the new contract as reliable;
-- citation metadata validation checks the narrow CFF 1.2.0 contract against the frozen STATUS snapshot, rejects unknown nested author content, and requires exact `YYYY-MM-DD` release-date syntax;
-- bibliography syntax/structure validation rejects unsupported text outside records, malformed/multiline field syntax, duplicate keys/fields/DOIs/eprints, placeholder values, and malformed DOI/arXiv identifiers;
-- bibliography record classes are explicit: journal `@article` records require journal/volume/pages/DOI, book-chapter `@incollection` records require booktitle/editor/publisher/pages/DOI, and arXiv-only `@misc` records retain a separate eprint/archive provenance contract;
-- the split-license validator classifies every tracked file into exactly one path-explicit license class, so an unclassified tracked file or overlapping class fails;
-- `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` are pinned to full Node-24/v7 commit SHAs and exact audited multiplicities;
-- checkout uses `persist-credentials: false` in both jobs; workflow permissions remain `contents: read`;
-- both `repository-validation` and `manuscript-build` run the runtime-contract validator;
-- `workflow_dispatch` allows a complete manual run from **Actions → validate → Run workflow** without a dummy commit;
-- the root README exposes the `main` validation badge;
-- open S2 review Issue #14 was synchronized from stale `$$` / `\operatorname{Cov}` syntax to fenced `math` / `\mathrm{Cov}` without altering scientific content;
-- a generic manuscript phrase `recognition-activated policy` was aligned to the repository's general `recognition-dependent policy` terminology; the separate evidence-threshold activation model remains intentionally named as such;
-- tracked diffs and nonignored untracked files anywhere in the repository-validation checkout are rejected;
-- ignored/untracked files are separately validated against an **exact workflow-derived allowlist**: the bytecode paths corresponding to the top-level Python files compiled by CI plus the exact six generated manuscript figure PDFs; arbitrary `*.pyc`, log, output, or other ignored artifacts fail;
-- ignored-artifact logic was negative-tested with stray bytecode/log artifacts and missing expected outputs;
-- locked historical blob checking was negative-tested in a temporary Git repository: a dirty edit changes the worktree blob identity and a committed edit changes the HEAD blob identity;
-- experiment-card theory routing was negative-tested at function level with a synthetic `T1 -> T99` mutation and an E5 route mutation.
+## Bibliography and prior-art state
 
-The newer Pass-2 validators were source-audited and wired into CI, but the literal network clone remains unavailable in this audit runtime. Therefore the first-pass local execution evidence does not automatically count as execution evidence for every later validator revision. The final GitHub Actions run remains required.
+The bibliography audit separates syntactic BibTeX validity from factual publication chronology. Where the same work has a clearly verified definitive journal/book publication, the current bibliography uses that publication rather than a later arXiv upload that could make prior art appear artificially recent. Earlier preprints remain when they are themselves the relevant historical record or when no definitive same-work publication was established.
 
-### Pass 3 — external bibliography and prior-art truth
+[`paper/bibliography_fact_lock.md`](paper/bibliography_fact_lock.md) records, for all current bibliography entries:
 
-The third pass separates **syntactically valid BibTeX** from **factually correct publication/provenance metadata**. Publisher, journal, author, and archival records were used to check whether later arXiv postings were obscuring earlier established publication chronology.
+- citation key;
+- record type;
+- year;
+- author;
+- title;
+- publication locator;
+- DOI or arXiv identifier;
+- provenance class.
 
-Corrections applied include:
+For journal records the locator fixes journal, volume/number, and pages/article number; for book chapters it fixes book title, editors, publisher, and pages. `scripts/validate_bibliography_metadata.py` requires exact agreement with that reviewed lock. This is a regression guard against later corruption of already-reviewed bibliography facts, not an automated proof of external bibliographic truth.
 
-- Greaves's deterministic-multiverse paper is represented by its 2004 journal publication rather than only the 2003 arXiv posting;
-- Sebens--Carroll is represented by the 2018 BJPS publication rather than only the 2014 preprint;
-- Saunders's branch-counting paper is represented by the 2021 *Proceedings of the Royal Society A* article rather than the later arXiv posting;
-- Hanson's observer-selection paper is represented by its 2003 *Foundations of Physics* publication rather than only the 2001 preprint;
-- Hult--Nyquist is represented by its 2016 *Stochastic Processes and their Applications* publication rather than only the 2012 preprint;
-- Conitzer's de se paper is represented by its 2015 *Synthese* publication rather than the later 2017 arXiv posting;
-- Price's decision chapter and Kent's critique are represented by their 2010 Oxford book chapters;
-- Garisto is represented by the 2020 *Physical Review Research* article;
-- Araújo is represented by the 2019 *Foundations of Physics* article;
-- Khawaja's current BJPS entry includes the verified page range 313--344;
-- Saunders's *Chance in the Everett Interpretation* is represented as the 2010 Oxford chapter, pp. 181--205, rather than the later arXiv upload;
-- Saunders's Routledge probability chapter is represented as a book chapter rather than an arXiv-only record.
+The three working prior-art ledgers are aligned with the current recognition boundary: recognition/information state can alter policy selection, but recognition is not described as a privileged physical causal variable.
 
-Earlier public preprints are still retained when they are themselves the relevant early prior-art record or when no definitive publication record was identified. Wallace's 2009 preprint remains distinct from the later revised-title book chapter; Tegmark's 1997 preprint remains the earlier public record despite a 1998 journal publication; Mallah, Armstrong, Price's 2006 comments, Cooper--Oesterheld--Conitzer, and Saunders's current physical-probability paper remain preprint/working-paper records where appropriate.
+## GitHub Actions validation contract
 
-The two same-title Saunders physical-probability deposits were disambiguated through author archival provenance: the 2026 record is the latest version and links the 2025 deposit as an earlier version, so the current `2601.12159` citation is retained.
+The workflow runs on push, pull request, and manual dispatch. Both jobs use Ubuntu 24.04 and Python 3.11.15. Reusable Actions are pinned to audited full commit SHAs, checkout credentials are not persisted, and workflow permissions remain read-only.
 
-A reviewed bibliography fact lock now records the current citation-key set, record class, year, canonical DOI/arXiv identifier, and provenance class. The bibliography validator requires exact agreement with that lock so a later syntactically valid edit cannot silently reverse an already-reviewed chronology correction. The lock is a regression guard, not an automated proof of external bibliographic truth.
+`repository-validation` currently checks, in enforced relative order where order matters:
 
-This pass also found semantic drift in all three `literature/` prior-art ledgers: older text described recognition as a **causal variable/policy input**. Those ledgers are now aligned with the authoritative project boundary: recognition/information state can change which policy is selected, but recognition is not assigned privileged physical causal power merely by being upstream in the model.
+- runtime/workflow contract;
+- Python compilation;
+- Markdown math and repository structure;
+- frozen T1–T5 canonical theorem/body/domain lock;
+- supplementary theorem/domain consistency;
+- citation and bibliography fact-lock metadata;
+- split licensing and live frozen snapshot refs;
+- issue templates, experiment cards, and manifest/provenance routing;
+- repository-relative links and GitHub GFM structural rendering;
+- E1–E5 scientific invariants and byte-identical current reproduction outputs;
+- frozen historical data identities;
+- deterministic figure regeneration, exact figure set, and SVG safety;
+- final tracked and untracked/ignored worktree cleanliness.
 
-These bibliography and literature corrections themselves affect provenance, chronology, and novelty framing. They do **not** alter theorem identities, S2-family theorem statements, experiment values, or the Everett-bridge status.
+`manuscript-build` independently validates the runtime contract, generates PDF figures, preflights the reachable LaTeX/citation/reference graph, installs the TeX toolchain, compiles `paper/main.pdf`, verifies it, and uploads the PDF artifact.
 
-### Pass 4 — theorem-domain consistency
+## What is still unverified
 
-A later cross-file comparison found that current canonical theorem sources had already gained necessary integrability corrections while the validator audit/status language still described the canonical TeX as title-only drift and the manuscript theorem/proof surfaces still used the older implicit-domain wording.
+**The latest final `main` GitHub Actions result is not yet recorded as PASS.** The connected GitHub interface available in this audit does not expose direct-push Actions check-run state, and the combined commit-status endpoint returning no statuses is not evidence of success. Because this audit is still committing fixes, prior runs may also be cancelled by workflow concurrency; only the final settled commit matters.
 
-The correction is now explicit and synchronized:
+Source-level GFM/SVG/math validators also do not replace direct browser inspection. The actual GitHub UI still needs representative desktop/mobile review for:
 
-- T1 requires both `E[|X|] < ∞` and `E[|X|S] < ∞` with `0 < E[S] < ∞`;
-- T4 requires, for each recognition state, finite base utility expectation and finite accessibility-weighted utility expectation;
-- general T5 additionally requires `E[|U_1|S_0] < ∞` because the proof introduces `Q(U_1,S_0)`;
-- the frozen v0.3 tag remains unchanged;
-- current theory Markdown, standalone canonical TeX, formal model, manuscript theorem section, and manuscript proof appendix now state the same domain corrections;
-- `validate_core_theorem_lock.py` requires those domain assumptions across six public/manuscript surfaces while still proving that, after exactly four approved normalizations, the canonical standalone TeX reduces to the frozen v0.3 blob.
-
-The identities, proof algebra, FOSD/sign conclusions, support/extinction boundaries, and Everett bridge statement are unchanged by this domain correction.
-
-## Workflow state
-
-The current workflow is configured to run on push, pull request, and manual dispatch.
-
-`repository-validation` covers runtime/workflow consistency, Python compilation, Markdown math, repository structure, the canonical T1–T5 theorem-body/domain lock, citation/bibliography fact-lock/license/snapshot/issue-template checks, manifest/card/provenance validation, links, GitHub GFM conversion, E1–E5 scientific invariants, current reproduction identity, frozen historical CSV blob identity, data-tree cleanliness, figure generation, exact SVG/PDF figure-set validation, static SVG validation, committed SVG/Figure-2 data reproducibility, full tracked-tree cleanliness, rejection of nonignored untracked artifacts, and exact allowlisting/rejection of ignored untracked artifacts.
-
-`manuscript-build` independently validates the runtime contract, generates manuscript PDF figures, preflights the compiled LaTeX graph and citation/reference relationships, installs the TeX toolchain, builds `paper/main.pdf`, verifies it, and uploads it as an artifact.
-
-**The latest final `main` Actions result is still not recorded as PASS.** The connected GitHub interface available during this audit does not expose direct-push Actions check-run state through its commit-run lookup; combined commit status remains empty and is not a substitute for Actions state. The workflow badge/manual Actions UI must therefore establish the final execution gate.
-
-## Browser/rendering state
-
-Source-level Markdown/GFM/SVG checks are substantially hardened, but they do not prove browser-side rendering. Direct GitHub UI inspection is still required for:
-
-- MathJax output;
-- Mermaid diagrams;
+- MathJax;
+- Mermaid;
 - SVG sizing/readability;
-- Markdown tables/navigation;
-- desktop/mobile layout.
+- tables and navigation;
+- overall mobile/desktop layout.
 
-The repository is therefore **not yet marked ready for broad announcement**.
+Accordingly, the repository is **not yet certified ready for broad announcement**.
 
-## Governance and metadata observations
+## Governance / presentation items
 
-The GitHub branch API currently reports `main` as `protected: false`; classic branch protection is not enabled. The audit runtime cannot write repository rules/settings, so no branch/tag ruleset was created. After final CI stabilizes, a public-source-of-truth protection policy should be configured deliberately.
+The current public-source-of-truth branch should receive an appropriate branch/ruleset policy after CI stabilizes. A tag ruleset is optional if platform-level deletion/update protection is desired for frozen review tags.
 
-The repository header description still uses the phrase **“recognition-activated Quantum Bogosort”** and the repository currently has no topics. The source/manuscript terminology is now recognition-dependent except where explicit evidence-threshold activation is the modeled mechanism. Repository-header metadata could not be changed through the available connector and remains a presentation cleanup item.
+Repository-header description/topics are presentation metadata and remain separate from the scientific/source audit. They may be normalized before broad promotion, but are not a substitute for the Actions and browser gates.
 
-A preferable description would be:
-
-> Formal theory and reproducible simulations of recognition-dependent policies, observer-indexed accessibility, first-person conditioning, and cross-copy coherence.
-
-Potential topics include `decision-theory`, `quantum-foundations`, `self-locating-uncertainty`, `observer-selection`, and `reproducible-research`.
-
-## Current release gates
+## Release gates
 
 Before broad announcement:
 
-1. confirm the final `main` `validate` workflow is green for both `repository-validation` and `manuscript-build`;
-2. inspect representative GitHub pages directly in desktop/mobile browser UI;
-3. decide and apply an appropriate `main` branch ruleset/protection policy after CI stabilizes;
-4. optionally add a tag ruleset if platform-level update/deletion protection is desired for frozen release tags;
-5. normalize repository-header description/topics or explicitly defer that metadata cleanup;
-6. continue external proof/prior-art/Everett-bridge review as scientific/public-review work rather than repository QA.
+1. stop source-changing audit commits long enough for the final `main` `validate` workflow to finish;
+2. confirm both `repository-validation` and `manuscript-build` are green for that exact final commit;
+3. inspect representative GitHub pages directly in the real browser UI on desktop and mobile;
+4. configure the desired `main` branch/ruleset policy after CI is stable;
+5. optionally normalize repository-header description/topics and add a tag ruleset;
+6. continue external proof/prior-art/Everett-bridge review as scientific review, not as a substitute for repository QA.
+
+No S2.14 or sixth core experiment is added by default. New mathematical machinery should respond to a concrete modeling gap or review finding.

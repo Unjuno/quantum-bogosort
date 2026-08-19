@@ -3,6 +3,7 @@ name: validate
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -16,8 +17,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.11.15'
       - name: Install pinned Python dependencies
@@ -28,6 +29,8 @@ jobs:
         run: python scripts/validate_markdown_math.py
       - name: Validate research repository structure
         run: python scripts/validate_repository_structure.py
+      - name: Validate GitHub issue-template front matter
+        run: python scripts/validate_issue_templates.py
       - name: Validate experiment manifest
         run: python scripts/validate_manifest.py
       - name: Validate repository-relative Markdown links
@@ -76,8 +79,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.11.15'
       - name: Install pinned Python dependencies
@@ -108,7 +111,7 @@ jobs:
         run: latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
       - name: Verify manuscript PDF
         run: test -s paper/main.pdf
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: qbs-manuscript-pdf
           path: paper/main.pdf

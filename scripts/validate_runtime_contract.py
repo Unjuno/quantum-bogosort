@@ -55,6 +55,7 @@ REQUIRED_REPOSITORY_COMMANDS = [
     "python scripts/validate_citation_metadata.py",
     "python scripts/validate_bibliography_metadata.py",
     "python scripts/validate_license_map.py",
+    "python scripts/validate_snapshot_refs.py",
     "python scripts/validate_issue_templates.py",
     "python scripts/validate_manifest.py",
     "python scripts/validate_markdown_links.py",
@@ -229,8 +230,12 @@ def main() -> None:
     require_snippets("repository-validation", repository_job, REQUIRED_REPOSITORY_COMMANDS, errors)
     require_snippets("manuscript-build", manuscript_job, REQUIRED_MANUSCRIPT_COMMANDS, errors)
 
-    if "GITHUB_TOKEN: ${{ github.token }}" not in repository_job:
-        errors.append("repository-validation: GFM renderer must receive the scoped github.token")
+    token_binding = "GITHUB_TOKEN: ${{ github.token }}"
+    if repository_job.count(token_binding) != 2:
+        errors.append(
+            "repository-validation must bind the scoped github.token exactly twice "
+            "(snapshot refs and GFM renderer)"
+        )
 
     if repository_job.count("actions/checkout@") != 1 or repository_job.count("actions/setup-python@") != 1:
         errors.append("repository-validation must contain exactly one checkout and one setup-python action")

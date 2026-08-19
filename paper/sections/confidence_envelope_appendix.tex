@@ -15,11 +15,15 @@ L_S\le\mathbb E[S]\le U_S,
 \qquad
 \mathbb E[(U-Y)^2]\le U_M.
 \]
-Define
+Define the nonnegative effective bounds
 \[
-L_S^+=\max\{0,L_S\}
+L_S^+=\max\{0,L_S\},
+\qquad
+U_M^+=\max\{0,U_M\}.
 \]
-and
+On the simultaneous confidence event the MSE inequality implies $U_M\ge0$, so $U_M^+=U_M$ there; the clipping only keeps the reported statistic real-valued on samples outside the validity event.
+
+Define
 \[
 P_U
 =
@@ -35,7 +39,7 @@ and define
 \[
 D_{\mathrm{env}}
 =
-C_L-\sqrt{U_MV_U}.
+C_L-\sqrt{U_M^+V_U}.
 \]
 
 \begin{corollary}[Generic confidence-envelope certificate]
@@ -97,15 +101,15 @@ Furthermore,
 U_{S^2}-(L_S^+)^2
 \le V_U,
 \]
-where the outer maximum only enforces a nonnegative reported envelope outside the simultaneous-validity event. Also
+where the outer maximum only enforces a nonnegative reported envelope outside the simultaneous-validity event. Also, on that event,
 \[
-\mathbb E[(U-Y)^2]\le U_M.
+\mathbb E[(U-Y)^2]\le U_M=U_M^+.
 \]
 S2.4 therefore gives
 \[
 \operatorname{Cov}(U,S)
 \ge
-C_L-\sqrt{U_MV_U}
+C_L-\sqrt{U_M^+V_U}
 =D_{\mathrm{env}}.
 \]
 The coverage statement follows from the assumed probability of the simultaneous event. If $D_{\mathrm{env}}>0$, then T1 and $\mathbb E[S]\le U_S$ give

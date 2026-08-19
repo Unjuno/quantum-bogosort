@@ -118,7 +118,7 @@ def fig6_branch_coherence():
     d = pd.read_csv(DATA / "e5_rho_paired_reproduction.csv")
     x = d["rho_env"]
     fig, ax = plt.subplots(figsize=(7.0, 4.3))
-    ax.plot(x, d["recognition_corr_increment"], marker="o",
+    ax.plot(x, d["action_corr_increment"], marker="o",
             label="Action-correlation increment")
     ax.plot(x, d["total_FP_gain"], marker="o", label="Total FP gain")
     ax.set_xlabel("Shared environmental correlation")

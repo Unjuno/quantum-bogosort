@@ -37,7 +37,7 @@ The compact canonical `theory/core_theorems.tex` differs from frozen v0.3 in exa
 3. the complete generic T1 domain `S >= 0`, `0 < E[S] < infinity`, `E[|X|] < infinity`, and `E[|X|S] < infinity`;
 4. T5 cross-integrability `E[|U_1|S_0] < infinity`, required because the proof introduces `Q(U_1,S_0)`.
 
-`scripts/validate_core_theorem_lock.py` normalizes exactly those four changes and then requires byte identity with the frozen v0.3 canonical TeX blob `82986d7197e79446d6574aab538d1edaeff47eb6`. It also requires the same T1/T4/T5 domain assumptions across nine theory, experiment-card, and manuscript surfaces.
+`scripts/validate_core_theorem_lock.py` normalizes exactly those four changes and then requires byte identity with the frozen v0.3 canonical TeX blob `82986d7197e79446d6574aab538d1edaeff47eb6`. It also requires the same T1/T4/T5 domain assumptions across nine theory, experiment-card, and manuscript surfaces. Those nine audited surfaces are now themselves HEAD/worktree Git-blob locked, so a later edit cannot satisfy the domain check only through a comment or literal-code decoy without an explicit scientific-review contract update.
 
 ### Supplementary-domain corrections
 
@@ -51,7 +51,7 @@ The deeper mathematical audit also corrected several boundary/domain defects wit
 - **binary soft-QBS:** `p`, `lambda`, `q`, and `alpha` domains are explicit and the zero-normalization corner `(p,lambda)=(0,0)` is excluded;
 - **Gaussian toy:** `rho`, `lambda`, `q`, and `alpha` domains are explicit and positive normalization/denominator is guaranteed.
 
-`scripts/validate_supplementary_consistency.py` locks these corrections across the relevant supplementary, manuscript, and theorem-audit surfaces.
+`scripts/validate_supplementary_consistency.py` locks these corrections across the relevant supplementary, manuscript, and theorem-audit surfaces. The fourteen audited consistency surfaces are now also HEAD/worktree Git-blob locked before semantic snippet checks, closing the same comment/literal-code false-PASS class for the supplementary boundary line.
 
 The main S1, S2/S2.3/S2.4, S2.5–S2.7, and S2.11–S2.13 arguments were rechecked for the same class of domain/sign/coverage failure and no additional correction was identified in that pass.
 
@@ -77,10 +77,15 @@ The current E5 rho-sweep field is `action_corr_increment`; its numerical series 
 The continued validator audit now also enforces several repository-surface invariants that were previously only implicit:
 
 - experiment-card CSV and `Linked theory` routing is parsed from the fence-filtered rendered Markdown surface rather than raw source, closing a fenced-code decoy route;
-- experiment cards use an ATX-only H1/H2 schema, so Setext/raw-HTML H1/H2 forms cannot add visible headings outside the card parser;
+- experiment cards use an ATX-only H1/H2 schema, including rejection of multiline/raw-HTML H1/H2 tag forms, so visible non-ATX headings cannot sit outside the card parser;
 - raw HTML `<a>`/`<img>` routes are rejected by the repository-link contract rather than bypassing Markdown link validation;
 - tracked symlinks are rejected repository-wide, and required files, current reproduction CSVs, and generated figure outputs must be nonsymlink regular files;
-- public SVG and manuscript PDF Figures 2–6 obtain their numerical series from shared `figures/figure_data.py`; the figure-set validator uses AST checks to require both renderers to call the corresponding shared data function.
+- public SVG and manuscript PDF Figures 2–6 obtain their numerical series from shared `figures/figure_data.py`;
+- the Fig2–6 refactor was independently recalculated against the current CSVs and preserves the pre-refactor x arrays, labels, ordering, values, and relevant NumPy/pandas scalar/array types;
+- the figure-data module and both SVG/PDF renderer sources are fixed to audited Git blobs in addition to the AST shared-function checks, so a dead-code `shared_call()` cannot by itself satisfy the figure contract after an accidental renderer drift;
+- the complete validation workflow is fixed to its audited Git blob before its human-readable runtime/order/security checks, closing the possibility that a required command survives only as a YAML/shell comment;
+- issue-template front matter is restricted to the repository's supported one-line YAML scalar subset, rejecting malformed quoted scalars that the previous nonempty-string parser could accept;
+- `CITATION.cff` and `STATUS.md` are fixed to their audited snapshot-metadata blobs before the narrow CFF/ledger checks, so malformed YAML/source drift cannot be hidden by successful string extraction.
 
 Current CI additionally locks all sixteen historical E1–E5 CSVs to their frozen v0.3 Git blob identities, validates manifest/card/theorem routing, rejects experiment side effects outside the declared current outputs, and rejects undeclared ignored/nonignored worktree artifacts.
 
@@ -105,22 +110,22 @@ The three working prior-art ledgers are aligned with the current recognition bou
 
 ## GitHub Actions validation contract
 
-The workflow runs on push, pull request, and manual dispatch. Both jobs use Ubuntu 24.04 and Python 3.11.15. Reusable Actions are pinned to audited full commit SHAs, checkout credentials are not persisted, and workflow permissions remain read-only.
+The workflow runs on push, pull request, and manual dispatch. Both jobs use Ubuntu 24.04 and Python 3.11.15. Reusable Actions are pinned to audited full commit SHAs, checkout credentials are not persisted, and workflow permissions remain read-only. `scripts/validate_runtime_contract.py` additionally fixes the complete audited workflow source to its current Git blob, so command-presence/order checks cannot be satisfied by commented/dead copies unless the workflow contract is explicitly reviewed and updated.
 
 `repository-validation` currently checks, in enforced relative order where order matters:
 
 - runtime/workflow contract;
 - Python compilation;
 - Markdown math and repository structure;
-- frozen T1–T5 canonical theorem/body/domain lock;
-- supplementary theorem/domain consistency;
-- citation and bibliography fact-lock metadata;
+- frozen T1–T5 canonical theorem/body/domain lock plus audited cross-surface blob identities;
+- supplementary theorem/domain consistency plus audited cross-surface blob identities;
+- citation/snapshot metadata blobs and bibliography fact-lock metadata;
 - split licensing, repository-wide nonsymlink classification, and live frozen snapshot refs;
 - issue templates, rendered-surface experiment cards, and manifest/provenance/theory routing;
 - repository-relative links and GitHub GFM structural rendering;
 - E1–E5 scientific invariants and byte-identical current reproduction outputs;
 - frozen historical data identities;
-- deterministic figure regeneration, shared SVG/PDF numerical-data contract, exact nonsymlink figure sets, and SVG safety;
+- deterministic figure regeneration, shared SVG/PDF numerical-data contract, audited figure-source blobs, exact nonsymlink figure sets, and SVG safety;
 - final tracked and untracked/ignored worktree cleanliness.
 
 `manuscript-build` independently validates the runtime contract, generates PDF figures, preflights the reachable LaTeX/citation/reference graph, installs the TeX toolchain, compiles `paper/main.pdf`, verifies it, and uploads the PDF artifact.
@@ -128,6 +133,8 @@ The workflow runs on push, pull request, and manual dispatch. Both jobs use Ubun
 ## What is still unverified
 
 **The latest final `main` GitHub Actions result is not yet recorded as PASS.** The connected GitHub interface available in this audit does not expose direct-push Actions check-run state, and the combined commit-status endpoint returning no statuses is not evidence of success. Because this audit is still committing fixes, prior runs may also be cancelled by workflow concurrency; only the final settled commit matters.
+
+The shared figure-data refactor has been checked at the numerical-object level in this audit, but the final pinned-environment Actions regeneration remains the authoritative post-refactor byte check for all seven committed SVGs and the deterministic Figure 2 CSV.
 
 Source-level GFM/SVG/math validators also do not replace direct browser inspection. The actual GitHub UI still needs representative desktop/mobile review for:
 

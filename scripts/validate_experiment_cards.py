@@ -64,7 +64,7 @@ CSV_RE = re.compile(r"data/processed/([A-Za-z0-9_.-]+\.csv)")
 FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
 SETEXT_UNDERLINE_RE = re.compile(r"^ {0,3}(?:=+|-+)[ \t]*$")
-RAW_HTML_H1_H2_RE = re.compile(r"<\s*/?\s*h[12](?:\s|>)", re.IGNORECASE)
+RAW_HTML_H1_H2_RE = re.compile(r"<\s*/?\s*h[12]\b", re.IGNORECASE)
 
 
 def split_files(value: str) -> list[str]:

@@ -1,5 +1,8 @@
-"""Validate the repository's file-type split licensing declarations."""
+"""Validate the repository's path-explicit split licensing contract."""
+from __future__ import annotations
+
 from pathlib import Path
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 ROOT_LICENSE = ROOT / "LICENSE"
@@ -10,11 +13,56 @@ README = ROOT / "README.md"
 CITATION = ROOT / "CITATION.cff"
 
 REQUIRED_FILES = [ROOT_LICENSE, MAP, CC_BY, CC0, README, CITATION]
+LICENSE_NOTICE_PATHS = {
+    "LICENSE",
+    "LICENSES/CC-BY-4.0.txt",
+    "LICENSES/CC0-1.0.txt",
+}
+MIT_EXACT_PATHS = {
+    "requirements.txt",
+    ".python-version",
+    ".gitignore",
+}
+CC_BY_EXACT_PATHS = {
+    "CITATION.cff",
+    "experiments/manifest.csv",
+}
 
 
 def require(path: Path, text: str, needle: str, errors: list[str]) -> None:
     if needle not in text:
         errors.append(f"{path.relative_to(ROOT)}: missing licensing contract text {needle!r}")
+
+
+def tracked_files() -> set[str]:
+    result = subprocess.run(
+        ["git", "ls-files", "-z"],
+        cwd=ROOT,
+        check=True,
+        stdout=subprocess.PIPE,
+    )
+    return {raw.decode("utf-8") for raw in result.stdout.split(b"\0") if raw}
+
+
+def categories(path: str) -> set[str]:
+    if path in LICENSE_NOTICE_PATHS:
+        return {"license-notice"}
+
+    matched: set[str] = set()
+    suffix = Path(path).suffix.lower()
+
+    if suffix == ".py" or path in MIT_EXACT_PATHS or (
+        path.startswith(".github/workflows/") and suffix in {".yml", ".yaml"}
+    ):
+        matched.add("MIT")
+
+    if path.startswith("data/processed/") and suffix == ".csv":
+        matched.add("CC0-1.0")
+
+    if suffix in {".md", ".tex", ".bib", ".svg"} or path in CC_BY_EXACT_PATHS:
+        matched.add("CC-BY-4.0")
+
+    return matched
 
 
 def main() -> None:
@@ -29,28 +77,34 @@ def main() -> None:
     require(
         ROOT_LICENSE,
         root_license,
-        "This MIT License applies to the repository's Python source code and software support files only.",
+        "This MIT License applies only to the repository's executable/software-support layer",
         errors,
     )
-    require(ROOT_LICENSE, root_license, "LICENSES/README.md", errors)
-    for standard_fragment in (
+    for fragment in (
+        "all Python source files",
+        "GitHub Actions workflow files under `.github/workflows/`",
+        "`requirements.txt`, `.python-version`, and `.gitignore`",
+        "LICENSES/README.md",
         "MIT License",
         "Permission is hereby granted, free of charge",
         'copies or substantial portions of the "Software"',
         'THE SOFTWARE IS PROVIDED "AS IS"',
     ):
-        require(ROOT_LICENSE, root_license, standard_fragment, errors)
+        require(ROOT_LICENSE, root_license, fragment, errors)
 
     license_map = MAP.read_text(encoding="utf-8")
-    require(MAP, license_map, "This repository uses file-type split licensing.", errors)
-    require(MAP, license_map, "Python source code and software support files: **MIT License**", errors)
-    require(
-        MAP,
-        license_map,
-        "Manuscript text, theoretical notes, Markdown/LaTeX documentation, and figures: **CC BY 4.0**",
-        errors,
-    )
-    require(MAP, license_map, "Generated research CSV datasets: **CC0 1.0 Universal**", errors)
+    for fragment in (
+        "This repository uses path-explicit split licensing.",
+        "all Python source files (`**/*.py`)",
+        "GitHub Actions workflow files under `.github/workflows/`",
+        "`CITATION.cff`",
+        "`experiments/manifest.csv`",
+        "every committed generated/locked research CSV under `data/processed/`",
+        "No CSV outside `data/processed/` is assigned to CC0 by this rule.",
+        "cover every other tracked repository file exactly once",
+        "scripts/validate_license_map.py",
+    ):
+        require(MAP, license_map, fragment, errors)
 
     cc_by = CC_BY.read_text(encoding="utf-8")
     require(CC_BY, cc_by, "SPDX identifier: CC-BY-4.0", errors)
@@ -91,12 +145,26 @@ def main() -> None:
     ):
         require(CITATION, citation, fragment, errors)
 
+    tracked = tracked_files()
+    classified_counts = {"MIT": 0, "CC-BY-4.0": 0, "CC0-1.0": 0, "license-notice": 0}
+    for path in sorted(tracked):
+        matched = categories(path)
+        if not matched:
+            errors.append(f"unclassified tracked file: {path}")
+            continue
+        if len(matched) != 1:
+            errors.append(f"tracked file matches multiple license classes {sorted(matched)!r}: {path}")
+            continue
+        classified_counts[next(iter(matched))] += 1
+
     if errors:
         raise SystemExit("License-map validation failed:\n" + "\n".join(errors))
 
     print(
-        "License-map validation passed: root MIT scope, split-license map, Creative Commons "
-        "notices, README hosting-layer boundary, and CFF summary are mutually consistent."
+        "License-map validation passed: every tracked file maps to exactly one path-explicit "
+        f"class ({classified_counts['MIT']} MIT, {classified_counts['CC-BY-4.0']} CC BY 4.0, "
+        f"{classified_counts['CC0-1.0']} CC0, {classified_counts['license-notice']} license/notice); "
+        "root notices, README boundary, and CFF summary remain consistent."
     )
 
 

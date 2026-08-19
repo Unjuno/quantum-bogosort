@@ -239,12 +239,13 @@ The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged in 
 The current `main` validation state is visible in the badge at the top of this README. GitHub Actions checks:
 
 - Python/runtime and workflow-security consistency under the pinned Python and primary numerical-package contract;
-- required repository structure, including core theory, consolidated/archival provenance, licensing/configuration, and validator sources;
-- frozen citation metadata, bibliography identifier structure, and split-license declaration consistency;
+- required repository structure, including the complete declared Markdown inventory, core theory, consolidated/archival provenance, licensing/configuration, and validator sources;
+- frozen citation metadata, printable bibliography identifiers, and split-license declaration consistency;
+- live frozen-snapshot tag targets and matching GitHub Releases against the recorded v0.3/v0.2 commit identities;
 - GitHub issue-template chooser front matter;
 - repository-wide fenced Markdown math syntax and structural TeX balance;
 - repository-relative Markdown links, including rejection of relative targets that escape the repository root;
-- GFM structure conversion of every Markdown file through GitHub's Markdown API, with heading/table/image/fenced-block preservation checks;
+- GFM structure conversion of every Markdown file through GitHub's Markdown API, with heading/table/inline-image and ordinary fenced-code preservation checks;
 - E1–E5 scientific regression invariants;
 - manifest ID/order/LOCK/provenance validation and byte-for-byte verification of all manifest-declared current reproduction CSVs;
 - post-experiment cleanliness of tracked repository content plus rejection of undeclared files under `data/processed/`, including ignored files;
@@ -252,9 +253,9 @@ The current `main` validation state is visible in the badge at the top of this R
 - final tracked-worktree and nonignored-untracked cleanliness after repository validation;
 - manuscript compiled-input-graph, bibliography/citation/reference, environment, and generated-graphic preflight, followed by LaTeX build and PDF verification.
 
-The workflow runs on push and pull request and can also be repeated manually from **Actions → validate → Run workflow**. Reusable GitHub Actions are pinned to full commit SHAs rather than mutable major-version tags, checkout credentials are not persisted into later shell steps, and the workflow token is limited to `contents: read`.
+The workflow runs on push and pull request and can also be repeated manually from **Actions → validate → Run workflow**. Reusable GitHub Actions are pinned to audited full commit SHAs rather than mutable major-version tags, checkout credentials are not persisted into later shell steps, and the workflow token is limited to `contents: read`.
 
-The GitHub API GFM check is a structural parser check; direct browser inspection remains the release gate for MathJax, Mermaid, SVG sizing, and page layout.
+The GitHub API GFM check is a structural parser check. It does not treat `math` or `mermaid` source fences as ordinary `<pre>` blocks; direct browser inspection remains the release gate for MathJax, Mermaid, SVG sizing, and page layout.
 
 ## License
 
@@ -264,7 +265,7 @@ This repository uses file-type split licensing:
 - theory, documentation, manuscript text, and figures: **CC BY 4.0** — [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt);
 - generated research datasets: **CC0 1.0** — [`LICENSES/CC0-1.0.txt`](LICENSES/CC0-1.0.txt).
 
-See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. Because the root `LICENSE` now carries an explicit scope notice in addition to the standard MIT text, GitHub currently classifies the repository-level license as **Other / NOASSERTION**. That repository-level classifier does not override the file-type licensing map.
+See [`LICENSES/README.md`](LICENSES/README.md) for the authoritative licensing map. GitHub's repository-level single-license classifier is a hosting-layer summary and is not authoritative for this split-licensed repository; the scoped root `LICENSE` and [`LICENSES/README.md`](LICENSES/README.md) define which license applies to each file class.
 
 ## Citation
 

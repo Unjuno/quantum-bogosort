@@ -11,11 +11,16 @@ silently reappearing:
   Chebyshev step;
 * recognition time: the confidence process must be typed as adapted/measurable, the
   continuous-time hitting statement must carry path/measurability hypotheses, and the FP
-  stopping-rule value must satisfy the full T1 base/weighted integrability domain.
+  stopping-rule value must satisfy the full T1 base/weighted integrability domain;
+* repeated filtering: the derivative identity must retain its dominated-differentiation
+  and weighted-moment regularity conditions;
+* binary/Gaussian toys: accessibility/execution parameters must remain in their stated
+  nonnegative domains and the binary model must exclude zero total accessibility.
 
 The S2.8--S2.10 corrections must be present in the canonical supplementary note, compiled
-manuscript appendix, and corresponding theorem-audit record. The recognition-time note is
-repository-only and is locked directly at its canonical source.
+manuscript appendix, and corresponding theorem-audit record. Repository-only notes are
+locked directly at their canonical source; repeated-filter and Gaussian conditions are also
+required on the manuscript derivation surface.
 """
 from __future__ import annotations
 
@@ -83,6 +88,40 @@ REQUIRED_SNIPPETS: dict[Path, tuple[str, ...]] = {
         r"E[|U_{\tau}|]<\infty",
         r"E[|U_{\tau}|S_{\tau}]<\infty",
     ),
+    ROOT / "supplementary/repeated_filtering.md": (
+        r"0<\lambda\le1",
+        "open positive neighborhood",
+        r"E[|U|N_B\lambda^{N_B}]",
+        r"E[N_B\lambda^{N_B}]",
+        "left derivative",
+    ),
+    ROOT / "supplementary/binary_soft_qbs.md": (
+        r"0\le p\le1",
+        r"0\le\lambda\le1",
+        r"p+(1-p)\lambda>0",
+        r"(p,\lambda)=(0,0)",
+        r"0\le q\le1",
+        r"0\le\alpha\le1",
+    ),
+    ROOT / "supplementary/gaussian_model.md": (
+        r"-1\le\rho\le1",
+        r"0\le\lambda\le1",
+        r"0\le q\le1",
+        r"0\le\alpha\le1",
+        "denominator strictly positive",
+    ),
+    ROOT / "paper/sections/appendix.tex": (
+        r"0<\lambda\le1",
+        "open positive neighborhood",
+        r"\mathbb E[|U|N_B\lambda^{N_B}]",
+        r"\mathbb E[N_B\lambda^{N_B}]",
+        "left derivative",
+        r"-1\le\rho\le1",
+        r"0\le\lambda\le1",
+        r"0\le q\le1",
+        r"0\le\alpha\le1",
+        "denominator is strictly positive",
+    ),
 }
 
 # Guard the mathematical relationships, not only prose markers.
@@ -101,6 +140,11 @@ PAIRWISE_FORMULAS: tuple[tuple[Path, Path, tuple[str, ...]], ...] = (
         ROOT / "supplementary/robust_mom_certificate.md",
         ROOT / "paper/sections/robust_mom_certificate_appendix.tex",
         (r"\mathrm{Var}(Z_j)=0",),
+    ),
+    (
+        ROOT / "supplementary/gaussian_model.md",
+        ROOT / "paper/sections/appendix.tex",
+        (r"-1\le\rho\le1", r"0\le\lambda\le1", r"0\le q\le1", r"0\le\alpha\le1"),
     ),
 )
 
@@ -139,10 +183,9 @@ def main() -> None:
         )
 
     print(
-        "Supplementary consistency validation passed: S2.8 off-event totality, "
-        "S2.9 nonnegative concentration-parameter domain, S2.10 zero-variance boundary, "
-        "and recognition-time measurability/FP-admissibility remain locked across "
-        f"{len(REQUIRED_SNIPPETS)} audited surfaces."
+        "Supplementary consistency validation passed: audited S2.8--S2.10, recognition-time, "
+        "repeated-filter, and binary/Gaussian domain/totality boundaries remain locked across "
+        f"{len(REQUIRED_SNIPPETS)} source/manuscript/audit surfaces."
     )
 
 

@@ -5,7 +5,8 @@ from urllib.parse import unquote
 ROOT = Path(__file__).resolve().parents[1]
 
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
-FENCE_RE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
+FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
+CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
 INLINE_CODE_RE = re.compile(r"(`+)(.*?)\1")
 EXTERNAL_PREFIXES = (
     "http://",
@@ -41,40 +42,47 @@ def is_external_or_anchor(target: str) -> bool:
     )
 
 
-def normalize_repo_relative(markdown_file: Path, target: str) -> tuple[Path, str]:
+def normalize_repo_relative(markdown_file: Path, target: str) -> tuple[Path, str | None]:
     path_part = target.split("#", 1)[0].split("?", 1)[0]
     resolved = (markdown_file.parent / path_part).resolve()
     try:
         relative = resolved.relative_to(ROOT).as_posix()
     except ValueError:
-        return resolved, ""
+        return resolved, None
     return resolved, relative
+
+
+def closes_fence(line: str, marker: str) -> bool:
+    match = CLOSING_FENCE_RE.match(line)
+    if not match:
+        return False
+    candidate = match.group(1)
+    return candidate[0] == marker[0] and len(candidate) >= len(marker)
 
 
 def rendered_prose(text: str) -> str:
     """Return Markdown prose with fenced and inline code removed.
 
     Link-like examples inside literal code must not be treated as repository links.
+    CommonMark fenced blocks may be indented by at most three spaces.
     """
     output: list[str] = []
     fence_marker: str | None = None
 
     for line in text.splitlines():
-        stripped = line.strip()
         if fence_marker is not None:
-            if (
-                stripped
-                and stripped[0] == fence_marker[0]
-                and set(stripped) == {fence_marker[0]}
-                and len(stripped) >= len(fence_marker)
-            ):
+            if closes_fence(line, fence_marker):
                 fence_marker = None
             continue
 
         match = FENCE_RE.match(line)
         if match:
-            fence_marker = match.group(1)
-            continue
+            marker = match.group(1)
+            info = match.group(2)
+            # A backtick fence opener cannot contain another backtick in its info string.
+            if marker[0] != "`" or "`" not in info:
+                fence_marker = marker
+                continue
 
         output.append(INLINE_CODE_RE.sub("", line))
 
@@ -94,15 +102,16 @@ for markdown_file in sorted(ROOT.rglob("*.md")):
         if is_external_or_anchor(target):
             continue
 
+        source = markdown_file.relative_to(ROOT).as_posix()
         resolved, relative = normalize_repo_relative(markdown_file, target)
-        if not relative:
+        if relative is None:
+            missing.append(f"{source}: relative target escapes repository root: {target}")
             continue
         if relative in ALLOWED_GENERATED:
             continue
 
         checked += 1
         if not resolved.exists():
-            source = markdown_file.relative_to(ROOT).as_posix()
             missing.append(f"{source}: {target}")
 
 if missing:

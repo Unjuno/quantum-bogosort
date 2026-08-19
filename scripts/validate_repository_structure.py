@@ -51,8 +51,9 @@ required = [
     "scripts/validate_issue_templates.py", "scripts/validate_latex_sources.py",
     "scripts/validate_license_map.py", "scripts/validate_manifest.py",
     "scripts/validate_reproduction_outputs.py", "scripts/validate_runtime_contract.py",
-    "scripts/validate_markdown_links.py", "scripts/validate_markdown_math.py",
-    "scripts/validate_repository_structure.py", "scripts/validate_svg_sources.py",
+    "scripts/validate_snapshot_refs.py", "scripts/validate_markdown_links.py",
+    "scripts/validate_markdown_math.py", "scripts/validate_repository_structure.py",
+    "scripts/validate_svg_sources.py",
 ]
 
 if len(required) != len(set(required)):
@@ -97,6 +98,6 @@ if missing_sections:
 print(
     f"Repository structure OK: {len(required)} required files; complete {len(actual_markdown)}-file "
     f"Markdown inventory declared; all five core theory sources; consolidated/archived research "
-    f"provenance; both pre-announcement audit records; runtime/citation/bibliography/license/figure-set "
-    f"validators; and {len(section_refs)} manuscript sections found."
+    f"provenance; both pre-announcement audit records; runtime/citation/bibliography/license/figure-set/"
+    f"snapshot-ref validators; and {len(section_refs)} manuscript sections found."
 )

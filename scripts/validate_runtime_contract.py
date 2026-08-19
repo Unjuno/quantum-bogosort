@@ -41,6 +41,7 @@ REQUIRED_REPOSITORY_COMMANDS = [
     "python scripts/validate_repository_structure.py",
     "python scripts/validate_citation_metadata.py",
     "python scripts/validate_bibliography_metadata.py",
+    "python scripts/validate_license_map.py",
     "python scripts/validate_issue_templates.py",
     "python scripts/validate_manifest.py",
     "python scripts/validate_markdown_links.py",

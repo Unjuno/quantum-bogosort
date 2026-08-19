@@ -34,7 +34,7 @@
 - added manifest-driven byte validation of every current reproduction CSV, replacing a duplicate hard-coded output list in CI;
 - strengthened reproduction validation again so E1–E5 execution must leave the complete tracked `data/processed/` tree unchanged outside byte-identical current outputs and must not create undeclared files even when `.gitignore` would hide them;
 - corrected the current E5 rho-sweep field name from misleading `recognition_corr_increment` to `action_corr_increment`; numerical values and Figure 6 are unchanged, and locked historical schemas are preserved;
-- expanded repository-structure validation to cover the workflow, dependency/Python configuration, split-license metadata, all five core theory sources, experiment executables/manifest, archived experiment provenance, theorem-illustration data, both pre-announcement audit records, and principal validator scripts;
+- expanded repository-structure validation to cover the workflow, dependency/Python configuration, split-license metadata, all five core theory sources, experiment executables/manifest, archived experiment provenance, theorem-illustration data, the pre-announcement audit records, bibliography fact lock, and principal validator scripts;
 - added `scripts/validate_issue_templates.py` and wired it into CI so GitHub issue-template chooser front matter and nonempty bodies are validated;
 - pinned `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` to full commit SHAs rather than mutable major-version tags, and synchronized the validator audit record after a same-day refresh to the current Node-24/v7 Action commits;
 - disabled persisted checkout credentials in both validation jobs, kept the workflow token at `contents: read`, and run the runtime contract in both repository and manuscript jobs;
@@ -46,7 +46,10 @@
 - externally cross-checked manuscript prior-art metadata against publisher/authoritative records rather than relying only on syntactic BibTeX validation; established publication records now replace later arXiv-upload chronology where source identity is clear, including Greaves (2004), Sebens--Carroll (2018), Saunders branch-counting (2021), Hanson (2003), Hult--Nyquist (2016), and Conitzer (2015), while ambiguous/non-identical preprint-to-chapter transformations are not silently conflated;
 - represented verified Saunders book chapters as `@incollection`, including *Chance in the Everett Interpretation* (2010, pp. 181--205) and *The Everett Interpretation: Probability* in the Routledge companion, and completed Khawaja's current BJPS page range;
 - strengthened `scripts/validate_bibliography_metadata.py` so journal articles require journal/volume/pages/DOI, book chapters require booktitle/editor/publisher/pages/DOI, arXiv-only records remain a separate provenance class, and stock `plain.bst` DOI visibility is preserved through printable notes;
+- added `paper/bibliography_fact_lock.md` and extended bibliography validation to require exact agreement on the externally reviewed citation-key set, record class, year, canonical DOI/arXiv identifier, and provenance class; this is a regression guard against silently reversing reviewed chronology, not an automated proof of external bibliographic truth;
 - resolved the two same-title Saunders physical-probability arXiv records through the author's PhilSci-Archive provenance: the 2026 deposit is explicitly the latest version and links the 2025 deposit as an earlier available version, so the current `2601.12159` citation is retained;
+- audited the frozen-v0.3/current-main core-theorem domain boundary and made four approved current-main corrections explicit: version-neutral canonical title, setup base-integrability, T1 base-integrability, and T5 cross-integrability for `Q(U_1,S_0)`; the frozen v0.3 snapshot remains untouched and the algebraic identities/proof steps are unchanged;
+- synchronized those T1/T4/T5 domain assumptions across theory Markdown, canonical TeX, manuscript formal model, theorem section, and proof appendix, and extended `scripts/validate_core_theorem_lock.py` to require them across six public/manuscript surfaces while still normalizing exactly four approved changes back to the frozen canonical blob;
 - corrected stale `CONTRIBUTING.md` references to removed release branches and replaced obsolete double-dollar contribution guidance with the current fenced-math convention;
 - marked or rewrote historical stacked-branch S2 audit language so it cannot be mistaken for the current single-branch repository state;
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
@@ -58,7 +61,7 @@
 
 ### Scientific scope
 
-- no T1–T5 theorem statement is changed;
+- T1–T5 retain their identities, numbering, proof algebra, sign/FOSD conclusions, and physical-boundary content; current `main` explicitly closes audited integrability/domain gaps while the frozen v0.3 snapshot remains unchanged;
 - no numerical E1–E5 experiment result is changed by the execution/validator audits; the E5 rho current-output schema has one corrected column name and the E3 null test plumbing is stronger without changing its values;
 - no S2-family theorem or statistical certificate is changed;
 - the manuscript wording change from generic `recognition-activated` to `recognition-dependent` is terminological consistency, not a theorem or mechanism change;

@@ -77,6 +77,12 @@ d\mu^{FP}_\pi(\omega)
 
 from Everettian quantum mechanics. The bridge remains a separate physical assumption and review target.
 
+## Bibliography and prior-art provenance
+
+`references.bib` is the compiled bibliography. [`bibliography_fact_lock.md`](bibliography_fact_lock.md) records the externally reviewed current-main citation-key set, record class, publication/preprint year, canonical DOI or arXiv identifier, and provenance class.
+
+The fact lock is deliberately narrower than a claim of automatic bibliographic truth. `scripts/validate_bibliography_metadata.py` checks that later edits cannot silently change an already-reviewed key from a definitive publication back to a later preprint, alter its chronology, or drift its canonical identifier without also changing the explicit reviewed lock. External factual re-verification remains a human review task and is documented in [`../docs/pre_announcement_bibliography_audit_2026-08-19.md`](../docs/pre_announcement_bibliography_audit_2026-08-19.md).
+
 ## Figures
 
 GitHub-readable SVG previews are committed under `../figures/generated/`. LaTeX uses PDF variants generated from the same committed source data by:
@@ -94,13 +100,14 @@ From the repository root:
 ```bash
 pip install -r requirements.txt
 python scripts/validate_runtime_contract.py
+python scripts/validate_bibliography_metadata.py
 python figures/generate_pdf_figures.py
 python scripts/validate_latex_sources.py
 cd paper
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-GitHub Actions performs runtime-contract validation, figure generation, compiled-input-graph LaTeX/PDF validation, and manuscript compilation automatically, then uploads `paper/main.pdf` as an artifact.
+GitHub Actions performs runtime-contract validation, bibliography/fact-lock validation, figure generation, compiled-input-graph LaTeX/PDF validation, and manuscript compilation automatically, then uploads `paper/main.pdf` as an artifact.
 
 ## Current review state
 

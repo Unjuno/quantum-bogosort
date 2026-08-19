@@ -9,7 +9,8 @@ REPOSITORY_DISALLOWED_MATH_MACROS = {
     r"\operatorname": r"use the repository convention \mathrm{Cov}, \mathrm{Var}, etc.",
 }
 LEGACY_MATH_DELIMITERS = (r"\(", r"\)", r"\[", r"\]")
-FENCE_RE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
+FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
+CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
 BEGIN_END_RE = re.compile(r"\\(begin|end)\{([^{}]+)\}")
 errors = []
 
@@ -29,13 +30,18 @@ def strip_inline_code_spans(line: str) -> str:
     return re.sub(r"(`+)(.*?)\1", "", line)
 
 
-def closes_fence(stripped: str, marker: str) -> bool:
+def closes_fence(line: str, marker: str) -> bool:
     """Return whether a line closes the currently open CommonMark fence."""
-    if not stripped or stripped[0] != marker[0]:
+    match = CLOSING_FENCE_RE.match(line)
+    if not match:
         return False
-    if set(stripped) != {marker[0]}:
-        return False
-    return len(stripped) >= len(marker)
+    candidate = match.group(1)
+    return candidate[0] == marker[0] and len(candidate) >= len(marker)
+
+
+def valid_fence_opener(marker: str, info: str) -> bool:
+    # CommonMark forbids backticks inside a backtick-fence info string.
+    return marker[0] != "`" or "`" not in info
 
 
 def check_math_structure(path: Path, start_line: int, lines: list[str]) -> None:
@@ -120,7 +126,7 @@ for path in ROOT.rglob("*.md"):
         stripped = line.strip()
 
         if fence_marker is not None:
-            if closes_fence(stripped, fence_marker):
+            if closes_fence(line, fence_marker):
                 if fence_kind == "math":
                     if not math_fence_has_content:
                         errors.append(
@@ -145,15 +151,17 @@ for path in ROOT.rglob("*.md"):
         fence_match = FENCE_RE.match(line)
         if fence_match:
             marker = fence_match.group(1)
-            info = fence_match.group(2).strip()
-            fence_marker = marker
-            fence_kind = "math" if info == "math" else "code"
-            fence_start = line_no
-            math_fence_has_content = False
-            math_lines = []
-            if fence_kind == "math":
-                math_fence_count += 1
-            continue
+            raw_info = fence_match.group(2)
+            if valid_fence_opener(marker, raw_info):
+                info = raw_info.strip()
+                fence_marker = marker
+                fence_kind = "math" if info == "math" else "code"
+                fence_start = line_no
+                math_fence_has_content = False
+                math_lines = []
+                if fence_kind == "math":
+                    math_fence_count += 1
+                continue
 
         rendered_line = strip_inline_code_spans(line)
 
@@ -194,6 +202,6 @@ if errors:
 
 print(
     "Markdown math validation passed: repository display math uses fenced GitHub "
-    "math blocks; fences and TeX grouping/environments are balanced; repository "
-    "math-macro conventions are satisfied."
+    "math blocks; CommonMark fences and TeX grouping/environments are balanced; "
+    "repository math-macro conventions are satisfied."
 )

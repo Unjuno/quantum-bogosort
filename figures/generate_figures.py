@@ -4,6 +4,14 @@ from html import escape
 import numpy as np
 import pandas as pd
 
+from figure_data import (
+    adaptation_line_data,
+    branch_line_data,
+    fosd_curves,
+    interaction_bar_data,
+    recognition_bar_data,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "processed"
 OUT = ROOT / "figures" / "generated"
@@ -99,15 +107,7 @@ def fig1():
 
 
 def fig2():
-    x = np.linspace(-4, 4, 801)
-    phi = np.exp(-x*x/2) / np.sqrt(2*np.pi)
-    def wcdf(s):
-        w = phi * s
-        c = np.cumsum(w) * (x[1] - x[0])
-        return c / c[-1]
-    base = wcdf(np.ones_like(x))
-    mono = wcdf(0.1 + 0.9 / (1 + np.exp(-2*x)))
-    mid = wcdf(0.1 + 0.9 * np.exp(-(x/0.9)**2))
+    x, base, mono, mid = fosd_curves()
     pd.DataFrame({"x": x, "base_cdf": base, "fp_monotone_cdf": mono, "fp_nonmonotone_cdf": mid}).to_csv(DATA / "fig2_fosd_theorem_illustration.csv", index=False)
     parts = start("FOSD and the monotone-accessibility boundary")
     axes(parts, "Outcome x", "CDF", 0, 1, 5)
@@ -139,13 +139,13 @@ def bar_chart(name, title, labels, values, ylabel, note):
 
 
 def fig3():
-    d = pd.read_csv(DATA / "e3_recognition_decomposition_reproduction.csv").iloc[0]
-    bar_chart("fig3_recognition_decomposition.svg", "Recognition decomposition", ["Policy", "QBS", "Total"], [d.policy_gain, d.QBS_gain, d.total_gain], "FP value difference", "Paired primitive randomness; total equals policy plus QBS to numerical precision.")
+    labels, values = recognition_bar_data()
+    bar_chart("fig3_recognition_decomposition.svg", "Recognition decomposition", labels, values, "FP value difference", "Paired primitive randomness; total equals policy plus QBS to numerical precision.")
 
 
 def fig4():
-    d = pd.read_csv(DATA / "e4_fixed_selector_sign_reproduction.csv")
-    bar_chart("fig4_interaction_sign.svg", "Policy-QBS interaction sign", list(d.policy), list(d.interaction), "Interaction", "Fixed selector: sign matches Cov(D,S).")
+    labels, values = interaction_bar_data()
+    bar_chart("fig4_interaction_sign.svg", "Policy-QBS interaction sign", labels, values, "Interaction", "Fixed selector: sign matches Cov(D,S).")
 
 
 def line_chart(name, title, x, xlabel, series, ylabel, note):
@@ -167,15 +167,17 @@ def line_chart(name, title, x, xlabel, series, ylabel, note):
 
 
 def fig5():
-    d = pd.read_csv(DATA / "qbs_adaptation_total_effect_summary.csv")
-    x = d.adaptation_accuracy_p.to_numpy()
-    line_chart("fig5_adaptation_quality.svg", "Adaptation quality and substitution", x, "Targeting accuracy p", [("Policy effect", d.policy_effect.to_numpy(), "s1"), ("QBS after policy", d.QBS_after.to_numpy(), "s2"), ("Interaction", d.interaction.to_numpy(), "s3"), ("Total FP effect", d.total_FP_effect.to_numpy(), "s4")], "Effect size", "Toy adaptation study: total value rises while the interaction becomes more negative.")
+    x, raw_series = adaptation_line_data()
+    classes = ["s1", "s2", "s3", "s4"]
+    series = [(label, values, cls) for (label, values), cls in zip(raw_series, classes)]
+    line_chart("fig5_adaptation_quality.svg", "Adaptation quality and substitution", x, "Targeting accuracy p", series, "Effect size", "Toy adaptation study: total value rises while the interaction becomes more negative.")
 
 
 def fig6():
-    d = pd.read_csv(DATA / "e5_rho_paired_reproduction.csv")
-    x = d.rho_env.to_numpy()
-    line_chart("fig6_branch_coherence.svg", "Branch coherence versus marginal FP uplift", x, "Shared environmental correlation", [("Action-correlation increment", d.action_corr_increment.to_numpy(), "s1"), ("Total FP gain", d.total_FP_gain.to_numpy(), "s2")], "Simulation quantity", "Cross-copy coherence changes strongly while single-observer FP gain remains nearly flat.")
+    x, raw_series = branch_line_data()
+    classes = ["s1", "s2"]
+    series = [(label, values, cls) for (label, values), cls in zip(raw_series, classes)]
+    line_chart("fig6_branch_coherence.svg", "Branch coherence versus marginal FP uplift", x, "Shared environmental correlation", series, "Simulation quantity", "Cross-copy coherence changes strongly while single-observer FP gain remains nearly flat.")
 
 
 def fig7():

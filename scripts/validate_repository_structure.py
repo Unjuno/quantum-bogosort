@@ -63,9 +63,17 @@ required = [
 if len(required) != len(set(required)):
     raise SystemExit("Repository structure validator contains duplicate required paths")
 
-missing = [path for path in required if not (ROOT / path).is_file()]
-if missing:
-    raise SystemExit("Missing required repository-map files:\n" + "\n".join(missing))
+invalid_required = []
+for relative in required:
+    path = ROOT / relative
+    if path.is_symlink():
+        invalid_required.append(f"{relative} (symlink; regular tracked file required)")
+    elif not path.is_file():
+        invalid_required.append(f"{relative} (missing or not a regular file)")
+if invalid_required:
+    raise SystemExit(
+        "Missing/invalid required repository-map files:\n" + "\n".join(invalid_required)
+    )
 
 declared_markdown = {path for path in required if path.endswith(".md")}
 actual_markdown = {
@@ -93,16 +101,19 @@ section_refs = re.findall(r"\\input\{([^}]+)\}", main_tex)
 missing_sections = []
 for ref in section_refs:
     path = ROOT / "paper" / f"{ref}.tex"
-    if not path.is_file():
+    if path.is_symlink() or not path.is_file():
         missing_sections.append(str(path.relative_to(ROOT)))
 
 if missing_sections:
-    raise SystemExit("Missing manuscript sections:\n" + "\n".join(missing_sections))
+    raise SystemExit(
+        "Missing/invalid manuscript sections (regular nonsymlink files required):\n"
+        + "\n".join(missing_sections)
+    )
 
 print(
-    f"Repository structure OK: {len(required)} required files; complete {len(actual_markdown)}-file "
-    f"Markdown inventory declared; all five core theory sources; consolidated/archived research "
-    f"provenance; four pre-announcement audit records; runtime/core-theorem/supplementary/"
-    f"experiment-card/citation/bibliography/license/figure-set/snapshot-ref/worktree-artifact "
-    f"validators; and {len(section_refs)} manuscript sections found."
+    f"Repository structure OK: {len(required)} required nonsymlink regular files; complete "
+    f"{len(actual_markdown)}-file Markdown inventory declared; all five core theory sources; "
+    f"consolidated/archived research provenance; four pre-announcement audit records; runtime/"
+    f"core-theorem/supplementary/experiment-card/citation/bibliography/license/figure-set/"
+    f"snapshot-ref/worktree-artifact validators; and {len(section_refs)} manuscript sections found."
 )

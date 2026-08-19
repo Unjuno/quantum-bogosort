@@ -38,13 +38,17 @@ def tracked_processed_csvs() -> set[str]:
     names: set[str] = set()
     for raw in result.stdout.splitlines():
         path = Path(raw)
-        if path.suffix == ".csv":
-            if path.parent.as_posix() != "data/processed":
-                raise SystemExit(
-                    "Manifest validation failed:\n"
-                    f"nested processed-data CSV is outside the flat provenance contract: {raw}"
-                )
-            names.add(path.name)
+        if path.parent.as_posix() != "data/processed":
+            raise SystemExit(
+                "Manifest validation failed:\n"
+                f"nested tracked processed-data artifact is outside the flat provenance contract: {raw}"
+            )
+        if path.suffix != ".csv":
+            raise SystemExit(
+                "Manifest validation failed:\n"
+                f"tracked processed-data artifact must be CSV under the current contract: {raw}"
+            )
+        names.add(path.name)
     return names
 
 
@@ -153,7 +157,7 @@ def main() -> None:
         "Manifest validation passed: E1-E5 are uniquely LOCKed with disjoint "
         f"provenance classes ({len(all_locked)} locked CSVs, "
         f"{len(all_reproduction)} current reproduction CSVs), and all "
-        f"{len(tracked)} tracked processed-data CSVs are explicitly classified."
+        f"{len(tracked)} tracked flat processed-data CSVs are explicitly classified."
     )
 
 

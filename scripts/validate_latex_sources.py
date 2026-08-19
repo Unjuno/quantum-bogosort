@@ -1,4 +1,10 @@
-"""Validate manuscript/theory LaTeX source relationships before PDF compilation."""
+"""Validate manuscript/theory LaTeX source relationships before PDF compilation.
+
+This preflight deliberately supports the plain LaTeX subset used by the manuscript. TeX
+literal-code and conditional constructs that can hide ``\\input``, ``\\cite``, ``\\label``,
+or ``\\ref`` tokens from actual compilation are rejected rather than being scanned as if
+they were executable source. That keeps the regex graph/reference checks conservative.
+"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -22,6 +28,11 @@ CITE_RE = re.compile(r"\\cite[a-zA-Z*]*\{([^}]+)\}")
 LABEL_RE = re.compile(r"\\label\{([^}]+)\}")
 REF_RE = re.compile(r"\\(?:ref|eqref|pageref|autoref)\{([^}]+)\}")
 ENV_RE = re.compile(r"\\(begin|end)\{([^{}]+)\}")
+UNSUPPORTED_LITERAL_CONDITIONAL_RE = re.compile(
+    r"\\verb\*?|"
+    r"\\begin\{(?:verbatim|Verbatim|lstlisting|minted|comment)\}|"
+    r"\\(?:iffalse|iftrue|ifdefined|ifx|ifnum|ifdim)\b"
+)
 
 
 def strip_comments(text: str) -> str:
@@ -49,6 +60,15 @@ def within(path: Path, root: Path) -> bool:
         return False
 
 
+def reject_unparsed_constructs(path: Path, text: str, errors: list[str]) -> None:
+    matches = sorted(set(UNSUPPORTED_LITERAL_CONDITIONAL_RE.findall(text)))
+    if matches:
+        errors.append(
+            f"{path.relative_to(ROOT)}: literal/conditional TeX construct is outside the "
+            "preflight parser contract: " + ", ".join(matches)
+        )
+
+
 def resolve_tex_target(target: str) -> Path:
     """Resolve TeX paths as used by CI, whose working directory is paper/."""
     candidate = PAPER / target
@@ -71,6 +91,12 @@ def collect_reachable_tex() -> list[Path]:
         seen.add(path)
         ordered.append(path)
         text = strip_comments(path.read_text(encoding="utf-8"))
+        unsupported_literal = UNSUPPORTED_LITERAL_CONDITIONAL_RE.findall(text)
+        if unsupported_literal:
+            raise ValueError(
+                f"literal/conditional TeX construct is outside the input-graph parser contract "
+                f"in {path.relative_to(ROOT)}: " + ", ".join(sorted(set(unsupported_literal)))
+            )
         unsupported = UNSUPPORTED_INPUT_RE.findall(text)
         if unsupported:
             raise ValueError(
@@ -105,17 +131,18 @@ def check_environment_balance(path: Path, text: str, errors: list[str]) -> None:
 def main() -> None:
     errors: list[str] = []
 
-    if not MAIN.is_file():
-        raise SystemExit("Missing paper/main.tex")
+    if MAIN.is_symlink() or not MAIN.is_file():
+        raise SystemExit("Missing/invalid paper/main.tex; nonsymlink regular file required")
 
     for path in sorted(INTENTIONALLY_UNCOMPILED):
-        if not path.is_file():
+        if path.is_symlink() or not path.is_file():
             errors.append(
-                f"missing intentionally uncompiled TeX source: {path.relative_to(ROOT)}"
+                f"missing/invalid intentionally uncompiled TeX source: {path.relative_to(ROOT)}"
             )
 
     # Resolve the manuscript input graph and fail before TeX if an input is absent,
-    # escapes paper/, or uses an input primitive not covered by this preflight.
+    # escapes paper/, uses an input primitive not covered by this preflight, or contains a
+    # literal/conditional construct that can make regex token presence non-executable.
     try:
         reachable = collect_reachable_tex()
     except (FileNotFoundError, ValueError) as exc:
@@ -124,8 +151,8 @@ def main() -> None:
 
     paper_tex = sorted(PAPER.rglob("*.tex"))
     theory_core = ROOT / "theory/core_theorems.tex"
-    if not theory_core.is_file():
-        errors.append("missing standalone theory/core_theorems.tex")
+    if theory_core.is_symlink() or not theory_core.is_file():
+        errors.append("missing/invalid standalone theory/core_theorems.tex")
         extra_tex: list[Path] = []
     else:
         extra_tex = [theory_core]
@@ -133,8 +160,12 @@ def main() -> None:
 
     source_text: dict[Path, str] = {}
     for path in all_tex:
+        if path.is_symlink() or not path.is_file():
+            errors.append(f"{path.relative_to(ROOT)}: TeX source must be a nonsymlink regular file")
+            continue
         text = strip_comments(path.read_text(encoding="utf-8"))
         source_text[path] = text
+        reject_unparsed_constructs(path, text, errors)
         check_environment_balance(path, text, errors)
         if path in paper_tex and BIBLATEX_RE.search(text):
             errors.append(
@@ -161,8 +192,8 @@ def main() -> None:
                 bib = (PAPER / name).with_suffix(".bib").resolve()
                 if not within(bib, PAPER.resolve()):
                     errors.append(f"{path.relative_to(ROOT)}: bibliography escapes paper/: {name}")
-                elif not bib.is_file():
-                    errors.append(f"{path.relative_to(ROOT)}: missing bibliography {name}.bib")
+                elif bib.is_symlink() or not bib.is_file():
+                    errors.append(f"{path.relative_to(ROOT)}: missing/invalid bibliography {name}.bib")
                 else:
                     bib_files.append(bib)
 
@@ -188,7 +219,8 @@ def main() -> None:
     # Every citation in every manuscript source, including intentionally un-input
     # appendix/summary files, should resolve to the manuscript bibliography.
     for path in paper_tex:
-        for group in CITE_RE.findall(source_text[path]):
+        text = source_text.get(path, "")
+        for group in CITE_RE.findall(text):
             for key in (part.strip() for part in group.split(",")):
                 if key and key not in bib_keys:
                     errors.append(f"{path.relative_to(ROOT)}: missing citation key {key}")
@@ -198,7 +230,8 @@ def main() -> None:
     # separate so an uncompiled label can never make a compiled reference pass.
     all_labels: dict[str, Path] = {}
     for path in paper_tex:
-        for key in LABEL_RE.findall(source_text[path]):
+        text = source_text.get(path, "")
+        for key in LABEL_RE.findall(text):
             if key in all_labels:
                 errors.append(
                     f"duplicate manuscript label {key}: "
@@ -209,17 +242,15 @@ def main() -> None:
 
     compiled_labels: dict[str, Path] = {}
     for path in reachable:
-        text = source_text[path]
+        text = source_text.get(path, "")
         for key in LABEL_RE.findall(text):
             if key in compiled_labels:
-                # The global check above already records the detailed duplicate, but retain
-                # a compiled-graph-specific error so the failure mode is explicit.
                 errors.append(f"duplicate compiled label {key}")
             else:
                 compiled_labels[key] = path
 
     for path in reachable:
-        for key in REF_RE.findall(source_text[path]):
+        for key in REF_RE.findall(source_text.get(path, "")):
             if key not in compiled_labels:
                 errors.append(f"{path.relative_to(ROOT)}: unresolved compiled reference {key}")
 
@@ -228,7 +259,7 @@ def main() -> None:
     for path in paper_tex:
         if path.resolve() in reachable_set:
             continue
-        for key in REF_RE.findall(source_text[path]):
+        for key in REF_RE.findall(source_text.get(path, "")):
             if key not in all_labels:
                 errors.append(f"{path.relative_to(ROOT)}: unresolved retained-source reference {key}")
 
@@ -255,13 +286,13 @@ def main() -> None:
     # Graphics resolve from paper/, matching `working-directory: paper` in CI. The
     # script runs after figures/generate_pdf_figures.py, so generated PDFs must exist.
     for path in reachable:
-        text = source_text[path]
+        text = source_text.get(path, "")
         for target in GRAPHICS_RE.findall(text):
             graphic = (PAPER / target).resolve()
             if not within(graphic, ROOT.resolve()):
                 errors.append(f"{path.relative_to(ROOT)}: graphic escapes repository root: {target}")
-            elif not graphic.is_file():
-                errors.append(f"{path.relative_to(ROOT)}: missing graphic {target}")
+            elif graphic.is_symlink() or not graphic.is_file():
+                errors.append(f"{path.relative_to(ROOT)}: missing/invalid graphic {target}")
 
     if errors:
         raise SystemExit("LaTeX source validation failed:\n" + "\n".join(errors))
@@ -272,7 +303,8 @@ def main() -> None:
         f"{len(reachable)} files reachable from paper/main.tex; "
         f"{len(INTENTIONALLY_UNCOMPILED)} explicitly retained source outside the compiled graph; "
         f"{len(bib_keys)} bibliography keys available; "
-        f"{len(compiled_labels)} compiled labels resolved."
+        f"{len(compiled_labels)} compiled labels resolved; no unsupported literal/conditional "
+        "TeX constructs present."
     )
 
 

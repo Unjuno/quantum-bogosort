@@ -4,7 +4,7 @@
 
 This is a second-pass audit of the repository's **auditing machinery itself**. The earlier execution audit established a commit-fixed source/execution baseline and hardened E1–E5 reproduction. This pass asks a different question: can the validators or workflow still report success when an important repository, rendering, provenance, or publication invariant is actually broken?
 
-The pass began from `main` after `fe0ecca8c8bbaa10d4bdc5bc226a2ddaa60d226b` and applies only validation, reproducibility, repository-structure, CI-supply-chain, public-routing, and documentation corrections. It does not alter T1–T5, the S2 theorem/certificate line, the Everett bridge status, or locked historical experiment values.
+The pass began from `main` after `fe0ecca8c8bbaa10d4bdc5bc226a2ddaa60d226b`. Its primary scope is validation, reproducibility, repository structure, CI supply chain, public routing, and documentation. A later cross-file theorem-domain check in the same audit series identified incomplete integrability assumptions in the frozen v0.3 wording. Current `main` therefore contains explicitly reviewed **domain corrections** while preserving T1–T5 identity, proof algebra, sign/FOSD conclusions, and physical-boundary content. The frozen v0.3 snapshot itself remains untouched. The S2 theorem/certificate line, Everett bridge status, and locked historical experiment values are unchanged.
 
 ## Findings corrected
 
@@ -181,15 +181,24 @@ The audit compared frozen v0.3 commit `58038763127258bd3e2f0d41708c4dfa01f81fd6`
 
 This catches both a committed historical-data rewrite and an uncommitted dirty rewrite. The Git-hash behavior was negative-tested in a temporary repository: the baseline matched, a dirty mutation changed only the working-tree hash, and a committed mutation changed the HEAD blob hash.
 
-### 17. The locked T1–T5 theorem set had no executable semantic-body lock
+### 17. The locked T1–T5 theorem set had no executable semantic-body/domain lock
 
-The repository consistently described T1–T5 as locked, but source QA previously enforced that status only through documentation/provenance review. Raw Markdown cannot be frozen because GitHub-rendering corrections legitimately changed fence syntax and headings after v0.3.
+The repository consistently described T1–T5 as locked, but source QA previously enforced that status only through documentation/provenance review. Raw Markdown cannot simply be byte-frozen because GitHub-rendering corrections and later audited domain clarifications legitimately changed presentation text after v0.3.
 
-The compact standalone `theory/core_theorems.tex` provides a better invariant. Direct comparison of frozen v0.3 and current `main` showed that its only change is the document title, from the historical `v0.1` label to the version-neutral `Core Theorem Set (T1--T5)` title. The theorem statements, proofs, corollary, propositions, boundary, and Everett bridge paragraph are otherwise identical.
+The compact standalone `theory/core_theorems.tex` provides the canonical semantic-body invariant. A deeper comparison found that current `main` differs from frozen v0.3 in exactly four approved textual/domain places:
 
-`scripts/validate_core_theorem_lock.py` now normalizes exactly that one allowed title line back to the frozen title and requires the resulting Git blob to equal frozen v0.3 blob `82986d7197e79446d6574aab538d1edaeff47eb6`. Any other change to the canonical TeX theorem/proof/boundary body fails CI and requires explicit scientific review rather than being absorbed as repository QA. The workflow, runtime contract, and repository-structure inventory all require this validator.
+1. the historical `v0.1` document title is replaced by the version-neutral `Core Theorem Set (T1--T5)` title;
+2. the setup explicitly requires `E[|U_\pi|]<\infty` in addition to weighted integrability;
+3. T1 explicitly requires `E[|X|]<\infty` in addition to `E[|X|S]<\infty`;
+4. general T5 explicitly requires `E[|U_1|S_0]<\infty` because the proof introduces the intermediate quantity `Q(U_1,S_0)`.
 
-The manuscript's `paper/sections/appendix.tex`, which contains the complete T1–T5 proofs, was also directly inspected and remains unchanged from the v0.3 snapshot; no manuscript-side core-theorem drift was found.
+These are domain-of-definition corrections. They do not alter the covariance/tail/FOSD identities, recognition or interaction algebra, sign conclusions, support/extinction propositions, or Everett bridge paragraph.
+
+`scripts/validate_core_theorem_lock.py` normalizes **exactly those four approved changes** back to the frozen text and requires the resulting Git blob to equal frozen v0.3 blob `82986d7197e79446d6574aab538d1edaeff47eb6`. Any additional theorem/proof/boundary drift therefore fails CI and requires explicit scientific review.
+
+The audit then found a cross-surface consistency gap: the canonical theory source had the corrected domains while the manuscript theorem/proof presentation still used the older implicit wording. Current `main` now states the same requirements in `theory/core_theorems.md`, `theory/theorem_1_3.md`, `theory/theorem_4_5.md`, `paper/sections/formal_model.tex`, `paper/sections/theorems.tex`, and `paper/sections/appendix.tex`. The theorem-lock validator requires the approved domain snippets across all six surfaces, so a later documentation/manuscript edit cannot silently remove them.
+
+The frozen v0.3 snapshot and its historical manuscript appendix remain untouched. Current `main`'s manuscript appendix is intentionally no longer byte-identical to v0.3 because the domain assumptions are now explicit; the proof algebra is unchanged.
 
 ## Checks that remained valid
 
@@ -227,11 +236,11 @@ Release-tag commits were re-resolved successfully, but the rendered GitHub Relea
 
 ## Scientific/provenance boundary
 
-This pass changes validator logic, E3 null test plumbing, workflow configuration, current-review issue rendering syntax, contribution/reproduction instructions, bibliography metadata, and repository QA documentation.
+This pass changes validator logic, E3 null test plumbing, workflow configuration, current-review issue rendering syntax, contribution/reproduction instructions, bibliography metadata, explicit theorem-domain assumptions on current `main`, and repository QA documentation.
 
 It does not change:
 
-- T1–T5 theorem statements;
+- T1–T5 identities, numbering, proof algebra, sign/FOSD conclusions, or physical-boundary content; the frozen v0.3 snapshot remains untouched while current `main` explicitly closes the audited domain gaps;
 - S2-family theorem or certificate statements;
 - the Everett accessibility bridge status;
 - locked historical experiment CSV values;
@@ -239,7 +248,7 @@ It does not change:
 - the numerical E1–E5 conclusions;
 - the seven committed SVG figure files.
 
-The new blob locks make the first and fourth bullets executable regression boundaries rather than documentation-only assertions where a suitable canonical byte representation exists.
+The canonical theorem lock and frozen-data blob locks make the first and fourth bullets executable regression boundaries where a suitable canonical byte representation exists.
 
 ## Remaining release gates
 

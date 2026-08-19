@@ -61,7 +61,7 @@ The primary package pins are exact; the repository does **not** claim that every
 
 The current E5 rho-sweep field formerly named `recognition_corr_increment` was corrected to `action_corr_increment`; the values and Figure 6 are unchanged. Locked historical schemas were not rewritten.
 
-### Pass 2 — validators, workflow, and false-PASS paths
+### Pass 2 — validators, workflow, metadata, and false-PASS paths
 
 The second pass audited the auditing machinery itself. It corrected or strengthened the following:
 
@@ -70,27 +70,36 @@ The second pass audited the auditing machinery itself. It corrected or strengthe
 - E1–E5 scripts contain executable regression guards for the identities, nulls, sign/counterexample controls, predictive-alignment behavior, and branch-coherence contrasts described by their experiment cards;
 - the E3 inert recognition-label null now evaluates identical trajectory/accessibility arrays through the general first-person weighted-value path while preserving the committed exact-zero result;
 - issue-template front matter is validated for GitHub chooser compatibility;
-- the repository structure validator explicitly requires core theory, split-license/configuration, archive provenance, audit, experiment, figure, and validator sources;
+- the repository structure validator explicitly requires core theory, split-license/configuration, consolidated/archive provenance, audit, experiment, figure, and validator sources;
+- [`supplementary/research_notes.md`](supplementary/research_notes.md) is explicitly retained and linked as a historical consolidated note rather than a current source of truth;
 - the math, link, and GFM source scanners share CommonMark's zero-to-three-space fence boundary;
 - relative Markdown targets that escape the repository root fail validation; linked-image outer targets and reference-style definitions are also checked;
-- all repository Markdown is submitted to GitHub's GFM REST renderer in CI and checked for heading/table/image preservation;
+- all repository Markdown is submitted to GitHub's GFM REST renderer in CI and checked for heading/table/inline-image preservation;
 - SVG validation rejects DTD/entities, active/animation elements, event handlers, non-fragment hrefs, active/external CSS references, malformed/non-finite numeric attributes, and backgrounds that fail to cover the full viewBox;
+- the exact generated figure contract is now seven public SVGs plus six manuscript PDF figures; unexpected generated entries fail validation;
 - LaTeX preflight resolves compiled references only within the graph reachable from `paper/main.tex`;
 - `paper/sections/robust_mom_summary.tex` is explicitly locked as the sole intentionally uncompiled manuscript source, with `robust_mom_certificate_appendix.tex` providing the compiled robust-MoM treatment;
-- `scripts/validate_runtime_contract.py` cross-checks `.python-version`, the exact primary package pins/installed versions, runner choice, required workflow jobs/commands, manual dispatch, full-SHA Action pins, and checkout credential isolation;
+- `scripts/validate_runtime_contract.py` cross-checks `.python-version`, the exact primary package pins/installed versions, runner choice, required workflow jobs/commands, manual dispatch, full-SHA Action pins, checkout credential isolation, and final clean-worktree checks;
+- a real self-failure in that runtime validator was caught during review: its `python-version` / `runs-on` regexes initially lacked `re.MULTILINE`, which could make a valid workflow appear to have no runtime declarations; the parser was corrected before treating the new contract as reliable;
+- citation metadata validation now checks the narrow CFF 1.2.0 contract against the frozen STATUS snapshot, rejects unknown nested author content, and requires exact `YYYY-MM-DD` release-date syntax;
+- bibliography metadata validation now rejects unsupported text outside records, malformed/multiline field syntax, duplicate keys/fields/DOIs/eprints, placeholder values, and malformed DOI/arXiv identifiers;
+- arXiv primary classes for corrected entries were independently checked against arXiv primary pages, including Garisto `physics.hist-ph`, Armstrong `physics.data-an`, Conitzer `stat.OT`, Hult/Nyquist `math.PR`, and Cooper et al. `cs.AI`;
 - `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` are pinned to full commit SHAs;
 - checkout uses `persist-credentials: false` in both jobs; workflow permissions remain `contents: read`;
 - both `repository-validation` and `manuscript-build` run the runtime-contract validator;
 - `workflow_dispatch` allows a complete manual run from **Actions → validate → Run workflow** without a dummy commit;
 - the root README exposes the `main` validation badge;
 - the open S2 review Issue #14 was synchronized from stale `$$` / `\operatorname{Cov}` syntax to fenced `math` / `\mathrm{Cov}` without altering its scientific content;
-- a generic manuscript phrase `recognition-activated policy` was aligned to the repository's general `recognition-dependent policy` terminology; the separate evidence-threshold activation model remains intentionally named as such.
+- a generic manuscript phrase `recognition-activated policy` was aligned to the repository's general `recognition-dependent policy` terminology; the separate evidence-threshold activation model remains intentionally named as such;
+- after repository validation, tracked diffs and nonignored untracked files anywhere in the checkout are rejected, closing the remaining side-effect gap that ordinary `git diff` alone would miss.
+
+The newer Pass-2 validators were source-audited and wired into CI, but the literal network clone remains unavailable in this audit runtime. Therefore the first-pass local execution evidence does not automatically count as execution evidence for every later validator revision. The final GitHub Actions run remains required.
 
 ## Workflow state
 
 The current workflow is configured to run on push, pull request, and manual dispatch.
 
-`repository-validation` covers runtime consistency, Python compilation, Markdown math, repository structure, issue templates, manifest, links, GitHub GFM conversion, E1–E5 scientific invariants, reproduction identity/data-tree cleanliness, figure generation, static SVG validation, and committed SVG/Figure-2 data reproducibility.
+`repository-validation` covers runtime/workflow consistency, Python compilation, Markdown math, repository structure, citation metadata, bibliography metadata, issue templates, manifest, links, GitHub GFM conversion, E1–E5 scientific invariants, reproduction identity/data-tree cleanliness, figure generation, exact SVG/PDF figure-set validation, static SVG validation, committed SVG/Figure-2 data reproducibility, full tracked-tree cleanliness, and rejection of nonignored untracked artifacts.
 
 `manuscript-build` independently validates the runtime contract, generates manuscript PDF figures, preflights the compiled LaTeX graph, installs the TeX toolchain, builds `paper/main.pdf`, verifies it, and uploads it as an artifact.
 

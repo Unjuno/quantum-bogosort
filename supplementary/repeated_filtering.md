@@ -25,15 +25,31 @@ with the downweighting interpretation restricted to:
 0<\lambda\le1.
 ```
 
-The weighted value is:
+Then:
+
+```math
+0<S\le1
+```
+
+almost surely, so:
+
+```math
+0<E[\lambda^{N_B}]\le1.
+```
+
+Assume the weighted utility is absolutely integrable at the evaluation point:
+
+```math
+E[|U|\lambda^{N_B}]<\infty.
+```
+
+The weighted value is therefore finite and defined by:
 
 ```math
 V(\lambda)
 =
 \frac{E[U\lambda^{N_B}]}{E[\lambda^{N_B}]}.
 ```
-
-Because `N_B<∞` almost surely and `lambda>0`, the denominator is strictly positive whenever the displayed expectations are finite.
 
 ## Sensitivity identity and regularity domain
 
@@ -45,7 +61,11 @@ E[|U|N_B\lambda^{N_B}],
 E[N_B\lambda^{N_B}]
 ```
 
-must be finite at the evaluation point, in addition to the weighted-value numerator being finite.
+must be finite at the evaluation point, in addition to:
+
+```math
+E[|U|\lambda^{N_B}]<\infty.
+```
 
 Then differentiating with respect to log selectivity gives:
 
@@ -79,21 +99,15 @@ For the QBS downweighting family `0<lambda<=1`, the formula applies at interior 
 
 ## Accessible-measure boundary
 
-Normalization requires:
+The current downweighting domain `0<lambda<=1` and finite `N_B` imply positive total accessibility for every finite-stage model. More general repeated-filter limits may nevertheless have:
 
 ```math
-E[S]>0.
+E[S]\rightarrow0.
 ```
 
-If repeated filtering drives:
+In such a limiting sequence, the normalized FP mean can remain finite while effective support and Monte Carlo effective sample size collapse.
 
-```math
-E[S]\rightarrow0,
-```
-
-then the normalized FP mean may remain finite while effective support and Monte Carlo effective sample size collapse.
-
-At:
+If a generalized selector reaches:
 
 ```math
 E[S]=0,
@@ -113,6 +127,15 @@ Historical recursive and long-horizon simulations numerically verified the sensi
 
 The derivative identity requires the stated expectation/differentiation regularity; it is not justified merely by writing a formal derivative of an arbitrary unbounded history model. The physical meaning of total accessible measure depends on the Everett bridge and is not established by the mathematical identity.
 
+## ERROR CHECK
+
+1. For finite `N_B` and `0<lambda<=1`, `lambda^{N_B}` is strictly positive and at most one, so its expectation is automatically finite and positive.
+2. The weighted value additionally requires `E[|U|lambda^{N_B}]<infinity`.
+3. The derivative identity requires the two weighted derivative moments and a justified differentiation-under-expectation condition in a positive neighborhood.
+4. The endpoint `lambda=1` is one-sided when the modeled family is restricted to `lambda<=1`.
+5. A zero-accessible-measure statement concerns a generalized/limiting selector; it cannot occur at a finite stage under strictly positive `lambda` and finite `N_B`.
+6. The Everett bridge remains separate.
+
 ## Status
 
-**SENSITIVITY IDENTITY EXACT UNDER THE EXPLICIT DOMINATED-DIFFERENTIATION/FINITE-MOMENT CONDITIONS. MEASURE-DECAY BEHAVIOR SIMULATION-SUPPORTED IN TOY MODELS.**
+**SENSITIVITY IDENTITY EXACT UNDER THE EXPLICIT WEIGHTED-VALUE AND DOMINATED-DIFFERENTIATION/FINITE-MOMENT CONDITIONS. MEASURE-DECAY BEHAVIOR SIMULATION-SUPPORTED IN TOY MODELS.**

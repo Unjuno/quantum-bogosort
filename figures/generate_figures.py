@@ -175,7 +175,7 @@ def fig5():
 def fig6():
     d = pd.read_csv(DATA / "e5_rho_paired_reproduction.csv")
     x = d.rho_env.to_numpy()
-    line_chart("fig6_branch_coherence.svg", "Branch coherence versus marginal FP uplift", x, "Shared environmental correlation", [("Action-correlation increment", d.recognition_corr_increment.to_numpy(), "s1"), ("Total FP gain", d.total_FP_gain.to_numpy(), "s2")], "Simulation quantity", "Cross-copy coherence changes strongly while single-observer FP gain remains nearly flat.")
+    line_chart("fig6_branch_coherence.svg", "Branch coherence versus marginal FP uplift", x, "Shared environmental correlation", [("Action-correlation increment", d.action_corr_increment.to_numpy(), "s1"), ("Total FP gain", d.total_FP_gain.to_numpy(), "s2")], "Simulation quantity", "Cross-copy coherence changes strongly while single-observer FP gain remains nearly flat.")
 
 
 def fig7():

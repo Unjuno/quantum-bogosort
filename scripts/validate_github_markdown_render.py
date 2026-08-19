@@ -79,7 +79,7 @@ def fence_info_name(info: str) -> str:
 
 
 def special_render_fence_errors(relative: str, text: str) -> list[str]:
-    """Reject source forms that look special but GitHub would parse as ordinary code."""
+    """Reject special-render fence forms outside the repository's GitHub contract."""
     errors: list[str] = []
     fence_marker: str | None = None
 

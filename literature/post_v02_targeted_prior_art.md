@@ -9,8 +9,8 @@ This note records a narrow search for literature that could materially weaken th
 
 The highest-risk novelty overlap would be prior work that combines most of the following in one formal structure:
 
-1. an information/recognition state causally changes policy;
-2. policy changes downstream trajectories;
+1. an information/recognition state changes which policy is selected, without requiring a privileged physical causal role for recognition itself;
+2. the selected policy changes downstream trajectories;
 3. policy or observer state also changes a self-location / observer-selection weighting;
 4. first-person value is evaluated under that weighting;
 5. ordinary trajectory and observer-weighting effects are explicitly decomposed;
@@ -22,7 +22,7 @@ The search therefore targeted self-locating decision theory, observer selection,
 
 ### Robert Garisto — *How to Select Observers* (2020)
 
-**Source:** arXiv:2005.12342.
+**Source:** *Physical Review Research* 2(3), 033464 (2020), DOI `10.1103/PhysRevResearch.2.033464`; earlier arXiv:2005.12342.
 
 Garisto develops a general formalism for observer-selection effects and emphasizes that the result depends strongly on how the observer is selected and how enclosing sets/reference classes are specified. In particular, the paper distinguishes selection by "being in" a set from selection by "picking from" a set and shows that observer-selection effects can change or disappear when those assumptions change.
 
@@ -32,7 +32,7 @@ Garisto develops a general formalism for observer-selection effects and emphasiz
 
 ### Peter J. Lewis — *Probability, Self-Location, and Quantum Branching* (2009)
 
-**Source:** *Philosophy of Science* 76(5), 1009–1019, DOI 10.1086/605805.
+**Source:** *Philosophy of Science* 76(5), 1009–1019, DOI `10.1086/605805`.
 
 Lewis argues that if probability is used in Everett it must be connected to self-location, but also argues that branching structure may not supply enough structure to determine the relevant self-location probabilities and that decision-theoretic arguments do not automatically close that gap.
 
@@ -42,7 +42,7 @@ Lewis argues that if probability is used in Everett it must be connected to self
 
 ### Jake Khawaja — *Conquering Mount Everett: Branch Counting Versus the Born Rule* (2026)
 
-**Source:** *The British Journal for the Philosophy of Science* 77(2), DOI 10.1086/726282.
+**Source:** *The British Journal for the Philosophy of Science* 77(2), 313–344, DOI `10.1086/726282`.
 
 Khawaja develops indexed branch-counting as a rationally motivated self-locating credence rule and argues that it can remain a viable competitor to Born-rule credence assignments.
 
@@ -52,7 +52,7 @@ Khawaja develops indexed branch-counting as a rationally motivated self-locating
 
 ### Cooper, Oesterheld, and Conitzer — modified anthropics and ex ante policy optimization (2024)
 
-**Source:** arXiv:2411.04462.
+**Source:** arXiv:2411.04462. The authors' current publication listing classifies the work as a working paper.
 
 This paper directly links self-locating beliefs to policy choice and characterizes conditions under which modified anthropic beliefs can make causal decision theory recover ex ante optimal policies.
 
@@ -110,8 +110,8 @@ The manuscript should continue to avoid claiming novelty for:
 
 The defensible provisional contribution is the **combined framework architecture**:
 
-1. recognition is modeled as a causal policy input;
-2. policy changes the trajectory map on common primitive randomness;
+1. recognition/information state changes which policy is selected without assigning recognition a privileged physical causal power;
+2. the selected policy changes the trajectory map on common primitive randomness;
 3. policy may also change observer-indexed accessibility;
 4. trajectory and first-person conditioning effects are exactly separated;
 5. policy and QBS conditioning have an explicit interaction decomposition;
@@ -134,7 +134,7 @@ A broad additional search for generic anthropic decision theory is lower value b
 
 ## Manuscript action taken
 
-The manuscript Related Work section now cites Garisto, Lewis, and Khawaja alongside the existing Everett, observer-selection, and anthropic decision-theory literature.
+The manuscript Related Work section cites Garisto, Lewis, Khawaja, and direct self-location/policy literature alongside the existing Everett, observer-selection, and anthropic decision-theory literature. Its bibliography now prefers verified publication metadata when a later preprint posting would obscure the established publication chronology, while retaining earlier preprints when they are the earliest public record or when no definitive publication record was identified.
 
 The intended effect is to strengthen the boundary language, not to inflate the novelty claim.
 
@@ -147,7 +147,8 @@ The intended effect is to strengthen the boundary language, not to inflate the n
 5. Observer-selection assumptions are treated as model inputs requiring justification.
 6. Everettian branching is not treated as uniquely fixing the QBS accessibility map.
 7. The physical bridge remains independent of theorem correctness.
-8. No new theorem or experiment is introduced by this literature update.
+8. Recognition is not assigned a privileged physical causal power merely by appearing upstream of policy selection.
+9. No new theorem or experiment is introduced by this literature update.
 
 ## Current conclusion
 

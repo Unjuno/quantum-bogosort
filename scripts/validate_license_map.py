@@ -78,8 +78,8 @@ def main() -> None:
         "source code: **MIT**",
         "theory, documentation, manuscript text, and figures: **CC BY 4.0**",
         "generated research datasets: **CC0 1.0**",
-        "GitHub currently classifies the repository-level license as **Other / NOASSERTION**.",
-        "That repository-level classifier does not override the file-type licensing map.",
+        "See [`LICENSES/README.md`](LICENSES/README.md) for the authoritative licensing map.",
+        "GitHub's repository-level single-license classifier is a hosting-layer summary and is not authoritative for this split-licensed repository",
     ):
         require(README, readme, fragment, errors)
 
@@ -96,7 +96,7 @@ def main() -> None:
 
     print(
         "License-map validation passed: root MIT scope, split-license map, Creative Commons "
-        "notices, README disclosure, and CFF summary are mutually consistent."
+        "notices, README hosting-layer boundary, and CFF summary are mutually consistent."
     )
 
 

@@ -112,9 +112,10 @@ def main() -> None:
     require(
         CC_BY,
         cc_by,
-        "Manuscript text, theoretical notes, documentation, and figures in this repository are licensed under CC BY 4.0",
+        "Manuscript text, theoretical notes, Markdown/LaTeX documentation, bibliography/citation metadata, experiment provenance metadata, and committed figures in this repository are licensed under CC BY 4.0",
         errors,
     )
+    require(CC_BY, cc_by, "See LICENSES/README.md for the path-explicit repository map.", errors)
 
     cc0 = CC0.read_text(encoding="utf-8")
     require(CC0, cc0, "SPDX identifier: CC0-1.0", errors)

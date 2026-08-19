@@ -1,5 +1,7 @@
 # Quantum Bogosort (QBS)
 
+[![validate](https://github.com/Unjuno/quantum-bogosort/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/Unjuno/quantum-bogosort/actions/workflows/validate.yml)
+
 Quantum Bogosort is a formal research program for recognition-dependent policies whose trajectories and observer-indexed accessibility can change together.
 
 The motivating question is self-referential: if an agent recognizes a QBS-type rule and that information changes the policy it uses, while the resulting policy also changes which future continuations are observer-accessible, how does accessibility conditioning change the agent's first-person distribution over trajectories and present self-location? The model keeps the base probability law fixed; interpreting the accessibility weighting as an Everettian physical self-location rule is a separate bridge assumption.
@@ -203,9 +205,10 @@ python experiments/exp2_minimal_agent.py
 python experiments/exp3_recognition_decomposition.py
 python experiments/exp4_interaction.py
 python experiments/exp5_branch_map.py
+python scripts/validate_reproduction_outputs.py
 ```
 
-The dependency versions in `requirements.txt` are pinned because committed-output verification is byte-level; using a different NumPy/Pandas/Matplotlib stack can change serialization even when the numerical model is unchanged.
+The dependency versions in `requirements.txt` are pinned because committed-output verification is byte-level; using a different NumPy/Pandas/Matplotlib stack can change serialization even when the numerical model is unchanged. The reproduction validator derives the current output set from `experiments/manifest.csv`, compares those outputs byte-for-byte with `HEAD`, and rejects side effects on other files under `data/processed/`.
 
 Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/). Superseded experiment designs are kept under [`experiments/archive/`](experiments/archive/).
 
@@ -233,16 +236,21 @@ The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged in 
 
 ## Validation
 
-GitHub Actions checks:
+The current `main` validation state is visible in the badge at the top of this README. GitHub Actions checks:
 
 - Python compilation under the pinned Python/dependency environment;
+- required repository structure, including core theory, archival provenance, licensing/configuration, and validator sources;
+- GitHub issue-template chooser front matter;
 - repository-wide fenced Markdown math syntax and structural TeX balance;
-- repository-relative Markdown links and required repository structure;
+- repository-relative Markdown links, including rejection of relative targets that escape the repository root;
 - GFM structure conversion of every Markdown file through GitHub's Markdown API, with heading/table/image preservation checks;
-- E1–E5 reproduction plus byte-for-byte verification of all committed reproduction CSV outputs;
-- deterministic SVG regeneration, SVG XML/browser-structure validation, and byte-for-byte committed-output verification;
-- experiment-manifest references;
-- manuscript figure generation, LaTeX dependency/citation/reference preflight, LaTeX build, and PDF verification.
+- E1–E5 scientific regression invariants;
+- manifest ID/order/LOCK/provenance validation and byte-for-byte verification of all manifest-declared current reproduction CSVs;
+- post-experiment cleanliness of the complete `data/processed/` tree, including rejection of undeclared ignored files;
+- deterministic SVG regeneration, static/self-contained SVG browser-safety validation, and byte-for-byte committed-output verification;
+- manuscript figure generation, compiled-input-graph LaTeX dependency/citation/reference preflight, LaTeX build, and PDF verification.
+
+The workflow runs on push and pull request and can also be repeated manually from **Actions → validate → Run workflow**. Reusable GitHub Actions are pinned to full commit SHAs rather than mutable major-version tags.
 
 The GitHub API GFM check is a structural parser check; direct browser inspection remains the release gate for MathJax, Mermaid, SVG sizing, and page layout.
 

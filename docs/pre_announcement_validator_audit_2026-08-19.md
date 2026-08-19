@@ -100,13 +100,15 @@ It also requires the explicit white background rectangle to cover the full SVG `
 
 ### 8. GitHub Actions dependencies were mutable tags
 
-The workflow previously referenced `actions/checkout@v4`, `actions/setup-python@v5`, and `actions/upload-artifact@v4`. Those major-version tags can move upstream.
+The workflow originally referenced reusable Actions by mutable major-version tags. During this audit it was first moved to immutable full-commit SHA pins. A later same-day Actions-runtime refresh advanced those immutable pins to the current Node-24/v7 releases while preserving the same supply-chain rule.
 
-The workflow now pins the exact commits resolved during this audit:
+The current audited pins are:
 
-- `actions/checkout@11d5960a326750d5838078e36cf38b85af677262`;
-- `actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065`;
-- `actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02`.
+- `actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1` (`v7.0.1`);
+- `actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97` (`v7.0.0`);
+- `actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` (`v7.0.1`).
+
+`scripts/validate_runtime_contract.py` treats those full SHAs and their expected multiplicities as the current workflow contract, so action-pin drift fails CI rather than silently changing the execution environment.
 
 ### 9. Complete validation could not be manually dispatched
 
@@ -130,7 +132,8 @@ The null now explicitly creates identical trajectory/accessibility arrays for th
 - equality between every workflow `python-version` and `.python-version`;
 - `ubuntu-24.04` for both validation jobs;
 - presence of `workflow_dispatch`;
-- full 40-hex commit-SHA pinning for every reusable `uses:` step.
+- full 40-hex commit-SHA pinning for every reusable `uses:` step;
+- the exact currently audited action SHAs and expected action multiplicities.
 
 This is intentionally a **primary-package/runtime contract**, not a claim that every transitive wheel is cryptographically locked. Byte-level output identity is still the final executable check.
 

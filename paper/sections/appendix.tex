@@ -330,7 +330,7 @@ If $\mathbb E[S]=0$, the normalized measure is undefined. This is not merely a l
 
 \subsection{Repeated-filter sensitivity identity}
 
-Let $N_B$ count adverse triggers and define
+Let $N_B$ be a finite nonnegative integer-valued adverse-trigger count and define
 \[
 S=\lambda^{N_B},
 \qquad
@@ -338,7 +338,13 @@ V(\lambda)
 =
 \frac{\mathbb E[U\lambda^{N_B}]}{\mathbb E[\lambda^{N_B}]}.
 \]
-Assume differentiation under the expectation is valid. Define the $\lambda$-weighted expectation by
+For the downweighting interpretation take $0<\lambda\le1$. For the derivative identity at a fixed positive $\lambda_0$, assume $V$ is considered on an open positive neighborhood of $\lambda_0$ and that differentiation may be interchanged with numerator and denominator expectations there; in particular require the relevant weighted quantities
+\[
+\mathbb E[|U|N_B\lambda^{N_B}],
+\qquad
+\mathbb E[N_B\lambda^{N_B}]
+\]
+to be finite at the evaluation point, together with a valid domination condition in a neighborhood. Define the $\lambda$-weighted expectation by
 \[
 \mathbb E_\lambda[X]
 =
@@ -350,7 +356,7 @@ Then
 =
 \operatorname{Cov}_\lambda(U,N_B).
 \]
-Indeed, writing $N(\lambda)=\mathbb E[U\lambda^{N_B}]$ and $D(\lambda)=\mathbb E[\lambda^{N_B}]$, the quotient rule gives
+Indeed, writing $N(\lambda)=\mathbb E[U\lambda^{N_B}]$ and $D(\lambda)=\mathbb E[\lambda^{N_B}]$, differentiation under the expectation and the quotient rule give
 \[
 \lambda\frac{dV}{d\lambda}
 =
@@ -359,18 +365,26 @@ Indeed, writing $N(\lambda)=\mathbb E[U\lambda^{N_B}]$ and $D(\lambda)=\mathbb E
 \frac{N(\lambda)}{D(\lambda)}
 \frac{\mathbb E[N_B\lambda^{N_B}]}{D(\lambda)},
 \]
-which is the weighted covariance.
+which is the weighted covariance. If the modeled family is restricted to $\lambda\le1$, the corresponding statement at $\lambda=1$ is the left derivative under the same dominated-differentiation conditions from below.
 
 \subsection{Gaussian minimal model}
 
-Let $(L,Y)$ be jointly standard normal with correlation $\rho$. Let
+Let $(L,Y)$ be jointly standard normal with correlation $-1\le\rho\le1$. Let
 \[
 S
 =
 \begin{cases}
 1, & Y\ge 0,\\
-\lambda, & Y<0.
+\lambda, & Y<0,
 \end{cases}
+\qquad
+0\le\lambda\le1.
+\]
+Then $S\ge0$ and
+\[
+\mathbb E[S]
+=
+\frac{1+\lambda}{2}>0.
 \]
 Because
 \[
@@ -398,25 +412,27 @@ we obtain
 =
 \frac{1-\lambda}{\sqrt{2\pi}}.
 \]
-Also
-\[
-\mathbb E[S]
-=
-\frac{1+\lambda}{2}.
-\]
 Therefore
 \[
 \mathbb E_{\mathrm{FP}}[L]
 =
 \frac{2(1-\lambda)\rho}{(1+\lambda)\sqrt{2\pi}}.
 \]
-Under the toy parameterization $\lambda=1-q(1-\alpha)$,
+Under the toy parameterization
+\[
+\lambda=1-q(1-\alpha),
+\qquad
+0\le q\le1,
+\qquad
+0\le\alpha\le1,
+\]
+we have $0\le\lambda\le1$ and
 \[
 \mathbb E_{\mathrm{FP}}[L]
 =
 \frac{2q(1-\alpha)\rho}{[2-q(1-\alpha)]\sqrt{2\pi}}.
 \]
-This is an exact result for the Gaussian toy model, not a physical Everett prediction.
+The denominator is strictly positive under the stated parameter domain. This is an exact result for the Gaussian toy model, not a physical Everett prediction.
 
 \subsection{Separate normalization for multiple observers}
 

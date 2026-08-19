@@ -4,13 +4,19 @@ This section states the five core results. Complete proofs, equality/strictness 
 
 \subsection{Covariance identity}
 
-For integrable $X$ and nonnegative $S$ with positive finite mean,
+For $X$ satisfying
+\[
+\mathbb E[|X|]<\infty,
+\qquad
+\mathbb E[|X|S]<\infty,
+\]
+and nonnegative $S$ with $0<\mathbb E[S]<\infty$,
 \[
 \mathbb E_{\mathrm{FP}}[X]-\mathbb E[X]
 =
 \frac{\operatorname{Cov}(X,S)}{\mathbb E[S]}.
 \]
-Hence positive first-person mean uplift is equivalent to positive outcome--accessibility covariance.
+Hence positive first-person mean uplift is equivalent to positive outcome--accessibility covariance. The separate base and weighted integrability conditions are both needed in general.
 
 \subsection{Tail identity}
 
@@ -38,7 +44,15 @@ for every $c$. Positive Pearson correlation alone is not sufficient; nonmonotone
 
 \subsection{Recognition decomposition}
 
-Recognition satisfies
+Under the formal-model assumptions
+\[
+0<\mathbb E[S_R]<\infty,
+\qquad
+\mathbb E[|U_R|]<\infty,
+\qquad
+\mathbb E[|U_R|S_R]<\infty
+\]
+for $R\in\{0,1\}$, recognition satisfies
 \[
 V_1-V_0
 =
@@ -57,7 +71,11 @@ V_1-V_0
 
 \subsection{Policy--QBS interaction}
 
-Let $D=U_1-U_0$ and define
+For the general selector-changing identity, also assume
+\[
+\mathbb E[|U_1|S_0]<\infty,
+\]
+so that the intermediate quantity $Q(U_1,S_0)$ is defined. Let $D=U_1-U_0$ and define
 \[
 I=Q(U_1,S_1)-Q(U_0,S_0).
 \]
@@ -71,7 +89,7 @@ I
 \]
 For a fixed selector, the second term vanishes. If policy improvement increases with branch badness while accessibility decreases with branch badness, the interaction is nonpositive.
 
-The core five remain fixed. Two supplementary results are used for mechanism interpretation: S1 gives cross-branch policy coherence under explicit shared-latent assumptions, and S2 gives predictive-calibration alignment. In S2, if $m(Y)=\mathbb E[U\mid Y]$ and score-measurable accessibility $S=s(Y)$ are comonotone, then
+The core five remain fixed in identity and proof structure; current `main` includes explicit domain assumptions that close the audited integrability gaps in the frozen v0.3 wording. Two supplementary results are used for mechanism interpretation: S1 gives cross-branch policy coherence under explicit shared-latent assumptions, and S2 gives predictive-calibration alignment. In S2, if $m(Y)=\mathbb E[U\mid Y]$ and score-measurable accessibility $S=s(Y)$ are comonotone, then
 \[
 \operatorname{Cov}(U,S)
 =

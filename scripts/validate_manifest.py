@@ -24,6 +24,30 @@ CARD_MD_PATH_RE = re.compile(r"`([^`]+\.md)`")
 NON_EXPERIMENT_PROVENANCE = {
     "fig2_fosd_theorem_illustration.csv",
 }
+
+# These are Git blob identities of the 16 historical E1-E5 CSVs in the frozen
+# v0.3 public-review snapshot (58038763127258bd3e2f0d41708c4dfa01f81fd6).
+# The audit independently verified that current main still has these exact blobs.
+# A LOCKed historical result is therefore content-locked, not merely filename-locked.
+EXPECTED_LOCKED_BLOBS = {
+    "qbs_fosd_robustness_summary.csv": "6db8410a65008b8c2e5e0d68d8d23f88ab65c51e",
+    "qbs_fosd_monotonicity_summary.csv": "e6a8643f66f49d0c2decabfafd0dfe8d69b32970",
+    "qbs_stress_independence_null.csv": "2b20ed1979a1d61a466c77de9f00383b7f8457b1",
+    "qbs_stress_nonmonotone_fosd.csv": "6c76e704db6694bf2c5aa8d2a5ddb27e9d10fba9",
+    "qbs_nonlinear_minimal_mock_summary.csv": "70a578ce86408819e4f441c67cdd3cce4c4d9a3e",
+    "qbs_correlation_uplift_relation.csv": "7faa69c6a55094435a5080dbaaf301f82b46baac",
+    "qbs_paired_policy_selection_decomposition.csv": "7c29ea3052012ed698dc93bb663b769eeb2c0272",
+    "qbs_paired_decomposition_replication_summary.csv": "ba0f31a6c48742fc4f2b2a3fb7d645f789eb5c78",
+    "qbs_stress_recognition_null_corrected.csv": "1da69e2b571c5cb8cd49074a9bc08f9f767b784f",
+    "qbs_interaction_theorem_sign_test.csv": "cbdf79565b0849dcfc726ab40e89e99c86d0e077",
+    "qbs_general_interaction_summary.csv": "1a03ddb836b490692c5171338f36aae7cd8127ba",
+    "qbs_adaptation_total_effect_summary.csv": "d069440e1f754f8d1dd59ef9670c26ba307cc7ab",
+    "qbs_branch_policy_map_correlation_sweep.csv": "fdd8cee538c38f9f2251a455e8335dbf494b0a88",
+    "qbs_branch_policy_map_replication_summary.csv": "db10416234a2e62e0b3de608ac836204f0d366e0",
+    "qbs_probabilistic_execution_corrected.csv": "5d719a64ca3e7cdae503eaf85aa330d352d068a4",
+    "qbs_shared_recognition_contrasts.csv": "f5cfe97be9c43349e8ff7fb431ef29f3ee3f47b6",
+}
+
 EXPECTED_EXPERIMENTS = {
     "E1": {
         "card": "experiments/E1_FOSD.md",
@@ -111,16 +135,23 @@ def split_files(value: str) -> list[str]:
     return [item.strip() for item in value.split(";") if item.strip()]
 
 
-def tracked_processed_csvs() -> set[str]:
+def git_text(*args: str) -> str:
     result = subprocess.run(
-        ["git", "ls-files", "--", "data/processed"],
+        ["git", *args],
         cwd=ROOT,
         check=True,
         capture_output=True,
         text=True,
     )
+    return result.stdout.strip()
+
+
+def tracked_processed_csvs() -> set[str]:
+    output = git_text("ls-files", "--", "data/processed")
     names: set[str] = set()
-    for raw in result.stdout.splitlines():
+    for raw in output.splitlines():
+        if not raw:
+            continue
         path = Path(raw)
         if path.parent.as_posix() != "data/processed":
             raise SystemExit(
@@ -154,6 +185,43 @@ def markdown_h2_section(text: str, heading: str) -> str | None:
             break
         body.append(line)
     return "\n".join(body).strip()
+
+
+def validate_locked_blob_identities(all_locked: set[str], errors: list[str]) -> None:
+    """Require frozen historical CSVs to match both HEAD and working-tree blob identities."""
+    expected_names = set(EXPECTED_LOCKED_BLOBS)
+    if all_locked != expected_names:
+        missing = sorted(all_locked - expected_names)
+        extra = sorted(expected_names - all_locked)
+        if missing:
+            errors.append(
+                "locked manifest CSV(s) lack a frozen blob identity: " + ", ".join(missing)
+            )
+        if extra:
+            errors.append(
+                "frozen blob contract contains CSV(s) absent from locked manifest mappings: "
+                + ", ".join(extra)
+            )
+        return
+
+    for name in sorted(all_locked):
+        expected_sha = EXPECTED_LOCKED_BLOBS[name]
+        relative = f"data/processed/{name}"
+        try:
+            head_sha = git_text("rev-parse", f"HEAD:{relative}")
+            worktree_sha = git_text("hash-object", relative)
+        except subprocess.CalledProcessError as exc:
+            errors.append(f"{name}: unable to resolve Git blob identity: {exc}")
+            continue
+
+        if head_sha != expected_sha:
+            errors.append(
+                f"{name}: committed locked blob drift: HEAD has {head_sha}, expected {expected_sha}"
+            )
+        if worktree_sha != expected_sha:
+            errors.append(
+                f"{name}: working-tree locked blob drift: {worktree_sha}, expected {expected_sha}"
+            )
 
 
 def main() -> None:
@@ -298,6 +366,8 @@ def main() -> None:
             + ", ".join(sorted(cross_class))
         )
 
+    validate_locked_blob_identities(all_locked, errors)
+
     tracked = tracked_processed_csvs()
     classified = all_locked | all_reproduction | NON_EXPERIMENT_PROVENANCE
     if tracked != classified:
@@ -322,11 +392,11 @@ def main() -> None:
         raise SystemExit("Manifest validation failed:\n" + "\n".join(errors))
 
     print(
-        "Manifest validation passed: E1-E5 canonical locked/current mappings, manifest theorem "
-        "links, experiment-card theorem tokens/routes, and card CSV references agree; provenance "
-        f"classes are disjoint ({len(all_locked)} locked CSVs, {len(all_reproduction)} current "
-        f"reproduction CSVs); all {len(tracked)} tracked flat processed-data CSVs are explicitly "
-        "classified."
+        "Manifest validation passed: E1-E5 canonical locked/current mappings, frozen historical "
+        "blob identities, manifest theorem links, experiment-card theorem tokens/routes, and card "
+        f"CSV references agree; provenance classes are disjoint ({len(all_locked)} locked CSVs, "
+        f"{len(all_reproduction)} current reproduction CSVs); all {len(tracked)} tracked flat "
+        "processed-data CSVs are explicitly classified."
     )
 
 

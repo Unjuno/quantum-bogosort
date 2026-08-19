@@ -12,12 +12,30 @@ R
 (U_R,S_R).
 ```
 
-For a policy `pi` with nonnegative accessibility and positive finite expected accessibility:
+For a policy `pi`, the normalized first-person measure requires nonnegative accessibility with positive finite mean. Finite value/covariance decompositions additionally require both base and weighted outcome integrability:
+
+```math
+S_\pi\ge0,
+\qquad
+0<E[S_\pi]<\infty,
+\qquad
+E[|U_\pi|]<\infty,
+\qquad
+E[|U_\pi|S_\pi]<\infty.
+```
+
+Then:
 
 ```math
 V_{FP}(\pi)
 =
 \frac{E_\mu[U_\pi S_\pi]}{E_\mu[S_\pi]}.
+```
+
+For the general selector-changing T5 decomposition, the intermediate `Q(U_1,S_0)` term additionally requires:
+
+```math
+E[|U_1|S_0]<\infty.
 ```
 
 The repository separates three questions:
@@ -36,7 +54,7 @@ The repository separates three questions:
 | T4 | Recognition decomposes into trajectory and conditioning effects | EXACT THEOREM | [`theory/core_theorems.md`](../theory/core_theorems.md) | E3 |
 | T5 | Policy–QBS interaction decomposes into targeting and selector-map effects | EXACT THEOREM | [`theory/core_theorems.md`](../theory/core_theorems.md) | E4 |
 
-The locked core theorem set stops at T5.
+The locked core theorem set stops at T5. Current `main` preserves every identity/proof while making the finite-integrability domain explicit; the frozen v0.3 tag remains unchanged.
 
 ## 3. Core experiment map: E1–E5
 
@@ -132,13 +150,21 @@ P_{FP}(Z\in A)
 \frac{E[\mathbf 1_{\{Z\in A\}}S_T]}{E[S_T]}.
 ```
 
-For a discrete present state:
+For a discrete atom with positive base probability:
+
+```math
+P(Z=z)>0,
+```
+
+we may write:
 
 ```math
 P_{FP}(Z=z)
 =
 \frac{E[S_T\mid Z=z]P(Z=z)}{E[S_T]}.
 ```
+
+If `P(Z=z)=0`, absolute continuity of the weighted measure gives `P_FP(Z=z)=0`; no pointwise conditional expectation at that null atom is needed.
 
 Thus differential future accessibility can reweight present self-location toward states associated with higher expected future accessibility. This is a conditioning/change-of-measure statement, not backward causation or a causal change in the base probability law.
 
@@ -167,6 +193,8 @@ The authoritative classification of theorem claims, simulations, assumptions, br
 
 Important boundaries include:
 
+- finite mean/covariance decompositions require both base and weighted outcome integrability;
+- the general T5 selector-changing identity requires the cross-integrability of `U_1` against `S_0`;
 - positive covariance does not by itself imply FOSD;
 - pure reweighting does not create support absent from the fixed-policy base measure;
 - zero expected accessibility makes the normalized FP measure undefined;

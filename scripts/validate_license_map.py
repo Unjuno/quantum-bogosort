@@ -68,7 +68,9 @@ def categories(path: str) -> set[str]:
 def main() -> None:
     errors: list[str] = []
     for path in REQUIRED_FILES:
-        if not path.is_file():
+        if path.is_symlink():
+            errors.append(f"licensing-related path must not be a symlink: {path.relative_to(ROOT)}")
+        elif not path.is_file():
             errors.append(f"missing licensing-related file: {path.relative_to(ROOT)}")
     if errors:
         raise SystemExit("License-map validation failed:\n" + "\n".join(errors))
@@ -148,7 +150,14 @@ def main() -> None:
 
     tracked = tracked_files()
     classified_counts = {"MIT": 0, "CC-BY-4.0": 0, "CC0-1.0": 0, "license-notice": 0}
+    symlink_count = 0
     for path in sorted(tracked):
+        filesystem_path = ROOT / path
+        if filesystem_path.is_symlink():
+            errors.append(f"tracked symlink is outside the repository file/provenance contract: {path}")
+            symlink_count += 1
+            continue
+
         matched = categories(path)
         if not matched:
             errors.append(f"unclassified tracked file: {path}")
@@ -162,10 +171,11 @@ def main() -> None:
         raise SystemExit("License-map validation failed:\n" + "\n".join(errors))
 
     print(
-        "License-map validation passed: every tracked file maps to exactly one path-explicit "
-        f"class ({classified_counts['MIT']} MIT, {classified_counts['CC-BY-4.0']} CC BY 4.0, "
-        f"{classified_counts['CC0-1.0']} CC0, {classified_counts['license-notice']} license/notice); "
-        "root notices, README boundary, and CFF summary remain consistent."
+        "License-map validation passed: every tracked nonsymlink file maps to exactly one "
+        f"path-explicit class ({classified_counts['MIT']} MIT, {classified_counts['CC-BY-4.0']} "
+        f"CC BY 4.0, {classified_counts['CC0-1.0']} CC0, "
+        f"{classified_counts['license-notice']} license/notice; {symlink_count} symlinks); root "
+        "notices, README boundary, and CFF summary remain consistent."
     )
 
 

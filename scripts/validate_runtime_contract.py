@@ -3,8 +3,8 @@
 This checks the primary numerical package pins and their installed versions,
 consistency between `.python-version` and GitHub Actions, audited reusable-action
 SHAs, checkout credential isolation, required validation/manuscript jobs and commands,
-and a small read-only workflow security contract. It does not claim that every
-transitive wheel is cryptographically locked.
+and the read-only/clean-worktree workflow security contract. It does not claim that
+every transitive wheel is cryptographically locked.
 """
 from __future__ import annotations
 
@@ -70,6 +70,7 @@ REQUIRED_REPOSITORY_COMMANDS = [
     "python figures/generate_pdf_figures.py",
     "python scripts/validate_figure_set.py",
     "python scripts/validate_svg_sources.py",
+    "python scripts/validate_worktree_artifacts.py",
     "git diff --exit-code --",
     "data/processed/fig2_fosd_theorem_illustration.csv",
     "git ls-files --others --exclude-standard",
@@ -254,7 +255,7 @@ def main() -> None:
         "Runtime contract validation passed: "
         f"Python {expected_python}; {package_summary}; ubuntu-24.04; required jobs/commands present; "
         "read-only workflow security contract; audited checkout/setup-python/upload-artifact "
-        "SHAs and multiplicities match exactly."
+        "SHAs and multiplicities match exactly; ignored/untracked artifact validation required."
     )
 
 

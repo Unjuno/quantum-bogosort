@@ -9,8 +9,9 @@ identity, proof step, sign result, and physical boundary unchanged.
 
 The canonical TeX source is normalized only at those four approved places and must then
 match the frozen v0.3 Git blob. In addition, the corresponding explicit domain assumptions
-must remain present in the rendered theory pages and manuscript theorem/proof surfaces so
-a later documentation edit cannot silently reintroduce the old incomplete domain wording.
+must remain present in the rendered theory pages, experiment cards, and manuscript theorem/
+proof surfaces so a later documentation edit cannot silently reintroduce the old incomplete
+domain wording.
 """
 from __future__ import annotations
 
@@ -53,6 +54,22 @@ DOMAIN_SURFACES: dict[Path, tuple[str, ...]] = {
         r"E[|X|S]<\infty",
     ),
     ROOT / "theory/theorem_4_5.md": (
+        r"E[|U_R|]<\infty",
+        r"E[|U_R|S_R]<\infty",
+        r"E[|U_1|S_0]<\infty",
+    ),
+    ROOT / "experiments/E1_FOSD.md": (
+        r"0<E[S]<\infty",
+        r"E[|X|]<\infty",
+        r"E[|X|S]<\infty",
+    ),
+    ROOT / "experiments/E3_RECOGNITION.md": (
+        r"0<E[S_R]<\infty",
+        r"E[|U_R|]<\infty",
+        r"E[|U_R|S_R]<\infty",
+    ),
+    ROOT / "experiments/E4_INTERACTION.md": (
+        r"0<E[S_R]<\infty",
         r"E[|U_R|]<\infty",
         r"E[|U_R|S_R]<\infty",
         r"E[|U_1|S_0]<\infty",
@@ -151,7 +168,7 @@ def main() -> None:
         "T5 cross-integrability), "
         f"theory/core_theorems.tex matches frozen v0.3 commit {FROZEN_V03_COMMIT[:12]}… "
         f"blob {FROZEN_V03_BLOB}; explicit domain assumptions are also present across "
-        f"{len(DOMAIN_SURFACES)} rendered/manuscript surfaces."
+        f"{len(DOMAIN_SURFACES)} theory/card/manuscript surfaces."
     )
 
 

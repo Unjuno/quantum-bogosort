@@ -18,14 +18,16 @@ silently reappearing:
 * binary/Gaussian toys: accessibility/execution parameters must remain in their stated
   nonnegative domains and the binary model must exclude zero total accessibility.
 
-The S2.8--S2.10 corrections must be present in the canonical supplementary note, compiled
-manuscript appendix, and corresponding theorem-audit record. Repository-only notes are
-locked directly at their canonical source; repeated-filter and Gaussian conditions are also
-required on the manuscript derivation surface.
+The audited source/manuscript/audit surfaces are Git-blob locked in both HEAD and the
+working tree before semantic snippet checks. This prevents required formulas or boundary
+language from surviving only in comments/literal code while the actual reviewed surface
+drifts; any wording or mathematical change to these surfaces requires an explicit audit
+contract update.
 """
 from __future__ import annotations
 
 from pathlib import Path
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -127,6 +129,23 @@ REQUIRED_SNIPPETS: dict[Path, tuple[str, ...]] = {
     ),
 }
 
+EXPECTED_SURFACE_BLOBS = {
+    "supplementary/confidence_envelope_certificate.md": "8980a4336d2bdc14bd7bf56931c6e9f2bb6535b6",
+    "paper/sections/confidence_envelope_appendix.tex": "02e9623f94c4fced3ec300bd76da8a5e1e47dbb4",
+    "docs/s2_confidence_envelope_audit.md": "fc80b9ff4db9768c1b2c505e04f30a09039c9966",
+    "supplementary/light_tail_certificate.md": "e0a4f00db4f3da0174d8f353d6fe9200934c56b3",
+    "paper/sections/light_tail_certificate_appendix.tex": "9fd831ecfa574c50a82d9fde07ea8b2c968c3390",
+    "docs/s2_light_tail_certificate_audit.md": "e307d3d733fc862f1798f05f59ce209e4a073941",
+    "supplementary/robust_mom_certificate.md": "c3316494c58f1fb221cac4c93ea67abd1533fbad",
+    "paper/sections/robust_mom_certificate_appendix.tex": "fba18e511bc803c74fab4a435b8f6e7e5943a213",
+    "docs/s2_robust_mom_certificate_audit.md": "1f232fb48d6ab64deb6cf4cdd02be6218076f0be",
+    "supplementary/recognition_time.md": "37c808db43bf02a340cfffa920040edc8d1e25c4",
+    "supplementary/repeated_filtering.md": "73a79b39e092ca24c27eb5d5a55aed42d620ed6a",
+    "supplementary/binary_soft_qbs.md": "d3dcbf281e7111f432d1acf4ba5a29aad2e64209",
+    "supplementary/gaussian_model.md": "e8f9a6c6d5a6683459e86b32f91ef61f610046c7",
+    "paper/sections/appendix.tex": "f55de6faf4ce50edd5ba301670ce58810a9db49a",
+}
+
 # Guard the mathematical relationships, not only prose markers.
 PAIRWISE_FORMULAS: tuple[tuple[Path, Path, tuple[str, ...]], ...] = (
     (
@@ -152,20 +171,58 @@ PAIRWISE_FORMULAS: tuple[tuple[Path, Path, tuple[str, ...]], ...] = (
 )
 
 
+def git_text(*args: str) -> str:
+    result = subprocess.run(
+        ["git", *args],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
 def main() -> None:
     errors: list[str] = []
     texts: dict[Path, str] = {}
 
+    expected_paths = {path.relative_to(ROOT).as_posix() for path in REQUIRED_SNIPPETS}
+    if set(EXPECTED_SURFACE_BLOBS) != expected_paths:
+        errors.append("validator self-contract: supplementary blob map differs from REQUIRED_SNIPPETS")
+
     for path, snippets in REQUIRED_SNIPPETS.items():
-        if not path.is_file():
-            errors.append(f"missing supplementary consistency surface: {path.relative_to(ROOT)}")
+        relative = path.relative_to(ROOT).as_posix()
+        if path.is_symlink() or not path.is_file():
+            errors.append(f"missing/invalid supplementary consistency surface: {relative}")
             continue
+
+        expected_blob = EXPECTED_SURFACE_BLOBS.get(relative)
+        if expected_blob is None:
+            errors.append(f"{relative}: no audited supplementary-surface blob identity")
+            continue
+        try:
+            head_blob = git_text("rev-parse", f"HEAD:{relative}")
+            worktree_blob = git_text("hash-object", relative)
+        except subprocess.CalledProcessError as exc:
+            errors.append(f"{relative}: unable to resolve Git blob identity: {exc}")
+            continue
+        if head_blob != expected_blob:
+            errors.append(
+                f"{relative}: committed supplementary-surface drift: "
+                f"HEAD has {head_blob}, expected {expected_blob}"
+            )
+        if worktree_blob != expected_blob:
+            errors.append(
+                f"{relative}: working-tree supplementary-surface drift: "
+                f"{worktree_blob}, expected {expected_blob}"
+            )
+
         text = path.read_text(encoding="utf-8")
         texts[path] = text
         for snippet in snippets:
             if snippet not in text:
                 errors.append(
-                    f"{path.relative_to(ROOT)}: missing audited supplementary invariant {snippet!r}"
+                    f"{relative}: missing audited supplementary invariant {snippet!r}"
                 )
 
     for left, right, formulas in PAIRWISE_FORMULAS:
@@ -188,7 +245,8 @@ def main() -> None:
     print(
         "Supplementary consistency validation passed: audited S2.8--S2.10, recognition-time, "
         "repeated-filter, and binary/Gaussian domain/totality boundaries remain locked across "
-        f"{len(REQUIRED_SNIPPETS)} source/manuscript/audit surfaces."
+        f"{len(REQUIRED_SNIPPETS)} source/manuscript/audit surfaces; all audited HEAD/worktree "
+        "blob identities and semantic invariants match."
     )
 
 

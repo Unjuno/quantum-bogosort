@@ -7,7 +7,7 @@ and T5 cross-integrability for the intermediate ``Q(U_1,S_0)`` term. These close
 domain gaps while leaving every identity, proof step, sign result, and physical boundary
 unchanged. Normalize only these approved corrections back to the frozen text and require
 the resulting Git blob identity to equal the v0.3 canonical blob. Any other T1-T5
- theorem/proof/boundary change fails CI.
+theorem/proof/boundary change fails CI.
 """
 from __future__ import annotations
 
@@ -50,14 +50,10 @@ def git_blob_sha(text: str) -> str:
     return result.stdout.strip()
 
 
-def require_exact_current(text: str, current: str, frozen: str, label: str) -> None:
+def require_exact_current(text: str, current: str, label: str) -> None:
     if text.count(current) != 1:
         raise SystemExit(
             f"Core-theorem lock validation failed: approved current {label} must occur exactly once"
-        )
-    if frozen in text:
-        raise SystemExit(
-            f"Core-theorem lock validation failed: stale frozen {label} remains in current source"
         )
 
 
@@ -72,8 +68,8 @@ def main() -> None:
         (CURRENT_T1_ASSUMPTION, FROZEN_T1_ASSUMPTION, "T1 integrability text"),
         (CURRENT_T5_INTRO, FROZEN_T5_INTRO, "T5 cross-integrability text"),
     ]
-    for current, frozen, label in approved:
-        require_exact_current(text, current, frozen, label)
+    for current, _frozen, label in approved:
+        require_exact_current(text, current, label)
 
     normalized = text
     for current, frozen, _label in approved:

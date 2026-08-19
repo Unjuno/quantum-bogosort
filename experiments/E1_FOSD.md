@@ -11,7 +11,19 @@ The experiment evaluates several base distributions and monotone soft-accessibil
 1. accessibility independent of outcome;
 2. nonmonotone accessibility.
 
-The theoretical benchmark is:
+The theoretical benchmark is used under the T1 domain conditions
+
+```math
+S\ge0,
+\qquad
+0<E[S]<\infty,
+\qquad
+E[|X|]<\infty,
+\qquad
+E[|X|S]<\infty,
+```
+
+and is:
 
 ```math
 E_{FP}[X]-E[X]
@@ -54,7 +66,7 @@ This experiment verifies the formal weighted-measure structure. It does not esta
 
 ## ERROR CHECK
 
-- Covariance identities are exact algebraic benchmarks.
+- Covariance identities are exact algebraic benchmarks under their stated domain conditions.
 - Independence null is required to remain near zero up to Monte Carlo error.
 - Nonmonotone controls are expected to permit FOSD failure.
 - CI re-runs the reproduction script on every relevant pull request.

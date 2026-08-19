@@ -2,13 +2,17 @@
 
 The repository intentionally keeps citation metadata on the current frozen public-review
 snapshot while `main` continues review/development. This validator therefore checks the
-CFF fields against STATUS.md rather than assuming CITATION.cff must describe HEAD.
+CFF fields against STATUS.md rather than assuming CITATION.cff must describe HEAD. The
+audited CFF/STATUS source blobs are fixed as well, so the narrow parser cannot report a
+false PASS after a syntactically malformed YAML edit that happens to preserve extracted
+strings.
 """
 from __future__ import annotations
 
 from datetime import date
 from pathlib import Path
 import re
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 CITATION = ROOT / "CITATION.cff"
@@ -18,6 +22,10 @@ EXPECTED_CURRENT_TAG = "v0.3-public-review"
 EXPECTED_CURRENT_COMMIT = "58038763127258bd3e2f0d41708c4dfa01f81fd6"
 EXPECTED_ARCHIVED_TAG = "v0.2-public-review"
 EXPECTED_ARCHIVED_COMMIT = "7405f7408f74fa32b16d1cc9f624070cc14624ab"
+EXPECTED_METADATA_BLOBS = {
+    "CITATION.cff": "2f9a3fd738a875c5aa79ebc11c88bd5c0168d4e5",
+    "STATUS.md": "34ca69670417107bf23166bc63f87c90ca9a12fe",
+}
 REQUIRED_KEYWORDS = {
     "quantum foundations",
     "Everett interpretation",
@@ -44,6 +52,17 @@ STATUS_DATE_RE = re.compile(r"^\*\*Snapshot date:\*\*\s*(\d{4}-\d{2}-\d{2})\s*$"
 STATUS_TAG_RE = re.compile(r"^- tag/Release:\s*`(v[^`]+)`\s*$", re.MULTILINE)
 STATUS_COMMIT_RE = re.compile(r"^- commit:\s*`([0-9a-f]{40})`\s*$", re.MULTILINE)
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def git_text(*args: str) -> str:
+    result = subprocess.run(
+        ["git", *args],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
 
 
 def unquote(value: str) -> str:
@@ -111,13 +130,34 @@ def parse_cff(text: str) -> tuple[dict[str, str], list[str], list[str], list[str
     return scalars, authors, keywords, errors
 
 
+def validate_metadata_blobs(errors: list[str]) -> None:
+    for relative, expected_blob in EXPECTED_METADATA_BLOBS.items():
+        path = ROOT / relative
+        if path.is_symlink() or not path.is_file():
+            errors.append(f"{relative}: missing/invalid audited snapshot-metadata file")
+            continue
+        try:
+            head_blob = git_text("rev-parse", f"HEAD:{relative}")
+            worktree_blob = git_text("hash-object", relative)
+        except subprocess.CalledProcessError as exc:
+            errors.append(f"{relative}: unable to resolve Git blob identity: {exc}")
+            continue
+        if head_blob != expected_blob:
+            errors.append(
+                f"{relative}: committed snapshot-metadata drift: "
+                f"HEAD has {head_blob}, expected {expected_blob}"
+            )
+        if worktree_blob != expected_blob:
+            errors.append(
+                f"{relative}: working-tree snapshot-metadata drift: "
+                f"{worktree_blob}, expected {expected_blob}"
+            )
+
+
 def main() -> None:
     errors: list[str] = []
 
-    if not CITATION.is_file():
-        raise SystemExit("Missing CITATION.cff")
-    if not STATUS.is_file():
-        raise SystemExit("Missing STATUS.md")
+    validate_metadata_blobs(errors)
 
     scalars, authors, keywords, parse_errors = parse_cff(CITATION.read_text(encoding="utf-8"))
     errors.extend(parse_errors)
@@ -209,7 +249,8 @@ def main() -> None:
         raise SystemExit("Citation metadata validation failed:\n" + "\n".join(errors))
 
     print(
-        "Citation metadata validation passed: CFF 1.2.0, canonical repository URLs, "
+        "Citation metadata validation passed: audited CITATION.cff/STATUS.md blobs, CFF 1.2.0, "
+        "canonical repository URLs, "
         f"{len(authors)} author entry, {len(keywords)} keywords, and frozen snapshot "
         f"{EXPECTED_CURRENT_TAG} / {EXPECTED_CURRENT_COMMIT[:12]}… / {released} aligned with STATUS.md."
     )

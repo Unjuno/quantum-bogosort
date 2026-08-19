@@ -4,7 +4,9 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 
 required = [
-    "STATUS.md", "DEVELOPMENT_STATUS.md", "ROADMAP.md", "CHANGELOG.md", "CONTRIBUTING.md",
+    "README.md", "STATUS.md", "DEVELOPMENT_STATUS.md", "ROADMAP.md", "CHANGELOG.md",
+    "CONTRIBUTING.md", "CITATION.cff", "requirements.txt", ".python-version",
+    ".github/workflows/validate.yml",
     "docs/research_map.md", "docs/notation.md", "docs/claims_and_assumptions.md",
     "docs/everett_bridge_tests.md", "docs/manuscript_claim_audit.md", "docs/v0.2_release_audit.md",
     "docs/s2_stack_review_map.md", "docs/s2_stack_semantic_audit.md",
@@ -16,8 +18,11 @@ required = [
     "docs/s2_explained_variance_audit.md",
     ".github/ISSUE_TEMPLATE/proof-counterexample.md", ".github/ISSUE_TEMPLATE/prior-art.md",
     ".github/ISSUE_TEMPLATE/reproducibility.md", ".github/ISSUE_TEMPLATE/everett-bridge.md",
-    "experiments/E1_FOSD.md", "experiments/E2_LEARNED_AGENT.md", "experiments/E3_RECOGNITION.md",
-    "experiments/E4_INTERACTION.md", "experiments/E5_BRANCH_MAP.md",
+    "experiments/README.md", "experiments/E1_FOSD.md", "experiments/E2_LEARNED_AGENT.md",
+    "experiments/E3_RECOGNITION.md", "experiments/E4_INTERACTION.md", "experiments/E5_BRANCH_MAP.md",
+    "experiments/exp1_fosd_and_stress.py", "experiments/exp2_minimal_agent.py",
+    "experiments/exp3_recognition_decomposition.py", "experiments/exp4_interaction.py",
+    "experiments/exp5_branch_map.py", "experiments/manifest.csv",
     "supplementary/README.md", "supplementary/multi_observer.md", "supplementary/binary_soft_qbs.md",
     "supplementary/repeated_filtering.md", "supplementary/gaussian_model.md", "supplementary/adaptive_agent.md",
     "supplementary/finite_sample_certificate.md", "supplementary/selection_validity.md",
@@ -33,7 +38,10 @@ required = [
     "figures/generated/fig3_recognition_decomposition.svg", "figures/generated/fig4_interaction_sign.svg",
     "figures/generated/fig5_adaptation_quality.svg", "figures/generated/fig6_branch_coherence.svg",
     "figures/generated/fig7_predictive_alignment.svg",
+    "data/processed/fig2_fosd_theorem_illustration.csv",
     "scripts/validate_github_markdown_render.py", "scripts/validate_latex_sources.py",
+    "scripts/validate_manifest.py", "scripts/validate_markdown_links.py",
+    "scripts/validate_markdown_math.py", "scripts/validate_repository_structure.py",
     "scripts/validate_svg_sources.py",
 ]
 

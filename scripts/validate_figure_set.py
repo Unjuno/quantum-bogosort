@@ -1,9 +1,13 @@
-"""Validate the exact public SVG and manuscript PDF figure output sets."""
+"""Validate the exact figure sets and shared SVG/PDF numerical-data contract."""
 from pathlib import Path
+import ast
 
 ROOT = Path(__file__).resolve().parents[1]
 SVG_DIR = ROOT / "figures" / "generated"
 PDF_DIR = ROOT / "figures" / "generated_pdf"
+FIGURE_DATA = ROOT / "figures" / "figure_data.py"
+SVG_GENERATOR = ROOT / "figures" / "generate_figures.py"
+PDF_GENERATOR = ROOT / "figures" / "generate_pdf_figures.py"
 EXPECTED_SVGS = {
     "fig1_framework.svg",
     "fig2_fosd.svg",
@@ -20,6 +24,29 @@ EXPECTED_PDFS = {
     "fig4_interaction_sign.pdf",
     "fig5_adaptation_quality.pdf",
     "fig6_branch_coherence.pdf",
+}
+SHARED_DATA_FUNCTIONS = {
+    "fig2": "fosd_curves",
+    "fig3": "recognition_bar_data",
+    "fig4": "interaction_bar_data",
+    "fig5": "adaptation_line_data",
+    "fig6": "branch_line_data",
+}
+RENDERER_FUNCTIONS = {
+    SVG_GENERATOR: {
+        "fig2": "fig2",
+        "fig3": "fig3",
+        "fig4": "fig4",
+        "fig5": "fig5",
+        "fig6": "fig6",
+    },
+    PDF_GENERATOR: {
+        "fig2": "fig2_fosd",
+        "fig3": "fig3_recognition",
+        "fig4": "fig4_interaction",
+        "fig5": "fig5_adaptation",
+        "fig6": "fig6_branch_coherence",
+    },
 }
 
 
@@ -51,17 +78,102 @@ def check_exact(directory: Path, expected: set[str], label: str, errors: list[st
         )
 
 
+def parsed_module(path: Path, errors: list[str]) -> ast.Module | None:
+    if path.is_symlink() or not path.is_file():
+        errors.append(
+            f"missing/invalid figure source: {path.relative_to(ROOT)} "
+            "(nonsymlink regular file required)"
+        )
+        return None
+    try:
+        return ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    except SyntaxError as exc:
+        errors.append(f"{path.relative_to(ROOT)}: unable to parse Python AST: {exc}")
+        return None
+
+
+def imported_from_figure_data(tree: ast.Module) -> set[str]:
+    imported: set[str] = set()
+    for node in tree.body:
+        if isinstance(node, ast.ImportFrom) and node.module == "figure_data" and node.level == 0:
+            imported.update(alias.name for alias in node.names)
+    return imported
+
+
+def function_call_names(tree: ast.Module, function_name: str) -> list[str] | None:
+    matches = [
+        node for node in tree.body
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == function_name
+    ]
+    if len(matches) != 1:
+        return None
+    names: list[str] = []
+    for node in ast.walk(matches[0]):
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+            names.append(node.func.id)
+    return names
+
+
+def check_shared_data_contract(errors: list[str]) -> None:
+    data_tree = parsed_module(FIGURE_DATA, errors)
+    if data_tree is None:
+        return
+    data_definitions = {
+        node.name
+        for node in data_tree.body
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+    }
+    expected_shared = set(SHARED_DATA_FUNCTIONS.values())
+    missing_data_functions = sorted(expected_shared - data_definitions)
+    if missing_data_functions:
+        errors.append(
+            "figures/figure_data.py: missing shared numerical-data function(s): "
+            + ", ".join(missing_data_functions)
+        )
+
+    for renderer_path, functions in RENDERER_FUNCTIONS.items():
+        tree = parsed_module(renderer_path, errors)
+        if tree is None:
+            continue
+        imported = imported_from_figure_data(tree)
+        missing_imports = sorted(expected_shared - imported)
+        if missing_imports:
+            errors.append(
+                f"{renderer_path.relative_to(ROOT)}: missing shared figure_data import(s): "
+                + ", ".join(missing_imports)
+            )
+
+        for figure_id, renderer_function in functions.items():
+            required_call = SHARED_DATA_FUNCTIONS[figure_id]
+            calls = function_call_names(tree, renderer_function)
+            if calls is None:
+                errors.append(
+                    f"{renderer_path.relative_to(ROOT)}: expected exactly one top-level "
+                    f"renderer function {renderer_function}"
+                )
+                continue
+            count = calls.count(required_call)
+            if count != 1:
+                errors.append(
+                    f"{renderer_path.relative_to(ROOT)}:{renderer_function}: shared numerical "
+                    f"function {required_call} must be called exactly once; got {count}"
+                )
+
+
 def main() -> None:
     errors: list[str] = []
     check_exact(SVG_DIR, EXPECTED_SVGS, "public SVG set", errors)
     check_exact(PDF_DIR, EXPECTED_PDFS, "manuscript PDF figure set", errors)
+    check_shared_data_contract(errors)
 
     if errors:
         raise SystemExit("Figure-set validation failed:\n" + "\n".join(errors))
 
     print(
         "Figure-set validation passed: exact nonsymlink regular-file "
-        f"{len(EXPECTED_SVGS)}-SVG public set and {len(EXPECTED_PDFS)}-PDF manuscript set present."
+        f"{len(EXPECTED_SVGS)}-SVG public set and {len(EXPECTED_PDFS)}-PDF manuscript set present; "
+        "Figures 2-6 in both renderers each call the canonical shared numerical-data function "
+        "exactly once."
     )
 
 

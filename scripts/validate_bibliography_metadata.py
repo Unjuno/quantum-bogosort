@@ -3,7 +3,7 @@
 The manuscript intentionally uses the stock ``plain`` BibTeX style. Machine-readable
 ``eprint``/``doi`` fields are therefore paired with standard printable fields:
 arXiv-only records are ``@misc`` entries with ``howpublished = {arXiv:<id>}``, while
-journal records are ``@article`` entries with a printable ``note = {doi:<doi>}``.
+journal and book-chapter records carry a printable ``note = {doi:<doi>}``.
 """
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ ARXIV_NEW_RE = re.compile(r"^\d{4}\.\d{4,5}(?:v\d+)?$")
 ARXIV_OLD_RE = re.compile(r"^[a-z-]+/\d{7}(?:v\d+)?$", re.IGNORECASE)
 ARXIV_CLASS_RE = re.compile(r"^[A-Za-z]+(?:[.-][A-Za-z]+)*$")
 DOI_RE = re.compile(r"^10\.\d{4,9}/\S+$")
-ALLOWED_TYPES = {"article", "misc"}
+ALLOWED_TYPES = {"article", "incollection", "misc"}
 
 
 def split_entries(text: str) -> list[tuple[str, str, str]]:
@@ -81,6 +81,12 @@ def parse_fields(key: str, body: str, errors: list[str]) -> dict[str, str]:
     return fields
 
 
+def require_fields(key: str, fields: dict[str, str], names: tuple[str, ...], errors: list[str]) -> None:
+    for name in names:
+        if not fields.get(name, "").strip():
+            errors.append(f"{key}: missing/nonempty required field {name}")
+
+
 def main() -> None:
     errors: list[str] = []
     if not BIB.is_file():
@@ -98,6 +104,7 @@ def main() -> None:
     dois: dict[str, str] = {}
     eprints: dict[str, str] = {}
     article_count = 0
+    incollection_count = 0
     misc_count = 0
 
     for entry_type, key, body in entries:
@@ -107,13 +114,11 @@ def main() -> None:
 
         if entry_type not in ALLOWED_TYPES:
             errors.append(
-                f"{key}: bibliography contract permits only @article/@misc, got @{entry_type}"
+                f"{key}: bibliography contract permits only @article/@incollection/@misc, got @{entry_type}"
             )
 
         fields = parse_fields(key, body, errors)
-        for required in ("author", "title", "year"):
-            if not fields.get(required, "").strip():
-                errors.append(f"{key}: missing/nonempty required field {required}")
+        require_fields(key, fields, ("author", "title", "year"), errors)
 
         year = fields.get("year", "")
         if year and not re.fullmatch(r"(?:19|20)\d{2}", year):
@@ -127,16 +132,36 @@ def main() -> None:
 
         if entry_type == "article":
             article_count += 1
-            if not journal:
-                errors.append(f"{key}: @article requires a journal under the current contract")
-            if not doi:
-                errors.append(f"{key}: journal @article requires a DOI under the current contract")
+            require_fields(key, fields, ("journal", "volume", "pages", "doi"), errors)
             if eprint:
                 errors.append(
                     f"{key}: current @article contract uses DOI publication provenance, not eprint"
                 )
             if howpublished:
                 errors.append(f"{key}: @article must not use howpublished")
+            if fields.get("booktitle") or fields.get("publisher"):
+                errors.append(f"{key}: @article must not use book-chapter fields")
+            if doi and note != f"doi:{doi}":
+                errors.append(
+                    f"{key}: stock plain.bst printable DOI note must be exactly 'doi:{doi}'"
+                )
+
+        elif entry_type == "incollection":
+            incollection_count += 1
+            require_fields(
+                key,
+                fields,
+                ("booktitle", "editor", "publisher", "pages", "doi"),
+                errors,
+            )
+            if journal:
+                errors.append(f"{key}: @incollection must not contain journal")
+            if eprint:
+                errors.append(
+                    f"{key}: current @incollection contract uses DOI publication provenance, not eprint"
+                )
+            if howpublished:
+                errors.append(f"{key}: @incollection must not use howpublished")
             if doi and note != f"doi:{doi}":
                 errors.append(
                     f"{key}: stock plain.bst printable DOI note must be exactly 'doi:{doi}'"
@@ -146,6 +171,8 @@ def main() -> None:
             misc_count += 1
             if journal:
                 errors.append(f"{key}: arXiv @misc must not contain journal")
+            if fields.get("booktitle") or fields.get("publisher"):
+                errors.append(f"{key}: arXiv @misc must not use publication-container fields")
             if doi:
                 errors.append(f"{key}: arXiv @misc must not contain DOI")
             if note:
@@ -200,7 +227,8 @@ def main() -> None:
 
     print(
         "Bibliography metadata validation passed: "
-        f"{len(entries)} unique records ({article_count} journal @article, {misc_count} arXiv @misc); "
+        f"{len(entries)} unique records ({article_count} journal @article, "
+        f"{incollection_count} book-chapter @incollection, {misc_count} arXiv @misc); "
         f"{len(dois)} unique printable DOI records and {len(eprints)} unique printable arXiv "
         "identifiers/classes validated for stock plain.bst."
     )

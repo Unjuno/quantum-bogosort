@@ -1,13 +1,13 @@
 """Verify the canonical standalone T1-T5 TeX body against frozen v0.3.
 
 The frozen v0.3 snapshot remains untouched. Current ``main`` intentionally differs in
-exactly three audited textual places: a version-neutral title, explicit base-integrability
-of policy utility in the setup, and explicit base-integrability of the generic T1 outcome.
-The latter two close a real domain gap: weighted integrability alone does not imply that
-``E[X]``/``Cov(X,S)`` exist, while separate integrability of X and S alone does not imply
-weighted integrability. Normalize only these approved corrections back to the frozen text
-and require the resulting Git blob identity to equal the v0.3 canonical blob. Any other
-T1-T5 theorem/proof/boundary change fails CI.
+exactly four audited textual places: a version-neutral title, explicit base-integrability
+of policy utility in the setup, explicit base-integrability of the generic T1 outcome,
+and T5 cross-integrability for the intermediate ``Q(U_1,S_0)`` term. These close real
+domain gaps while leaving every identity, proof step, sign result, and physical boundary
+unchanged. Normalize only these approved corrections back to the frozen text and require
+the resulting Git blob identity to equal the v0.3 canonical blob. Any other T1-T5
+ theorem/proof/boundary change fails CI.
 """
 from __future__ import annotations
 
@@ -31,6 +31,10 @@ CURRENT_SETUP = "\n".join(
 FROZEN_T1_ASSUMPTION = r"For any $X$ with $\E[|X|S]<\infty$,"
 CURRENT_T1_ASSUMPTION = (
     r"For any $X$ with $\E[|X|]<\infty$ and $\E[|X|S]<\infty$,"
+)
+FROZEN_T5_INTRO = r"Let $D=U_1-U_0$ and"
+CURRENT_T5_INTRO = (
+    r"Assume additionally $\E[|U_1|S_0]<\infty$. Let $D=U_1-U_0$ and"
 )
 
 
@@ -66,6 +70,7 @@ def main() -> None:
         (CURRENT_TITLE, FROZEN_TITLE, "title"),
         (CURRENT_SETUP, FROZEN_SETUP, "setup integrability text"),
         (CURRENT_T1_ASSUMPTION, FROZEN_T1_ASSUMPTION, "T1 integrability text"),
+        (CURRENT_T5_INTRO, FROZEN_T5_INTRO, "T5 cross-integrability text"),
     ]
     for current, frozen, label in approved:
         require_exact_current(text, current, frozen, label)
@@ -84,8 +89,8 @@ def main() -> None:
         )
 
     print(
-        "Core-theorem lock validation passed: after exactly three approved normalizations "
-        "(version-neutral title plus base/weighted integrability corrections), "
+        "Core-theorem lock validation passed: after exactly four approved normalizations "
+        "(version-neutral title plus T1/T4-domain and T5 cross-integrability corrections), "
         f"theory/core_theorems.tex matches frozen v0.3 commit {FROZEN_V03_COMMIT[:12]}… "
         f"blob {FROZEN_V03_BLOB}."
     )

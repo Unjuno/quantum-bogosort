@@ -89,6 +89,7 @@ python scripts/validate_markdown_links.py
 python scripts/validate_repository_structure.py
 python scripts/validate_citation_metadata.py
 python scripts/validate_bibliography_metadata.py
+python scripts/validate_license_map.py
 python scripts/validate_issue_templates.py
 python scripts/validate_manifest.py
 python scripts/validate_svg_sources.py
@@ -107,7 +108,7 @@ python figures/generate_pdf_figures.py
 python scripts/validate_latex_sources.py
 ```
 
-For experiment changes, run the locked suite and then verify declared output identity plus processed-data cleanliness:
+For experiment changes, run the locked suite and then verify declared output identity plus repository cleanliness:
 
 ```bash
 python experiments/exp1_fosd_and_stress.py
@@ -118,7 +119,7 @@ python experiments/exp5_branch_map.py
 python scripts/validate_reproduction_outputs.py
 ```
 
-The reproduction validator is manifest-driven. It requires the tracked E1–E5 current CSV set to match the manifest, requires current outputs to remain byte-identical to `HEAD`, rejects changes to other tracked files under `data/processed/`, and rejects undeclared generated files under `data/processed/`, including ignored files. The workflow's final clean-worktree step separately rejects any remaining tracked diff and any nonignored untracked artifact anywhere in the checkout.
+The reproduction validator is manifest-driven. It requires the tracked E1–E5 current CSV set to match the manifest, requires current outputs to remain byte-identical to `HEAD`, rejects changes to any tracked repository content during experiment execution, and rejects undeclared generated files under `data/processed/`, including ignored files. The workflow's final clean-worktree step separately rejects any remaining tracked diff and any nonignored untracked artifact anywhere in the checkout.
 
 For figure changes, regenerate both the public SVGs and the gitignored manuscript PDF figures before validating the exact output sets:
 
@@ -132,6 +133,6 @@ git diff --exit-code
 test -z "$(git ls-files --others --exclude-standard)"
 ```
 
-GitHub Actions additionally sends every repository Markdown file through GitHub's GFM rendering API and checks that expected source headings, tables, and inline images survive server-side GFM conversion. This structural check complements, but does not replace, direct browser inspection of GitHub's MathJax, Mermaid, SVG sizing, and page layout.
+GitHub Actions additionally sends every repository Markdown file through GitHub's GFM rendering API and checks that expected source headings, tables, inline images, and fenced blocks survive server-side GFM conversion. This structural check complements, but does not replace, direct browser inspection of GitHub's MathJax, Mermaid, SVG sizing, and page layout.
 
 The `validate` workflow is also configured with `workflow_dispatch`, so repository maintainers can use **Actions → validate → Run workflow** on `main` to repeat the complete CI audit without creating a dummy commit. The workflow's reusable Actions are pinned to full commit SHAs, checkout credentials are not persisted into later steps, and the workflow token is read-only; update these constraints deliberately rather than weakening them incidentally.

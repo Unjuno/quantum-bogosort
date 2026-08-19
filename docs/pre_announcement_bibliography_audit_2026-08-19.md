@@ -32,11 +32,11 @@ The audit uses the following rule rather than mechanically replacing every prepr
 
 `Chance in the Everett Interpretation` is represented as the 2010 Oxford University Press chapter in *Many Worlds? Everett, Quantum Theory, and Reality*, pp. 181–205, DOI `10.1093/acprof:oso/9780199560561.003.0008`.
 
-The audit encountered a conflicting secondary page-range citation. Oxford primary metadata confirms pp. 181–205, which is the range retained in the repository.
+The audit encountered a conflicting secondary page-range citation. Oxford primary metadata confirms pp. 181–205, which is the range retained and fact-locked in the repository. The conflicting 355–368 range belongs to a different chapter in the same volume and is not used for this record.
 
 ### Saunders — Everett probability
 
-`The Everett Interpretation: Probability` is represented as a chapter in *The Routledge Companion to Philosophy of Physics*, pp. 230–246, DOI `10.4324/9781315623818-21`, rather than as an arXiv-only record.
+`The Everett Interpretation: Probability` is represented as a 2021 chapter in *The Routledge Companion to Philosophy of Physics*, pp. 230–246, DOI `10.4324/9781315623818-21`, rather than as an arXiv-only record.
 
 ### Saunders — branch counting
 
@@ -116,9 +116,24 @@ The previous bibliography validator could verify syntax and DOI/arXiv formatting
 
 The repository uses stock `plain.bst`, so DOI-bearing records also retain a printable `note = {doi:...}` field.
 
-A second false-PASS remained after that correction: once a publication/preprint chronology had been externally reviewed, a later edit could still silently change the citation key, record class, year, or canonical identifier while remaining syntactically valid. [`../paper/bibliography_fact_lock.md`](../paper/bibliography_fact_lock.md) now records the reviewed current-main citation-key set, record type, year, canonical DOI/arXiv identifier, and provenance class. `scripts/validate_bibliography_metadata.py` requires exact agreement between that reviewed lock and `references.bib`.
+A second false-PASS remained after that correction: once publication chronology had been externally reviewed, a later edit could still silently change the citation key, record class, year, or canonical identifier while remaining syntactically valid. A first version of [`../paper/bibliography_fact_lock.md`](../paper/bibliography_fact_lock.md) closed that gap.
 
-The fact lock is a regression guard, not an oracle. It prevents accidental reversal of already-reviewed bibliography facts; external factual truth still cannot be proved by a repository-local parser and remains a review responsibility.
+A third false-PASS then became visible: the initial fact lock did **not** lock author strings, titles, journal/book container metadata, volume/number, or pages/article numbers. A record could therefore keep the same DOI/year while acquiring a wrong title, author, or page range and still pass. That is material because this audit itself encountered a real conflicting secondary page-range citation for the Saunders chance chapter.
+
+The reviewed fact lock now records, for every current bibliography entry:
+
+- citation key;
+- BibTeX record type;
+- publication/preprint year;
+- author string;
+- title string;
+- publication locator;
+- canonical DOI or arXiv identifier;
+- provenance class.
+
+For journal articles, the locator fixes journal, volume/number, and pages/article number. For book chapters, it fixes book title, editors, publisher, and pages. For retained preprints, the locator is explicitly `arXiv`. `scripts/validate_bibliography_metadata.py` requires exact agreement between all of those reviewed values and `references.bib`.
+
+The fact lock is a regression guard, not an oracle. It prevents accidental reversal or corruption of already-reviewed bibliography facts; external factual truth still cannot be proved by a repository-local parser and remains a review responsibility.
 
 ## Prior-art semantic drift found
 

@@ -12,8 +12,9 @@ silently reappearing:
 * recognition time: the confidence process must be typed as adapted/measurable, the
   continuous-time hitting statement must carry path/measurability hypotheses, and the FP
   stopping-rule value must satisfy the full T1 base/weighted integrability domain;
-* repeated filtering: the derivative identity must retain its dominated-differentiation
-  and weighted-moment regularity conditions;
+* repeated filtering: the weighted value must be defined by explicit absolute
+  integrability before the derivative identity, which must retain its
+  dominated-differentiation and weighted-moment regularity conditions;
 * binary/Gaussian toys: accessibility/execution parameters must remain in their stated
   nonnegative domains and the binary model must exclude zero total accessibility.
 
@@ -90,6 +91,7 @@ REQUIRED_SNIPPETS: dict[Path, tuple[str, ...]] = {
     ),
     ROOT / "supplementary/repeated_filtering.md": (
         r"0<\lambda\le1",
+        r"E[|U|\lambda^{N_B}]",
         "open positive neighborhood",
         r"E[|U|N_B\lambda^{N_B}]",
         r"E[N_B\lambda^{N_B}]",
@@ -112,6 +114,7 @@ REQUIRED_SNIPPETS: dict[Path, tuple[str, ...]] = {
     ),
     ROOT / "paper/sections/appendix.tex": (
         r"0<\lambda\le1",
+        r"\mathbb E[|U|\lambda^{N_B}]",
         "open positive neighborhood",
         r"\mathbb E[|U|N_B\lambda^{N_B}]",
         r"\mathbb E[N_B\lambda^{N_B}]",

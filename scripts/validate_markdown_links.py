@@ -1,3 +1,4 @@
+"""Validate repository-relative Markdown links on the rendered-prose surface."""
 from pathlib import Path
 import re
 from urllib.parse import unquote
@@ -6,7 +7,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 LINKED_IMAGE_OUTER_RE = re.compile(r"\[!\[[^\]]*\]\([^)]+\)\]\(([^)]+)\)")
-REFERENCE_DEF_RE = re.compile(r"^ {0,3}\[(?!\^)[^\]]+\]:\s*(?:<([^>]+)>|(\S+))", re.MULTILINE)
+REFERENCE_DEF_RE = re.compile(
+    r"^ {0,3}\[((?!\^)[^\]\n]+)\]:[ \t]*(?:<([^>]+)>|(\S+))",
+    re.MULTILINE,
+)
+REFERENCE_USE_RE = re.compile(r"!?\[([^\]\n]+)\]\[([^\]\n]*)\]")
 FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
 INLINE_CODE_RE = re.compile(r"(`+)(.*?)\1")
@@ -89,68 +94,127 @@ def rendered_prose(text: str) -> str:
     return "\n".join(output)
 
 
+def normalize_reference_label(label: str) -> str:
+    """Normalize the repository's reference labels using CommonMark's key rules."""
+    return re.sub(r"\s+", " ", label.strip()).casefold()
+
+
+def reference_definitions(text: str) -> tuple[dict[str, str], list[str]]:
+    """Return normalized reference definitions and duplicate-definition errors."""
+    definitions: dict[str, str] = {}
+    errors: list[str] = []
+    for match in REFERENCE_DEF_RE.finditer(text):
+        label = normalize_reference_label(match.group(1))
+        target = match.group(2) or match.group(3)
+        if not label:
+            continue
+        if label in definitions:
+            errors.append(f"duplicate reference definition: [{match.group(1)}]")
+            continue
+        definitions[label] = target
+    return definitions, errors
+
+
 def iter_targets(text: str):
-    """Yield inline/image targets, linked-image outer targets, and reference definitions."""
+    """Yield inline/image, linked-image outer, and reference-definition targets."""
     for match in LINK_RE.finditer(text):
         yield match.group(1)
     # LINK_RE sees the inner image in [![alt](image.svg)](page.md) but not the outer
     # destination because the link label contains nested Markdown. Validate it separately.
     for match in LINKED_IMAGE_OUTER_RE.finditer(text):
         yield match.group(1)
-    # A reference-style usage resolves through its definition, so validating every local
-    # definition target covers both normal and image reference forms without reimplementing
-    # GitHub's full reference-label matching algorithm. GitHub footnotes use [^id]: and are
+    # A reference-style usage resolves through its definition. Validate every local
+    # definition target, while full/collapsed reference uses are checked separately for
+    # the existence of a corresponding definition. GitHub footnotes use [^id]: and are
     # intentionally excluded because their body is prose, not a link destination.
     for match in REFERENCE_DEF_RE.finditer(text):
-        yield match.group(1) or match.group(2)
+        yield match.group(2) or match.group(3)
 
 
-errors: list[str] = []
-checked = 0
-
-for markdown_file in sorted(ROOT.rglob("*.md")):
-    if ".git" in markdown_file.parts:
-        continue
-
-    text = rendered_prose(markdown_file.read_text(encoding="utf-8"))
-    for raw_target in iter_targets(text):
-        target = parse_target(raw_target)
-        if is_external_or_site_absolute(target):
-            continue
-
-        source = markdown_file.relative_to(ROOT).as_posix()
-
-        # The repository currently has no local fragment/query links. Until a GitHub-slug
-        # validator is deliberately implemented, reject such targets rather than checking
-        # only the file portion and silently accepting a broken anchor/query suffix.
-        if target.startswith("#") or "#" in target:
-            errors.append(
-                f"{source}: local fragment target is outside the validated link contract: {target}"
-            )
-            continue
-        if target.startswith("?") or "?" in target:
-            errors.append(
-                f"{source}: local query target is outside the validated link contract: {target}"
-            )
-            continue
-
-        resolved, relative = normalize_repo_relative(markdown_file, target)
-        if relative is None:
-            errors.append(f"{source}: relative target escapes repository root: {target}")
-            continue
-        if relative in ALLOWED_GENERATED:
-            continue
-
+def validate_reference_uses(
+    source: str, text: str, definitions: dict[str, str], errors: list[str]
+) -> int:
+    """Require every explicit full/collapsed reference use to resolve."""
+    checked = 0
+    for match in REFERENCE_USE_RE.finditer(text):
+        visible_label, explicit_label = match.groups()
+        raw_label = explicit_label if explicit_label else visible_label
+        normalized = normalize_reference_label(raw_label)
         checked += 1
-        if not resolved.exists():
-            errors.append(f"{source}: {target}")
+        if not normalized or normalized not in definitions:
+            display = raw_label if raw_label else visible_label
+            errors.append(f"{source}: unresolved reference-style link label: [{display}]")
+    return checked
 
-if errors:
-    raise SystemExit(
-        "Broken or unsupported repository-relative Markdown links:\n" + "\n".join(errors)
+
+def validate_target(
+    markdown_file: Path, source: str, raw_target: str, errors: list[str]
+) -> bool:
+    """Validate one repository-relative target; return whether it was locally checked."""
+    target = parse_target(raw_target)
+    if is_external_or_site_absolute(target):
+        return False
+
+    # The repository currently has no local fragment/query links. Until a GitHub-slug
+    # validator is deliberately implemented, reject such targets rather than checking
+    # only the file portion and silently accepting a broken anchor/query suffix.
+    if target.startswith("#") or "#" in target:
+        errors.append(
+            f"{source}: local fragment target is outside the validated link contract: {target}"
+        )
+        return False
+    if target.startswith("?") or "?" in target:
+        errors.append(
+            f"{source}: local query target is outside the validated link contract: {target}"
+        )
+        return False
+
+    resolved, relative = normalize_repo_relative(markdown_file, target)
+    if relative is None:
+        errors.append(f"{source}: relative target escapes repository root: {target}")
+        return False
+    if relative in ALLOWED_GENERATED:
+        return True
+
+    if not resolved.exists():
+        errors.append(f"{source}: {target}")
+    return True
+
+
+def main() -> None:
+    errors: list[str] = []
+    checked_targets = 0
+    checked_reference_uses = 0
+
+    for markdown_file in sorted(ROOT.rglob("*.md")):
+        if ".git" in markdown_file.parts:
+            continue
+
+        text = rendered_prose(markdown_file.read_text(encoding="utf-8"))
+        source = markdown_file.relative_to(ROOT).as_posix()
+        definitions, definition_errors = reference_definitions(text)
+        errors.extend(f"{source}: {error}" for error in definition_errors)
+        checked_reference_uses += validate_reference_uses(
+            source, text, definitions, errors
+        )
+
+        for raw_target in iter_targets(text):
+            if validate_target(markdown_file, source, raw_target, errors):
+                checked_targets += 1
+
+    if errors:
+        raise SystemExit(
+            "Broken or unsupported repository-relative Markdown links:\n"
+            + "\n".join(errors)
+        )
+
+    print(
+        f"Markdown links OK: {checked_targets} rendered repository-relative inline, "
+        "linked-image, and reference-definition targets resolved; "
+        f"{checked_reference_uses} full/collapsed reference-style uses resolved; "
+        "no duplicate reference definitions or unvalidated local fragments/queries present."
     )
 
-print(
-    f"Markdown links OK: {checked} rendered repository-relative inline, linked-image, "
-    "and reference-definition targets resolved; no unvalidated local fragments/queries present."
-)
+
+if __name__ == "__main__":
+    main()

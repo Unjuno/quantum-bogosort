@@ -67,7 +67,16 @@ for name, D in increments.items():
         "identity_error": interaction - predicted,
     })
 
-pd.DataFrame(fixed_rows).to_csv(
+fixed_df = pd.DataFrame(fixed_rows).set_index("policy")
+if fixed_df["identity_error"].abs().max() > 1e-12:
+    raise RuntimeError("E4 fixed-selector identity failed")
+if fixed_df.loc["rescue_bad", "interaction"] >= 0:
+    raise RuntimeError("E4 rescue-bad interaction lost its negative sign")
+if abs(fixed_df.loc["neutral", "interaction"]) > .01:
+    raise RuntimeError("E4 neutral interaction exceeded tolerance")
+if fixed_df.loc["amplify_good", "interaction"] <= 0:
+    raise RuntimeError("E4 amplify-good interaction lost its positive sign")
+fixed_df.reset_index().to_csv(
     OUT / "e4_fixed_selector_sign_reproduction.csv", index=False
 )
 
@@ -83,7 +92,7 @@ interaction = Q1S1 - Q0S0
 targeting = (np.mean(D * S0) - np.mean(D) * np.mean(S0)) / np.mean(S0)
 selector_map_shift = Q1S1 - Q1S0
 
-pd.DataFrame([{
+general_df = pd.DataFrame([{
     "Corr(D,S0)": np.corrcoef(D, S0)[0, 1],
     "Q(U0,S0)": Q0S0,
     "Q(U1,S0)": Q1S0,
@@ -93,6 +102,11 @@ pd.DataFrame([{
     "selector_map_shift": selector_map_shift,
     "selector_changed_fraction_gt_1e-6": np.mean(np.abs(S1 - S0) > 1e-6),
     "decomposition_error": interaction - (targeting + selector_map_shift),
-}]).to_csv(OUT / "e4_general_interaction_reproduction.csv", index=False)
+}])
+if general_df["decomposition_error"].abs().max() > 1e-12:
+    raise RuntimeError("E4 changing-selector decomposition failed")
+if general_df.loc[0, "selector_changed_fraction_gt_1e-6"] < .9:
+    raise RuntimeError("E4 changing-selector control no longer changes the selector map")
+general_df.to_csv(OUT / "e4_general_interaction_reproduction.csv", index=False)
 
 print("E4 complete.")

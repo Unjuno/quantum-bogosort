@@ -24,21 +24,27 @@ Source-level presentation QA now includes repository-wide GitHub rendering harde
 - [ ] Keep `main` CI-green after review-driven editorial or scientific corrections.
 - [ ] Keep README, research map, claim ledger, notation, status, and roadmap free of conflicting source-of-truth roles.
 - [x] Validate repository-relative Markdown links in CI.
-- [x] Inspect all 66 repository Markdown sources for rendering-critical structure rather than sampling representative pages only.
+- [x] Inspect the complete repository Markdown surface for rendering-critical structure rather than sampling representative pages only.
 - [x] Standardize repository Markdown display mathematics on balanced fenced `math` blocks; reject legacy display/inline delimiters outside literal code examples and enforce repository math-macro conventions.
 - [x] Validate brace balance, TeX environment balance, and common `\left`/`\right` pairing inside fenced Markdown math blocks.
-- [x] Add CI rendering of every Markdown file through GitHub's own GFM REST renderer with source/render structure checks for headings, tables, and images.
+- [x] Add CI GFM conversion of every Markdown file through GitHub's Markdown REST renderer with source/render structure checks for headings, tables, and images.
 - [x] Validate all committed SVGs as XML/browser assets, including viewBox/size, explicit background, forbidden active elements/external hrefs, and non-finite attributes.
 - [x] Validate manuscript LaTeX input, bibliography/citation, label/reference, environment, and generated-graphic dependencies before PDF compilation.
+- [x] Pin the byte-reproduction environment: Ubuntu 24.04, Python 3.11.15, NumPy 2.4.6, pandas 3.0.5, and Matplotlib 3.11.1.
+- [x] Add executable scientific regression guards to E1–E5 for the declared identities, nulls, controls, signs, and coherence/predictive-alignment behavior.
+- [x] Validate manifest ID/order, `LOCK` state, file existence, and separation of locked historical versus current reproduction provenance classes.
+- [x] Derive current reproduction byte validation from the manifest rather than maintaining a duplicate hard-coded CSV list in CI.
 - [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
 - [x] Provide a dedicated visual route for every locked experiment family E1–E5, including E2 predictive alignment.
-- [x] Require committed SVGs to match deterministic generator output byte-for-byte.
+- [x] Require committed SVGs and the deterministic Figure 2 theorem-illustration CSV to match generator output byte-for-byte under the pinned environment.
 - [x] Keep deterministic theorem illustrations, current reproduction outputs, and locked historical summaries explicitly separated at figure level.
 - [x] Provide a static SVG fallback for the root Mermaid dependency diagram.
 - [x] Keep `main` as the only branch; preserve frozen v0.2/v0.3 snapshots as tags/GitHub Releases.
 - [ ] Confirm rendered GitHub pages display correctly in the web UI, including the root README plus representative theory, experiment, canonical-doc, supplementary, and audit pages.
 - [ ] Keep E1–E5 as the locked reproducibility suite unless a review identifies a concrete missing core test.
 - [ ] Preserve deterministic figure regeneration and manuscript PDF verification.
+
+The detailed commit-fixed execution audit is [`docs/pre_announcement_execution_audit_2026-08-19.md`](docs/pre_announcement_execution_audit_2026-08-19.md).
 
 ## Broad-announcement gate
 

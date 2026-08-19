@@ -73,6 +73,8 @@ jobs:
           test -s figures/generated_pdf/fig4_interaction_sign.pdf
           test -s figures/generated_pdf/fig5_adaptation_quality.pdf
           test -s figures/generated_pdf/fig6_branch_coherence.pdf
+      - name: Validate exact public figure set
+        run: python scripts/validate_figure_set.py
       - name: Validate committed SVG browser structure
         run: python scripts/validate_svg_sources.py
       - name: Verify committed SVG and theorem-illustration reproducibility

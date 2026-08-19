@@ -12,6 +12,7 @@ required = [
     "docs/everett_bridge_tests.md", "docs/manuscript_claim_audit.md", "docs/v0.2_release_audit.md",
     "docs/pre_announcement_execution_audit_2026-08-19.md",
     "docs/pre_announcement_validator_audit_2026-08-19.md",
+    "docs/pre_announcement_bibliography_audit_2026-08-19.md",
     "docs/s2_stack_review_map.md", "docs/s2_stack_semantic_audit.md",
     "docs/post_v02_manuscript_compression_audit.md", "docs/post_v02_core_s2_proof_review.md",
     "docs/s2_adaptive_alignment_audit.md", "docs/s2_finite_sample_certificate_audit.md",
@@ -98,6 +99,6 @@ if missing_sections:
 print(
     f"Repository structure OK: {len(required)} required files; complete {len(actual_markdown)}-file "
     f"Markdown inventory declared; all five core theory sources; consolidated/archived research "
-    f"provenance; both pre-announcement audit records; runtime/citation/bibliography/license/figure-set/"
+    f"provenance; three pre-announcement audit records; runtime/citation/bibliography/license/figure-set/"
     f"snapshot-ref validators; and {len(section_refs)} manuscript sections found."
 )

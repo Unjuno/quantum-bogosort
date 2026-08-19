@@ -15,6 +15,7 @@ REFERENCE_USE_RE = re.compile(r"!?\[([^\]\n]+)\]\[([^\]\n]*)\]")
 FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
 INLINE_CODE_RE = re.compile(r"(`+)(.*?)\1")
+RAW_HTML_LINK_IMAGE_RE = re.compile(r"<\s*(?:a|img)\b", re.IGNORECASE)
 EXTERNAL_PREFIXES = (
     "http://",
     "https://",
@@ -192,6 +193,13 @@ def main() -> None:
 
         text = rendered_prose(markdown_file.read_text(encoding="utf-8"))
         source = markdown_file.relative_to(ROOT).as_posix()
+
+        if RAW_HTML_LINK_IMAGE_RE.search(text):
+            errors.append(
+                f"{source}: raw HTML <a>/<img> is outside the validated repository-link contract; "
+                "use Markdown link/image syntax"
+            )
+
         definitions, definition_errors = reference_definitions(text)
         errors.extend(f"{source}: {error}" for error in definition_errors)
         checked_reference_uses += validate_reference_uses(
@@ -212,7 +220,8 @@ def main() -> None:
         f"Markdown links OK: {checked_targets} rendered repository-relative inline, "
         "linked-image, and reference-definition targets resolved; "
         f"{checked_reference_uses} full/collapsed reference-style uses resolved; "
-        "no duplicate reference definitions or unvalidated local fragments/queries present."
+        "no duplicate reference definitions, unvalidated local fragments/queries, or raw "
+        "HTML link/image routes present."
     )
 
 

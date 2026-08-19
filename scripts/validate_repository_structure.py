@@ -42,7 +42,7 @@ required = [
     "supplementary/selectivity_frontier.md", "supplementary/branch_recognition.md",
     "literature/prior_art.md", "literature/extended_prior_art.md", "literature/post_v02_targeted_prior_art.md",
     "paper/README.md", "paper/bibliography_fact_lock.md", "paper/main.tex", "paper/references.bib",
-    "figures/README.md", "figures/generate_figures.py", "figures/generate_pdf_figures.py",
+    "figures/README.md", "figures/figure_data.py", "figures/generate_figures.py", "figures/generate_pdf_figures.py",
     "figures/generated/fig1_framework.svg", "figures/generated/fig2_fosd.svg",
     "figures/generated/fig3_recognition_decomposition.svg", "figures/generated/fig4_interaction_sign.svg",
     "figures/generated/fig5_adaptation_quality.svg", "figures/generated/fig6_branch_coherence.svg",

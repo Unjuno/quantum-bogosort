@@ -90,10 +90,16 @@ def main() -> None:
         reachable = collect_reachable_tex()
     except FileNotFoundError as exc:
         raise SystemExit(f"Missing LaTeX input: {exc.filename}") from exc
+    reachable_set = set(reachable)
 
     paper_tex = sorted(PAPER.rglob("*.tex"))
-    extra_tex = [ROOT / "theory/core_theorems.tex"]
-    all_tex = paper_tex + [p for p in extra_tex if p.exists()]
+    theory_core = ROOT / "theory/core_theorems.tex"
+    if not theory_core.is_file():
+        errors.append("missing standalone theory/core_theorems.tex")
+        extra_tex: list[Path] = []
+    else:
+        extra_tex = [theory_core]
+    all_tex = paper_tex + extra_tex
 
     source_text: dict[Path, str] = {}
     for path in all_tex:
@@ -104,7 +110,10 @@ def main() -> None:
     # Bibliography declarations resolve from paper/, matching latexmk's working dir.
     bib_files: list[Path] = []
     for path in reachable:
-        text = strip_comments(path.read_text(encoding="utf-8"))
+        text = source_text.get(path)
+        if text is None:
+            text = strip_comments(path.read_text(encoding="utf-8"))
+            source_text[path] = text
         for group in BIB_RE.findall(text):
             for name in (part.strip() for part in group.split(",")):
                 bib = (PAPER / name).with_suffix(".bib").resolve()
@@ -125,32 +134,41 @@ def main() -> None:
         errors.append(f"duplicate bibliography key: {key}")
 
     # Every citation in every manuscript source, including intentionally un-input
-    # appendix/summary files, should resolve to the declared bibliography.
+    # appendix/summary files, should resolve to the manuscript bibliography.
     for path in paper_tex:
         for group in CITE_RE.findall(source_text[path]):
             for key in (part.strip() for part in group.split(",")):
                 if key and key not in bib_keys:
                     errors.append(f"{path.relative_to(ROOT)}: missing citation key {key}")
 
-    # Labels/references are checked across all paper sources to catch silent ?? output.
-    labels: dict[str, Path] = {}
-    for path in paper_tex:
-        for key in LABEL_RE.findall(source_text[path]):
-            if key in labels:
+    # Only labels reachable from paper/main.tex exist in the compiled manuscript.
+    # A label in an intentionally un-input source must not make a compiled \ref pass.
+    compiled_labels: dict[str, Path] = {}
+    for path in reachable:
+        text = source_text[path]
+        for key in LABEL_RE.findall(text):
+            if key in compiled_labels:
                 errors.append(
-                    f"duplicate label {key}: {labels[key].relative_to(ROOT)} and {path.relative_to(ROOT)}"
+                    f"duplicate compiled label {key}: "
+                    f"{compiled_labels[key].relative_to(ROOT)} and {path.relative_to(ROOT)}"
                 )
             else:
-                labels[key] = path
-    for path in paper_tex:
+                compiled_labels[key] = path
+
+    for path in reachable:
         for key in REF_RE.findall(source_text[path]):
-            if key not in labels:
-                errors.append(f"{path.relative_to(ROOT)}: unresolved reference {key}")
+            if key not in compiled_labels:
+                errors.append(f"{path.relative_to(ROOT)}: unresolved compiled reference {key}")
+
+    # Non-reachable TeX remains linted for environments/citations above. Report the
+    # count explicitly so future source files are not silently confused with compiled
+    # manuscript content.
+    unreachable = [path for path in paper_tex if path.resolve() not in reachable_set]
 
     # Graphics resolve from paper/, matching `working-directory: paper` in CI. The
     # script runs after figures/generate_pdf_figures.py, so generated PDFs must exist.
     for path in reachable:
-        text = strip_comments(path.read_text(encoding="utf-8"))
+        text = source_text[path]
         for target in GRAPHICS_RE.findall(text):
             graphic = (PAPER / target).resolve()
             if not graphic.exists():
@@ -163,8 +181,9 @@ def main() -> None:
         "LaTeX source validation passed: "
         f"{len(all_tex)} TeX files structurally checked; "
         f"{len(reachable)} files reachable from paper/main.tex; "
+        f"{len(unreachable)} paper TeX files intentionally outside the compiled graph; "
         f"{len(bib_keys)} bibliography keys available; "
-        f"{len(labels)} labels resolved."
+        f"{len(compiled_labels)} compiled labels resolved."
     )
 
 

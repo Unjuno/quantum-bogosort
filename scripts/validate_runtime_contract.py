@@ -66,8 +66,10 @@ REQUIRED_MANUSCRIPT_COMMANDS = [
 ]
 EXACT_REQUIREMENT_RE = re.compile(r"^([A-Za-z0-9_.-]+)==([^\s#;]+)$")
 FULL_SHA_ACTION_RE = re.compile(r"^\s*- uses:\s+([^@\s]+)@([0-9a-f]{40})(?:\s+#.*)?$")
-PYTHON_WORKFLOW_RE = re.compile(r"^\s+python-version:\s*['\"]?([^'\"\s]+)['\"]?\s*$")
-RUNNER_RE = re.compile(r"^\s+runs-on:\s*([^\s#]+)")
+PYTHON_WORKFLOW_RE = re.compile(
+    r"^\s+python-version:\s*['\"]?([^'\"\s]+)['\"]?\s*$", re.MULTILINE
+)
+RUNNER_RE = re.compile(r"^\s+runs-on:\s*([^\s#]+)", re.MULTILINE)
 JOB_HEADER_RE = re.compile(r"^  ([A-Za-z0-9_-]+):\s*$", re.MULTILINE)
 TIMEOUT_RE = re.compile(r"^\s{4}timeout-minutes:\s*(\d+)\s*$", re.MULTILINE)
 

@@ -2,9 +2,9 @@
 
 This checks the primary numerical package pins and their installed versions,
 consistency between `.python-version` and GitHub Actions, immutable reusable-action
-pins, checkout credential isolation, and the presence of the required validation/
-manuscript jobs and commands. It does not claim that every transitive wheel is
-cryptographically locked.
+pins, checkout credential isolation, required validation/manuscript jobs and commands,
+and a small read-only workflow security contract. It does not claim that every
+transitive wheel is cryptographically locked.
 """
 from __future__ import annotations
 
@@ -26,6 +26,13 @@ REQUIRED_GLOBAL_WORKFLOW_SNIPPETS = [
     "  workflow_dispatch:\n",
     "permissions:\n  contents: read\n",
     "cancel-in-progress: true",
+]
+FORBIDDEN_WORKFLOW_SNIPPETS = [
+    "pull_request_target:",
+    "contents: write",
+    "actions: write",
+    "checks: write",
+    "pull-requests: write",
 ]
 REQUIRED_REPOSITORY_COMMANDS = [
     "python -m py_compile experiments/*.py figures/*.py scripts/*.py",
@@ -132,6 +139,9 @@ def main() -> None:
 
     workflow_text = WORKFLOW.read_text(encoding="utf-8")
     require_snippets("workflow", workflow_text, REQUIRED_GLOBAL_WORKFLOW_SNIPPETS, errors)
+    for snippet in FORBIDDEN_WORKFLOW_SNIPPETS:
+        if snippet in workflow_text:
+            errors.append(f"workflow contains forbidden elevated/unsafe construct: {snippet!r}")
 
     workflow_python_versions = PYTHON_WORKFLOW_RE.findall(workflow_text)
     if len(workflow_python_versions) < len(REQUIRED_JOBS):
@@ -182,6 +192,9 @@ def main() -> None:
     require_snippets("repository-validation", repository_job, REQUIRED_REPOSITORY_COMMANDS, errors)
     require_snippets("manuscript-build", manuscript_job, REQUIRED_MANUSCRIPT_COMMANDS, errors)
 
+    if "GITHUB_TOKEN: ${{ github.token }}" not in repository_job:
+        errors.append("repository-validation: GFM renderer must receive the scoped github.token")
+
     if repository_job.count("actions/checkout@") != 1 or repository_job.count("actions/setup-python@") != 1:
         errors.append("repository-validation must contain exactly one checkout and one setup-python action")
     if manuscript_job.count("actions/checkout@") != 1 or manuscript_job.count("actions/setup-python@") != 1:
@@ -198,7 +211,8 @@ def main() -> None:
     print(
         "Runtime contract validation passed: "
         f"Python {expected_python}; {package_summary}; ubuntu-24.04; required jobs/commands present; "
-        f"checkout credentials disabled; {len(action_lines)} reusable action steps full-SHA pinned."
+        "read-only workflow security contract; "
+        f"{len(action_lines)} reusable action steps full-SHA pinned."
     )
 
 

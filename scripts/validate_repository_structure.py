@@ -62,6 +62,27 @@ missing = [path for path in required if not (ROOT / path).is_file()]
 if missing:
     raise SystemExit("Missing required repository-map files:\n" + "\n".join(missing))
 
+declared_markdown = {path for path in required if path.endswith(".md")}
+actual_markdown = {
+    path.relative_to(ROOT).as_posix()
+    for path in ROOT.rglob("*.md")
+    if ".git" not in path.parts
+}
+if actual_markdown != declared_markdown:
+    undeclared = sorted(actual_markdown - declared_markdown)
+    declared_but_absent = sorted(declared_markdown - actual_markdown)
+    details: list[str] = []
+    if undeclared:
+        details.append(
+            "Markdown files outside the declared public/audit inventory: " + ", ".join(undeclared)
+        )
+    if declared_but_absent:
+        details.append(
+            "Declared Markdown inventory entries absent from the repository: "
+            + ", ".join(declared_but_absent)
+        )
+    raise SystemExit("Markdown inventory mismatch:\n" + "\n".join(details))
+
 main_tex = (ROOT / "paper/main.tex").read_text(encoding="utf-8")
 section_refs = re.findall(r"\\input\{([^}]+)\}", main_tex)
 missing_sections = []
@@ -74,7 +95,8 @@ if missing_sections:
     raise SystemExit("Missing manuscript sections:\n" + "\n".join(missing_sections))
 
 print(
-    f"Repository structure OK: {len(required)} required files, all five core theory "
-    f"sources, consolidated/archived research provenance, both pre-announcement audit records, "
-    f"runtime/citation/bibliography/license/figure-set validators, and {len(section_refs)} manuscript sections found."
+    f"Repository structure OK: {len(required)} required files; complete {len(actual_markdown)}-file "
+    f"Markdown inventory declared; all five core theory sources; consolidated/archived research "
+    f"provenance; both pre-announcement audit records; runtime/citation/bibliography/license/figure-set "
+    f"validators; and {len(section_refs)} manuscript sections found."
 )

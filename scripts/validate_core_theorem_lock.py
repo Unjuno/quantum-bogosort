@@ -8,10 +8,11 @@ intermediate ``Q(U_1,S_0)`` term. These close real domain gaps while leaving eve
 identity, proof step, sign result, and physical boundary unchanged.
 
 The canonical TeX source is normalized only at those four approved places and must then
-match the frozen v0.3 Git blob. In addition, the corresponding explicit domain assumptions
-must remain present in the rendered theory pages, experiment cards, and manuscript theorem/
-proof surfaces so a later documentation edit cannot silently reintroduce the old incomplete
-domain wording.
+match the frozen v0.3 Git blob. The nine corresponding theory/card/manuscript domain
+surfaces are also locked to their audited HEAD/worktree Git blobs before semantic snippet
+checks. This makes later wording/domain changes an explicit scientific-review contract
+update rather than allowing required assumptions to survive only in comments or literal
+code while visible text drifts.
 """
 from __future__ import annotations
 
@@ -96,6 +97,17 @@ DOMAIN_SURFACES: dict[Path, tuple[str, ...]] = {
         r"\mathbb E[|U_1|S_0]<\infty",
     ),
 }
+EXPECTED_DOMAIN_SURFACE_BLOBS = {
+    "theory/core_theorems.md": "0047670c137ed9ee4fb06780454b4d8bbdbb7c26",
+    "theory/theorem_1_3.md": "b78fae00f097555944c2c9f9b42cbe269136461a",
+    "theory/theorem_4_5.md": "a84c2667dc5138e744fea1ea5ad2730cc2d88995",
+    "experiments/E1_FOSD.md": "a45119f37c3bdde640900b66052b3add935f5f75",
+    "experiments/E3_RECOGNITION.md": "0db4c2a54067749659a8123ec5599c8814529f21",
+    "experiments/E4_INTERACTION.md": "9e7ba2125e5f4dfd10713cccd213ee822481e25e",
+    "paper/sections/formal_model.tex": "b98223ce0b38f5d9c5e49f447cbddd8d4eee4196",
+    "paper/sections/theorems.tex": "54c6cc260ff39344933d432d85790298454a7492",
+    "paper/sections/appendix.tex": "f55de6faf4ce50edd5ba301670ce58810a9db49a",
+}
 
 
 def git_blob_sha(text: str) -> str:
@@ -110,6 +122,17 @@ def git_blob_sha(text: str) -> str:
     return result.stdout.strip()
 
 
+def git_text(*args: str) -> str:
+    result = subprocess.run(
+        ["git", *args],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
 def require_exact_current(text: str, current: str, label: str) -> None:
     if text.count(current) != 1:
         raise SystemExit(
@@ -119,23 +142,54 @@ def require_exact_current(text: str, current: str, label: str) -> None:
 
 def validate_domain_surfaces() -> None:
     errors: list[str] = []
+    if set(EXPECTED_DOMAIN_SURFACE_BLOBS) != {
+        path.relative_to(ROOT).as_posix() for path in DOMAIN_SURFACES
+    }:
+        errors.append("validator self-contract: domain-surface blob map differs from DOMAIN_SURFACES")
+
     for path, snippets in DOMAIN_SURFACES.items():
-        if not path.is_file():
-            errors.append(f"missing theorem-domain surface: {path.relative_to(ROOT)}")
+        relative = path.relative_to(ROOT).as_posix()
+        if path.is_symlink() or not path.is_file():
+            errors.append(f"missing/invalid theorem-domain surface: {relative}")
             continue
+
+        expected_blob = EXPECTED_DOMAIN_SURFACE_BLOBS.get(relative)
+        if expected_blob is None:
+            errors.append(f"{relative}: no audited domain-surface blob identity")
+            continue
+        try:
+            head_blob = git_text("rev-parse", f"HEAD:{relative}")
+            worktree_blob = git_text("hash-object", relative)
+        except subprocess.CalledProcessError as exc:
+            errors.append(f"{relative}: unable to resolve Git blob identity: {exc}")
+            continue
+        if head_blob != expected_blob:
+            errors.append(
+                f"{relative}: committed theorem-domain surface drift: "
+                f"HEAD has {head_blob}, expected {expected_blob}"
+            )
+        if worktree_blob != expected_blob:
+            errors.append(
+                f"{relative}: working-tree theorem-domain surface drift: "
+                f"{worktree_blob}, expected {expected_blob}"
+            )
+
         text = path.read_text(encoding="utf-8")
         for snippet in snippets:
             if snippet not in text:
                 errors.append(
-                    f"{path.relative_to(ROOT)}: missing approved domain assumption {snippet!r}"
+                    f"{relative}: missing approved domain assumption {snippet!r}"
                 )
     if errors:
         raise SystemExit("Core-theorem domain-surface validation failed:\n" + "\n".join(errors))
 
 
 def main() -> None:
-    if not SOURCE.is_file():
-        raise SystemExit("Core-theorem lock validation failed: missing theory/core_theorems.tex")
+    if SOURCE.is_symlink() or not SOURCE.is_file():
+        raise SystemExit(
+            "Core-theorem lock validation failed: theory/core_theorems.tex must be a "
+            "nonsymlink regular file"
+        )
 
     text = SOURCE.read_text(encoding="utf-8")
     approved = [
@@ -167,8 +221,9 @@ def main() -> None:
         "(version-neutral title, setup base-integrability, complete generic T1 domain, and "
         "T5 cross-integrability), "
         f"theory/core_theorems.tex matches frozen v0.3 commit {FROZEN_V03_COMMIT[:12]}… "
-        f"blob {FROZEN_V03_BLOB}; explicit domain assumptions are also present across "
-        f"{len(DOMAIN_SURFACES)} theory/card/manuscript surfaces."
+        f"blob {FROZEN_V03_BLOB}; all {len(DOMAIN_SURFACES)} audited theory/card/manuscript "
+        "domain surfaces match their committed/worktree blob identities and contain the "
+        "approved domain assumptions."
     )
 
 

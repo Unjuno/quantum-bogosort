@@ -2,8 +2,9 @@
 
 This checks the primary numerical package pins and their installed versions,
 consistency between `.python-version` and GitHub Actions, immutable reusable-action
-pins, and the presence of the required validation/manuscript jobs and commands. It
-does not claim that every transitive wheel is cryptographically locked.
+pins, checkout credential isolation, and the presence of the required validation/
+manuscript jobs and commands. It does not claim that every transitive wheel is
+cryptographically locked.
 """
 from __future__ import annotations
 
@@ -48,6 +49,7 @@ REQUIRED_REPOSITORY_COMMANDS = [
     "data/processed/fig2_fosd_theorem_illustration.csv",
 ]
 REQUIRED_MANUSCRIPT_COMMANDS = [
+    "python scripts/validate_runtime_contract.py",
     "python figures/generate_pdf_figures.py",
     "python scripts/validate_latex_sources.py",
     "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex",
@@ -162,13 +164,18 @@ def main() -> None:
         errors.append("workflow missing required job(s): " + ", ".join(missing_jobs))
 
     for job_name in sorted(REQUIRED_JOBS & set(jobs)):
-        timeout_match = TIMEOUT_RE.search(jobs[job_name])
+        job_text = jobs[job_name]
+        timeout_match = TIMEOUT_RE.search(job_text)
         if not timeout_match:
             errors.append(f"{job_name}: missing timeout-minutes")
         elif int(timeout_match.group(1)) > 30:
             errors.append(f"{job_name}: timeout-minutes exceeds 30")
-        if "pip install -r requirements.txt" not in jobs[job_name]:
+        if "pip install -r requirements.txt" not in job_text:
             errors.append(f"{job_name}: missing pinned requirements installation")
+        if job_text.count("persist-credentials: false") != 1:
+            errors.append(
+                f"{job_name}: checkout must set persist-credentials: false exactly once"
+            )
 
     repository_job = jobs.get("repository-validation", "")
     manuscript_job = jobs.get("manuscript-build", "")
@@ -191,7 +198,7 @@ def main() -> None:
     print(
         "Runtime contract validation passed: "
         f"Python {expected_python}; {package_summary}; ubuntu-24.04; required jobs/commands present; "
-        f"{len(action_lines)} reusable action steps full-SHA pinned."
+        f"checkout credentials disabled; {len(action_lines)} reusable action steps full-SHA pinned."
     )
 
 

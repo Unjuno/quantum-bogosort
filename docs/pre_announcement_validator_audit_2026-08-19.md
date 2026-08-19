@@ -44,7 +44,7 @@ The required map now includes:
 - `.gitignore`, dependency/Python configuration, and the validation workflow;
 - `experiments/archive/README.md` and `experiments/archive/INDEX.md`;
 - the pre-announcement audit records;
-- all principal validator scripts, including the runtime-contract and worktree-artifact validators.
+- all principal validator scripts, including the runtime-contract, core-theorem-lock, and worktree-artifact validators.
 
 Required paths must be regular files, not merely existing paths, and duplicate declarations in the validator itself are rejected.
 
@@ -70,7 +70,7 @@ It now:
 - validates reference-style definition targets;
 - excludes GitHub footnote definitions (`[^id]: ...`), whose body is prose rather than a link target.
 
-No current fragment/heading-anchor links were found, so fragment-slug validation is not presently a repository defect.
+A later pass found that local fragment/query suffixes were still stripped before filesystem resolution. Because the repository currently has no local fragment/query links and no GitHub-heading-slug validator, local `#fragment` and `?query` targets are now rejected rather than silently checking only the file component. This closes the `file.md#nonexistent-heading` false-PASS path without pretending to validate GitHub slug semantics.
 
 ### 6. LaTeX reference preflight could resolve a compiled reference from an uncompiled file
 
@@ -134,9 +134,9 @@ The null now explicitly creates identical trajectory/accessibility arrays for th
 - presence of `workflow_dispatch`;
 - full 40-hex commit-SHA pinning for every reusable `uses:` step;
 - the exact currently audited action SHAs and expected action multiplicities;
-- presence of the final ignored-artifact validation command.
+- presence of the canonical theorem-lock and final ignored-artifact validation commands.
 
-This is intentionally a **primary-package/runtime contract**, not a claim that every transitive wheel is cryptographically locked. Byte-level output identity is still the final executable check.
+This is intentionally a **primary-package/runtime contract**, not a claim that every transitive wheel is cryptographically locked. Byte-level output identity is still the final executable check. The audit considered fully pinning transitive plotting dependencies, but deferred that change until a successful final Actions run can provide the actual resolved environment; guessing a new lock set before that run could itself invalidate the committed byte contract.
 
 The audit independently confirmed that Python 3.11.15 is a stable release and that the `actions/python-versions` manifest contains a Linux 24.04 x64 build for 3.11.15. The exact NumPy, pandas, and Matplotlib pins also publish Python-3.11/Linux-compatible distributions.
 
@@ -152,7 +152,7 @@ The root README now exposes the `main` `validate` workflow badge and links direc
 
 ### 14. Ignored untracked files could evade the final clean-worktree check
 
-The workflow already rejected tracked diffs and nonignored untracked files. However, `git ls-files --others --exclude-standard` deliberately omits paths matched by `.gitignore`. A validator or experiment could therefore create an unexpected file such as `stray.log` or `stray.out` and still leave the final CI clean check green.
+The workflow already rejected tracked diffs and nonignored untracked files. However, `git ls-files --others --exclude-standard` deliberately omits paths matched by `.gitignore`. A validator or experiment could therefore create an unexpected ignored file and still leave the final CI clean check green.
 
 `scripts/validate_worktree_artifacts.py` now inspects:
 
@@ -160,14 +160,36 @@ The workflow already rejected tracked diffs and nonignored untracked files. Howe
 git ls-files --others --ignored --exclude-standard
 ```
 
-and permits only the ignored outputs the repository-validation job intentionally creates:
+The first implementation allowed any `*.pyc` under the three expected `__pycache__` directories. A deeper negative test showed that this was still too broad: an unrelated `scripts/__pycache__/stray.pyc` would pass. The validator now derives the **exact expected bytecode path set** from the same top-level `experiments/*.py`, `figures/*.py`, and `scripts/*.py` source globs compiled by the workflow, using Python's `cache_from_source`. It combines that exact set with the six expected generated manuscript PDFs and rejects every other ignored/untracked path.
 
-- Python bytecode files under `experiments/__pycache__/`, `figures/__pycache__/`, or `scripts/__pycache__/`;
-- the exact six manuscript figure PDFs already declared by `scripts/validate_figure_set.py`.
+The Git enumeration and allowlist behavior were negative-tested independently: the exact expected set passes, a stray `.pyc` is rejected, a stray ignored log is rejected, and a missing expected bytecode/PDF artifact is rejected.
 
-All six PDF outputs are also required to be present. Any other ignored/untracked path fails validation. The workflow runs this validator after figure generation and the tracked/nonignored clean checks, and the runtime contract requires that invocation.
+### 15. Manifest theorem-routing validation did not actually inspect experiment-card theory routes
 
-The Git enumeration semantics and the validator's failure behavior were negative-tested independently: the expected bytecode/PDF set passes, adding a `stray.log` fails, and removing one expected manuscript PDF fails.
+The manifest validator had begun locking the canonical E1–E5 CSV mappings and `linked_theorems` fields, but its success message implied agreement with the experiment cards while the card check only scanned CSV paths. An experiment card could therefore change `T1` to `T99` under `## Linked theory` while the manifest validator still passed.
+
+The validator now parses the exact `## Linked theory` section of every E1–E5 card and checks both theorem/corollary tokens and routed Markdown source paths against the canonical experiment mapping. It also verifies that every routed source exists. A function-level negative test confirmed that an E1 `T1 -> T99` mutation and an E5 theory-route mutation are rejected. Because the audit runtime still cannot perform a normal network clone, this is a negative test of the new routing logic rather than a substitute for the final Actions execution.
+
+### 16. `LOCK` status fixed historical filenames but not historical content
+
+The manifest previously locked the identities/names of the 16 historical E1–E5 CSVs but not their bytes. If a historical CSV were modified and that modification itself committed to `HEAD`, the later clean-worktree checks could still pass because there would be no runtime diff.
+
+The audit compared frozen v0.3 commit `58038763127258bd3e2f0d41708c4dfa01f81fd6` with current `main` and confirmed that none of the 16 locked historical CSVs has changed. Their frozen Git blob identities are now recorded in `scripts/validate_manifest.py`. For each locked file, CI verifies both:
+
+- `HEAD:data/processed/<file>` against the frozen expected blob SHA;
+- the actual working-tree file via `git hash-object` against the same SHA.
+
+This catches both a committed historical-data rewrite and an uncommitted dirty rewrite. The Git-hash behavior was negative-tested in a temporary repository: the baseline matched, a dirty mutation changed only the working-tree hash, and a committed mutation changed the HEAD blob hash.
+
+### 17. The locked T1–T5 theorem set had no executable semantic-body lock
+
+The repository consistently described T1–T5 as locked, but source QA previously enforced that status only through documentation/provenance review. Raw Markdown cannot be frozen because GitHub-rendering corrections legitimately changed fence syntax and headings after v0.3.
+
+The compact standalone `theory/core_theorems.tex` provides a better invariant. Direct comparison of frozen v0.3 and current `main` showed that its only change is the document title, from the historical `v0.1` label to the version-neutral `Core Theorem Set (T1--T5)` title. The theorem statements, proofs, corollary, propositions, boundary, and Everett bridge paragraph are otherwise identical.
+
+`scripts/validate_core_theorem_lock.py` now normalizes exactly that one allowed title line back to the frozen title and requires the resulting Git blob to equal frozen v0.3 blob `82986d7197e79446d6574aab538d1edaeff47eb6`. Any other change to the canonical TeX theorem/proof/boundary body fails CI and requires explicit scientific review rather than being absorbed as repository QA. The workflow, runtime contract, and repository-structure inventory all require this validator.
+
+The manuscript's `paper/sections/appendix.tex`, which contains the complete T1–T5 proofs, was also directly inspected and remains unchanged from the v0.3 snapshot; no manuscript-side core-theorem drift was found.
 
 ## Checks that remained valid
 
@@ -177,7 +199,9 @@ The second pass also rechecked several earlier decisions and did not find a corr
 - the pinned Python 3.11.15 / NumPy 2.4.6 / pandas 3.0.5 / Matplotlib 3.11.1 primary runtime contract remains internally coherent;
 - the four current Markdown issue templates contain the expected chooser front matter;
 - the split Creative Commons files are intentionally concise licensing notices pointing to canonical legal codes rather than truncated copies presented as full legal text;
+- the split-license validator classifies every tracked file into exactly one path-explicit license class, so an unclassified tracked extension/path fails rather than silently falling outside the map;
 - `CITATION.cff` contains the required root CFF 1.2.0 fields and intentionally tracks the frozen v0.3 public-review snapshot;
+- Figure 7 is intentionally a repository-review SVG, while Figures 1–6 constitute the manuscript PDF set; generator, figure-set validator, and figure provenance documentation agree on that asymmetry;
 - no current `release/v0.*` development-branch routing remains in the repository search surface;
 - the only open issue is the current S2 review issue #14, whose main body is now synchronized;
 - `v0.3-public-review` still resolves to `58038763127258bd3e2f0d41708c4dfa01f81fd6`;
@@ -203,7 +227,7 @@ Release-tag commits were re-resolved successfully, but the rendered GitHub Relea
 
 ## Scientific/provenance boundary
 
-This pass changes validator logic, E3 null test plumbing, workflow configuration, current-review issue rendering syntax, contribution/reproduction instructions, and repository QA documentation.
+This pass changes validator logic, E3 null test plumbing, workflow configuration, current-review issue rendering syntax, contribution/reproduction instructions, bibliography metadata, and repository QA documentation.
 
 It does not change:
 
@@ -214,6 +238,8 @@ It does not change:
 - the numerical E3 recognition-null result;
 - the numerical E1–E5 conclusions;
 - the seven committed SVG figure files.
+
+The new blob locks make the first and fourth bullets executable regression boundaries rather than documentation-only assertions where a suitable canonical byte representation exists.
 
 ## Remaining release gates
 

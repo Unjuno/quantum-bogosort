@@ -37,6 +37,8 @@ jobs:
         run: python scripts/validate_citation_metadata.py
       - name: Validate bibliography metadata
         run: python scripts/validate_bibliography_metadata.py
+      - name: Validate split licensing declarations
+        run: python scripts/validate_license_map.py
       - name: Validate GitHub issue-template front matter
         run: python scripts/validate_issue_templates.py
       - name: Validate experiment manifest

@@ -7,17 +7,24 @@ journal and book-chapter records carry a printable ``note = {doi:<doi>}``.
 
 A separate reviewed fact lock records the citation-key set, record type, year, author,
 title, publication locator, canonical DOI/arXiv identifier, and provenance class. The
-lock prevents a later edit from silently reverting already-reviewed publication identity
-or chronology. It does not replace external factual verification of the bibliography.
+reviewed BibTeX file and fact-lock table are themselves fixed to audited HEAD/worktree
+Git blobs before semantic cross-checking, so a coordinated edit to both files cannot
+silently rewrite already-reviewed publication identity or chronology. External factual
+verification remains a separate human/source-review task.
 """
 from __future__ import annotations
 
 from pathlib import Path
 import re
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 BIB = ROOT / "paper/references.bib"
 FACT_LOCK = ROOT / "paper/bibliography_fact_lock.md"
+EXPECTED_REVIEWED_BLOBS = {
+    "paper/references.bib": "5f959621efc7c97edf23555612d8ca1c0ffce9d0",
+    "paper/bibliography_fact_lock.md": "1425031e996de82b9f190d708f58cceeadf00fd9",
+}
 ENTRY_START_RE = re.compile(r"@(\w+)\s*\{\s*([^,\s]+)\s*,", re.IGNORECASE)
 FIELD_RE = re.compile(r"^\s*([A-Za-z][A-Za-z0-9]*)\s*=\s*\{(.*)\}\s*,?\s*$")
 ARXIV_NEW_RE = re.compile(r"^\d{4}\.\d{4,5}(?:v\d+)?$")
@@ -42,6 +49,41 @@ ALLOWED_PROVENANCE = {
     "retained-working-paper",
     "latest-working-preprint",
 }
+
+
+def git_text(*args: str) -> str:
+    result = subprocess.run(
+        ["git", *args],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
+def validate_reviewed_blobs(errors: list[str]) -> None:
+    for relative, expected_blob in EXPECTED_REVIEWED_BLOBS.items():
+        path = ROOT / relative
+        if path.is_symlink() or not path.is_file():
+            errors.append(f"{relative}: missing/invalid reviewed bibliography source")
+            continue
+        try:
+            head_blob = git_text("rev-parse", f"HEAD:{relative}")
+            worktree_blob = git_text("hash-object", relative)
+        except subprocess.CalledProcessError as exc:
+            errors.append(f"{relative}: unable to resolve Git blob identity: {exc}")
+            continue
+        if head_blob != expected_blob:
+            errors.append(
+                f"{relative}: committed reviewed-bibliography drift: "
+                f"HEAD has {head_blob}, expected {expected_blob}"
+            )
+        if worktree_blob != expected_blob:
+            errors.append(
+                f"{relative}: working-tree reviewed-bibliography drift: "
+                f"{worktree_blob}, expected {expected_blob}"
+            )
 
 
 def split_entries(text: str) -> list[tuple[str, str, str]]:
@@ -221,10 +263,7 @@ def parse_fact_lock(text: str, errors: list[str]) -> dict[str, dict[str, str]]:
 
 def main() -> None:
     errors: list[str] = []
-    if not BIB.is_file():
-        raise SystemExit("Missing paper/references.bib")
-    if not FACT_LOCK.is_file():
-        raise SystemExit("Missing paper/bibliography_fact_lock.md")
+    validate_reviewed_blobs(errors)
 
     try:
         entries = split_entries(BIB.read_text(encoding="utf-8"))
@@ -424,7 +463,8 @@ def main() -> None:
         raise SystemExit("Bibliography metadata validation failed:\n" + "\n".join(errors))
 
     print(
-        "Bibliography metadata validation passed: "
+        "Bibliography metadata validation passed: reviewed references.bib/fact-lock HEAD/worktree "
+        "blobs match; "
         f"{len(entries)} unique records ({article_count} journal @article, "
         f"{incollection_count} book-chapter @incollection, {misc_count} arXiv @misc); "
         f"{len(dois)} unique printable DOI records and {len(eprints)} unique printable arXiv "

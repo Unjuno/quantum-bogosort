@@ -91,7 +91,6 @@ python scripts/validate_citation_metadata.py
 python scripts/validate_bibliography_metadata.py
 python scripts/validate_issue_templates.py
 python scripts/validate_manifest.py
-python scripts/validate_figure_set.py
 python scripts/validate_svg_sources.py
 ```
 
@@ -121,10 +120,11 @@ python scripts/validate_reproduction_outputs.py
 
 The reproduction validator is manifest-driven. It requires the tracked E1–E5 current CSV set to match the manifest, requires current outputs to remain byte-identical to `HEAD`, rejects changes to any tracked repository content during experiment execution, and rejects undeclared generated files under `data/processed/`, including ignored files.
 
-For figure changes, regenerate and validate the exact committed SVG set separately:
+For figure changes, regenerate both the public SVGs and the gitignored manuscript PDF figures before validating the exact output sets:
 
 ```bash
 python figures/generate_figures.py
+python figures/generate_pdf_figures.py
 python scripts/validate_figure_set.py
 python scripts/validate_svg_sources.py
 git diff --exit-code -- figures/generated/ data/processed/fig2_fosd_theorem_illustration.csv

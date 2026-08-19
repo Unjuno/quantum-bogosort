@@ -1,17 +1,30 @@
-"""Byte-compare all manifest-declared current reproduction outputs with HEAD."""
+"""Validate current reproduction outputs and the post-experiment data tree."""
 from __future__ import annotations
 
 from pathlib import Path
 import csv
+import re
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "experiments" / "manifest.csv"
 DATA_RELATIVE = Path("data") / "processed"
+CURRENT_NAME_RE = re.compile(r"^e[1-5]_.+\.csv$")
 
 
 def split_files(value: str) -> list[str]:
     return [item.strip() for item in value.split(";") if item.strip()]
+
+
+def git_output(*args: str) -> list[str]:
+    result = subprocess.run(
+        ["git", *args],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return [line for line in result.stdout.splitlines() if line]
 
 
 def main() -> None:
@@ -28,20 +41,32 @@ def main() -> None:
         raise SystemExit("Duplicate reproduction output names in manifest")
 
     paths = [(DATA_RELATIVE / name).as_posix() for name in names]
+    manifest_paths = set(paths)
 
     missing = [path for path in paths if not (ROOT / path).is_file()]
     if missing:
         raise SystemExit("Missing reproduction outputs:\n" + "\n".join(missing))
 
-    for path in paths:
-        tracked = subprocess.run(
-            ["git", "cat-file", "-e", f"HEAD:{path}"],
-            cwd=ROOT,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-        if tracked.returncode != 0:
-            raise SystemExit(f"Manifest reproduction output is not tracked in HEAD: {path}")
+    tracked_data = git_output("ls-files", "--", DATA_RELATIVE.as_posix())
+    tracked_current = {
+        path
+        for path in tracked_data
+        if CURRENT_NAME_RE.match(Path(path).name)
+    }
+    if tracked_current != manifest_paths:
+        undeclared = sorted(tracked_current - manifest_paths)
+        untracked_by_manifest = sorted(manifest_paths - tracked_current)
+        details: list[str] = []
+        if undeclared:
+            details.append(
+                "tracked E1-E5 CSVs missing from manifest: " + ", ".join(undeclared)
+            )
+        if untracked_by_manifest:
+            details.append(
+                "manifest reproduction CSVs not tracked in HEAD: "
+                + ", ".join(untracked_by_manifest)
+            )
+        raise SystemExit("Reproduction manifest/tracked-file mismatch:\n" + "\n".join(details))
 
     diff = subprocess.run(
         ["git", "diff", "--exit-code", "--", *paths],
@@ -53,9 +78,33 @@ def main() -> None:
             "Current reproduction output differs from committed HEAD; see git diff above."
         )
 
+    # Experiment scripts are not allowed to modify locked historical data or any
+    # other tracked processed-data file. Figure-generation data is produced only
+    # after this validator runs in CI.
+    full_diff = subprocess.run(
+        ["git", "diff", "--exit-code", "--", DATA_RELATIVE.as_posix()],
+        cwd=ROOT,
+        check=False,
+    )
+    if full_diff.returncode != 0:
+        raise SystemExit(
+            "Experiment execution changed a processed-data file outside the accepted "
+            "byte-identical reproduction contract; see git diff above."
+        )
+
+    untracked = git_output(
+        "ls-files", "--others", "--exclude-standard", "--", DATA_RELATIVE.as_posix()
+    )
+    if untracked:
+        raise SystemExit(
+            "Experiment execution produced undeclared/untracked processed-data files:\n"
+            + "\n".join(untracked)
+        )
+
     print(
         f"Reproduction output validation passed: {len(paths)} manifest-declared "
-        "current CSVs are tracked and byte-identical to HEAD."
+        "current CSVs exactly cover the tracked E1-E5 output set, are byte-identical "
+        "to HEAD, and experiment execution left data/processed otherwise clean."
     )
 
 

@@ -42,7 +42,7 @@ The manuscript uses PDF build products for Figures 1–6 generated from the same
 
 ![Cross-copy action correlation and single-observer FP gain](generated/fig6_branch_coherence.svg)
 
-**Current reproduction source:** `data/processed/e5_rho_paired_reproduction.csv`.
+**Current reproduction source:** `data/processed/e5_rho_paired_reproduction.csv`. Its current rho-sweep field is `action_corr_increment`; the audit corrected an earlier misleading `recognition_corr_increment` field name without changing the numerical series or the rendered figure.
 
 ### Figure 7 — Learned predictive alignment under noise
 
@@ -51,6 +51,14 @@ The manuscript uses PDF build products for Figures 1–6 generated from the same
 **Type:** repository-review visualization of a locked E2 simulation summary. **Locked historical source:** `data/processed/qbs_nonlinear_minimal_mock_summary.csv`, metric `corr_score_luck`. The current E2 rerun output is `data/processed/e2_minimal_agent_reproduction.csv` and is kept separate rather than silently substituted into the locked figure. The interaction-capable evaluator retains positive predictive alignment as noise rises, while the misspecified linear and random controls remain near zero.
 
 ## Reproduction
+
+Use the repository's recorded Python version and pinned dependencies before byte-level regeneration:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
 For GitHub-readable SVG previews:
 
@@ -64,7 +72,7 @@ For LaTeX manuscript PDF figures:
 python figures/generate_pdf_figures.py
 ```
 
-The SVG generator writes Figure 2's deterministic theorem-illustration CDF data to `data/processed/fig2_fosd_theorem_illustration.csv` during regeneration.
+The SVG generator writes Figure 2's deterministic theorem-illustration CDF data to `data/processed/fig2_fosd_theorem_illustration.csv` during regeneration. This CSV is serialization-sensitive across numerical-library versions, so the byte-reproduction environment is pinned rather than specified only by lower version bounds.
 
 Figure-level data provenance and script-level reproducibility are related but distinct. Figures 3, 4, and 6 read current reproduction outputs; Figure 2 is a deterministic theorem illustration; Figures 5 and 7 read locked historical summaries. The experiment manifest is authoritative for which CSVs are locked and which are current reproduction outputs.
 
@@ -79,4 +87,6 @@ Figure-level data provenance and script-level reproducibility are related but di
 
 ## CI
 
-GitHub Actions regenerates all seven SVGs, verifies every expected SVG output, regenerates the six manuscript PDFs, and then builds the manuscript PDF using Figures 1–6.
+GitHub Actions uses the pinned Python/numerical environment, regenerates all seven SVGs, verifies every expected SVG output, validates the committed SVGs as browser-safe XML assets, and byte-compares the SVG directory plus the deterministic Figure 2 theorem-illustration CSV. It also regenerates the six manuscript PDFs before the LaTeX source preflight/build. Current E1–E5 reproduction CSV identity is checked separately in the experiment-validation stage.
+
+See [`../docs/pre_announcement_execution_audit_2026-08-19.md`](../docs/pre_announcement_execution_audit_2026-08-19.md) for the commit-fixed execution audit and the remaining browser/Actions release gates.

@@ -16,9 +16,10 @@ Z_5=(U-Y)^2.
 \]
 Assume $S\ge0$, $0<\mathbb E[S]<\infty$, and
 \[
-\operatorname{Var}(Z_j)\le v_j<\infty,
-\qquad j=1,\ldots,5.
+0\le \operatorname{Var}(Z_j)\le v_j<\infty,
+\qquad j=1,\ldots,5,
 \]
+where the $v_j$ are valid nonnegative population upper bounds.
 
 Choose an odd integer $b$ satisfying
 \[
@@ -110,7 +111,13 @@ Fix target $Z_j$. A block mean satisfies
 \operatorname{Var}(\bar Z_{j,r})
 \le\frac{v_j}{m}.
 \]
-By Chebyshev,
+If $v_j=0$, then nonnegativity of variance and the upper bound imply
+\[
+\operatorname{Var}(Z_j)=0.
+\]
+Hence $Z_j=\mathbb E[Z_j]$ almost surely, every block mean equals the population mean almost surely, $r_j=0$, and the MoM deviation event has probability zero.
+
+Now suppose $v_j>0$. Chebyshev gives
 \[
 P\!\left(
 |\bar Z_{j,r}-\mathbb E[Z_j]|>
@@ -128,7 +135,7 @@ P\!\left(
 \le
 \frac{\delta}{5}.
 \]
-A union bound over the five target variables gives simultaneous coverage at least $1-\delta$. The resulting intervals are exactly the S2.8 inputs, so S2.8 yields
+The same displayed bound is trivially true in the $v_j=0$ case because its left-hand probability is zero. A union bound over the five target variables gives simultaneous coverage at least $1-\delta$. The resulting intervals are exactly the S2.8 inputs, so S2.8 yields
 \[
 \operatorname{Cov}(U,S)
 \ge D_{\rm MoM}

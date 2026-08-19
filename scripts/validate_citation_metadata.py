@@ -14,6 +14,10 @@ ROOT = Path(__file__).resolve().parents[1]
 CITATION = ROOT / "CITATION.cff"
 STATUS = ROOT / "STATUS.md"
 REPOSITORY_URL = "https://github.com/Unjuno/quantum-bogosort"
+EXPECTED_CURRENT_TAG = "v0.3-public-review"
+EXPECTED_CURRENT_COMMIT = "58038763127258bd3e2f0d41708c4dfa01f81fd6"
+EXPECTED_ARCHIVED_TAG = "v0.2-public-review"
+EXPECTED_ARCHIVED_COMMIT = "7405f7408f74fa32b16d1cc9f624070cc14624ab"
 REQUIRED_KEYWORDS = {
     "quantum foundations",
     "Everett interpretation",
@@ -53,6 +57,7 @@ def parse_cff(text: str) -> tuple[dict[str, str], list[str], list[str], list[str
     authors: list[str] = []
     keywords: list[str] = []
     errors: list[str] = []
+    seen_top_level: set[str] = set()
     section: str | None = None
 
     for line_no, raw in enumerate(text.splitlines(), start=1):
@@ -75,6 +80,8 @@ def parse_cff(text: str) -> tuple[dict[str, str], list[str], list[str], list[str
                     keywords.append(unquote(match.group(1)))
                 else:
                     errors.append(f"CITATION.cff:{line_no}: malformed keyword entry")
+            else:
+                errors.append(f"CITATION.cff:{line_no}: unexpected indented content")
             continue
 
         match = SCALAR_RE.fullmatch(raw)
@@ -86,8 +93,9 @@ def parse_cff(text: str) -> tuple[dict[str, str], list[str], list[str], list[str
         key, raw_value = match.groups()
         if key not in TOP_LEVEL_KEYS:
             errors.append(f"CITATION.cff:{line_no}: unexpected top-level key {key!r}")
-        if key in scalars:
+        if key in seen_top_level:
             errors.append(f"CITATION.cff:{line_no}: duplicate top-level key {key!r}")
+        seen_top_level.add(key)
 
         value = unquote(raw_value)
         if key in {"authors", "keywords"}:
@@ -164,18 +172,22 @@ def main() -> None:
     status_date_match = STATUS_DATE_RE.search(status_text)
     status_tags = STATUS_TAG_RE.findall(status_text)
     status_commits = STATUS_COMMIT_RE.findall(status_text)
+    expected_tags = [EXPECTED_CURRENT_TAG, EXPECTED_ARCHIVED_TAG]
+    expected_commits = [EXPECTED_CURRENT_COMMIT, EXPECTED_ARCHIVED_COMMIT]
+    if status_tags[:2] != expected_tags:
+        errors.append(f"STATUS.md snapshot tag ledger must begin {expected_tags!r}; got {status_tags[:2]!r}")
+    if status_commits[:2] != expected_commits:
+        errors.append(
+            f"STATUS.md snapshot commit ledger must begin {expected_commits!r}; got {status_commits[:2]!r}"
+        )
     if not status_date_match:
         errors.append("STATUS.md is missing the frozen snapshot date")
-    if not status_tags:
-        errors.append("STATUS.md is missing a frozen tag/Release entry")
-    if not status_commits:
-        errors.append("STATUS.md is missing a frozen commit entry")
 
     citation_version = scalars.get("version", "")
     expected_tag = f"v{citation_version}" if citation_version else ""
-    if status_tags and status_tags[0] != expected_tag:
+    if expected_tag != EXPECTED_CURRENT_TAG:
         errors.append(
-            f"CITATION.cff version {citation_version!r} does not match current STATUS tag {status_tags[0]!r}"
+            f"CITATION.cff version must identify current frozen snapshot {EXPECTED_CURRENT_TAG!r}; got {citation_version!r}"
         )
     if status_date_match and released != status_date_match.group(1):
         errors.append(
@@ -194,7 +206,7 @@ def main() -> None:
     print(
         "Citation metadata validation passed: CFF 1.2.0, canonical repository URLs, "
         f"{len(authors)} author entry, {len(keywords)} keywords, and frozen snapshot "
-        f"{expected_tag} / {released} aligned with STATUS.md."
+        f"{EXPECTED_CURRENT_TAG} / {EXPECTED_CURRENT_COMMIT[:12]}… / {released} aligned with STATUS.md."
     )
 
 

@@ -81,13 +81,23 @@ satisfies:
 P(\mathcal E)\ge1-\delta.
 ```
 
-Because accessibility is nonnegative, define the effective lower bound:
+Because accessibility and MSE are nonnegative, define effective nonnegative bounds:
 
 ```math
 L_S^+
 =
-\max\{0,L_S\}.
+\max\{0,L_S\},
 ```
+
+and:
+
+```math
+U_M^+
+=
+\max\{0,U_M\}.
+```
+
+On `\mathcal E`, the MSE inequality itself implies `U_M\ge0`, so `U_M^+=U_M`; the clipping only makes the reported certificate a real-valued statistic on samples outside the simultaneous-validity event as well.
 
 Define the largest possible product of the two mean intervals:
 
@@ -127,7 +137,7 @@ Finally define:
 \boxed{
 D_{\mathrm{env}}
 =
-C_L-\sqrt{U_MV_U}
+C_L-\sqrt{U_M^+V_U}
 }.
 ```
 
@@ -147,9 +157,7 @@ D_{\mathrm{env}}
 Therefore, whenever the realized confidence envelopes satisfy:
 
 ```math
-\boxed{
-D_{\mathrm{env}}>0,
-}
+\boxed{D_{\mathrm{env}}>0},
 ```
 
 positive population outcome/accessibility covariance is certified at confidence at least `1-delta`.
@@ -273,6 +281,14 @@ E[(U-Y)^2]
 U_M.
 ```
 
+Because the left side is nonnegative, `U_M\ge0` on the event and therefore:
+
+```math
+E[(U-Y)^2]
+\le
+U_M^+.
+```
+
 ### Step 4: compose with S2.4
 
 S2.4 states:
@@ -292,7 +308,7 @@ Substituting the simultaneous lower and upper envelopes gives:
 ```math
 \mathrm{Cov}(U,S)
 \ge
-C_L-\sqrt{U_MV_U}
+C_L-\sqrt{U_M^+V_U}
 =
 D_{\mathrm{env}}.
 ```
@@ -401,13 +417,14 @@ The theorem remains interpretation-neutral. A valid sub-Gaussian, robust, or seq
 1. The covariance product bound uses all four corners because `E[Y]` may be negative.
 2. Nonnegativity of `S` permits replacing the lower mean bound by `L_S^+=max(0,L_S)`.
 3. The variance upper bound uses a lower bound on `E[S]`; using an upper bound there would have the wrong direction.
-4. `D_env` is valid only on the stated simultaneous confidence event.
-5. Marginal confidence intervals must be combined into a justified simultaneous event.
-6. The theorem makes no distributional assumption beyond whatever is required to produce the input confidence envelopes.
-7. S2.8 does not claim that bootstrap or asymptotic intervals are finite-sample exact.
-8. The FP lower bound uses the upper confidence bound `U_S` on the positive denominator.
-9. `D_env<=0` is inconclusive.
-10. The Everett bridge remains logically separate.
+4. `U_M^+=max(0,U_M)` makes `D_env` real-valued on the full sample space; on the simultaneous confidence event it equals `U_M` and does not weaken the guarantee.
+5. `D_env` is valid only on the stated simultaneous confidence event.
+6. Marginal confidence intervals must be combined into a justified simultaneous event.
+7. The theorem makes no distributional assumption beyond whatever is required to produce the input confidence envelopes.
+8. S2.8 does not claim that bootstrap or asymptotic intervals are finite-sample exact.
+9. The FP lower bound uses the upper confidence bound `U_S` on the positive denominator.
+10. `D_env<=0` is inconclusive.
+11. The Everett bridge remains logically separate.
 
 ## Status
 

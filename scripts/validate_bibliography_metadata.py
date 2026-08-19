@@ -10,6 +10,7 @@ ENTRY_START_RE = re.compile(r"@(\w+)\s*\{\s*([^,\s]+)\s*,", re.IGNORECASE)
 FIELD_RE = re.compile(r"^\s*([A-Za-z][A-Za-z0-9]*)\s*=\s*\{(.*)\}\s*,?\s*$")
 ARXIV_NEW_RE = re.compile(r"^\d{4}\.\d{4,5}(?:v\d+)?$")
 ARXIV_OLD_RE = re.compile(r"^[a-z-]+/\d{7}(?:v\d+)?$", re.IGNORECASE)
+ARXIV_CLASS_RE = re.compile(r"^[A-Za-z]+(?:[.-][A-Za-z]+)*$")
 DOI_RE = re.compile(r"^10\.\d{4,9}/\S+$")
 
 
@@ -126,11 +127,21 @@ def main() -> None:
                 errors.append(f"{key}: malformed arXiv eprint identifier {eprint!r}")
             if fields.get("archiveprefix", "") != "arXiv":
                 errors.append(f"{key}: eprint requires archivePrefix = {{arXiv}}")
+
+            primary_class = fields.get("primaryclass", "")
+            if not primary_class:
+                errors.append(f"{key}: arXiv eprint requires primaryClass")
+            elif not ARXIV_CLASS_RE.fullmatch(primary_class):
+                errors.append(f"{key}: malformed arXiv primaryClass {primary_class!r}")
+
             normalized_eprint = eprint.lower()
             if normalized_eprint in eprints:
                 errors.append(f"{key}: eprint duplicates {eprints[normalized_eprint]}: {eprint}")
             else:
                 eprints[normalized_eprint] = key
+
+        if fields.get("primaryclass") and not eprint:
+            errors.append(f"{key}: primaryClass is present without an arXiv eprint")
 
         if fields.get("journal") and not (doi or eprint):
             errors.append(f"{key}: journal article lacks DOI/eprint provenance")
@@ -146,7 +157,7 @@ def main() -> None:
     print(
         "Bibliography metadata validation passed: "
         f"{len(entries)} unique article records; required author/title/year fields present; "
-        f"{len(dois)} unique DOI records and {len(eprints)} unique arXiv identifiers validated."
+        f"{len(dois)} unique DOI records and {len(eprints)} unique arXiv identifiers/classes validated."
     )
 
 

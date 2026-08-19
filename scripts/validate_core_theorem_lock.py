@@ -2,8 +2,8 @@
 
 The frozen v0.3 snapshot remains untouched. Current ``main`` intentionally differs in
 exactly four audited textual places in ``theory/core_theorems.tex``: a version-neutral
-title, explicit base-integrability of policy utility in the setup, explicit
-base-integrability of the generic T1 outcome, and T5 cross-integrability for the
+title, explicit base-integrability of policy utility in the setup, an explicit complete
+T1 domain for generic accessibility/outcome variables, and T5 cross-integrability for the
 intermediate ``Q(U_1,S_0)`` term. These close real domain gaps while leaving every
 identity, proof step, sign result, and physical boundary unchanged.
 
@@ -33,7 +33,8 @@ CURRENT_SETUP = "\n".join(
 )
 FROZEN_T1_ASSUMPTION = r"For any $X$ with $\E[|X|S]<\infty$,"
 CURRENT_T1_ASSUMPTION = (
-    r"For any $X$ with $\E[|X|]<\infty$ and $\E[|X|S]<\infty$,"
+    r"For any $S\ge0$ with $0<\E[S]<\infty$ and any $X$ with "
+    r"$\E[|X|]<\infty$ and $\E[|X|S]<\infty$,"
 )
 FROZEN_T5_INTRO = r"Let $D=U_1-U_0$ and"
 CURRENT_T5_INTRO = (
@@ -42,11 +43,13 @@ CURRENT_T5_INTRO = (
 
 DOMAIN_SURFACES: dict[Path, tuple[str, ...]] = {
     ROOT / "theory/core_theorems.md": (
+        r"0<E_\mu[S_\pi]<\infty",
         r"E_\mu[|U_\pi|]<\infty",
         r"E_\mu[|U_\pi|S_\pi]<\infty",
     ),
     ROOT / "theory/theorem_1_3.md": (
         r"E[|X|]<\infty",
+        r"0<E[S]<\infty",
         r"E[|X|S]<\infty",
     ),
     ROOT / "theory/theorem_4_5.md": (
@@ -60,6 +63,7 @@ DOMAIN_SURFACES: dict[Path, tuple[str, ...]] = {
         r"\mathbb E_\mu[|U_1|S_0]<\infty",
     ),
     ROOT / "paper/sections/theorems.tex": (
+        r"0<\mathbb E[S]<\infty",
         r"\mathbb E[|X|]<\infty",
         r"\mathbb E[|X|S]<\infty",
         r"\mathbb E[|U_R|]<\infty",
@@ -67,6 +71,7 @@ DOMAIN_SURFACES: dict[Path, tuple[str, ...]] = {
         r"\mathbb E[|U_1|S_0]<\infty",
     ),
     ROOT / "paper/sections/appendix.tex": (
+        r"0<\mathbb E[S]<\infty",
         r"\mathbb E[|X|]<\infty",
         r"\mathbb E[|X|S]<\infty",
         r"\mathbb E[|U_R|]<\infty",
@@ -119,7 +124,7 @@ def main() -> None:
     approved = [
         (CURRENT_TITLE, FROZEN_TITLE, "title"),
         (CURRENT_SETUP, FROZEN_SETUP, "setup integrability text"),
-        (CURRENT_T1_ASSUMPTION, FROZEN_T1_ASSUMPTION, "T1 integrability text"),
+        (CURRENT_T1_ASSUMPTION, FROZEN_T1_ASSUMPTION, "T1 accessibility/integrability text"),
         (CURRENT_T5_INTRO, FROZEN_T5_INTRO, "T5 cross-integrability text"),
     ]
     for current, _frozen, label in approved:
@@ -133,7 +138,7 @@ def main() -> None:
     if actual != FROZEN_V03_BLOB:
         raise SystemExit(
             "Core-theorem lock validation failed: after normalizing only the audited title/"
-            "integrability corrections, the T1-T5 TeX body differs from frozen v0.3 canonical "
+            "domain corrections, the T1-T5 TeX body differs from frozen v0.3 canonical "
             f"blob {FROZEN_V03_BLOB}; got {actual}. Any additional theorem/proof/boundary change "
             "requires explicit scientific review."
         )
@@ -142,7 +147,8 @@ def main() -> None:
 
     print(
         "Core-theorem lock validation passed: after exactly four approved normalizations "
-        "(version-neutral title, setup/T1 base-integrability, and T5 cross-integrability), "
+        "(version-neutral title, setup base-integrability, complete generic T1 domain, and "
+        "T5 cross-integrability), "
         f"theory/core_theorems.tex matches frozen v0.3 commit {FROZEN_V03_COMMIT[:12]}… "
         f"blob {FROZEN_V03_BLOB}; explicit domain assumptions are also present across "
         f"{len(DOMAIN_SURFACES)} rendered/manuscript surfaces."

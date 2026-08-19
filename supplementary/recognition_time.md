@@ -14,13 +14,7 @@ Let:
 (\Omega,\mathcal F,(\mathcal F_t)_{t\ge0},\mu)
 ```
 
-be a filtered probability space. Let `C_t` be an adapted recognition-confidence process:
-
-```math
-C_t
-\in
-\mathcal F_t.
-```
+be a filtered probability space. Let `C_t:\Omega\to\mathbb R` be an adapted recognition-confidence process, meaning that for each `t`, `C_t` is `\mathcal F_t`-measurable.
 
 Fix an activation threshold `kappa`. Define recognition time by:
 
@@ -30,29 +24,25 @@ Fix an activation threshold `kappa`. Define recognition time by:
 \inf\{t\ge0:C_t\ge\kappa\}.
 ```
 
-If for each `t` the event:
+### Discrete time
 
-```math
-\{C_t\ge\kappa\}
-```
-
-is measurable with respect to:
-
-```math
-\mathcal F_t,
-```
-
-then `tau_rec` is a stopping time because:
+In discrete time, adaptedness is sufficient. For each integer `t`:
 
 ```math
 \{\tau_{\mathrm{rec}}\le t\}
 =
-\bigcup_{s\le t}\{C_s\ge\kappa\}
+\bigcup_{s=0}^{t}\{C_s\ge\kappa\}
 \in
-\mathcal F_t
+\mathcal F_t.
 ```
 
-in discrete time, with the usual right-continuity/measurability qualifications in continuous time.
+Hence `tau_rec` is a stopping time.
+
+### Continuous time
+
+In continuous time, measurability of an uncountable union should not be assumed from adaptedness alone. A standard sufficient setup is that `C` is adapted with continuous sample paths and the filtration satisfies the usual conditions. Then the first hitting time of the closed set `[kappa,\infty)` is a stopping time.
+
+More general progressive/optional measurability hypotheses can also support hitting-time results, but this note does not need their full generality.
 
 ## Recognition-dependent policy after the stopping time
 
@@ -81,21 +71,29 @@ S_{\tau}
 S(\pi^{(\tau)},\omega).
 ```
 
-The first-person value of a recognition-time rule is therefore:
+Call a stopping rule **FP-admissible** for this value comparison when:
+
+```math
+S_{\tau}\ge0,
+\qquad
+0<E[S_{\tau}]<\infty,
+```
+
+```math
+E[|U_{\tau}|]<\infty,
+\qquad
+E[|U_{\tau}|S_{\tau}]<\infty.
+```
+
+The weighted first-person value is then finite and defined by:
 
 ```math
 V(\tau)
 =
-\frac{E[U_{\tau}S_{\tau}]}{E[S_{\tau}]},
+\frac{E[U_{\tau}S_{\tau}]}{E[S_{\tau}]}.
 ```
 
-whenever:
-
-```math
-0<E[S_{\tau}]<\infty.
-```
-
-The covariance decomposition applies to each fixed admissible stopping rule:
+For each fixed FP-admissible stopping rule, T1 applies and gives:
 
 ```math
 V(\tau)
@@ -104,6 +102,8 @@ E[U_{\tau}]
 +
 \frac{\mathrm{Cov}(U_{\tau},S_{\tau})}{E[S_{\tau}]}.
 ```
+
+The separate base- and weighted-integrability conditions are both needed: positive finite expected accessibility alone does not make either `E[U_tau]` or `E[U_tau S_tau]` finite.
 
 ## Why earlier recognition is not automatically better
 
@@ -136,10 +136,12 @@ See:
 
 ## v0.2 scope decision
 
-For v0.2:
+For the historical v0.2 scope:
 
-- the stopping-time definition is **FORMALIZED**;
-- the value functional for a stopping rule is **EXACT BY DEFINITION**;
+- the discrete-time stopping-time definition is **FORMALIZED**;
+- the continuous-time statement is **CONDITIONAL** on standard path/measurability hypotheses such as adapted continuous sample paths;
+- the value functional for an FP-admissible stopping rule is **EXACT BY DEFINITION**;
+- the T1 decomposition is **EXACT** under the explicit base/weighted integrability conditions above;
 - a universal ordering of early versus late recognition is **NOT CLAIMED**;
 - a full timing theorem and reconstructed timing experiment are **DEFERRED** to a later extension.
 
@@ -170,12 +172,15 @@ The point of the future theorem would be to make the assumptions explicit rather
 
 ## ERROR CHECK
 
-1. The stopping-time definition does not itself imply optimality.
-2. Earlier recognition is not treated as universally beneficial.
-3. Historical timing simulations are not promoted to core evidence.
-4. The first-person normalization still requires positive expected accessibility.
-5. Everett interpretation of `S_tau` remains conditional on the separate bridge assumption.
+1. `C_t` is an `\mathcal F_t`-measurable random variable; it is not itself an element/event of the sigma-algebra.
+2. In discrete time, adaptedness gives the stopping-time property through a finite/countable union of threshold events.
+3. In continuous time, adaptedness alone is not used as a blanket hitting-time theorem; continuous sample paths plus the usual filtration conditions are one sufficient setup stated here.
+4. The stopping-time definition does not itself imply optimality.
+5. Earlier recognition is not treated as universally beneficial.
+6. Historical timing simulations are not promoted to core evidence.
+7. The FP value/decomposition requires nonnegative positive-finite accessibility plus both base and accessibility-weighted utility integrability.
+8. Everett interpretation of `S_tau` remains conditional on the separate bridge assumption.
 
 ## Status
 
-**STOPPING-TIME FORMALIZATION COMPLETE. GENERAL TIMING ORDERING DEFERRED BEYOND v0.2.**
+**DISCRETE-TIME STOPPING-TIME FORMALIZATION COMPLETE; CONTINUOUS-TIME HITTING CLAIM CONDITIONED ON STANDARD PATH/MEASURABILITY HYPOTHESES. FP VALUE/DECOMPOSITION DOMAIN MADE EXPLICIT. GENERAL TIMING ORDERING REMAINS DEFERRED.**

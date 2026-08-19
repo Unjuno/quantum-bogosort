@@ -8,7 +8,7 @@
 - added a concise landing-page statement of the self-referential QBS question and clarified that the name labels the observer-selection intuition rather than a literal utility-sorting operation by quantum mechanics;
 - exposed present self-location under future accessibility in the root README, canonical claim ledger, research map, notation reference, and manuscript formal model;
 - clarified that future accessibility can reweight present self-location without by itself guaranteeing a favorable direction; favorable/upward reweighting additionally requires alignment with the relevant favorability or utility statistic;
-- aligned manuscript recognition wording with an information-state / policy-selection interpretation to avoid implying a privileged physical causal role for recognition itself;
+- aligned manuscript recognition wording with an information-state / policy-selection interpretation and replaced a residual generic `recognition-activated policy` phrase with `recognition-dependent policy`; evidence-threshold activation remains a distinct explicit supplementary model where intended;
 - added a Mermaid dependency diagram to the root README and an experiment/theorem Mermaid map to `experiments/README.md`;
 - added a static Figure 1 SVG fallback below the root Mermaid dependency diagram so the core visual remains available when Mermaid is not rendered;
 - embedded the committed SVG theorem/simulation figures directly into the root README, experiment index, and figure-provenance page so results are visually inspectable without opening raw CSV files;
@@ -21,26 +21,26 @@
 - standardized named Markdown math operators on repository roman forms such as `\mathrm{Cov}`, `\mathrm{Var}`, `\mathrm{Corr}`, `\mathrm{sign}`, and `\mathrm{median}` while leaving LaTeX manuscript sources unchanged; this is a repository consistency convention rather than a claim that MathJax lacks `\operatorname`;
 - exhaustively inspected the complete then-current repository Markdown surface for rendering-critical structure, including issue-template front matter, math/code/Mermaid fences, tables, images, links, and public-state routing language;
 - added `scripts/validate_github_markdown_render.py`, which sends every Markdown file through GitHub's own GFM REST renderer in CI and checks that expected headings, tables, and images survive structural conversion;
-- added `scripts/validate_svg_sources.py` to parse all committed SVGs as XML/browser assets and reject malformed viewBoxes, missing sizes/backgrounds, active/external content, and non-finite attributes;
-- added `scripts/validate_latex_sources.py` to preflight manuscript input paths, TeX environments, bibliography/citation keys, labels/references, and generated graphics before `latexmk`;
+- added `scripts/validate_svg_sources.py` and subsequently hardened it to reject DTD/entities, animation/active elements, event-handler attributes, non-fragment hrefs, active/external CSS references, malformed/non-finite numeric attributes, and backgrounds that fail to cover the full viewBox;
+- added `scripts/validate_latex_sources.py`, then changed compiled reference resolution to use only labels reachable from `paper/main.tex` and locked `paper/sections/robust_mom_summary.tex` as the sole intentionally uncompiled manuscript source;
 - hardened `scripts/validate_markdown_math.py` to support variable-length CommonMark fences, ignore literal inline code, reject legacy dollar/LaTeX delimiter regressions, enforce repository macro conventions, and check brace, TeX-environment, and common `\left`/`\right` balance inside fenced math blocks;
-- hardened `scripts/validate_markdown_links.py` so link-like examples inside fenced or inline literal code are not misclassified as rendered repository links;
-- pinned the byte-reproduction environment to Ubuntu 24.04, Python 3.11.15, NumPy 2.4.6, pandas 3.0.5, and Matplotlib 3.11.1 after a commit-fixed audit reproduced a serialization-only Figure 2 CSV difference under a different numerical-library stack;
+- hardened `scripts/validate_markdown_links.py` so literal code does not create false positives, root-escaping relative targets fail, linked-image outer destinations are checked, reference-style definitions are checked, and GitHub footnote definitions are excluded from link-target parsing;
+- aligned the math, link, and GFM source scanners on CommonMark's zero-to-three-space fenced-code boundary, preventing four-space-indented fence-like text from suppressing later validation;
+- pinned the byte-reproduction contract to Ubuntu 24.04, Python 3.11.15, NumPy 2.4.6, pandas 3.0.5, and Matplotlib 3.11.1 after a commit-fixed audit reproduced a serialization-only Figure 2 CSV difference under a different numerical-library stack;
+- added `scripts/validate_runtime_contract.py` to cross-check `.python-version`, exact primary NumPy/pandas/Matplotlib pins, installed versions, Ubuntu runner choice, required workflow jobs/commands, manual dispatch, full-SHA reusable-action pins, and checkout credential isolation; this is a primary-package/runtime contract rather than a claim that every transitive wheel is cryptographically locked;
 - added executable E1–E5 scientific regression guards for the declared identities, nulls, sign/counterexample controls, predictive-alignment behavior, and branch-coherence contrasts;
+- routed the E3 recognition-label null through the general first-person weighted-value calculation using identical trajectory/accessibility arrays while preserving the committed exact-zero null output;
 - strengthened the experiment manifest validator to enforce exact E1–E5 ID/order, `LOCK` state, file existence, and separation of locked historical versus current reproduction provenance classes;
 - added manifest-driven byte validation of every current reproduction CSV, replacing a duplicate hard-coded output list in CI;
 - strengthened reproduction validation again so E1–E5 execution must leave the complete tracked `data/processed/` tree unchanged outside byte-identical current outputs and must not create undeclared files even when `.gitignore` would hide them;
 - corrected the current E5 rho-sweep field name from misleading `recognition_corr_increment` to `action_corr_increment`; numerical values and Figure 6 are unchanged, and locked historical schemas are preserved;
-- routed the E3 recognition-label null through the general first-person weighted-value calculation using identical trajectory/accessibility arrays while preserving the committed exact-zero null output;
 - expanded repository-structure validation to cover the workflow, dependency/Python configuration, split-license metadata, all five core theory sources, experiment executables/manifest, archived experiment provenance, theorem-illustration data, both pre-announcement audit records, and principal validator scripts;
 - added `scripts/validate_issue_templates.py` and wired it into CI so GitHub issue-template chooser front matter and nonempty bodies are validated;
-- aligned the math, link, and GFM source scanners on CommonMark's zero-to-three-space fenced-code boundary, preventing four-space-indented fence-like text from suppressing later validation;
-- changed relative-link validation so targets that escape the repository root are explicit errors, and added coverage for linked-image outer destinations and reference-style link definitions;
-- changed LaTeX preflight so compiled references can be resolved only by labels reachable from `paper/main.tex`, while intentionally uncompiled TeX sources remain linted for environments and citations;
-- strengthened static SVG validation to reject DTD/entities, animation elements, event-handler attributes, non-fragment hrefs, active/external CSS references, malformed numeric attributes, and backgrounds that fail to cover the full viewBox;
 - pinned `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` to full commit SHAs rather than mutable major-version tags;
+- disabled persisted checkout credentials in both validation jobs, kept the workflow token at `contents: read`, and run the runtime contract in both repository and manuscript jobs;
 - added `workflow_dispatch` so maintainers can repeat the complete `validate` workflow from the Actions UI without a dummy commit;
 - added the `main` validation workflow badge to the root README and synchronized contributor validation commands with the current workflow;
+- synchronized open Issue #14, the current S2 review surface, from stale `$$`/`\operatorname{Cov}` rendering syntax to fenced `math`/`\mathrm{Cov}` without changing its scientific review content;
 - added `docs/pre_announcement_execution_audit_2026-08-19.md` recording the commit-fixed local execution audit, fixes, provenance boundaries, and remaining browser/Actions gates;
 - added `docs/pre_announcement_validator_audit_2026-08-19.md` recording the second-pass false-PASS/validator and Actions-supply-chain audit;
 - corrected stale `CONTRIBUTING.md` references to removed release branches and replaced obsolete double-dollar contribution guidance with the current fenced-math convention;
@@ -48,15 +48,16 @@
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
 - removed public repository-process wording that depended on tool availability;
 - removed merged/superseded development branches;
-- migrated the frozen v0.2 and v0.3 review snapshots from `release/*` branches to immutable `v0.2-public-review` and `v0.3-public-review` tags/GitHub Releases, leaving `main` as the only active branch;
+- migrated the frozen v0.2 and v0.3 review snapshots from `release/*` branches to named, commit-pinned `v0.2-public-review` and `v0.3-public-review` tags/GitHub Releases, leaving `main` as the only active branch; the repository no longer describes those tags as platform-immutable without a verified tag ruleset;
 - added CI concurrency cancellation and runtime limits so stalled validation jobs cannot remain indefinitely in progress;
-- routed manuscript LaTeX installation through explicit Ubuntu archive/security sources so transient Azure runner-mirror failures do not masquerade as manuscript build failures.
+- routed manuscript LaTeX installation through explicit Ubuntu archive/security sources so transient runner-mirror failures do not masquerade as manuscript build failures.
 
 ### Scientific scope
 
 - no T1–T5 theorem statement is changed;
 - no numerical E1–E5 experiment result is changed by the execution/validator audits; the E5 rho current-output schema has one corrected column name and the E3 null test plumbing is stronger without changing its values;
 - no S2-family theorem or statistical certificate is changed;
+- the manuscript wording change from generic `recognition-activated` to `recognition-dependent` is terminological consistency, not a theorem or mechanism change;
 - the visualization, GitHub-math compatibility, validation, reproducibility, and workflow-supply-chain changes do not add new physical or statistical evidence;
 - the present-self-location identities are direct consequences of the already-defined first-person weighted measure, not a new physical bridge claim;
 - locked historical Figure 5/E4 and Figure 7/E2 data provenance remains unchanged and separate from current reruns;

@@ -1,7 +1,9 @@
 Scope notice
 ============
 
-This MIT License applies to the repository's Python source code and software support files only. It does not apply to the manuscript text, theoretical notes, Markdown/LaTeX documentation, figures, or generated research datasets. Those materials use the file-type split licenses described in LICENSES/README.md.
+This MIT License applies only to the repository's executable/software-support layer: all Python source files, GitHub Actions workflow files under `.github/workflows/`, `requirements.txt`, `.python-version`, and `.gitignore`.
+
+It does not apply to the manuscript/theory/documentation layer, committed figures, citation/experiment provenance metadata, or generated research datasets. Those materials use the path-explicit split licenses described in LICENSES/README.md.
 
 MIT License
 

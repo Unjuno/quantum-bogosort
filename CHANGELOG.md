@@ -36,13 +36,17 @@
 - corrected the current E5 rho-sweep field name from misleading `recognition_corr_increment` to `action_corr_increment`; numerical values and Figure 6 are unchanged, and locked historical schemas are preserved;
 - expanded repository-structure validation to cover the workflow, dependency/Python configuration, split-license metadata, all five core theory sources, experiment executables/manifest, archived experiment provenance, theorem-illustration data, both pre-announcement audit records, and principal validator scripts;
 - added `scripts/validate_issue_templates.py` and wired it into CI so GitHub issue-template chooser front matter and nonempty bodies are validated;
-- pinned `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` to full commit SHAs rather than mutable major-version tags;
+- pinned `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` to full commit SHAs rather than mutable major-version tags, and synchronized the validator audit record after a same-day refresh to the current Node-24/v7 Action commits;
 - disabled persisted checkout credentials in both validation jobs, kept the workflow token at `contents: read`, and run the runtime contract in both repository and manuscript jobs;
 - added `workflow_dispatch` so maintainers can repeat the complete `validate` workflow from the Actions UI without a dummy commit;
 - added the `main` validation workflow badge to the root README and synchronized contributor validation commands with the current workflow;
 - synchronized open Issue #14, the current S2 review surface, from stale `$$`/`\operatorname{Cov}` rendering syntax to fenced `math`/`\mathrm{Cov}` without changing its scientific review content;
 - added `docs/pre_announcement_execution_audit_2026-08-19.md` recording the commit-fixed local execution audit, fixes, provenance boundaries, and remaining browser/Actions gates;
 - added `docs/pre_announcement_validator_audit_2026-08-19.md` recording the second-pass false-PASS/validator and Actions-supply-chain audit;
+- externally cross-checked manuscript prior-art metadata against publisher/authoritative records rather than relying only on syntactic BibTeX validation; established publication records now replace later arXiv-upload chronology where source identity is clear, including Greaves (2004), Sebens--Carroll (2018), Saunders branch-counting (2021), Hanson (2003), Hult--Nyquist (2016), and Conitzer (2015), while ambiguous/non-identical preprint-to-chapter transformations are not silently conflated;
+- represented verified Saunders book chapters as `@incollection`, including *Chance in the Everett Interpretation* (2010, pp. 181--205) and *The Everett Interpretation: Probability* in the Routledge companion, and completed Khawaja's current BJPS page range;
+- strengthened `scripts/validate_bibliography_metadata.py` so journal articles require journal/volume/pages/DOI, book chapters require booktitle/editor/publisher/pages/DOI, arXiv-only records remain a separate provenance class, and stock `plain.bst` DOI visibility is preserved through printable notes;
+- resolved the two same-title Saunders physical-probability arXiv records through the author's PhilSci-Archive provenance: the 2026 deposit is explicitly the latest version and links the 2025 deposit as an earlier available version, so the current `2601.12159` citation is retained;
 - corrected stale `CONTRIBUTING.md` references to removed release branches and replaced obsolete double-dollar contribution guidance with the current fenced-math convention;
 - marked or rewrote historical stacked-branch S2 audit language so it cannot be mistaken for the current single-branch repository state;
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
@@ -58,6 +62,7 @@
 - no numerical E1–E5 experiment result is changed by the execution/validator audits; the E5 rho current-output schema has one corrected column name and the E3 null test plumbing is stronger without changing its values;
 - no S2-family theorem or statistical certificate is changed;
 - the manuscript wording change from generic `recognition-activated` to `recognition-dependent` is terminological consistency, not a theorem or mechanism change;
+- the bibliography/prior-art metadata corrections change citation provenance and chronology, not the mathematical claims; they reduce the risk of making established prior art look artificially recent through later arXiv upload dates;
 - the visualization, GitHub-math compatibility, validation, reproducibility, and workflow-supply-chain changes do not add new physical or statistical evidence;
 - the present-self-location identities are direct consequences of the already-defined first-person weighted measure, not a new physical bridge claim;
 - locked historical Figure 5/E4 and Figure 7/E2 data provenance remains unchanged and separate from current reruns;

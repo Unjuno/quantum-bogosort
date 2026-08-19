@@ -21,6 +21,9 @@ REPRODUCTION_NAME_RE = re.compile(r"^e([1-5])_.+\.csv$")
 CARD_DATA_RE = re.compile(r"data/processed/([A-Za-z0-9_.-]+\.csv)")
 THEORY_TOKEN_RE = re.compile(r"\bT\d+\b|Corollary\s+\d+\.\d+")
 CARD_MD_PATH_RE = re.compile(r"`([^`]+\.md)`")
+FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
+CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
+H2_RE = re.compile(r"^ {0,3}##\s+(.+?)\s*$", re.MULTILINE)
 NON_EXPERIMENT_PROVENANCE = {
     "fig2_fosd_theorem_illustration.csv",
 }
@@ -167,24 +170,50 @@ def tracked_processed_csvs() -> set[str]:
     return names
 
 
+def closes_fence(line: str, marker: str) -> bool:
+    match = CLOSING_FENCE_RE.match(line)
+    if not match:
+        return False
+    candidate = match.group(1)
+    return candidate[0] == marker[0] and len(candidate) >= len(marker)
+
+
+def rendered_markdown_surface(text: str) -> str:
+    """Remove fenced literal code before validating human-visible card routing."""
+    output: list[str] = []
+    fence_marker: str | None = None
+
+    for line in text.splitlines():
+        if fence_marker is not None:
+            if closes_fence(line, fence_marker):
+                fence_marker = None
+            continue
+
+        match = FENCE_RE.match(line)
+        if match:
+            marker = match.group(1)
+            info = match.group(2)
+            # CommonMark forbids backticks in a backtick-fence info string.
+            if marker[0] != "`" or "`" not in info:
+                fence_marker = marker
+                continue
+
+        output.append(line)
+
+    return "\n".join(output)
+
+
 def markdown_h2_section(text: str, heading: str) -> str | None:
-    """Return the body of an exact level-2 Markdown section."""
-    lines = text.splitlines()
-    target = f"## {heading}"
-    start: int | None = None
-    for index, line in enumerate(lines):
-        if line.strip() == target:
-            start = index + 1
-            break
-    if start is None:
+    """Return one exact rendered level-2 ATX section from a fence-filtered surface."""
+    matches = list(H2_RE.finditer(text))
+    target_indexes = [index for index, match in enumerate(matches) if match.group(1).strip() == heading]
+    if len(target_indexes) != 1:
         return None
 
-    body: list[str] = []
-    for line in lines[start:]:
-        if re.match(r"^\s*##\s+", line):
-            break
-        body.append(line)
-    return "\n".join(body).strip()
+    index = target_indexes[0]
+    start = matches[index].end()
+    end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
+    return text[start:end].strip()
 
 
 def validate_locked_blob_identities(all_locked: set[str], errors: list[str]) -> None:
@@ -286,7 +315,8 @@ def main() -> None:
             if not card_path.is_file():
                 errors.append(f"{experiment_id}: missing experiment card {expected['card']}")
             else:
-                card_text = card_path.read_text(encoding="utf-8")
+                raw_card_text = card_path.read_text(encoding="utf-8")
+                card_text = rendered_markdown_surface(raw_card_text)
                 card_data = set(CARD_DATA_RE.findall(card_text))
                 manifest_data = set(locked) | set(reproduction)
                 if card_data != manifest_data:
@@ -294,35 +324,39 @@ def main() -> None:
                     extra_in_card = sorted(card_data - manifest_data)
                     if missing_from_card:
                         errors.append(
-                            f"{experiment_id}: manifest CSV(s) absent from experiment card: "
+                            f"{experiment_id}: manifest CSV(s) absent from rendered experiment card: "
                             + ", ".join(missing_from_card)
                         )
                     if extra_in_card:
                         errors.append(
-                            f"{experiment_id}: experiment card references undeclared CSV(s): "
+                            f"{experiment_id}: rendered experiment card references undeclared CSV(s): "
                             + ", ".join(extra_in_card)
                         )
 
                 linked_section = markdown_h2_section(card_text, "Linked theory")
                 if linked_section is None:
-                    errors.append(f"{experiment_id}: experiment card is missing ## Linked theory")
+                    errors.append(
+                        f"{experiment_id}: rendered experiment card must contain exactly one "
+                        "## Linked theory section"
+                    )
                 else:
                     card_tokens = set(THEORY_TOKEN_RE.findall(linked_section))
                     if card_tokens != expected["card_theory_tokens"]:
                         errors.append(
-                            f"{experiment_id}: experiment-card theorem token drift: "
+                            f"{experiment_id}: rendered experiment-card theorem token drift: "
                             f"{sorted(card_tokens)!r} != {sorted(expected['card_theory_tokens'])!r}"
                         )
                     card_paths = set(CARD_MD_PATH_RE.findall(linked_section))
                     if card_paths != expected["card_theory_paths"]:
                         errors.append(
-                            f"{experiment_id}: experiment-card theory-route drift: "
+                            f"{experiment_id}: rendered experiment-card theory-route drift: "
                             f"{sorted(card_paths)!r} != {sorted(expected['card_theory_paths'])!r}"
                         )
                     for relative_path in sorted(card_paths):
                         if not (ROOT / relative_path).is_file():
                             errors.append(
-                                f"{experiment_id}: experiment-card theory route is missing: {relative_path}"
+                                f"{experiment_id}: rendered experiment-card theory route is missing: "
+                                f"{relative_path}"
                             )
 
         overlap = set(locked) & set(reproduction)
@@ -393,10 +427,10 @@ def main() -> None:
 
     print(
         "Manifest validation passed: E1-E5 canonical locked/current mappings, frozen historical "
-        "blob identities, manifest theorem links, experiment-card theorem tokens/routes, and card "
-        f"CSV references agree; provenance classes are disjoint ({len(all_locked)} locked CSVs, "
-        f"{len(all_reproduction)} current reproduction CSVs); all {len(tracked)} tracked flat "
-        "processed-data CSVs are explicitly classified."
+        "blob identities, manifest theorem links, rendered experiment-card theorem tokens/routes, "
+        f"and rendered card CSV references agree; provenance classes are disjoint ({len(all_locked)} "
+        f"locked CSVs, {len(all_reproduction)} current reproduction CSVs); all {len(tracked)} tracked "
+        "flat processed-data CSVs are explicitly classified."
     )
 
 

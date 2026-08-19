@@ -12,7 +12,8 @@ This file records the current review/development state. The frozen scientific sn
 - canonical claim/theorem/evidence index: [`docs/research_map.md`](docs/research_map.md);
 - authoritative claim boundaries: [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md);
 - execution/reproduction audit: [`docs/pre_announcement_execution_audit_2026-08-19.md`](docs/pre_announcement_execution_audit_2026-08-19.md);
-- validator/Actions/governance audit: [`docs/pre_announcement_validator_audit_2026-08-19.md`](docs/pre_announcement_validator_audit_2026-08-19.md).
+- validator/Actions/governance audit: [`docs/pre_announcement_validator_audit_2026-08-19.md`](docs/pre_announcement_validator_audit_2026-08-19.md);
+- bibliography/prior-art truth audit: [`docs/pre_announcement_bibliography_audit_2026-08-19.md`](docs/pre_announcement_bibliography_audit_2026-08-19.md).
 
 The repository has one active branch, `main`. The v0.2 and v0.3 tags were re-resolved during this audit and still point to the exact commits above. They are described as **frozen, commit-pinned snapshots**, not as platform-immutable tags unless a tag ruleset is actually confirmed.
 

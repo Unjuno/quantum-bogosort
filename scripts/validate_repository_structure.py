@@ -24,6 +24,7 @@ required = [
     "theory/theorem_1_3.md", "theory/theorem_4_5.md",
     "experiments/README.md", "experiments/E1_FOSD.md", "experiments/E2_LEARNED_AGENT.md",
     "experiments/E3_RECOGNITION.md", "experiments/E4_INTERACTION.md", "experiments/E5_BRANCH_MAP.md",
+    "experiments/archive/README.md", "experiments/archive/INDEX.md",
     "experiments/exp1_fosd_and_stress.py", "experiments/exp2_minimal_agent.py",
     "experiments/exp3_recognition_decomposition.py", "experiments/exp4_interaction.py",
     "experiments/exp5_branch_map.py", "experiments/manifest.csv",
@@ -70,5 +71,6 @@ if missing_sections:
 
 print(
     f"Repository structure OK: {len(required)} required files, all five core theory "
-    f"sources, and {len(section_refs)} manuscript sections found."
+    f"sources, archived experiment provenance, and {len(section_refs)} manuscript "
+    "sections found."
 )

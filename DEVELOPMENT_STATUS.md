@@ -74,6 +74,14 @@ The first execution audit locally reconstructed the commit-fixed executable subs
 
 The current E5 rho-sweep field is `action_corr_increment`; its numerical series and Figure 6 are unchanged. Locked historical schemas were not rewritten.
 
+The continued validator audit now also enforces several repository-surface invariants that were previously only implicit:
+
+- experiment-card CSV and `Linked theory` routing is parsed from the fence-filtered rendered Markdown surface rather than raw source, closing a fenced-code decoy route;
+- experiment cards use an ATX-only H1/H2 schema, so Setext/raw-HTML H1/H2 forms cannot add visible headings outside the card parser;
+- raw HTML `<a>`/`<img>` routes are rejected by the repository-link contract rather than bypassing Markdown link validation;
+- tracked symlinks are rejected repository-wide, and required files, current reproduction CSVs, and generated figure outputs must be nonsymlink regular files;
+- public SVG and manuscript PDF Figures 2–6 obtain their numerical series from shared `figures/figure_data.py`; the figure-set validator uses AST checks to require both renderers to call the corresponding shared data function.
+
 Current CI additionally locks all sixteen historical E1–E5 CSVs to their frozen v0.3 Git blob identities, validates manifest/card/theorem routing, rejects experiment side effects outside the declared current outputs, and rejects undeclared ignored/nonignored worktree artifacts.
 
 ## Bibliography and prior-art state
@@ -107,12 +115,12 @@ The workflow runs on push, pull request, and manual dispatch. Both jobs use Ubun
 - frozen T1–T5 canonical theorem/body/domain lock;
 - supplementary theorem/domain consistency;
 - citation and bibliography fact-lock metadata;
-- split licensing and live frozen snapshot refs;
-- issue templates, experiment cards, and manifest/provenance routing;
+- split licensing, repository-wide nonsymlink classification, and live frozen snapshot refs;
+- issue templates, rendered-surface experiment cards, and manifest/provenance/theory routing;
 - repository-relative links and GitHub GFM structural rendering;
 - E1–E5 scientific invariants and byte-identical current reproduction outputs;
 - frozen historical data identities;
-- deterministic figure regeneration, exact figure set, and SVG safety;
+- deterministic figure regeneration, shared SVG/PDF numerical-data contract, exact nonsymlink figure sets, and SVG safety;
 - final tracked and untracked/ignored worktree cleanliness.
 
 `manuscript-build` independently validates the runtime contract, generates PDF figures, preflights the reachable LaTeX/citation/reference graph, installs the TeX toolchain, compiles `paper/main.pdf`, verifies it, and uploads the PDF artifact.

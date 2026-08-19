@@ -79,9 +79,9 @@ from Everettian quantum mechanics. The bridge remains a separate physical assump
 
 ## Bibliography and prior-art provenance
 
-`references.bib` is the compiled bibliography. [`bibliography_fact_lock.md`](bibliography_fact_lock.md) records the externally reviewed current-main citation-key set, record class, publication/preprint year, canonical DOI or arXiv identifier, and provenance class.
+`references.bib` is the compiled bibliography. [`bibliography_fact_lock.md`](bibliography_fact_lock.md) records the externally reviewed current-main citation-key set, record class, publication/preprint year, author, title, publication locator, canonical DOI or arXiv identifier, and provenance class. Journal locators include journal/volume/number/pages; book-chapter locators include book title/editors/publisher/pages.
 
-The fact lock is deliberately narrower than a claim of automatic bibliographic truth. `scripts/validate_bibliography_metadata.py` checks that later edits cannot silently change an already-reviewed key from a definitive publication back to a later preprint, alter its chronology, or drift its canonical identifier without also changing the explicit reviewed lock. External factual re-verification remains a human review task and is documented in [`../docs/pre_announcement_bibliography_audit_2026-08-19.md`](../docs/pre_announcement_bibliography_audit_2026-08-19.md).
+The fact lock is deliberately narrower than a claim of automatic bibliographic truth. `scripts/validate_bibliography_metadata.py` checks that later edits cannot silently change an already-reviewed key from a definitive publication back to a later preprint, alter its chronology, corrupt its author/title/container/page metadata, or drift its canonical identifier without also changing the explicit reviewed lock. External factual re-verification remains a human review task and is documented in [`../docs/pre_announcement_bibliography_audit_2026-08-19.md`](../docs/pre_announcement_bibliography_audit_2026-08-19.md).
 
 ## Figures
 

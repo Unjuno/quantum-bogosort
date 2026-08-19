@@ -3,8 +3,8 @@
 This checks the primary numerical package pins and their installed versions,
 consistency between `.python-version` and GitHub Actions, audited reusable-action
 SHAs, checkout credential isolation, required validation/manuscript jobs and commands,
-and the read-only/clean-worktree workflow security contract. It does not claim that
-every transitive wheel is cryptographically locked.
+critical stage ordering, and the read-only/clean-worktree workflow security contract.
+It does not claim that every transitive wheel is cryptographically locked.
 """
 from __future__ import annotations
 
@@ -48,8 +48,8 @@ FORBIDDEN_WORKFLOW_SNIPPETS = [
     "pull-requests: write",
 ]
 REQUIRED_REPOSITORY_COMMANDS = [
-    "python -m py_compile experiments/*.py figures/*.py scripts/*.py",
     "python scripts/validate_runtime_contract.py",
+    "python -m py_compile experiments/*.py figures/*.py scripts/*.py",
     "python scripts/validate_markdown_math.py",
     "python scripts/validate_repository_structure.py",
     "python scripts/validate_core_theorem_lock.py",
@@ -58,6 +58,7 @@ REQUIRED_REPOSITORY_COMMANDS = [
     "python scripts/validate_license_map.py",
     "python scripts/validate_snapshot_refs.py",
     "python scripts/validate_issue_templates.py",
+    "python scripts/validate_experiment_cards.py",
     "python scripts/validate_manifest.py",
     "python scripts/validate_markdown_links.py",
     "python scripts/validate_github_markdown_render.py",
@@ -76,6 +77,26 @@ REQUIRED_REPOSITORY_COMMANDS = [
     "data/processed/fig2_fosd_theorem_illustration.csv",
     "git ls-files --others --exclude-standard",
 ]
+REPOSITORY_STAGE_ORDER = [
+    "python scripts/validate_runtime_contract.py",
+    "python -m py_compile experiments/*.py figures/*.py scripts/*.py",
+    "python scripts/validate_repository_structure.py",
+    "python scripts/validate_core_theorem_lock.py",
+    "python scripts/validate_experiment_cards.py",
+    "python scripts/validate_manifest.py",
+    "python experiments/exp1_fosd_and_stress.py",
+    "python experiments/exp2_minimal_agent.py",
+    "python experiments/exp3_recognition_decomposition.py",
+    "python experiments/exp4_interaction.py",
+    "python experiments/exp5_branch_map.py",
+    "python scripts/validate_reproduction_outputs.py",
+    "python figures/generate_figures.py",
+    "python figures/generate_pdf_figures.py",
+    "python scripts/validate_figure_set.py",
+    "python scripts/validate_svg_sources.py",
+    "git diff --exit-code --",
+    "python scripts/validate_worktree_artifacts.py",
+]
 REQUIRED_MANUSCRIPT_COMMANDS = [
     "python scripts/validate_runtime_contract.py",
     "python figures/generate_pdf_figures.py",
@@ -84,6 +105,13 @@ REQUIRED_MANUSCRIPT_COMMANDS = [
     "test -s paper/main.pdf",
     "name: qbs-manuscript-pdf",
     "path: paper/main.pdf",
+]
+MANUSCRIPT_STAGE_ORDER = [
+    "python scripts/validate_runtime_contract.py",
+    "python figures/generate_pdf_figures.py",
+    "python scripts/validate_latex_sources.py",
+    "latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex",
+    "test -s paper/main.pdf",
 ]
 EXACT_REQUIREMENT_RE = re.compile(r"^([A-Za-z0-9_.-]+)==([^\s#;]+)$")
 FULL_SHA_ACTION_RE = re.compile(r"^\s*- uses:\s+([^@\s]+)@([0-9a-f]{40})(?:\s+#.*)?$")
@@ -114,6 +142,34 @@ def require_snippets(scope: str, text: str, snippets: list[str], errors: list[st
     for snippet in snippets:
         if snippet not in text:
             errors.append(f"{scope}: missing required workflow contract snippet: {snippet!r}")
+
+
+def require_ordered_snippets(
+    scope: str, text: str, snippets: list[str], errors: list[str]
+) -> None:
+    """Require each critical stage exactly in the declared relative order.
+
+    Presence checks alone can be defeated by moving a cleanup/verification command before
+    the stage whose side effects it is meant to inspect. Relative-order checks keep those
+    execution semantics part of the workflow contract without adding a YAML dependency.
+    """
+    previous_position = -1
+    previous_snippet = "<start>"
+    for snippet in snippets:
+        positions = [m.start() for m in re.finditer(re.escape(snippet), text)]
+        if len(positions) != 1:
+            errors.append(
+                f"{scope}: ordered stage must occur exactly once: {snippet!r}; "
+                f"found {len(positions)} occurrence(s)"
+            )
+            continue
+        position = positions[0]
+        if position <= previous_position:
+            errors.append(
+                f"{scope}: stage order violation: {snippet!r} must follow {previous_snippet!r}"
+            )
+        previous_position = position
+        previous_snippet = snippet
 
 
 def main() -> None:
@@ -231,6 +287,8 @@ def main() -> None:
     manuscript_job = jobs.get("manuscript-build", "")
     require_snippets("repository-validation", repository_job, REQUIRED_REPOSITORY_COMMANDS, errors)
     require_snippets("manuscript-build", manuscript_job, REQUIRED_MANUSCRIPT_COMMANDS, errors)
+    require_ordered_snippets("repository-validation", repository_job, REPOSITORY_STAGE_ORDER, errors)
+    require_ordered_snippets("manuscript-build", manuscript_job, MANUSCRIPT_STAGE_ORDER, errors)
 
     token_binding = "GITHUB_TOKEN: ${{ github.token }}"
     if repository_job.count(token_binding) != 2:
@@ -254,10 +312,10 @@ def main() -> None:
     )
     print(
         "Runtime contract validation passed: "
-        f"Python {expected_python}; {package_summary}; ubuntu-24.04; required jobs/commands present; "
-        "read-only workflow security contract; audited checkout/setup-python/upload-artifact "
-        "SHAs and multiplicities match exactly; theorem-lock and ignored/untracked artifact "
-        "validation required."
+        f"Python {expected_python}; {package_summary}; ubuntu-24.04; required jobs/commands and "
+        "critical stage order present; read-only workflow security contract; audited "
+        "checkout/setup-python/upload-artifact SHAs and multiplicities match exactly; "
+        "theorem/card/provenance and ignored/untracked artifact validation required."
     )
 
 

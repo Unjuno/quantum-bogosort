@@ -52,6 +52,7 @@ REQUIRED_REPOSITORY_COMMANDS = [
     "python scripts/validate_runtime_contract.py",
     "python scripts/validate_markdown_math.py",
     "python scripts/validate_repository_structure.py",
+    "python scripts/validate_core_theorem_lock.py",
     "python scripts/validate_citation_metadata.py",
     "python scripts/validate_bibliography_metadata.py",
     "python scripts/validate_license_map.py",
@@ -255,7 +256,8 @@ def main() -> None:
         "Runtime contract validation passed: "
         f"Python {expected_python}; {package_summary}; ubuntu-24.04; required jobs/commands present; "
         "read-only workflow security contract; audited checkout/setup-python/upload-artifact "
-        "SHAs and multiplicities match exactly; ignored/untracked artifact validation required."
+        "SHAs and multiplicities match exactly; theorem-lock and ignored/untracked artifact "
+        "validation required."
     )
 
 

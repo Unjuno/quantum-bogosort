@@ -54,7 +54,7 @@ required = [
     "scripts/validate_reproduction_outputs.py", "scripts/validate_runtime_contract.py",
     "scripts/validate_snapshot_refs.py", "scripts/validate_markdown_links.py",
     "scripts/validate_markdown_math.py", "scripts/validate_repository_structure.py",
-    "scripts/validate_svg_sources.py",
+    "scripts/validate_svg_sources.py", "scripts/validate_worktree_artifacts.py",
 ]
 
 if len(required) != len(set(required)):
@@ -100,5 +100,5 @@ print(
     f"Repository structure OK: {len(required)} required files; complete {len(actual_markdown)}-file "
     f"Markdown inventory declared; all five core theory sources; consolidated/archived research "
     f"provenance; three pre-announcement audit records; runtime/citation/bibliography/license/figure-set/"
-    f"snapshot-ref validators; and {len(section_refs)} manuscript sections found."
+    f"snapshot-ref/worktree-artifact validators; and {len(section_refs)} manuscript sections found."
 )

@@ -116,7 +116,9 @@ The previous bibliography validator could verify syntax and DOI/arXiv formatting
 
 The repository uses stock `plain.bst`, so DOI-bearing records also retain a printable `note = {doi:...}` field.
 
-This validator remains a structural contract. External factual truth cannot be fully proved by a local parser and remains a review responsibility.
+A second false-PASS remained after that correction: once a publication/preprint chronology had been externally reviewed, a later edit could still silently change the citation key, record class, year, or canonical identifier while remaining syntactically valid. [`../paper/bibliography_fact_lock.md`](../paper/bibliography_fact_lock.md) now records the reviewed current-main citation-key set, record type, year, canonical DOI/arXiv identifier, and provenance class. `scripts/validate_bibliography_metadata.py` requires exact agreement between that reviewed lock and `references.bib`.
+
+The fact lock is a regression guard, not an oracle. It prevents accidental reversal of already-reviewed bibliography facts; external factual truth still cannot be proved by a repository-local parser and remains a review responsibility.
 
 ## Prior-art semantic drift found
 
@@ -154,8 +156,9 @@ Relative to the start of this bibliography truth pass, the changed surface is li
 
 - `paper/references.bib`;
 - `paper/sections/related_work.tex`;
+- `paper/bibliography_fact_lock.md` and `paper/README.md`;
 - the three `literature/` prior-art ledgers;
-- `scripts/validate_bibliography_metadata.py`;
+- `scripts/validate_bibliography_metadata.py` and the repository-structure inventory needed to require the fact lock;
 - changelog/status/audit documentation.
 
 The pass does not modify:
@@ -169,4 +172,4 @@ The pass does not modify:
 
 ## Remaining gate
 
-The bibliography/Related Work edits must still pass the final manuscript LaTeX preflight and PDF build in GitHub Actions. Source-level citation-key alignment has been reviewed, but the final Actions execution result remains the authoritative build gate.
+The bibliography/Related Work edits and reviewed fact-lock validator must still pass the final manuscript/repository GitHub Actions jobs. Source-level citation-key alignment has been reviewed, but the final Actions execution result remains the authoritative build/CI gate.

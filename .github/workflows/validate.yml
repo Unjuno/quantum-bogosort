@@ -28,6 +28,8 @@ jobs:
         run: python scripts/validate_markdown_math.py
       - name: Validate research repository structure
         run: python scripts/validate_repository_structure.py
+      - name: Validate experiment manifest
+        run: python scripts/validate_manifest.py
       - name: Validate repository-relative Markdown links
         run: python scripts/validate_markdown_links.py
       - name: Validate Markdown GFM structure through GitHub API
@@ -69,8 +71,6 @@ jobs:
           git diff --exit-code -- \
             figures/generated/ \
             data/processed/fig2_fosd_theorem_illustration.csv
-      - name: Validate experiment manifest
-        run: python scripts/validate_manifest.py
 
   manuscript-build:
     runs-on: ubuntu-24.04

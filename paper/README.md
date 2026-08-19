@@ -58,6 +58,8 @@ Detailed statistical machinery is Appendix-first:
 - S2.8–S2.10 — generic, light-tail, and robust confidence-envelope machinery;
 - S2.12 — full residual-variance proof and sharpness analysis.
 
+`sections/robust_mom_summary.tex` is intentionally retained as a standalone historical/editorial source but is **not** part of the compiled `main.tex` input graph. The compiled robust-MoM treatment is `sections/robust_mom_certificate_appendix.tex`. The LaTeX preflight locks this single-file uncompiled allowlist so that accidentally omitting any other manuscript section from `main.tex` becomes a CI failure rather than merely increasing an informational count.
+
 The dependency and editorial map is [`../docs/s2_stack_review_map.md`](../docs/s2_stack_review_map.md). The dedicated proof review is [`../docs/post_v02_core_s2_proof_review.md`](../docs/post_v02_core_s2_proof_review.md).
 
 No new S2-numbered theorem should be added by default. New theorem work should respond to a material modeling gap or concrete review objection.
@@ -91,12 +93,14 @@ From the repository root:
 
 ```bash
 pip install -r requirements.txt
+python scripts/validate_runtime_contract.py
 python figures/generate_pdf_figures.py
+python scripts/validate_latex_sources.py
 cd paper
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-GitHub Actions performs figure generation and LaTeX/PDF validation automatically and uploads `paper/main.pdf` as an artifact.
+GitHub Actions performs runtime-contract validation, figure generation, compiled-input-graph LaTeX/PDF validation, and manuscript compilation automatically, then uploads `paper/main.pdf` as an artifact.
 
 ## Current review state
 

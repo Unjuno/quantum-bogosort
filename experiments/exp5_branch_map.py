@@ -112,7 +112,7 @@ for rho in [0.0, 0.15, 0.35, 0.60, 0.80, 0.95]:
         "rho_env": rho,
         "action_corr_baseline": avg_pair_corr(A0),
         "action_corr_recognition": avg_pair_corr(Aad),
-        "recognition_corr_increment": avg_pair_corr(Aad) - avg_pair_corr(A0),
+        "action_corr_increment": avg_pair_corr(Aad) - avg_pair_corr(A0),
         "policy_gain": policy_gain,
         "QBS_gain": qbs_gain,
         "total_FP_gain": policy_gain + qbs_gain,

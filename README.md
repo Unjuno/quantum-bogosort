@@ -208,7 +208,7 @@ python experiments/exp5_branch_map.py
 python scripts/validate_reproduction_outputs.py
 ```
 
-The primary numerical/plotting package versions in `requirements.txt` are pinned because committed-output verification is byte-level; using a different NumPy/Pandas/Matplotlib stack can change serialization even when the numerical model is unchanged. The reproduction validator derives the current output set from `experiments/manifest.csv`, compares those outputs byte-for-byte with `HEAD`, and rejects side effects on other files under `data/processed/`.
+The primary numerical/plotting package versions in `requirements.txt` are pinned because committed-output verification is byte-level; using a different NumPy/Pandas/Matplotlib stack can change serialization even when the numerical model is unchanged. The reproduction validator derives the current output set from `experiments/manifest.csv`, compares those outputs byte-for-byte with `HEAD`, rejects changes to any tracked repository content during experiment execution, and rejects undeclared files under `data/processed/`, including ignored files.
 
 Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/). Superseded experiment designs are kept under [`experiments/archive/`](experiments/archive/).
 
@@ -238,17 +238,19 @@ The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged in 
 
 The current `main` validation state is visible in the badge at the top of this README. GitHub Actions checks:
 
-- Python/runtime consistency under the pinned Python and primary numerical-package contract;
-- required repository structure, including core theory, archival provenance, licensing/configuration, and validator sources;
+- Python/runtime and workflow-security consistency under the pinned Python and primary numerical-package contract;
+- required repository structure, including core theory, consolidated/archival provenance, licensing/configuration, and validator sources;
+- frozen citation metadata, bibliography identifier structure, and split-license declaration consistency;
 - GitHub issue-template chooser front matter;
 - repository-wide fenced Markdown math syntax and structural TeX balance;
 - repository-relative Markdown links, including rejection of relative targets that escape the repository root;
-- GFM structure conversion of every Markdown file through GitHub's Markdown API, with heading/table/image preservation checks;
+- GFM structure conversion of every Markdown file through GitHub's Markdown API, with heading/table/image/fenced-block preservation checks;
 - E1–E5 scientific regression invariants;
 - manifest ID/order/LOCK/provenance validation and byte-for-byte verification of all manifest-declared current reproduction CSVs;
-- post-experiment cleanliness of the complete `data/processed/` tree, including rejection of undeclared ignored files;
-- deterministic SVG regeneration, static/self-contained SVG browser-safety validation, and byte-for-byte committed-output verification;
-- manuscript figure generation, compiled-input-graph LaTeX dependency/citation/reference preflight, LaTeX build, and PDF verification.
+- post-experiment cleanliness of tracked repository content plus rejection of undeclared files under `data/processed/`, including ignored files;
+- deterministic SVG/PDF-figure generation, exact expected figure-output sets, static/self-contained SVG browser-safety validation, and byte-for-byte committed-output verification;
+- final tracked-worktree and nonignored-untracked cleanliness after repository validation;
+- manuscript compiled-input-graph, bibliography/citation/reference, environment, and generated-graphic preflight, followed by LaTeX build and PDF verification.
 
 The workflow runs on push and pull request and can also be repeated manually from **Actions → validate → Run workflow**. Reusable GitHub Actions are pinned to full commit SHAs rather than mutable major-version tags, checkout credentials are not persisted into later shell steps, and the workflow token is limited to `contents: read`.
 
@@ -262,7 +264,7 @@ This repository uses file-type split licensing:
 - theory, documentation, manuscript text, and figures: **CC BY 4.0** — [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt);
 - generated research datasets: **CC0 1.0** — [`LICENSES/CC0-1.0.txt`](LICENSES/CC0-1.0.txt).
 
-See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. GitHub's repository-level license badge may show MIT because it detects the root `LICENSE`; that does not override the file-type licensing map.
+See [`LICENSES/README.md`](LICENSES/README.md) for the licensing map. Because the root `LICENSE` now carries an explicit scope notice in addition to the standard MIT text, GitHub currently classifies the repository-level license as **Other / NOASSERTION**. That repository-level classifier does not override the file-type licensing map.
 
 ## Citation
 

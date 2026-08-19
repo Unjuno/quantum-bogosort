@@ -25,7 +25,8 @@ TABLE_SEPARATOR_RE = re.compile(
     r"^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*$"
 )
 IMAGE_RE = re.compile(r"!\[[^\]]*\]\([^)]+\)")
-FENCE_RE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
+FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
+CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
 
 
 class RenderedStructure(HTMLParser):
@@ -44,31 +45,38 @@ class RenderedStructure(HTMLParser):
             self.images += 1
 
 
+def closes_fence(line: str, marker: str) -> bool:
+    match = CLOSING_FENCE_RE.match(line)
+    if not match:
+        return False
+    candidate = match.group(1)
+    return candidate[0] == marker[0] and len(candidate) >= len(marker)
+
+
+def valid_fence_opener(marker: str, info: str) -> bool:
+    return marker[0] != "`" or "`" not in info
+
+
 def source_structure(text: str) -> tuple[int, int, int]:
-    """Count render-critical structures outside fenced blocks."""
+    """Count render-critical structures outside valid CommonMark fenced blocks."""
     headings = 0
     tables = 0
     images = 0
-    fence_char: str | None = None
-    fence_len = 0
+    fence_marker: str | None = None
 
     for line in text.splitlines():
+        if fence_marker is not None:
+            if closes_fence(line, fence_marker):
+                fence_marker = None
+            continue
+
         match = FENCE_RE.match(line)
         if match:
             marker = match.group(1)
-            trailer = match.group(2).strip()
-            char = marker[0]
-            if fence_char is None:
-                fence_char = char
-                fence_len = len(marker)
+            info = match.group(2)
+            if valid_fence_opener(marker, info):
+                fence_marker = marker
                 continue
-            if char == fence_char and len(marker) >= fence_len and not trailer:
-                fence_char = None
-                fence_len = 0
-                continue
-
-        if fence_char is not None:
-            continue
 
         if HEADING_RE.match(line):
             headings += 1

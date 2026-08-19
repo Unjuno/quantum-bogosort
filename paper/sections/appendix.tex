@@ -338,7 +338,17 @@ V(\lambda)
 =
 \frac{\mathbb E[U\lambda^{N_B}]}{\mathbb E[\lambda^{N_B}]}.
 \]
-For the downweighting interpretation take $0<\lambda\le1$. For the derivative identity at a fixed positive $\lambda_0$, assume $V$ is considered on an open positive neighborhood of $\lambda_0$ and that differentiation may be interchanged with numerator and denominator expectations there; in particular require the relevant weighted quantities
+For the downweighting interpretation take $0<\lambda\le1$. Since $N_B$ is finite and nonnegative, $0<\lambda^{N_B}\le1$ almost surely and therefore
+\[
+0<\mathbb E[\lambda^{N_B}]\le1.
+\]
+At each evaluation point used to define the weighted value, assume
+\[
+\mathbb E[|U|\lambda^{N_B}]<\infty,
+\]
+so the numerator is absolutely integrable and $V(\lambda)$ is finite and well-defined.
+
+For the derivative identity at a fixed positive $\lambda_0$, assume $V$ is considered on an open positive neighborhood of $\lambda_0$ and that differentiation may be interchanged with numerator and denominator expectations there. In particular, in addition to the weighted-value condition above, require the relevant weighted derivative quantities
 \[
 \mathbb E[|U|N_B\lambda^{N_B}],
 \qquad

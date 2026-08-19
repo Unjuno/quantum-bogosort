@@ -18,8 +18,77 @@ EXPECTED_COLUMNS = [
     "status",
 ]
 REPRODUCTION_NAME_RE = re.compile(r"^e([1-5])_.+\.csv$")
+CARD_DATA_RE = re.compile(r"data/processed/([A-Za-z0-9_.-]+\.csv)")
 NON_EXPERIMENT_PROVENANCE = {
     "fig2_fosd_theorem_illustration.csv",
+}
+EXPECTED_EXPERIMENTS = {
+    "E1": {
+        "card": "experiments/E1_FOSD.md",
+        "locked": [
+            "qbs_fosd_robustness_summary.csv",
+            "qbs_fosd_monotonicity_summary.csv",
+            "qbs_stress_independence_null.csv",
+            "qbs_stress_nonmonotone_fosd.csv",
+        ],
+        "reproduction": [
+            "e1_fosd_reproduction.csv",
+            "e1_independence_null_reproduction.csv",
+            "e1_nonmonotone_counterexample_reproduction.csv",
+        ],
+        "linked_theorems": "T1,T2,T3",
+    },
+    "E2": {
+        "card": "experiments/E2_LEARNED_AGENT.md",
+        "locked": [
+            "qbs_nonlinear_minimal_mock_summary.csv",
+            "qbs_correlation_uplift_relation.csv",
+        ],
+        "reproduction": ["e2_minimal_agent_reproduction.csv"],
+        "linked_theorems": "T1,T3 + adaptive-agent mechanism",
+    },
+    "E3": {
+        "card": "experiments/E3_RECOGNITION.md",
+        "locked": [
+            "qbs_paired_policy_selection_decomposition.csv",
+            "qbs_paired_decomposition_replication_summary.csv",
+            "qbs_stress_recognition_null_corrected.csv",
+        ],
+        "reproduction": [
+            "e3_recognition_decomposition_reproduction.csv",
+            "e3_recognition_null_reproduction.csv",
+        ],
+        "linked_theorems": "T4",
+    },
+    "E4": {
+        "card": "experiments/E4_INTERACTION.md",
+        "locked": [
+            "qbs_interaction_theorem_sign_test.csv",
+            "qbs_general_interaction_summary.csv",
+            "qbs_adaptation_total_effect_summary.csv",
+        ],
+        "reproduction": [
+            "e4_fixed_selector_sign_reproduction.csv",
+            "e4_general_interaction_reproduction.csv",
+        ],
+        "linked_theorems": "T5, Corollary 5.1",
+    },
+    "E5": {
+        "card": "experiments/E5_BRANCH_MAP.md",
+        "locked": [
+            "qbs_branch_policy_map_correlation_sweep.csv",
+            "qbs_branch_policy_map_replication_summary.csv",
+            "qbs_probabilistic_execution_corrected.csv",
+            "qbs_shared_recognition_contrasts.csv",
+        ],
+        "reproduction": [
+            "e5_q_paired_reproduction.csv",
+            "e5_rho_paired_reproduction.csv",
+            "e5_shared_vs_independent_recognition.csv",
+            "e5_shared_recognition_contrasts.csv",
+        ],
+        "linked_theorems": "Recognition framework / branch-map extension",
+    },
 }
 
 
@@ -75,6 +144,7 @@ def main() -> None:
 
     for row in rows:
         experiment_id = row.get("experiment_id", "")
+        expected = EXPECTED_EXPERIMENTS.get(experiment_id)
         for field in ("title", "primary_claim", "linked_theorems"):
             if not row.get(field, "").strip():
                 errors.append(f"{experiment_id}: empty required field {field}")
@@ -88,6 +158,42 @@ def main() -> None:
             errors.append(f"{experiment_id}: no locked files declared")
         if not reproduction:
             errors.append(f"{experiment_id}: no current reproduction files declared")
+
+        if expected is not None:
+            if locked != expected["locked"]:
+                errors.append(
+                    f"{experiment_id}: locked provenance mapping drift: {locked!r} != {expected['locked']!r}"
+                )
+            if reproduction != expected["reproduction"]:
+                errors.append(
+                    f"{experiment_id}: reproduction provenance mapping drift: "
+                    f"{reproduction!r} != {expected['reproduction']!r}"
+                )
+            if row.get("linked_theorems", "").strip() != expected["linked_theorems"]:
+                errors.append(
+                    f"{experiment_id}: linked_theorems drift: {row.get('linked_theorems')!r} "
+                    f"!= {expected['linked_theorems']!r}"
+                )
+
+            card_path = ROOT / expected["card"]
+            if not card_path.is_file():
+                errors.append(f"{experiment_id}: missing experiment card {expected['card']}")
+            else:
+                card_data = set(CARD_DATA_RE.findall(card_path.read_text(encoding="utf-8")))
+                manifest_data = set(locked) | set(reproduction)
+                if card_data != manifest_data:
+                    missing_from_card = sorted(manifest_data - card_data)
+                    extra_in_card = sorted(card_data - manifest_data)
+                    if missing_from_card:
+                        errors.append(
+                            f"{experiment_id}: manifest CSV(s) absent from experiment card: "
+                            + ", ".join(missing_from_card)
+                        )
+                    if extra_in_card:
+                        errors.append(
+                            f"{experiment_id}: experiment card references undeclared CSV(s): "
+                            + ", ".join(extra_in_card)
+                        )
 
         overlap = set(locked) & set(reproduction)
         if overlap:
@@ -154,10 +260,10 @@ def main() -> None:
         raise SystemExit("Manifest validation failed:\n" + "\n".join(errors))
 
     print(
-        "Manifest validation passed: E1-E5 are uniquely LOCKed with disjoint "
-        f"provenance classes ({len(all_locked)} locked CSVs, "
-        f"{len(all_reproduction)} current reproduction CSVs), and all "
-        f"{len(tracked)} tracked flat processed-data CSVs are explicitly classified."
+        "Manifest validation passed: E1-E5 canonical locked/current mappings and theorem links "
+        f"match their experiment cards; provenance classes are disjoint ({len(all_locked)} locked CSVs, "
+        f"{len(all_reproduction)} current reproduction CSVs); all {len(tracked)} tracked flat "
+        "processed-data CSVs are explicitly classified."
     )
 
 

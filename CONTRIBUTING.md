@@ -48,7 +48,7 @@ Please include:
 - experiment ID;
 - whether the failure reproduces on a clean environment.
 
-Core experiments E1–E5 are expected to run under GitHub Actions.
+Core experiments E1–E5 are expected to run under GitHub Actions. The repository pins the Python package versions used for byte-level reproduction; install `requirements.txt` rather than substituting newer dependency versions when checking committed-output identity.
 
 ## Prior-art reports
 
@@ -85,6 +85,17 @@ Before committing documentation changes, run:
 ```bash
 python scripts/validate_markdown_math.py
 python scripts/validate_markdown_links.py
+python scripts/validate_repository_structure.py
+python scripts/validate_svg_sources.py
 ```
 
-GitHub Actions additionally sends every repository Markdown file through GitHub's own GFM rendering API and checks that source headings, tables, and images survive rendering.
+For manuscript-source changes, generate the PDF figures before the LaTeX dependency preflight:
+
+```bash
+python figures/generate_pdf_figures.py
+python scripts/validate_latex_sources.py
+```
+
+For experiment or figure changes, run E1–E5 and the figure generators from the pinned environment and confirm that the committed reproduction outputs remain unchanged unless the change intentionally updates an output with documented provenance.
+
+GitHub Actions additionally sends every repository Markdown file through GitHub's GFM rendering API and checks that source headings, tables, and images survive the GFM conversion. This API structure check complements, but does not replace, direct browser inspection of GitHub's MathJax, Mermaid, SVG sizing, and page layout.

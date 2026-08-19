@@ -29,9 +29,20 @@
 - added executable E1–E5 scientific regression guards for the declared identities, nulls, sign/counterexample controls, predictive-alignment behavior, and branch-coherence contrasts;
 - strengthened the experiment manifest validator to enforce exact E1–E5 ID/order, `LOCK` state, file existence, and separation of locked historical versus current reproduction provenance classes;
 - added manifest-driven byte validation of every current reproduction CSV, replacing a duplicate hard-coded output list in CI;
+- strengthened reproduction validation again so E1–E5 execution must leave the complete tracked `data/processed/` tree unchanged outside byte-identical current outputs and must not create undeclared files even when `.gitignore` would hide them;
 - corrected the current E5 rho-sweep field name from misleading `recognition_corr_increment` to `action_corr_increment`; numerical values and Figure 6 are unchanged, and locked historical schemas are preserved;
-- expanded repository-structure validation to cover the workflow, dependency/Python configuration, experiment executables/manifest, theorem-illustration data, audit record, and principal validator scripts;
+- routed the E3 recognition-label null through the general first-person weighted-value calculation using identical trajectory/accessibility arrays while preserving the committed exact-zero null output;
+- expanded repository-structure validation to cover the workflow, dependency/Python configuration, split-license metadata, all five core theory sources, experiment executables/manifest, archived experiment provenance, theorem-illustration data, both pre-announcement audit records, and principal validator scripts;
+- added `scripts/validate_issue_templates.py` and wired it into CI so GitHub issue-template chooser front matter and nonempty bodies are validated;
+- aligned the math, link, and GFM source scanners on CommonMark's zero-to-three-space fenced-code boundary, preventing four-space-indented fence-like text from suppressing later validation;
+- changed relative-link validation so targets that escape the repository root are explicit errors, and added coverage for linked-image outer destinations and reference-style link definitions;
+- changed LaTeX preflight so compiled references can be resolved only by labels reachable from `paper/main.tex`, while intentionally uncompiled TeX sources remain linted for environments and citations;
+- strengthened static SVG validation to reject DTD/entities, animation elements, event-handler attributes, non-fragment hrefs, active/external CSS references, malformed numeric attributes, and backgrounds that fail to cover the full viewBox;
+- pinned `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` to full commit SHAs rather than mutable major-version tags;
+- added `workflow_dispatch` so maintainers can repeat the complete `validate` workflow from the Actions UI without a dummy commit;
+- added the `main` validation workflow badge to the root README and synchronized contributor validation commands with the current workflow;
 - added `docs/pre_announcement_execution_audit_2026-08-19.md` recording the commit-fixed local execution audit, fixes, provenance boundaries, and remaining browser/Actions gates;
+- added `docs/pre_announcement_validator_audit_2026-08-19.md` recording the second-pass false-PASS/validator and Actions-supply-chain audit;
 - corrected stale `CONTRIBUTING.md` references to removed release branches and replaced obsolete double-dollar contribution guidance with the current fenced-math convention;
 - marked or rewrote historical stacked-branch S2 audit language so it cannot be mistaken for the current single-branch repository state;
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
@@ -44,9 +55,9 @@
 ### Scientific scope
 
 - no T1–T5 theorem statement is changed;
-- no numerical E1–E5 experiment result is changed by the execution audit; the E5 rho current-output schema has one corrected column name;
+- no numerical E1–E5 experiment result is changed by the execution/validator audits; the E5 rho current-output schema has one corrected column name and the E3 null test plumbing is stronger without changing its values;
 - no S2-family theorem or statistical certificate is changed;
-- the visualization, GitHub-math compatibility, validation, and reproducibility changes do not add new physical or statistical evidence;
+- the visualization, GitHub-math compatibility, validation, reproducibility, and workflow-supply-chain changes do not add new physical or statistical evidence;
 - the present-self-location identities are direct consequences of the already-defined first-person weighted measure, not a new physical bridge claim;
 - locked historical Figure 5/E4 and Figure 7/E2 data provenance remains unchanged and separate from current reruns;
 - the Everett accessibility bridge remains physically open;

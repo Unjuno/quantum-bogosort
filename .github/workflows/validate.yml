@@ -39,6 +39,10 @@ jobs:
         run: python scripts/validate_bibliography_metadata.py
       - name: Validate split licensing declarations
         run: python scripts/validate_license_map.py
+      - name: Validate frozen snapshot tags and Releases
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/validate_snapshot_refs.py
       - name: Validate GitHub issue-template front matter
         run: python scripts/validate_issue_templates.py
       - name: Validate experiment manifest

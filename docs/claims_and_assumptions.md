@@ -4,6 +4,18 @@ This document prevents theorem statements, simulation results, statistical valid
 
 ## Core exact claims
 
+For covariance/mean identities, assume the relevant outcome is integrable under both the base measure and the accessibility weighting:
+
+```math
+E[|X|]<\infty,
+\qquad
+0<E[S]<\infty,
+\qquad
+E[|X|S]<\infty.
+```
+
+Then:
+
 ```math
 E_{FP}[X]-E[X]
 =
@@ -28,17 +40,33 @@ is nondecreasing, then:
 F_{FP}(c)\le F(c).
 ```
 
-Recognition and interaction decompose as:
+For recognition states, assume for each `R`:
+
+```math
+0<E[S_R]<\infty,
+\qquad
+E[|U_R|]<\infty,
+\qquad
+E[|U_R|S_R]<\infty.
+```
+
+Recognition decomposes as:
 
 ```math
 V_1-V_0
 =
 E[U_1-U_0]
 +
-Q(U_1,S_1)-Q(U_0,S_0),
+Q(U_1,S_1)-Q(U_0,S_0).
 ```
 
-and:
+The general selector-changing interaction identity additionally requires:
+
+```math
+E[|U_1|S_0]<\infty,
+```
+
+because it introduces the cross term `Q(U_1,S_0)`. Under that condition:
 
 ```math
 I
@@ -47,6 +75,8 @@ I
 +
 \left[Q(U_1,S_1)-Q(U_1,S_0)\right].
 ```
+
+These are domain conditions ensuring the displayed expectations and covariance terms are finite; they do not change the algebraic identities themselves.
 
 ## Present self-location under future accessibility
 
@@ -286,12 +316,26 @@ E1–E5 classically demonstrate the formal mechanisms: weighting/FOSD, learned p
 
 ## Model and statistical assumptions
 
-The abstract weighted measure requires:
+The abstract weighted **measure** requires:
 
 ```math
 S_\pi(\omega)\ge0,
 \qquad
 0<E[S_\pi]<\infty.
+```
+
+Finite ordinary/first-person value and covariance decompositions additionally require the corresponding base and weighted outcome integrability:
+
+```math
+E[|U_\pi|]<\infty,
+\qquad
+E[|U_\pi|S_\pi]<\infty.
+```
+
+For the general T5 selector-changing decomposition, also require:
+
+```math
+E[|U_1|S_0]<\infty.
 ```
 
 S2 assumes score-measurable accessibility. S2.11 relaxes that assumption but retains residual dependence explicitly and currently uses square integrability to make the covariance decomposition unambiguous. S2.12 uses the same square-integrability basis. S2.13 additionally assumes nonzero total variances when normalized explained-variance quantities are used.
@@ -342,4 +386,5 @@ The repository does **not** claim that:
 - large unexplained variance can make S2.12/S2.13 inconclusive;
 - invalid concentration, tail, variance, or model-selection assumptions invalidate their corresponding statistical certificates;
 - zero expected accessibility makes the normalized FP measure undefined;
+- missing base/weighted integrability makes the corresponding finite mean/covariance decomposition undefined even though the normalized accessibility measure itself may still exist;
 - rejecting the Everett bridge removes the physical interpretation while leaving the abstract mathematical/statistical results intact.

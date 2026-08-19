@@ -6,7 +6,11 @@ The Gaussian toy model provides a closed-form bridge between score/outcome corre
 
 ## Definitions
 
-Let outcome `L` and score `Y` be jointly standard normal with correlation `rho`.
+Let outcome `L` and score `Y` be jointly standard normal with correlation:
+
+```math
+-1\le\rho\le1.
+```
 
 Accessibility is:
 
@@ -33,7 +37,22 @@ S
 for:
 
 ```math
-Y<0.
+Y<0,
+```
+
+with:
+
+```math
+0\le\lambda\le1.
+```
+
+Thus `S` is nonnegative and:
+
+```math
+E[S]
+=
+\frac{1+\lambda}{2}
+>0.
 ```
 
 ## Result
@@ -55,6 +74,14 @@ Under the provisional binary execution/leakage parameterization:
 1-q(1-\alpha),
 ```
 
+with:
+
+```math
+0\le q\le1,
+\qquad
+0\le\alpha\le1,
+```
+
 this becomes:
 
 ```math
@@ -64,13 +91,17 @@ E_{FP}[L]
 {[2-q(1-\alpha)]\sqrt{2\pi}}.
 ```
 
+The parameter bounds imply `0<=lambda<=1` and keep the denominator strictly positive.
+
 ## Interpretation
 
 The expression makes three model-level facts explicit:
 
 - zero score/outcome correlation gives zero mean shift;
 - no downweighting gives zero mean shift;
-- stronger positive alignment and stronger selectivity increase the mean shift within this toy model.
+- for positive `rho`, stronger positive alignment and stronger selectivity increase the mean shift within this toy model.
+
+For negative `rho`, the same selector shifts the mean in the negative direction, as the exact formula shows.
 
 ## Experiment
 
@@ -82,4 +113,4 @@ The closed form depends on joint Gaussianity and a two-level accessibility rule.
 
 ## Status
 
-**EXACT for the stated Gaussian toy model.**
+**EXACT for the stated Gaussian toy model and parameter domain.**

@@ -44,7 +44,13 @@ For an i.i.d. sample of size `n`, write empirical averages as:
 
 ### Sub-Gaussian mean control
 
-A centered random variable `X-E[X]` is said here to have sub-Gaussian mean parameter `sigma_X` when its i.i.d. sample mean satisfies, for every `t>0`:
+A centered random variable `X-E[X]` is said here to have sub-Gaussian mean parameter:
+
+```math
+\sigma_X\ge0
+```
+
+when its i.i.d. sample mean satisfies, for every `t>0`:
 
 ```math
 P\!\left(
@@ -59,7 +65,15 @@ This is the only sub-Gaussian property used below.
 
 ### Bernstein / sub-exponential mean control
 
-A random variable `W` is said here to have Bernstein mean parameters `(v_W,b_W)` when, for every `t>0`:
+A random variable `W` is said here to have Bernstein mean parameters:
+
+```math
+v_W\ge0,
+\qquad
+b_W\ge0
+```
+
+when, for every `t>0`:
 
 ```math
 P\!\left(
@@ -198,6 +212,8 @@ U_M
 \overline{R^2}+r_{R^2}.
 ```
 
+The concentration-parameter domain above makes all radii nonnegative. Since `R^2>=0`, `U_M>=0` on every sample; therefore the S2.8 clipping `U_M^+=max(0,U_M)` equals `U_M` identically for this instantiation.
+
 Let:
 
 ```math
@@ -329,7 +345,7 @@ and:
 E[(U-Y)^2]\le U_M.
 ```
 
-These are exactly the five input envelopes required by S2.8.
+These are exactly the five input envelopes required by S2.8, with `U_M^+=U_M` identically in this construction.
 
 ### Step 2: invoke S2.8
 
@@ -441,15 +457,16 @@ It does not change the QBS measure-theoretic assumptions, does not prove that le
 
 1. The five-event union bound explains `log(10/delta)` because each two-sided tail has failure probability `2 exp(-t)`.
 2. The theorem states the Bernstein concentration form directly, avoiding silent dependence on a particular sub-exponential parameterization.
-3. `YS`, `S^2`, and `(U-Y)^2` receive their own concentration parameters; marginal sub-Gaussian assumptions are not incorrectly treated as sufficient without constants.
-4. The covariance product envelope still uses all four interval corners because `E[Y]` may be negative.
-5. `S>=0` justifies `L_S^+=max(0,L_S)`.
-6. Tail-parameter estimation from the certification sample requires extra accounting.
-7. Finite variance alone is not enough for S2.9.
-8. `D_LT<=0` is inconclusive.
-9. Candidate selection requires S2.7-style multiplicity control.
-10. The Everett bridge remains logically separate.
+3. All sub-Gaussian/Bernstein concentration parameters are explicitly nonnegative, so every reported radius and `U_M` is real/nonnegative on the full sample space.
+4. `YS`, `S^2`, and `(U-Y)^2` receive their own concentration parameters; marginal sub-Gaussian assumptions are not incorrectly treated as sufficient without constants.
+5. The covariance product envelope still uses all four interval corners because `E[Y]` may be negative.
+6. `S>=0` justifies `L_S^+=max(0,L_S)`.
+7. Tail-parameter estimation from the certification sample requires extra accounting.
+8. Finite variance alone is not enough for S2.9.
+9. `D_LT<=0` is inconclusive.
+10. Candidate selection requires S2.7-style multiplicity control.
+11. The Everett bridge remains logically separate.
 
 ## Status
 
-**S2.9 LIGHT-TAIL SUB-GAUSSIAN/BERNSTEIN INSTANTIATION PROVED CONDITIONAL ON THE STATED FIVE MEAN-CONCENTRATION CONTROLS.**
+**S2.9 LIGHT-TAIL SUB-GAUSSIAN/BERNSTEIN INSTANTIATION PROVED CONDITIONAL ON THE STATED FIVE MEAN-CONCENTRATION CONTROLS AND NONNEGATIVE CONCENTRATION-PARAMETER DOMAIN.**

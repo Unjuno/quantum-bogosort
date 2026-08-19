@@ -41,9 +41,9 @@ required = [
     "figures/generated/fig7_predictive_alignment.svg",
     "data/processed/fig2_fosd_theorem_illustration.csv",
     "scripts/validate_github_markdown_render.py", "scripts/validate_latex_sources.py",
-    "scripts/validate_manifest.py", "scripts/validate_markdown_links.py",
-    "scripts/validate_markdown_math.py", "scripts/validate_repository_structure.py",
-    "scripts/validate_svg_sources.py",
+    "scripts/validate_manifest.py", "scripts/validate_reproduction_outputs.py",
+    "scripts/validate_markdown_links.py", "scripts/validate_markdown_math.py",
+    "scripts/validate_repository_structure.py", "scripts/validate_svg_sources.py",
 ]
 
 missing = [path for path in required if not (ROOT / path).exists()]

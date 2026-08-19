@@ -13,6 +13,7 @@ required = [
     "docs/pre_announcement_execution_audit_2026-08-19.md",
     "docs/pre_announcement_validator_audit_2026-08-19.md",
     "docs/pre_announcement_bibliography_audit_2026-08-19.md",
+    "docs/pre_announcement_mathematical_domain_audit_2026-08-19.md",
     "docs/s2_stack_review_map.md", "docs/s2_stack_semantic_audit.md",
     "docs/post_v02_manuscript_compression_audit.md", "docs/post_v02_core_s2_proof_review.md",
     "docs/s2_adaptive_alignment_audit.md", "docs/s2_finite_sample_certificate_audit.md",
@@ -100,7 +101,7 @@ if missing_sections:
 print(
     f"Repository structure OK: {len(required)} required files; complete {len(actual_markdown)}-file "
     f"Markdown inventory declared; all five core theory sources; consolidated/archived research "
-    f"provenance; three pre-announcement audit records; runtime/core-theorem/experiment-card/"
+    f"provenance; four pre-announcement audit records; runtime/core-theorem/experiment-card/"
     f"citation/bibliography/license/figure-set/snapshot-ref/worktree-artifact validators; and "
     f"{len(section_refs)} manuscript sections found."
 )

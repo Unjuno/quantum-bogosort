@@ -5,10 +5,10 @@ The manuscript intentionally uses the stock ``plain`` BibTeX style. Machine-read
 arXiv-only records are ``@misc`` entries with ``howpublished = {arXiv:<id>}``, while
 journal and book-chapter records carry a printable ``note = {doi:<doi>}``.
 
-A separate reviewed fact lock records the citation-key set, record type, year, canonical
-DOI/arXiv identifier, and provenance class. That lock prevents a later edit from silently
-reverting already-reviewed publication chronology. It does not replace external factual
-verification of the bibliography.
+A separate reviewed fact lock records the citation-key set, record type, year, author,
+title, publication locator, canonical DOI/arXiv identifier, and provenance class. The
+lock prevents a later edit from silently reverting already-reviewed publication identity
+or chronology. It does not replace external factual verification of the bibliography.
 """
 from __future__ import annotations
 
@@ -25,7 +25,16 @@ ARXIV_OLD_RE = re.compile(r"^[a-z-]+/\d{7}(?:v\d+)?$", re.IGNORECASE)
 ARXIV_CLASS_RE = re.compile(r"^[A-Za-z]+(?:[.-][A-Za-z]+)*$")
 DOI_RE = re.compile(r"^10\.\d{4,9}/\S+$")
 ALLOWED_TYPES = {"article", "incollection", "misc"}
-FACT_LOCK_HEADER = ["citation_key", "record_type", "year", "canonical_id", "provenance"]
+FACT_LOCK_HEADER = [
+    "citation_key",
+    "record_type",
+    "year",
+    "author",
+    "title",
+    "locator",
+    "canonical_id",
+    "provenance",
+]
 ALLOWED_PROVENANCE = {
     "definitive-publication",
     "retained-early-preprint",
@@ -101,6 +110,27 @@ def require_fields(key: str, fields: dict[str, str], names: tuple[str, ...], err
             errors.append(f"{key}: missing/nonempty required field {name}")
 
 
+def publication_locator(entry_type: str, fields: dict[str, str]) -> str:
+    """Return the exact human-readable publication locator locked by the audit."""
+    if entry_type == "article":
+        volume = fields.get("volume", "")
+        number = fields.get("number", "")
+        volume_number = f"{volume}({number})" if number else volume
+        return f"{fields.get('journal', '')}; {volume_number}; {fields.get('pages', '')}"
+    if entry_type == "incollection":
+        return "; ".join(
+            [
+                fields.get("booktitle", ""),
+                fields.get("editor", ""),
+                fields.get("publisher", ""),
+                fields.get("pages", ""),
+            ]
+        )
+    if entry_type == "misc":
+        return "arXiv"
+    return ""
+
+
 def parse_fact_lock(text: str, errors: list[str]) -> dict[str, dict[str, str]]:
     """Parse the single Markdown fact-lock table into a citation-key mapping."""
     table_lines = [line.strip() for line in text.splitlines() if line.strip().startswith("|")]
@@ -150,18 +180,32 @@ def parse_fact_lock(text: str, errors: list[str]) -> dict[str, dict[str, str]]:
             errors.append(
                 f"paper/bibliography_fact_lock.md:{key}: invalid four-digit year {record['year']!r}"
             )
+        for field_name in ("author", "title", "locator"):
+            if not record[field_name]:
+                errors.append(
+                    f"paper/bibliography_fact_lock.md:{key}: empty reviewed field {field_name}"
+                )
         if record["provenance"] not in ALLOWED_PROVENANCE:
             errors.append(
                 f"paper/bibliography_fact_lock.md:{key}: unsupported provenance "
                 f"{record['provenance']!r}"
             )
+
         canonical_id = record["canonical_id"]
         if canonical_id.startswith("doi:"):
+            if record["record_type"] not in {"article", "incollection"}:
+                errors.append(
+                    f"paper/bibliography_fact_lock.md:{key}: DOI-backed record must be a publication"
+                )
             if not DOI_RE.fullmatch(canonical_id.removeprefix("doi:")):
                 errors.append(
                     f"paper/bibliography_fact_lock.md:{key}: malformed DOI canonical_id {canonical_id!r}"
                 )
         elif canonical_id.startswith("arxiv:"):
+            if record["record_type"] != "misc":
+                errors.append(
+                    f"paper/bibliography_fact_lock.md:{key}: arXiv-backed record must be @misc"
+                )
             eprint = canonical_id.removeprefix("arxiv:")
             if not (ARXIV_NEW_RE.fullmatch(eprint) or ARXIV_OLD_RE.fullmatch(eprint)):
                 errors.append(
@@ -339,6 +383,20 @@ def main() -> None:
             errors.append(
                 f"{key}: BibTeX year {fields.get('year')!r} != reviewed fact lock {locked['year']!r}"
             )
+        for field_name in ("author", "title"):
+            actual_value = fields.get(field_name, "")
+            if actual_value != locked[field_name]:
+                errors.append(
+                    f"{key}: BibTeX {field_name} {actual_value!r} != reviewed fact lock "
+                    f"{locked[field_name]!r}"
+                )
+
+        actual_locator = publication_locator(entry_type, fields)
+        if actual_locator != locked["locator"]:
+            errors.append(
+                f"{key}: BibTeX publication locator {actual_locator!r} != reviewed fact lock "
+                f"{locked['locator']!r}"
+            )
 
         canonical_id = locked["canonical_id"]
         if canonical_id.startswith("doi:"):
@@ -371,7 +429,8 @@ def main() -> None:
         f"{incollection_count} book-chapter @incollection, {misc_count} arXiv @misc); "
         f"{len(dois)} unique printable DOI records and {len(eprints)} unique printable arXiv "
         f"identifiers/classes validated for stock plain.bst; {len(fact_lock)} reviewed fact-lock "
-        "records match citation key, class, year, and canonical identifier exactly."
+        "records match citation key, class, year, author, title, publication locator, and "
+        "canonical identifier exactly."
     )
 
 

@@ -57,6 +57,7 @@ REQUIRED_REPOSITORY_COMMANDS = [
     "python scripts/validate_svg_sources.py",
     "git diff --exit-code --",
     "data/processed/fig2_fosd_theorem_illustration.csv",
+    "git ls-files --others --exclude-standard",
 ]
 REQUIRED_MANUSCRIPT_COMMANDS = [
     "python scripts/validate_runtime_contract.py",

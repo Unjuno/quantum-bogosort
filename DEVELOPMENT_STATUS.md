@@ -19,7 +19,9 @@ The repository has one active branch, `main`. The v0.2 and v0.3 tags were re-res
 
 ## Scientific state
 
-The locked core theorem set remains **T1–T5**. The locked core experiment set remains **E1–E5**. The supplementary line remains complete through **S2.13**.
+The locked core theorem set remains **T1–T5** in identity, numbering, proof structure, sign conclusions, and physical-boundary content. The frozen v0.3 snapshot itself remains untouched. Current `main` contains four explicitly reviewed textual/domain corrections to the standalone canonical TeX source: a version-neutral title, explicit base-integrability in the policy setup, explicit base-integrability for the generic T1 outcome, and T5 cross-integrability for the intermediate `Q(U_1,S_0)` term. These close definition-domain gaps; they do not alter the algebraic identities or their proof steps.
+
+The locked core experiment set remains **E1–E5**. The supplementary line remains complete through **S2.13**.
 
 The conceptual supplementary spine remains:
 
@@ -39,7 +41,7 @@ The Everett accessibility bridge remains a separate physical open problem. Nothi
 
 ## Pre-announcement audit state
 
-Three complementary passes have now been performed.
+Four complementary passes have now been performed.
 
 ### Pass 1 — source, execution, and reproduction
 
@@ -82,8 +84,8 @@ The second pass audited the auditing machinery itself. It corrected or strengthe
 - the exact generated figure contract is seven public SVGs plus six manuscript PDF figures; Figure 7 is intentionally repository-review-only and is not a manuscript PDF figure;
 - LaTeX preflight resolves compiled references only within the graph reachable from `paper/main.tex`;
 - `paper/sections/robust_mom_summary.tex` is explicitly locked as the sole intentionally uncompiled manuscript source, with `robust_mom_certificate_appendix.tex` providing the compiled robust-MoM treatment;
-- standalone canonical `theory/core_theorems.tex` is now executable-locked to the frozen v0.3 theorem/proof/boundary body: its single intentional version-neutral title change is normalized before comparison to frozen blob `82986d7197e79446d6574aab538d1edaeff47eb6`; any other T1–T5 body change fails CI;
-- the manuscript's complete core-proof appendix remains byte-identical to the v0.3 snapshot, so no manuscript-side T1–T5 drift was found;
+- standalone canonical `theory/core_theorems.tex` is executable-locked to the frozen v0.3 theorem/proof/boundary body after exactly four approved normalizations: version-neutral title, setup base-integrability, T1 base-integrability, and T5 cross-integrability; any additional theorem/proof/boundary drift fails CI;
+- the theorem lock also requires the approved domain assumptions to remain explicit across the rendered theory pages, formal model, manuscript theorem section, and proof appendix;
 - `scripts/validate_runtime_contract.py` cross-checks `.python-version`, exact primary package pins/installed versions, runner choice, required workflow jobs/commands, manual dispatch, full-SHA Action pins, checkout credential isolation, theorem-lock invocation, and final worktree checks;
 - a real self-failure in that runtime validator was caught during review: its `python-version` / `runs-on` regexes initially lacked `re.MULTILINE`; the parser was corrected before treating the new contract as reliable;
 - citation metadata validation checks the narrow CFF 1.2.0 contract against the frozen STATUS snapshot, rejects unknown nested author content, and requires exact `YYYY-MM-DD` release-date syntax;
@@ -128,15 +130,32 @@ Earlier public preprints are still retained when they are themselves the relevan
 
 The two same-title Saunders physical-probability deposits were disambiguated through author archival provenance: the 2026 record is the latest version and links the 2025 deposit as an earlier version, so the current `2601.12159` citation is retained.
 
+A reviewed bibliography fact lock now records the current citation-key set, record class, year, canonical DOI/arXiv identifier, and provenance class. The bibliography validator requires exact agreement with that lock so a later syntactically valid edit cannot silently reverse an already-reviewed chronology correction. The lock is a regression guard, not an automated proof of external bibliographic truth.
+
 This pass also found semantic drift in all three `literature/` prior-art ledgers: older text described recognition as a **causal variable/policy input**. Those ledgers are now aligned with the authoritative project boundary: recognition/information state can change which policy is selected, but recognition is not assigned privileged physical causal power merely by being upstream in the model.
 
-These bibliography and literature corrections affect provenance, chronology, and novelty framing. They do **not** change T1–T5, S2-family theorem statements, experiment values, or the Everett-bridge status.
+These bibliography and literature corrections themselves affect provenance, chronology, and novelty framing. They do **not** alter theorem identities, S2-family theorem statements, experiment values, or the Everett-bridge status.
+
+### Pass 4 — theorem-domain consistency
+
+A later cross-file comparison found that current canonical theorem sources had already gained necessary integrability corrections while the validator audit/status language still described the canonical TeX as title-only drift and the manuscript theorem/proof surfaces still used the older implicit-domain wording.
+
+The correction is now explicit and synchronized:
+
+- T1 requires both `E[|X|] < ∞` and `E[|X|S] < ∞` with `0 < E[S] < ∞`;
+- T4 requires, for each recognition state, finite base utility expectation and finite accessibility-weighted utility expectation;
+- general T5 additionally requires `E[|U_1|S_0] < ∞` because the proof introduces `Q(U_1,S_0)`;
+- the frozen v0.3 tag remains unchanged;
+- current theory Markdown, standalone canonical TeX, formal model, manuscript theorem section, and manuscript proof appendix now state the same domain corrections;
+- `validate_core_theorem_lock.py` requires those domain assumptions across six public/manuscript surfaces while still proving that, after exactly four approved normalizations, the canonical standalone TeX reduces to the frozen v0.3 blob.
+
+The identities, proof algebra, FOSD/sign conclusions, support/extinction boundaries, and Everett bridge statement are unchanged by this domain correction.
 
 ## Workflow state
 
 The current workflow is configured to run on push, pull request, and manual dispatch.
 
-`repository-validation` covers runtime/workflow consistency, Python compilation, Markdown math, repository structure, the canonical T1–T5 theorem-body lock, citation/bibliography/license/snapshot/issue-template checks, manifest/card/provenance validation, links, GitHub GFM conversion, E1–E5 scientific invariants, current reproduction identity, frozen historical CSV blob identity, data-tree cleanliness, figure generation, exact SVG/PDF figure-set validation, static SVG validation, committed SVG/Figure-2 data reproducibility, full tracked-tree cleanliness, rejection of nonignored untracked artifacts, and exact allowlisting/rejection of ignored untracked artifacts.
+`repository-validation` covers runtime/workflow consistency, Python compilation, Markdown math, repository structure, the canonical T1–T5 theorem-body/domain lock, citation/bibliography fact-lock/license/snapshot/issue-template checks, manifest/card/provenance validation, links, GitHub GFM conversion, E1–E5 scientific invariants, current reproduction identity, frozen historical CSV blob identity, data-tree cleanliness, figure generation, exact SVG/PDF figure-set validation, static SVG validation, committed SVG/Figure-2 data reproducibility, full tracked-tree cleanliness, rejection of nonignored untracked artifacts, and exact allowlisting/rejection of ignored untracked artifacts.
 
 `manuscript-build` independently validates the runtime contract, generates manuscript PDF figures, preflights the compiled LaTeX graph and citation/reference relationships, installs the TeX toolchain, builds `paper/main.pdf`, verifies it, and uploads it as an artifact.
 

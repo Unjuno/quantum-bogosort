@@ -19,12 +19,19 @@
 - moved root README display mathematics to GitHub fenced `math` blocks after direct rendered-UI QA exposed broken double-dollar rendering;
 - standardized display mathematics across public repository Markdown on GitHub fenced `math` blocks, including theory, experiment cards, canonical docs, supplementary theorem/certificate pages, audit pages, prior-art notes, and the experiment archive;
 - standardized named Markdown math operators on repository roman forms such as `\mathrm{Cov}`, `\mathrm{Var}`, `\mathrm{Corr}`, `\mathrm{sign}`, and `\mathrm{median}` while leaving LaTeX manuscript sources unchanged; this is a repository consistency convention rather than a claim that MathJax lacks `\operatorname`;
-- exhaustively inspected all 66 repository Markdown sources for rendering-critical structure, including issue-template front matter, math/code/Mermaid fences, tables, images, links, and public-state routing language;
-- added `scripts/validate_github_markdown_render.py`, which sends every Markdown file through GitHub's own GFM REST renderer in CI and checks that expected headings, tables, and images survive rendering;
+- exhaustively inspected the complete then-current repository Markdown surface for rendering-critical structure, including issue-template front matter, math/code/Mermaid fences, tables, images, links, and public-state routing language;
+- added `scripts/validate_github_markdown_render.py`, which sends every Markdown file through GitHub's own GFM REST renderer in CI and checks that expected headings, tables, and images survive structural conversion;
 - added `scripts/validate_svg_sources.py` to parse all committed SVGs as XML/browser assets and reject malformed viewBoxes, missing sizes/backgrounds, active/external content, and non-finite attributes;
 - added `scripts/validate_latex_sources.py` to preflight manuscript input paths, TeX environments, bibliography/citation keys, labels/references, and generated graphics before `latexmk`;
 - hardened `scripts/validate_markdown_math.py` to support variable-length CommonMark fences, ignore literal inline code, reject legacy dollar/LaTeX delimiter regressions, enforce repository macro conventions, and check brace, TeX-environment, and common `\left`/`\right` balance inside fenced math blocks;
 - hardened `scripts/validate_markdown_links.py` so link-like examples inside fenced or inline literal code are not misclassified as rendered repository links;
+- pinned the byte-reproduction environment to Ubuntu 24.04, Python 3.11.15, NumPy 2.4.6, pandas 3.0.5, and Matplotlib 3.11.1 after a commit-fixed audit reproduced a serialization-only Figure 2 CSV difference under a different numerical-library stack;
+- added executable E1–E5 scientific regression guards for the declared identities, nulls, sign/counterexample controls, predictive-alignment behavior, and branch-coherence contrasts;
+- strengthened the experiment manifest validator to enforce exact E1–E5 ID/order, `LOCK` state, file existence, and separation of locked historical versus current reproduction provenance classes;
+- added manifest-driven byte validation of every current reproduction CSV, replacing a duplicate hard-coded output list in CI;
+- corrected the current E5 rho-sweep field name from misleading `recognition_corr_increment` to `action_corr_increment`; numerical values and Figure 6 are unchanged, and locked historical schemas are preserved;
+- expanded repository-structure validation to cover the workflow, dependency/Python configuration, experiment executables/manifest, theorem-illustration data, audit record, and principal validator scripts;
+- added `docs/pre_announcement_execution_audit_2026-08-19.md` recording the commit-fixed local execution audit, fixes, provenance boundaries, and remaining browser/Actions gates;
 - corrected stale `CONTRIBUTING.md` references to removed release branches and replaced obsolete double-dollar contribution guidance with the current fenced-math convention;
 - marked or rewrote historical stacked-branch S2 audit language so it cannot be mistaken for the current single-branch repository state;
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
@@ -37,10 +44,11 @@
 ### Scientific scope
 
 - no T1–T5 theorem statement is changed;
-- no E1–E5 experiment result is changed;
+- no numerical E1–E5 experiment result is changed by the execution audit; the E5 rho current-output schema has one corrected column name;
 - no S2-family theorem or statistical certificate is changed;
-- the visualization and GitHub-math compatibility changes alter presentation syntax only; they do not add new physical or statistical evidence;
+- the visualization, GitHub-math compatibility, validation, and reproducibility changes do not add new physical or statistical evidence;
 - the present-self-location identities are direct consequences of the already-defined first-person weighted measure, not a new physical bridge claim;
+- locked historical Figure 5/E4 and Figure 7/E2 data provenance remains unchanged and separate from current reruns;
 - the Everett accessibility bridge remains physically open;
 - tag/Release `v0.3-public-review` remains the frozen v0.3 scientific snapshot at commit `58038763127258bd3e2f0d41708c4dfa01f81fd6`.
 

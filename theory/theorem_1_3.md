@@ -2,7 +2,19 @@
 
 ## Theorem 1 — QBS Covariance Identity
 
-Let `X` be an integrable outcome, and let `S` be a nonnegative accessibility weight satisfying positive finite expectation. Define:
+Let `X` be an integrable outcome, and let `S` be a nonnegative accessibility weight satisfying positive finite expectation. Also assume the weighted outcome is absolutely integrable:
+
+```math
+E[|X|]<\infty,
+\qquad
+0<E[S]<\infty,
+\qquad
+E[|X|S]<\infty.
+```
+
+Both base and weighted integrability are required: neither follows from the other assumptions in general.
+
+Define:
 
 ```math
 E_{FP}[X]
@@ -108,7 +120,7 @@ E_{FP}[Z]
 P_{FP}(X\ge c).
 ```
 
-Theorem 1 immediately gives the result.
+The indicator is bounded, and weighted integrability follows from `E[S]<∞`; Theorem 1 therefore applies and gives the result.
 
 ### Exact tail criterion
 

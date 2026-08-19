@@ -31,6 +31,9 @@ TABLE_SEPARATOR_RE = re.compile(
 IMAGE_RE = re.compile(r"!\[[^\]]*\]\([^)]+\)")
 FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
+SPECIAL_FENCE_CANDIDATE_RE = re.compile(
+    r"^(?P<indent>[ \t]*)(?P<marker>`{3,}|~{3,})(?P<info>.*)$"
+)
 SPECIAL_RENDER_INFO = {"math", "mermaid"}
 
 
@@ -75,6 +78,54 @@ def fence_info_name(info: str) -> str:
     return stripped.split(None, 1)[0].lower() if stripped else ""
 
 
+def special_render_fence_errors(relative: str, text: str) -> list[str]:
+    """Reject source forms that look special but GitHub would parse as ordinary code."""
+    errors: list[str] = []
+    fence_marker: str | None = None
+
+    for line_no, line in enumerate(text.splitlines(), start=1):
+        if fence_marker is not None:
+            if closes_fence(line, fence_marker):
+                fence_marker = None
+            continue
+
+        candidate = SPECIAL_FENCE_CANDIDATE_RE.match(line)
+        if candidate:
+            indent = candidate.group("indent")
+            marker = candidate.group("marker")
+            raw_info = candidate.group("info")
+            info = raw_info.strip()
+            info_name = fence_info_name(raw_info)
+
+            if info_name in SPECIAL_RENDER_INFO:
+                if "\t" in indent or len(indent) > 3:
+                    errors.append(
+                        f"{relative}:{line_no}: {info_name} fence is indented beyond the "
+                        "CommonMark 0-3-space fence boundary and would render as code"
+                    )
+                if marker[0] != "`":
+                    errors.append(
+                        f"{relative}:{line_no}: repository {info_name} render blocks must "
+                        "use backtick fences, not tilde fences"
+                    )
+                if info != info_name:
+                    errors.append(
+                        f"{relative}:{line_no}: repository {info_name} fence info string "
+                        f"must be exactly {info_name!r}, got {info!r}"
+                    )
+
+            # Track only syntactically valid CommonMark fences so literal special-fence
+            # examples inside an ordinary outer fence are ignored by this contract check.
+            if (
+                "\t" not in indent
+                and len(indent) <= 3
+                and valid_fence_opener(marker, raw_info)
+            ):
+                fence_marker = marker
+
+    return errors
+
+
 def source_structure(text: str) -> tuple[int, int, int, int, int, int]:
     """Count render-critical structures and classify valid CommonMark fences."""
     headings = 0
@@ -97,10 +148,10 @@ def source_structure(text: str) -> tuple[int, int, int, int, int, int]:
             info = match.group(2)
             if valid_fence_opener(marker, info):
                 fence_marker = marker
-                info_name = fence_info_name(info)
-                if info_name == "math":
+                stripped_info = info.strip()
+                if marker[0] == "`" and stripped_info == "math":
                     math_fences += 1
-                elif info_name == "mermaid":
+                elif marker[0] == "`" and stripped_info == "mermaid":
                     mermaid_fences += 1
                 else:
                     ordinary_fences += 1
@@ -156,6 +207,7 @@ def main() -> None:
     for path in files:
         relative = path.relative_to(ROOT).as_posix()
         text = path.read_text(encoding="utf-8")
+        errors.extend(special_render_fence_errors(relative, text))
         (
             expected_headings,
             expected_tables,
@@ -206,9 +258,9 @@ def main() -> None:
         f"GitHub Markdown rendering OK: {len(files)} files rendered through the GitHub "
         "GFM API; expected headings, tables, inline images, and ordinary fenced code "
         f"blocks preserved. Source audit counted {total_ordinary} ordinary, {total_math} "
-        f"math, and {total_mermaid} Mermaid fences; GitHub returned "
-        f"{observed_math_renderers} <math-renderer> elements. MathJax/Mermaid visual "
-        "presentation remains a browser-UI gate."
+        f"math, and {total_mermaid} Mermaid fences under the exact special-render fence "
+        f"contract; GitHub returned {observed_math_renderers} <math-renderer> elements. "
+        "MathJax/Mermaid visual presentation remains a browser-UI gate."
     )
 
 

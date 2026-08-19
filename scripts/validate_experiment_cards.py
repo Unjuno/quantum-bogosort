@@ -2,9 +2,9 @@
 
 The manifest fixes machine-readable experiment metadata and provenance. The Markdown
 cards are the human review surface. This validator prevents either side from drifting
-while still looking superficially complete: titles/claims are locked, the seven H2
-sections and their order are fixed, and every manifest CSV must appear exactly once in
-``D — Data / Result`` and nowhere else in the card.
+while still looking superficially complete: titles/claims are locked, the seven rendered
+H2 sections and their order are fixed, and every manifest CSV must appear exactly once in
+``D — Data / Result`` and nowhere else in the rendered card surface.
 """
 from __future__ import annotations
 
@@ -56,17 +56,51 @@ EXPECTED = {
         "primary_claim": "Shared recognition-dependent policy and shared world structure induce correlated decisions; execution-strength sweeps are paired on common primitive randomness.",
     },
 }
-H1_RE = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
-H2_RE = re.compile(r"^##\s+(.+?)\s*$", re.MULTILINE)
+H1_RE = re.compile(r"^ {0,3}#\s+(.+?)\s*$", re.MULTILINE)
+H2_RE = re.compile(r"^ {0,3}##\s+(.+?)\s*$", re.MULTILINE)
 CSV_RE = re.compile(r"data/processed/([A-Za-z0-9_.-]+\.csv)")
+FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
+CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
 
 
 def split_files(value: str) -> list[str]:
     return [part.strip() for part in value.split(";") if part.strip()]
 
 
+def closes_fence(line: str, marker: str) -> bool:
+    match = CLOSING_FENCE_RE.match(line)
+    if not match:
+        return False
+    candidate = match.group(1)
+    return candidate[0] == marker[0] and len(candidate) >= len(marker)
+
+
+def rendered_markdown_surface(text: str) -> str:
+    """Remove fenced literal code so card structure is parsed from rendered Markdown."""
+    output: list[str] = []
+    fence_marker: str | None = None
+
+    for line in text.splitlines():
+        if fence_marker is not None:
+            if closes_fence(line, fence_marker):
+                fence_marker = None
+            continue
+
+        match = FENCE_RE.match(line)
+        if match:
+            marker = match.group(1)
+            info = match.group(2)
+            if marker[0] != "`" or "`" not in info:
+                fence_marker = marker
+                continue
+
+        output.append(line)
+
+    return "\n".join(output)
+
+
 def sections(text: str) -> tuple[list[str], dict[str, str]]:
-    """Return ordered H2 headings and exact bodies between H2 boundaries."""
+    """Return ordered rendered H2 headings and exact bodies between H2 boundaries."""
     matches = list(H2_RE.finditer(text))
     headings = [match.group(1).strip() for match in matches]
     bodies: dict[str, str] = {}
@@ -109,19 +143,19 @@ def main() -> None:
         if not card_path.is_file():
             errors.append(f"{experiment_id}: missing experiment card {expected['card']}")
             continue
-        text = card_path.read_text(encoding="utf-8")
+        text = rendered_markdown_surface(card_path.read_text(encoding="utf-8"))
 
         h1 = H1_RE.findall(text)
         if h1 != [expected["heading"]]:
             errors.append(
-                f"{experiment_id}: card must contain exactly canonical H1 {expected['heading']!r}; "
-                f"got {h1!r}"
+                f"{experiment_id}: rendered card must contain exactly canonical H1 "
+                f"{expected['heading']!r}; got {h1!r}"
             )
 
         headings, bodies = sections(text)
         if headings != EXPECTED_H2:
             errors.append(
-                f"{experiment_id}: H2 schema/order drift: {headings!r} != {EXPECTED_H2!r}"
+                f"{experiment_id}: rendered H2 schema/order drift: {headings!r} != {EXPECTED_H2!r}"
             )
 
         for heading in EXPECTED_H2:
@@ -129,7 +163,7 @@ def main() -> None:
             if body is None:
                 continue
             if not body.strip():
-                errors.append(f"{experiment_id}: empty card section {heading!r}")
+                errors.append(f"{experiment_id}: empty rendered card section {heading!r}")
 
         expected_csvs = split_files(row.get("locked_files", "")) + split_files(
             row.get("reproduction_files", "")
@@ -143,11 +177,13 @@ def main() -> None:
             extra = sorted((d_counts - expected_counts).elements())
             if missing:
                 errors.append(
-                    f"{experiment_id}: manifest CSV(s) missing from D section: " + ", ".join(missing)
+                    f"{experiment_id}: manifest CSV(s) missing from rendered D section: "
+                    + ", ".join(missing)
                 )
             if extra:
                 errors.append(
-                    f"{experiment_id}: unexpected/duplicate CSV(s) in D section: " + ", ".join(extra)
+                    f"{experiment_id}: unexpected/duplicate CSV(s) in rendered D section: "
+                    + ", ".join(extra)
                 )
 
         non_d_text = "\n".join(
@@ -156,14 +192,14 @@ def main() -> None:
         outside_csvs = CSV_RE.findall(non_d_text)
         if outside_csvs:
             errors.append(
-                f"{experiment_id}: data/processed CSV reference(s) outside D section: "
+                f"{experiment_id}: data/processed CSV reference(s) outside rendered D section: "
                 + ", ".join(outside_csvs)
             )
 
         full_counts = Counter(CSV_RE.findall(text))
         if full_counts != expected_counts:
             errors.append(
-                f"{experiment_id}: card-wide CSV occurrence contract drift: "
+                f"{experiment_id}: rendered card-wide CSV occurrence contract drift: "
                 f"{dict(full_counts)!r} != {dict(expected_counts)!r}"
             )
 
@@ -171,9 +207,9 @@ def main() -> None:
         raise SystemExit("Experiment-card validation failed:\n" + "\n".join(errors))
 
     print(
-        "Experiment-card validation passed: E1-E5 canonical manifest titles/claims, H1 headings, "
-        "ordered H/T/D/C/U + ERROR CHECK + Linked theory schema, and D-section-only CSV routing "
-        "match exactly."
+        "Experiment-card validation passed: E1-E5 canonical manifest titles/claims, rendered "
+        "H1 headings, ordered H/T/D/C/U + ERROR CHECK + Linked theory schema, and rendered "
+        "D-section-only CSV routing match exactly."
     )
 
 

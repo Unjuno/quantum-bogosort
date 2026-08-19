@@ -87,6 +87,8 @@ jobs:
           python-version: '3.11.15'
       - name: Install pinned Python dependencies
         run: pip install -r requirements.txt
+      - name: Validate runtime and workflow contract
+        run: python scripts/validate_runtime_contract.py
       - name: Generate manuscript figure PDFs
         run: python figures/generate_pdf_figures.py
       - name: Validate LaTeX render dependencies

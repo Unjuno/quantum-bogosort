@@ -34,11 +34,11 @@ The conceptual supplementary spine remains:
 
 Recognition is treated as an information/policy state, not as a privileged physical cause. Future accessibility may reweight present self-location under the first-person change of measure; favorable/upward reweighting additionally requires alignment with the relevant favorability statistic. The base probability law remains fixed.
 
-The Everett accessibility bridge remains a separate physical open problem. Nothing in the validator/reproducibility work establishes an Everettian accessibility law or objective random-generator bias.
+The Everett accessibility bridge remains a separate physical open problem. Nothing in the validator/reproducibility or bibliography work establishes an Everettian accessibility law or objective random-generator bias.
 
 ## Pre-announcement audit state
 
-Two complementary passes have been completed at source/local-audit level.
+Three complementary passes have now been performed.
 
 ### Pass 1 — source, execution, and reproduction
 
@@ -81,10 +81,10 @@ The second pass audited the auditing machinery itself. It corrected or strengthe
 - `paper/sections/robust_mom_summary.tex` is explicitly locked as the sole intentionally uncompiled manuscript source, with `robust_mom_certificate_appendix.tex` providing the compiled robust-MoM treatment;
 - `scripts/validate_runtime_contract.py` cross-checks `.python-version`, the exact primary package pins/installed versions, runner choice, required workflow jobs/commands, manual dispatch, full-SHA Action pins, checkout credential isolation, and final clean-worktree checks;
 - a real self-failure in that runtime validator was caught during review: its `python-version` / `runs-on` regexes initially lacked `re.MULTILINE`, which could make a valid workflow appear to have no runtime declarations; the parser was corrected before treating the new contract as reliable;
-- citation metadata validation now checks the narrow CFF 1.2.0 contract against the frozen STATUS snapshot, rejects unknown nested author content, and requires exact `YYYY-MM-DD` release-date syntax;
-- bibliography metadata validation now rejects unsupported text outside records, malformed/multiline field syntax, duplicate keys/fields/DOIs/eprints, placeholder values, and malformed DOI/arXiv identifiers;
-- arXiv primary classes for corrected entries were independently checked against arXiv primary pages, including Garisto `physics.hist-ph`, Armstrong `physics.data-an`, Conitzer `stat.OT`, Hult/Nyquist `math.PR`, and Cooper et al. `cs.AI`;
-- `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` are pinned to full commit SHAs;
+- citation metadata validation checks the narrow CFF 1.2.0 contract against the frozen STATUS snapshot, rejects unknown nested author content, and requires exact `YYYY-MM-DD` release-date syntax;
+- bibliography syntax/structure validation rejects unsupported text outside records, malformed/multiline field syntax, duplicate keys/fields/DOIs/eprints, placeholder values, and malformed DOI/arXiv identifiers;
+- bibliography record classes are now explicit: journal `@article` records require journal/volume/pages/DOI, book-chapter `@incollection` records require booktitle/editor/publisher/pages/DOI, and arXiv-only `@misc` records retain a separate eprint/archive provenance contract;
+- `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` are pinned to full Node-24/v7 commit SHAs and their exact audited multiplicities are checked by the runtime contract;
 - checkout uses `persist-credentials: false` in both jobs; workflow permissions remain `contents: read`;
 - both `repository-validation` and `manuscript-build` run the runtime-contract validator;
 - `workflow_dispatch` allows a complete manual run from **Actions → validate → Run workflow** without a dummy commit;
@@ -95,13 +95,40 @@ The second pass audited the auditing machinery itself. It corrected or strengthe
 
 The newer Pass-2 validators were source-audited and wired into CI, but the literal network clone remains unavailable in this audit runtime. Therefore the first-pass local execution evidence does not automatically count as execution evidence for every later validator revision. The final GitHub Actions run remains required.
 
+### Pass 3 — external bibliography and prior-art truth
+
+The third pass separates **syntactically valid BibTeX** from **factually correct publication/provenance metadata**. Publisher, journal, author, and archival records were used to check whether later arXiv postings were obscuring earlier established publication chronology.
+
+Corrections applied include:
+
+- Greaves's deterministic-multiverse paper is represented by its 2004 journal publication rather than only the 2003 arXiv posting;
+- Sebens--Carroll is represented by the 2018 BJPS publication rather than only the 2014 preprint;
+- Saunders's branch-counting paper is represented by the 2021 *Proceedings of the Royal Society A* article rather than the later arXiv posting;
+- Hanson's observer-selection paper is represented by its 2003 *Foundations of Physics* publication rather than only the 2001 preprint;
+- Hult--Nyquist is represented by its 2016 *Stochastic Processes and their Applications* publication rather than only the 2012 preprint;
+- Conitzer's de se paper is represented by its 2015 *Synthese* publication rather than the later 2017 arXiv posting;
+- Price's decision chapter and Kent's critique are represented by their 2010 Oxford book chapters;
+- Garisto is represented by the 2020 *Physical Review Research* article;
+- Araújo is represented by the 2019 *Foundations of Physics* article;
+- Khawaja's current BJPS entry includes the verified page range 313--344;
+- Saunders's *Chance in the Everett Interpretation* is represented as the 2010 Oxford chapter, pp. 181--205, rather than the later arXiv upload;
+- Saunders's Routledge probability chapter is represented as a book chapter rather than an arXiv-only record.
+
+Earlier public preprints are still retained when they are themselves the relevant early prior-art record or when no definitive publication record was identified. Wallace's 2009 preprint remains distinct from the later revised-title book chapter; Tegmark's 1997 preprint remains the earlier public record despite a 1998 journal publication; Mallah, Armstrong, Price's 2006 comments, Cooper--Oesterheld--Conitzer, and Saunders's current physical-probability paper remain preprint/working-paper records where appropriate.
+
+The two same-title Saunders physical-probability deposits were also disambiguated through author archival provenance: the 2026 record is the latest version and links the 2025 deposit as an earlier version, so the current `2601.12159` citation is retained.
+
+This pass also found semantic drift in all three `literature/` prior-art ledgers: older text described recognition as a **causal variable/policy input**. Those ledgers are now aligned with the authoritative project boundary: recognition/information state can change which policy is selected, but recognition is not assigned privileged physical causal power merely by being upstream in the model.
+
+These bibliography and literature corrections affect provenance, chronology, and novelty framing. They do **not** change T1–T5, S2-family theorem statements, experiment values, or the Everett-bridge status.
+
 ## Workflow state
 
 The current workflow is configured to run on push, pull request, and manual dispatch.
 
-`repository-validation` covers runtime/workflow consistency, Python compilation, Markdown math, repository structure, citation metadata, bibliography metadata, issue templates, manifest, links, GitHub GFM conversion, E1–E5 scientific invariants, reproduction identity/data-tree cleanliness, figure generation, exact SVG/PDF figure-set validation, static SVG validation, committed SVG/Figure-2 data reproducibility, full tracked-tree cleanliness, and rejection of nonignored untracked artifacts.
+`repository-validation` covers runtime/workflow consistency, Python compilation, Markdown math, repository structure, citation metadata, bibliography metadata, license/snapshot/issue-template checks, manifest, links, GitHub GFM conversion, E1–E5 scientific invariants, reproduction identity/data-tree cleanliness, figure generation, exact SVG/PDF figure-set validation, static SVG validation, committed SVG/Figure-2 data reproducibility, full tracked-tree cleanliness, and rejection of nonignored untracked artifacts.
 
-`manuscript-build` independently validates the runtime contract, generates manuscript PDF figures, preflights the compiled LaTeX graph, installs the TeX toolchain, builds `paper/main.pdf`, verifies it, and uploads it as an artifact.
+`manuscript-build` independently validates the runtime contract, generates manuscript PDF figures, preflights the compiled LaTeX graph and citation/reference relationships, installs the TeX toolchain, builds `paper/main.pdf`, verifies it, and uploads it as an artifact.
 
 **The latest final `main` Actions result is still not recorded as PASS.** The connected GitHub interface available during this audit does not expose direct-push Actions check-run state through its commit-run lookup; combined commit status remains empty and is not a substitute for Actions state. The workflow badge/manual Actions UI must therefore establish the final execution gate.
 

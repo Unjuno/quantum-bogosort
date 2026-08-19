@@ -1,7 +1,8 @@
-"""Validate the locked E1-E5 experiment manifest and its provenance classes."""
+"""Validate the locked E1-E5 experiment manifest and processed-data provenance classes."""
 from pathlib import Path
 import csv
 import re
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "processed"
@@ -17,10 +18,34 @@ EXPECTED_COLUMNS = [
     "status",
 ]
 REPRODUCTION_NAME_RE = re.compile(r"^e([1-5])_.+\.csv$")
+NON_EXPERIMENT_PROVENANCE = {
+    "fig2_fosd_theorem_illustration.csv",
+}
 
 
 def split_files(value: str) -> list[str]:
     return [item.strip() for item in value.split(";") if item.strip()]
+
+
+def tracked_processed_csvs() -> set[str]:
+    result = subprocess.run(
+        ["git", "ls-files", "--", "data/processed"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    names: set[str] = set()
+    for raw in result.stdout.splitlines():
+        path = Path(raw)
+        if path.suffix == ".csv":
+            if path.parent.as_posix() != "data/processed":
+                raise SystemExit(
+                    "Manifest validation failed:\n"
+                    f"nested processed-data CSV is outside the flat provenance contract: {raw}"
+                )
+            names.add(path.name)
+    return names
 
 
 def main() -> None:
@@ -101,13 +126,34 @@ def main() -> None:
             + ", ".join(sorted(cross_class))
         )
 
+    tracked = tracked_processed_csvs()
+    classified = all_locked | all_reproduction | NON_EXPERIMENT_PROVENANCE
+    if tracked != classified:
+        unclassified = sorted(tracked - classified)
+        declared_missing = sorted(classified - tracked)
+        if unclassified:
+            errors.append(
+                "tracked processed-data CSVs lack an explicit provenance class: "
+                + ", ".join(unclassified)
+            )
+        if declared_missing:
+            errors.append(
+                "provenance contract names CSVs not tracked in HEAD: "
+                + ", ".join(declared_missing)
+            )
+
+    for name in NON_EXPERIMENT_PROVENANCE:
+        if not (DATA / name).is_file():
+            errors.append(f"missing non-experiment theorem-illustration data: {name}")
+
     if errors:
         raise SystemExit("Manifest validation failed:\n" + "\n".join(errors))
 
     print(
         "Manifest validation passed: E1-E5 are uniquely LOCKed with disjoint "
         f"provenance classes ({len(all_locked)} locked CSVs, "
-        f"{len(all_reproduction)} current reproduction CSVs)."
+        f"{len(all_reproduction)} current reproduction CSVs), and all "
+        f"{len(tracked)} tracked processed-data CSVs are explicitly classified."
     )
 
 

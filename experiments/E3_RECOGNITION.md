@@ -8,6 +8,16 @@ Recognition can change both ordinary trajectories and first-person accessibility
 
 The experiment uses paired counterfactual simulation on common primitive random seeds. Recognition-off and recognition-on policies generate different trajectory outcomes and accessibility maps from the same underlying realizations.
 
+For each recognition state, the T4 benchmark assumes:
+
+```math
+0<E[S_R]<\infty,
+\qquad
+E[|U_R|]<\infty,
+\qquad
+E[|U_R|S_R]<\infty.
+```
+
 The benchmark decomposition is:
 
 ```math
@@ -61,7 +71,7 @@ V_1-V_0=0.
 
 ## U — Uncertainty / Interpretation Boundary
 
-The decomposition is exact inside the formal model. Whether a real Everettian recognition event induces a physically meaningful accessibility change is a separate question.
+The decomposition is exact inside the formal model under the stated domain conditions. Whether a real Everettian recognition event induces a physically meaningful accessibility change is a separate question.
 
 ## ERROR CHECK
 

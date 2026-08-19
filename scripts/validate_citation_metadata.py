@@ -43,6 +43,7 @@ SCALAR_RE = re.compile(r"^([A-Za-z0-9-]+):\s*(.*)$")
 STATUS_DATE_RE = re.compile(r"^\*\*Snapshot date:\*\*\s*(\d{4}-\d{2}-\d{2})\s*$", re.MULTILINE)
 STATUS_TAG_RE = re.compile(r"^- tag/Release:\s*`(v[^`]+)`\s*$", re.MULTILINE)
 STATUS_COMMIT_RE = re.compile(r"^- commit:\s*`([0-9a-f]{40})`\s*$", re.MULTILINE)
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
 def unquote(value: str) -> str:
@@ -70,9 +71,10 @@ def parse_cff(text: str) -> tuple[dict[str, str], list[str], list[str], list[str
                 match = re.fullmatch(r"-\s+family-names:\s*(.+)", stripped)
                 if match:
                     authors.append(unquote(match.group(1)))
-                elif stripped.startswith("-") or stripped.startswith("family-names:"):
+                else:
                     errors.append(
-                        f"CITATION.cff:{line_no}: unsupported author form; expected '- family-names: ...'"
+                        f"CITATION.cff:{line_no}: unsupported author content; "
+                        "narrow contract expects only '- family-names: ...' entries"
                     )
             elif section == "keywords":
                 match = re.fullmatch(r"-\s+(.+)", stripped)
@@ -163,10 +165,13 @@ def main() -> None:
         errors.append("CITATION.cff contains duplicate keywords")
 
     released = scalars.get("date-released", "")
-    try:
-        date.fromisoformat(released)
-    except ValueError:
-        errors.append(f"date-released must be ISO YYYY-MM-DD; got {released!r}")
+    if not DATE_RE.fullmatch(released):
+        errors.append(f"date-released must be exact YYYY-MM-DD syntax; got {released!r}")
+    else:
+        try:
+            date.fromisoformat(released)
+        except ValueError:
+            errors.append(f"date-released is not a valid calendar date: {released!r}")
 
     status_text = STATUS.read_text(encoding="utf-8")
     status_date_match = STATUS_DATE_RE.search(status_text)

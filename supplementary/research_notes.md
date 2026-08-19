@@ -1,5 +1,7 @@
 # Supplementary Research Notes
 
+> **Historical consolidated note.** This file is retained for research provenance and should not be treated as the current source of truth for the supplementary results. Use [`README.md`](README.md) and the topic-specific files in this directory for current statements, assumptions, and status.
+
 This file preserves important results and modeling directions developed during the QBS research process that are not part of the five-experiment core release. The notes distinguish exact mathematical identities, simulation findings, and interpretation-level hypotheses.
 
 ## 1. Multi-observer normalization

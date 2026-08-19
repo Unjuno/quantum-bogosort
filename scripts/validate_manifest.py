@@ -1,4 +1,4 @@
-"""Validate the locked E1-E5 experiment manifest and processed-data provenance classes."""
+"""Validate the locked E1-E5 manifest, data provenance, and experiment-card routing."""
 from pathlib import Path
 import csv
 import re
@@ -19,6 +19,8 @@ EXPECTED_COLUMNS = [
 ]
 REPRODUCTION_NAME_RE = re.compile(r"^e([1-5])_.+\.csv$")
 CARD_DATA_RE = re.compile(r"data/processed/([A-Za-z0-9_.-]+\.csv)")
+THEORY_TOKEN_RE = re.compile(r"\bT\d+\b|Corollary\s+\d+\.\d+")
+CARD_MD_PATH_RE = re.compile(r"`([^`]+\.md)`")
 NON_EXPERIMENT_PROVENANCE = {
     "fig2_fosd_theorem_illustration.csv",
 }
@@ -37,6 +39,8 @@ EXPECTED_EXPERIMENTS = {
             "e1_nonmonotone_counterexample_reproduction.csv",
         ],
         "linked_theorems": "T1,T2,T3",
+        "card_theory_tokens": {"T1", "T2", "T3"},
+        "card_theory_paths": {"theory/theorem_1_3.md"},
     },
     "E2": {
         "card": "experiments/E2_LEARNED_AGENT.md",
@@ -46,6 +50,8 @@ EXPECTED_EXPERIMENTS = {
         ],
         "reproduction": ["e2_minimal_agent_reproduction.csv"],
         "linked_theorems": "T1,T3 + adaptive-agent mechanism",
+        "card_theory_tokens": {"T1", "T3"},
+        "card_theory_paths": {"supplementary/adaptive_agent.md"},
     },
     "E3": {
         "card": "experiments/E3_RECOGNITION.md",
@@ -59,6 +65,8 @@ EXPECTED_EXPERIMENTS = {
             "e3_recognition_null_reproduction.csv",
         ],
         "linked_theorems": "T4",
+        "card_theory_tokens": {"T4"},
+        "card_theory_paths": {"theory/theorem_4_5.md"},
     },
     "E4": {
         "card": "experiments/E4_INTERACTION.md",
@@ -72,6 +80,8 @@ EXPECTED_EXPERIMENTS = {
             "e4_general_interaction_reproduction.csv",
         ],
         "linked_theorems": "T5, Corollary 5.1",
+        "card_theory_tokens": {"T5", "Corollary 5.1"},
+        "card_theory_paths": {"theory/theorem_4_5.md"},
     },
     "E5": {
         "card": "experiments/E5_BRANCH_MAP.md",
@@ -88,6 +98,11 @@ EXPECTED_EXPERIMENTS = {
             "e5_shared_recognition_contrasts.csv",
         ],
         "linked_theorems": "Recognition framework / branch-map extension",
+        "card_theory_tokens": set(),
+        "card_theory_paths": {
+            "supplementary/branch_recognition.md",
+            "docs/research_map.md",
+        },
     },
 }
 
@@ -121,8 +136,31 @@ def tracked_processed_csvs() -> set[str]:
     return names
 
 
+def markdown_h2_section(text: str, heading: str) -> str | None:
+    """Return the body of an exact level-2 Markdown section."""
+    lines = text.splitlines()
+    target = f"## {heading}"
+    start: int | None = None
+    for index, line in enumerate(lines):
+        if line.strip() == target:
+            start = index + 1
+            break
+    if start is None:
+        return None
+
+    body: list[str] = []
+    for line in lines[start:]:
+        if re.match(r"^\s*##\s+", line):
+            break
+        body.append(line)
+    return "\n".join(body).strip()
+
+
 def main() -> None:
     errors: list[str] = []
+
+    if set(EXPECTED_EXPERIMENTS) != set(EXPECTED_IDS):
+        errors.append("validator self-contract: EXPECTED_EXPERIMENTS keys differ from EXPECTED_IDS")
 
     with MANIFEST.open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
@@ -162,7 +200,8 @@ def main() -> None:
         if expected is not None:
             if locked != expected["locked"]:
                 errors.append(
-                    f"{experiment_id}: locked provenance mapping drift: {locked!r} != {expected['locked']!r}"
+                    f"{experiment_id}: locked provenance mapping drift: "
+                    f"{locked!r} != {expected['locked']!r}"
                 )
             if reproduction != expected["reproduction"]:
                 errors.append(
@@ -179,7 +218,8 @@ def main() -> None:
             if not card_path.is_file():
                 errors.append(f"{experiment_id}: missing experiment card {expected['card']}")
             else:
-                card_data = set(CARD_DATA_RE.findall(card_path.read_text(encoding="utf-8")))
+                card_text = card_path.read_text(encoding="utf-8")
+                card_data = set(CARD_DATA_RE.findall(card_text))
                 manifest_data = set(locked) | set(reproduction)
                 if card_data != manifest_data:
                     missing_from_card = sorted(manifest_data - card_data)
@@ -194,6 +234,28 @@ def main() -> None:
                             f"{experiment_id}: experiment card references undeclared CSV(s): "
                             + ", ".join(extra_in_card)
                         )
+
+                linked_section = markdown_h2_section(card_text, "Linked theory")
+                if linked_section is None:
+                    errors.append(f"{experiment_id}: experiment card is missing ## Linked theory")
+                else:
+                    card_tokens = set(THEORY_TOKEN_RE.findall(linked_section))
+                    if card_tokens != expected["card_theory_tokens"]:
+                        errors.append(
+                            f"{experiment_id}: experiment-card theorem token drift: "
+                            f"{sorted(card_tokens)!r} != {sorted(expected['card_theory_tokens'])!r}"
+                        )
+                    card_paths = set(CARD_MD_PATH_RE.findall(linked_section))
+                    if card_paths != expected["card_theory_paths"]:
+                        errors.append(
+                            f"{experiment_id}: experiment-card theory-route drift: "
+                            f"{sorted(card_paths)!r} != {sorted(expected['card_theory_paths'])!r}"
+                        )
+                    for relative_path in sorted(card_paths):
+                        if not (ROOT / relative_path).is_file():
+                            errors.append(
+                                f"{experiment_id}: experiment-card theory route is missing: {relative_path}"
+                            )
 
         overlap = set(locked) & set(reproduction)
         if overlap:
@@ -222,11 +284,11 @@ def main() -> None:
 
         for name in locked:
             if name in all_locked:
-                errors.append(f"locked file declared by multiple experiment rows: {name}")
+                errors.append(f"locked file declared more than once: {name}")
             all_locked.add(name)
         for name in reproduction:
             if name in all_reproduction:
-                errors.append(f"reproduction file declared by multiple experiment rows: {name}")
+                errors.append(f"reproduction file declared more than once: {name}")
             all_reproduction.add(name)
 
     cross_class = all_locked & all_reproduction
@@ -260,10 +322,11 @@ def main() -> None:
         raise SystemExit("Manifest validation failed:\n" + "\n".join(errors))
 
     print(
-        "Manifest validation passed: E1-E5 canonical locked/current mappings and theorem links "
-        f"match their experiment cards; provenance classes are disjoint ({len(all_locked)} locked CSVs, "
-        f"{len(all_reproduction)} current reproduction CSVs); all {len(tracked)} tracked flat "
-        "processed-data CSVs are explicitly classified."
+        "Manifest validation passed: E1-E5 canonical locked/current mappings, manifest theorem "
+        "links, experiment-card theorem tokens/routes, and card CSV references agree; provenance "
+        f"classes are disjoint ({len(all_locked)} locked CSVs, {len(all_reproduction)} current "
+        f"reproduction CSVs); all {len(tracked)} tracked flat processed-data CSVs are explicitly "
+        "classified."
     )
 
 

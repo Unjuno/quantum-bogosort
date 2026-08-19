@@ -208,7 +208,7 @@ python experiments/exp5_branch_map.py
 python scripts/validate_reproduction_outputs.py
 ```
 
-The dependency versions in `requirements.txt` are pinned because committed-output verification is byte-level; using a different NumPy/Pandas/Matplotlib stack can change serialization even when the numerical model is unchanged. The reproduction validator derives the current output set from `experiments/manifest.csv`, compares those outputs byte-for-byte with `HEAD`, and rejects side effects on other files under `data/processed/`.
+The primary numerical/plotting package versions in `requirements.txt` are pinned because committed-output verification is byte-level; using a different NumPy/Pandas/Matplotlib stack can change serialization even when the numerical model is unchanged. The reproduction validator derives the current output set from `experiments/manifest.csv`, compares those outputs byte-for-byte with `HEAD`, and rejects side effects on other files under `data/processed/`.
 
 Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/). Superseded experiment designs are kept under [`experiments/archive/`](experiments/archive/).
 
@@ -222,7 +222,7 @@ The current review priority is external proof, novelty, manuscript, statistical-
 
 ## Repository state
 
-The repository has a single active branch: `main`. Frozen scientific snapshots are preserved as immutable tags and GitHub Releases rather than as branches, so they cannot be mistaken for pending development work.
+The repository has a single active branch: `main`. Frozen scientific snapshots are preserved as named, commit-pinned tags/GitHub Releases rather than as active branches, so they remain distinct from pending development work. Their commit targets are recorded explicitly below and rechecked during pre-announcement audit; platform-level tag immutability is not assumed without an active tag ruleset.
 
 - current review/development surface: `main`;
 - current frozen snapshot: tag/Release `v0.3-public-review` at commit `58038763127258bd3e2f0d41708c4dfa01f81fd6`;
@@ -238,7 +238,7 @@ The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged in 
 
 The current `main` validation state is visible in the badge at the top of this README. GitHub Actions checks:
 
-- Python compilation under the pinned Python/dependency environment;
+- Python/runtime consistency under the pinned Python and primary numerical-package contract;
 - required repository structure, including core theory, archival provenance, licensing/configuration, and validator sources;
 - GitHub issue-template chooser front matter;
 - repository-wide fenced Markdown math syntax and structural TeX balance;
@@ -250,7 +250,7 @@ The current `main` validation state is visible in the badge at the top of this R
 - deterministic SVG regeneration, static/self-contained SVG browser-safety validation, and byte-for-byte committed-output verification;
 - manuscript figure generation, compiled-input-graph LaTeX dependency/citation/reference preflight, LaTeX build, and PDF verification.
 
-The workflow runs on push and pull request and can also be repeated manually from **Actions → validate → Run workflow**. Reusable GitHub Actions are pinned to full commit SHAs rather than mutable major-version tags.
+The workflow runs on push and pull request and can also be repeated manually from **Actions → validate → Run workflow**. Reusable GitHub Actions are pinned to full commit SHAs rather than mutable major-version tags, checkout credentials are not persisted into later shell steps, and the workflow token is limited to `contents: read`.
 
 The GitHub API GFM check is a structural parser check; direct browser inspection remains the release gate for MathJax, Mermaid, SVG sizing, and page layout.
 

@@ -79,12 +79,18 @@ jobs:
         run: python scripts/validate_figure_set.py
       - name: Validate committed SVG browser structure
         run: python scripts/validate_svg_sources.py
-      - name: Verify committed SVG and theorem-illustration reproducibility
+      - name: Verify committed outputs and clean worktree
         run: |
           git diff --exit-code -- \
             figures/generated/ \
             data/processed/fig2_fosd_theorem_illustration.csv
           git diff --exit-code
+          untracked="$(git ls-files --others --exclude-standard)"
+          if [ -n "$untracked" ]; then
+            echo "Unexpected untracked validation artifacts:"
+            printf '%s\n' "$untracked"
+            exit 1
+          fi
 
   manuscript-build:
     runs-on: ubuntu-24.04

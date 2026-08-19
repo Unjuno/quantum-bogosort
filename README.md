@@ -42,13 +42,25 @@ The same dependency structure is also committed as a static SVG fallback for ren
 
 ## Core first-person quantity
 
-For:
+The normalized accessibility **measure** requires:
 
 ```math
-0<E_\mu[S_\pi]<\infty,
+S_\pi\ge0,
+\qquad
+0<E_\mu[S_\pi]<\infty.
 ```
 
-define:
+For the finite mean/covariance identities below, also assume:
+
+```math
+E_\mu[|U_\pi|]<\infty,
+\qquad
+E_\mu[|U_\pi|S_\pi]<\infty.
+```
+
+Base integrability and weighted integrability are separate requirements; neither one implies the other in general.
+
+Define:
 
 ```math
 V_{FP}(\pi)
@@ -73,6 +85,12 @@ E[U_1-U_0]
 ```
 
 The first term is the ordinary policy/trajectory effect. The second is the first-person conditioning contribution.
+
+The general selector-changing T5 interaction decomposition introduces `Q(U_1,S_0)` and therefore additionally assumes:
+
+```math
+E[|U_1|S_0]<\infty.
+```
 
 A positive conditioning contribution means that the first-person measure gives greater weight to favorable accessible trajectories. It does **not** mean that the base measure or an external random-number generator is causally changed.
 
@@ -110,7 +128,7 @@ The locked core theorem set is T1–T5:
 4. recognition decomposition;
 5. policy–QBS interaction decomposition.
 
-See [`theory/core_theorems.md`](theory/core_theorems.md) and the canonical [`docs/research_map.md`](docs/research_map.md).
+The identities and proofs are unchanged from the frozen v0.3 theorem set, while `main` now makes the base/weighted integrability domain and the T5 cross-integrability requirement explicit. See [`theory/core_theorems.md`](theory/core_theorems.md) and the canonical [`docs/research_map.md`](docs/research_map.md).
 
 ### Supplementary predictive-alignment line
 
@@ -232,25 +250,28 @@ The repository has a single active branch: `main`. Frozen scientific snapshots a
 - historical derivation provenance: PRs #11–#21;
 - post-snapshot rendering/visualization/reproducibility QA provenance: PRs #27–#29.
 
-The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged in v0.3. The principal v0.3 addition is the integrated S2 predictive-alignment/general-accessibility/certification line plus its proof, manuscript, prior-art, and repository-structure audits.
+The locked core theorem set T1–T5 and experiment set E1–E5 remain the same set as v0.3. Current `main` contains an audited domain correction that explicitly requires both base and weighted outcome integrability for finite covariance decompositions, plus the T5 cross-integrability needed by `Q(U_1,S_0)`; the frozen v0.3 tag itself is unchanged.
 
 ## Validation
 
 The current `main` validation state is visible in the badge at the top of this README. GitHub Actions checks:
 
-- Python/runtime and workflow-security consistency under the pinned Python and primary numerical-package contract;
+- Python/runtime and workflow-security consistency under the pinned Python and primary numerical-package contract, including critical validation-stage ordering;
 - required repository structure, including the complete declared Markdown inventory, core theory, consolidated/archival provenance, licensing/configuration, and validator sources;
+- the canonical standalone T1–T5 TeX body against frozen v0.3 after only the explicitly audited title/integrability normalizations;
 - frozen citation metadata, printable bibliography identifiers, and split-license declaration consistency;
 - live frozen-snapshot tag targets and matching GitHub Releases against the recorded v0.3/v0.2 commit identities;
 - GitHub issue-template chooser front matter;
+- canonical E1–E5 manifest titles/claims and ordered H/T/D/C/U experiment-card structure, including D-section-only CSV routing;
 - repository-wide fenced Markdown math syntax and structural TeX balance;
-- repository-relative Markdown links, including rejection of relative targets that escape the repository root;
+- repository-relative Markdown links, including rejection of root escapes and currently unvalidated local fragment/query suffixes;
 - GFM structure conversion of every Markdown file through GitHub's Markdown API, with heading/table/inline-image and ordinary fenced-code preservation checks;
 - E1–E5 scientific regression invariants;
-- manifest ID/order/LOCK/provenance validation and byte-for-byte verification of all manifest-declared current reproduction CSVs;
+- manifest ID/order/LOCK/provenance validation, frozen historical CSV blob identities, and byte-for-byte verification of all manifest-declared current reproduction CSVs;
 - post-experiment cleanliness of tracked repository content plus rejection of undeclared files under `data/processed/`, including ignored files;
 - deterministic SVG/PDF-figure generation, exact expected figure-output sets, static/self-contained SVG browser-safety validation, and byte-for-byte committed-output verification;
 - final tracked-worktree and nonignored-untracked cleanliness after repository validation;
+- exact CI-only allowlisting of ignored/untracked bytecode and manuscript figure artifacts;
 - manuscript compiled-input-graph, bibliography/citation/reference, environment, and generated-graphic preflight, followed by LaTeX build and PDF verification.
 
 The workflow runs on push and pull request and can also be repeated manually from **Actions → validate → Run workflow**. Reusable GitHub Actions are pinned to audited full commit SHAs rather than mutable major-version tags, checkout credentials are not persisted into later shell steps, and the workflow token is limited to `contents: read`.

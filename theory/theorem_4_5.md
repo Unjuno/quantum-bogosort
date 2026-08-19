@@ -12,6 +12,18 @@ R
 (U_R,S_R).
 ```
 
+For each recognition state `R`, assume:
+
+```math
+0<E[S_R]<\infty,
+\qquad
+E[|U_R|]<\infty,
+\qquad
+E[|U_R|S_R]<\infty.
+```
+
+These conditions make both the ordinary expectations and the covariance contributions finite.
+
 Define the first-person value under recognition state `R` by:
 
 ```math
@@ -99,7 +111,7 @@ U_1=U_0,
 and:
 
 ```math
-S_1=S_0,
+S_1=S_0
 ```
 
 almost surely, then:
@@ -113,6 +125,14 @@ Recognition has no effect merely by being a label; it must alter the policy/traj
 ---
 
 ## Theorem 5 — Policy–QBS Interaction Decomposition
+
+For the general selector-changing identity, additionally assume the cross-weighted outcome is integrable:
+
+```math
+E[|U_1|S_0]<\infty.
+```
+
+This is needed because the decomposition introduces the intermediate quantity `Q(U_1,S_0)`. Under a fixed selector `S_1=S_0`, it is already implied by the state-1 weighted-integrability assumption above.
 
 Define the ordinary policy increment:
 

@@ -7,8 +7,8 @@ This note expands the initial literature ledger with explicit criticism of Evere
 ### Huw Price
 
 **Sources:**
-- Huw Price, "Probability in the Everett World: Comments on Wallace and Greaves," arXiv:quant-ph/0604191.
-- Huw Price, "Decisions, Decisions, Decisions: Can Savage Salvage Everettian Probability?", arXiv:0802.1390.
+- Huw Price, "Probability in the Everett World: Comments on Wallace and Greaves," arXiv:quant-ph/0604191 (2006).
+- Huw Price, "Decisions, Decisions, Decisions: Can Savage Salvage Everettian Probability?", in *Many Worlds? Everett, Quantum Theory, and Reality*, pp. 369–390 (Oxford University Press, 2010), DOI `10.1093/acprof:oso/9780199560561.003.0014`; earlier arXiv:0802.1390.
 
 Price challenges the analogy between Everettian branching and ordinary decision under uncertainty and raises objections to Deutsch-Wallace-Greaves style probability arguments.
 
@@ -16,7 +16,7 @@ Price challenges the analogy between Everettian branching and ordinary decision 
 
 ### Adrian Kent
 
-**Source:** Adrian Kent, "One world versus many: the inadequacy of Everettian accounts of evolution, probability, and scientific confirmation," arXiv:0905.0624.
+**Source:** Adrian Kent, "One World Versus Many: The Inadequacy of Everettian Accounts of Evolution, Probability, and Scientific Confirmation," in *Many Worlds? Everett, Quantum Theory, and Reality*, pp. 307–354 (Oxford University Press, 2010), DOI `10.1093/acprof:oso/9780199560561.003.0012`; earlier arXiv:0905.0624.
 
 Kent argues that branch weights, rational decision roles, and empirical confirmation are logically distinct problems and criticizes attempts to identify them too quickly.
 
@@ -26,7 +26,7 @@ Kent argues that branch weights, rational decision roles, and empirical confirma
 
 ### Mateus Araújo
 
-**Source:** Mateus Araújo, "Probability in two deterministic universes," arXiv:1805.01753.
+**Source:** Mateus Araújo, "Probability in Two Deterministic Universes," *Foundations of Physics* 49(3), 202–231 (2019), DOI `10.1007/s10701-019-00241-7`; earlier arXiv:1805.01753.
 
 Araújo studies subjective and objective probability in deterministic many-world theories and emphasizes that the appropriate norm/measure depends on the underlying dynamics.
 
@@ -35,8 +35,8 @@ Araújo studies subjective and objective probability in deterministic many-world
 ### Simon Saunders — branch counting and physical probability
 
 **Sources:**
-- Simon Saunders, "Branch-counting in the Everett Interpretation of quantum mechanics," arXiv:2201.06087.
-- Simon Saunders, "Physical probability in the Everett interpretation and Bell inequalities," arXiv:2601.12159.
+- Simon Saunders, "Branch-counting in the Everett Interpretation of quantum mechanics," *Proceedings of the Royal Society A* 477(2255), 20210600 (2021), DOI `10.1098/rspa.2021.0600`.
+- Simon Saunders, "Physical probability in the Everett interpretation and Bell inequalities," arXiv:2601.12159 (2026). The author's PhilSci-Archive record identifies the 2026 deposit as the latest version and links the 2025 same-title deposit as an earlier version.
 
 These works develop explicit physical-probability proposals inside Everettian quantum mechanics rather than treating probability as a free observer-indexed reweighting.
 
@@ -46,7 +46,7 @@ These works develop explicit physical-probability proposals inside Everettian qu
 
 ### Hult and Nyquist
 
-**Source:** Henrik Hult and Pierre Nyquist, "Large deviations for weighted empirical measures arising in importance sampling," arXiv:1210.2251.
+**Source:** Henrik Hult and Pierre Nyquist, "Large deviations for weighted empirical measures arising in importance sampling," *Stochastic Processes and their Applications* 126(1), 138–170 (2016), DOI `10.1016/j.spa.2015.08.002`; earlier arXiv:1210.2251.
 
 Importance sampling and related change-of-measure methods routinely represent expectations under weighted probability measures.
 
@@ -56,17 +56,17 @@ Importance sampling and related change-of-measure methods routinely represent ex
 
 ### Cooper, Oesterheld, and Conitzer (2024)
 
-**Source:** Emery Cooper, Caspar Oesterheld, and Vincent Conitzer, "Can CDT rationalise the ex ante optimal policy via modified anthropics?", arXiv:2411.04462.
+**Source:** Emery Cooper, Caspar Oesterheld, and Vincent Conitzer, "Can CDT rationalise the ex ante optimal policy via modified anthropics?", arXiv:2411.04462 (2024). The authors' current publication listing still classifies it as a working paper.
 
 This work studies Newcomb-like problems in which self-locating beliefs, including beliefs about being in simulations of the agent, can change the action recommended by causal decision theory. It characterizes conditions under which modified anthropic/self-locating beliefs recover policies that are optimal from an ex ante policy-optimization perspective.
 
 **Why this is close to QBS:** it explicitly links self-locating structure to policy selection rather than treating self-location as passive belief only. This weakens any novelty claim based merely on "self-location affects decisions" or "copy structure can support policy-level optimization."
 
-**Remaining QBS distinction:** the present project centers on a recognition variable that causally changes the policy map, jointly changes trajectory utility and an observer-indexed accessibility map, and yields exact decomposition of trajectory, conditioning, and interaction terms. It also separately studies realized cross-branch action correlation. Those structural components, rather than the generic link between anthropics and policy, must carry any novelty claim.
+**Remaining QBS distinction:** the present project centers on a recognition/information state that can change which policy is selected; the selected policy may jointly change trajectory utility and an observer-indexed accessibility map, yielding exact decomposition of trajectory, conditioning, and interaction terms. It also separately studies realized cross-branch action correlation. Those structural components, rather than the generic link between anthropics and policy, must carry any novelty claim.
 
-### Conitzer (2017)
+### Conitzer (2015)
 
-**Source:** Vincent Conitzer, "Can rational choice guide us to correct de se beliefs?", arXiv:1705.06332.
+**Source:** Vincent Conitzer, "Can rational choice guide us to correct de se beliefs?", *Synthese* 192(12), 4107–4119 (2015), DOI `10.1007/s11229-015-0737-x`; a later arXiv posting is 1705.06332.
 
 Conitzer studies whether decision-theoretic behavior can adjudicate self-locating beliefs in Sleeping-Beauty-style settings and cautions that apparently unreasonable actions can arise for reasons other than the underlying de se probabilities.
 
@@ -74,7 +74,7 @@ Conitzer studies whether decision-theoretic behavior can adjudicate self-locatin
 
 ### Armstrong (2011)
 
-**Source:** Stuart Armstrong, "Anthropic decision theory," arXiv:1110.6437.
+**Source:** Stuart Armstrong, "Anthropic decision theory," arXiv:1110.6437 (2011).
 
 Anthropic decision theory addresses action choice directly in self-locating problems and shows that relationships among copies/agents and their objectives matter for the resulting decisions.
 
@@ -84,8 +84,8 @@ Anthropic decision theory addresses action choice directly in self-locating prob
 
 After the targeted overlap search, the novelty hypothesis should be stated more narrowly:
 
-1. recognition is treated as a causal variable that changes policy;
-2. policy changes branch-wise trajectory utility and may also change accessibility;
+1. recognition/information state can change which policy is selected, without assigning recognition a privileged physical causal power;
+2. the selected policy changes branch-wise trajectory utility and may also change accessibility;
 3. ordinary trajectory effects and first-person conditioning effects admit an exact decomposition;
 4. policy-QBS interaction admits a separate exact decomposition;
 5. adaptation can endogenously generate predictor/outcome alignment in toy agents;
@@ -106,7 +106,7 @@ The project should **not** claim novelty for:
 
 The highest-value remaining search is now narrower:
 
-- work where an agent's recognition or information state causally changes both policy and a self-location/selection rule;
+- work where an agent's recognition or information state changes policy selection and a self-location/selection rule;
 - work deriving an observer-indexed selection measure endogenously from adaptive policy or observer persistence;
 - direct decompositions separating ordinary causal policy effects from self-location-weighting effects;
 - causal-decision formulations where the weighting map itself changes with policy.

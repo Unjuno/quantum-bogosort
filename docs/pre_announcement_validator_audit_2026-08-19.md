@@ -43,8 +43,8 @@ The required map now includes:
 - root and split-license metadata;
 - `.gitignore`, dependency/Python configuration, and the validation workflow;
 - `experiments/archive/README.md` and `experiments/archive/INDEX.md`;
-- both pre-announcement audit records;
-- all principal validator scripts, including the runtime-contract validator.
+- the pre-announcement audit records;
+- all principal validator scripts, including the runtime-contract and worktree-artifact validators.
 
 Required paths must be regular files, not merely existing paths, and duplicate declarations in the validator itself are rejected.
 
@@ -133,7 +133,8 @@ The null now explicitly creates identical trajectory/accessibility arrays for th
 - `ubuntu-24.04` for both validation jobs;
 - presence of `workflow_dispatch`;
 - full 40-hex commit-SHA pinning for every reusable `uses:` step;
-- the exact currently audited action SHAs and expected action multiplicities.
+- the exact currently audited action SHAs and expected action multiplicities;
+- presence of the final ignored-artifact validation command.
 
 This is intentionally a **primary-package/runtime contract**, not a claim that every transitive wheel is cryptographically locked. Byte-level output identity is still the final executable check.
 
@@ -148,6 +149,25 @@ The open issue body was synchronized to fenced `math` and `\mathrm{Cov}` without
 ### 13. Root CI visibility was weak
 
 The root README now exposes the `main` `validate` workflow badge and links directly to the workflow page. The validation section and contributor instructions are synchronized with the current CI checks and manual-dispatch path.
+
+### 14. Ignored untracked files could evade the final clean-worktree check
+
+The workflow already rejected tracked diffs and nonignored untracked files. However, `git ls-files --others --exclude-standard` deliberately omits paths matched by `.gitignore`. A validator or experiment could therefore create an unexpected file such as `stray.log` or `stray.out` and still leave the final CI clean check green.
+
+`scripts/validate_worktree_artifacts.py` now inspects:
+
+```text
+git ls-files --others --ignored --exclude-standard
+```
+
+and permits only the ignored outputs the repository-validation job intentionally creates:
+
+- Python bytecode files under `experiments/__pycache__/`, `figures/__pycache__/`, or `scripts/__pycache__/`;
+- the exact six manuscript figure PDFs already declared by `scripts/validate_figure_set.py`.
+
+All six PDF outputs are also required to be present. Any other ignored/untracked path fails validation. The workflow runs this validator after figure generation and the tracked/nonignored clean checks, and the runtime contract requires that invocation.
+
+The Git enumeration semantics and the validator's failure behavior were negative-tested independently: the expected bytecode/PDF set passes, adding a `stray.log` fails, and removing one expected manuscript PDF fails.
 
 ## Checks that remained valid
 

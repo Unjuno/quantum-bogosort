@@ -52,6 +52,7 @@ REQUIRED_REPOSITORY_COMMANDS = [
     "python scripts/validate_reproduction_outputs.py",
     "python figures/generate_figures.py",
     "python figures/generate_pdf_figures.py",
+    "python scripts/validate_figure_set.py",
     "python scripts/validate_svg_sources.py",
     "git diff --exit-code --",
     "data/processed/fig2_fosd_theorem_illustration.csv",

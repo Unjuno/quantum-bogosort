@@ -1,4 +1,10 @@
-"""Validate the narrow BibTeX metadata contract used by the QBS manuscript."""
+"""Validate the narrow BibTeX metadata contract used by the QBS manuscript.
+
+The manuscript intentionally uses the stock ``plain`` BibTeX style. Machine-readable
+``eprint``/``doi`` fields are therefore paired with standard printable fields:
+arXiv-only records are ``@misc`` entries with ``howpublished = {arXiv:<id>}``, while
+journal records are ``@article`` entries with a printable ``note = {doi:<doi>}``.
+"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -12,6 +18,7 @@ ARXIV_NEW_RE = re.compile(r"^\d{4}\.\d{4,5}(?:v\d+)?$")
 ARXIV_OLD_RE = re.compile(r"^[a-z-]+/\d{7}(?:v\d+)?$", re.IGNORECASE)
 ARXIV_CLASS_RE = re.compile(r"^[A-Za-z]+(?:[.-][A-Za-z]+)*$")
 DOI_RE = re.compile(r"^10\.\d{4,9}/\S+$")
+ALLOWED_TYPES = {"article", "misc"}
 
 
 def split_entries(text: str) -> list[tuple[str, str, str]]:
@@ -90,14 +97,18 @@ def main() -> None:
     keys: set[str] = set()
     dois: dict[str, str] = {}
     eprints: dict[str, str] = {}
+    article_count = 0
+    misc_count = 0
 
     for entry_type, key, body in entries:
         if key in keys:
             errors.append(f"duplicate bibliography key: {key}")
         keys.add(key)
 
-        if entry_type != "article":
-            errors.append(f"{key}: current bibliography contract expects @article, got @{entry_type}")
+        if entry_type not in ALLOWED_TYPES:
+            errors.append(
+                f"{key}: bibliography contract permits only @article/@misc, got @{entry_type}"
+            )
 
         fields = parse_fields(key, body, errors)
         for required in ("author", "title", "year"):
@@ -110,8 +121,42 @@ def main() -> None:
 
         doi = fields.get("doi", "")
         eprint = fields.get("eprint", "")
-        if not doi and not eprint:
-            errors.append(f"{key}: expected either a DOI or an arXiv eprint identifier")
+        journal = fields.get("journal", "")
+        note = fields.get("note", "")
+        howpublished = fields.get("howpublished", "")
+
+        if entry_type == "article":
+            article_count += 1
+            if not journal:
+                errors.append(f"{key}: @article requires a journal under the current contract")
+            if not doi:
+                errors.append(f"{key}: journal @article requires a DOI under the current contract")
+            if eprint:
+                errors.append(
+                    f"{key}: current @article contract uses DOI publication provenance, not eprint"
+                )
+            if howpublished:
+                errors.append(f"{key}: @article must not use howpublished")
+            if doi and note != f"doi:{doi}":
+                errors.append(
+                    f"{key}: stock plain.bst printable DOI note must be exactly 'doi:{doi}'"
+                )
+
+        elif entry_type == "misc":
+            misc_count += 1
+            if journal:
+                errors.append(f"{key}: arXiv @misc must not contain journal")
+            if doi:
+                errors.append(f"{key}: arXiv @misc must not contain DOI")
+            if note:
+                errors.append(f"{key}: arXiv @misc uses howpublished, not note")
+            if not eprint:
+                errors.append(f"{key}: arXiv @misc requires an eprint identifier")
+            if eprint and howpublished != f"arXiv:{eprint}":
+                errors.append(
+                    f"{key}: stock plain.bst printable arXiv field must be exactly "
+                    f"'arXiv:{eprint}' in howpublished"
+                )
 
         if doi:
             if not DOI_RE.fullmatch(doi):
@@ -142,9 +187,8 @@ def main() -> None:
 
         if fields.get("primaryclass") and not eprint:
             errors.append(f"{key}: primaryClass is present without an arXiv eprint")
-
-        if fields.get("journal") and not (doi or eprint):
-            errors.append(f"{key}: journal article lacks DOI/eprint provenance")
+        if fields.get("archiveprefix") and not eprint:
+            errors.append(f"{key}: archivePrefix is present without an arXiv eprint")
 
         for field_name, value in fields.items():
             lowered = value.lower()
@@ -156,8 +200,9 @@ def main() -> None:
 
     print(
         "Bibliography metadata validation passed: "
-        f"{len(entries)} unique article records; required author/title/year fields present; "
-        f"{len(dois)} unique DOI records and {len(eprints)} unique arXiv identifiers/classes validated."
+        f"{len(entries)} unique records ({article_count} journal @article, {misc_count} arXiv @misc); "
+        f"{len(dois)} unique printable DOI records and {len(eprints)} unique printable arXiv "
+        "identifiers/classes validated for stock plain.bst."
     )
 
 

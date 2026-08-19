@@ -9,13 +9,13 @@ A literal `git clone` was attempted first. The audit runtime could not establish
 The inspected surface included:
 
 - the recursive repository directory tree;
-- all public Markdown sources already covered by the repository-wide rendering audit;
+- the complete public Markdown surface covered by the repository-wide rendering audit;
 - `.github/workflows/validate.yml`;
 - E1–E5 experiment scripts and their current reproduction outputs;
-- the experiment manifest;
+- the experiment manifest and provenance classes;
 - SVG and PDF figure generators;
 - all seven committed SVGs;
-- Markdown, link, structure, SVG, GitHub-GFM, and LaTeX validators;
+- Markdown, link, structure, manifest, reproduction-output, SVG, GitHub-GFM, and LaTeX validators;
 - manuscript source relationships, bibliography/reference routing, and figure-generation paths;
 - dependency and Python-version configuration.
 
@@ -105,7 +105,26 @@ A previous successful GitHub Actions run had generated the committed theorem-ill
 - `matplotlib==3.11.1`;
 - GitHub Actions runner: `ubuntu-24.04`.
 
-The workflow now byte-compares all twelve current E1–E5 reproduction CSVs after executing the scripts, in addition to the committed SVGs and the deterministic Figure 2 theorem-illustration CSV.
+The workflow now executes the locked E1–E5 scripts under that environment and byte-compares every manifest-declared current reproduction CSV with committed `HEAD`. It separately byte-compares the committed SVG directory and deterministic Figure 2 theorem-illustration CSV after regeneration.
+
+## Manifest/provenance validation defect found and corrected
+
+The previous manifest validator checked only whether named CSV files existed. It did not reject missing/reordered experiment IDs, non-`LOCK` rows, duplicate declarations, or accidental overlap between locked historical and current reproduction classes.
+
+The manifest validator now enforces:
+
+- exact E1–E5 ID/order;
+- unique experiment IDs;
+- `LOCK` status for every core experiment;
+- nonempty title/claim/theorem fields;
+- CSV-basename and E-number consistency for current reproduction outputs;
+- existence of every declared CSV;
+- no duplicate file declarations;
+- no locked/current provenance overlap.
+
+Current-output byte validation is derived from the manifest rather than maintaining a second hard-coded list in the workflow. The reproduction validator additionally requires each current output to be tracked in `HEAD`.
+
+Both validators were negative-tested locally: a one-byte mutation in a current reproduction CSV was rejected, and changing one manifest experiment from `LOCK` was rejected. After restoration, both validators passed.
 
 ## Semantic schema defect found and corrected
 
@@ -123,7 +142,7 @@ The current reproduction schema is therefore corrected to `action_corr_increment
 
 The structure validator previously omitted several executable/configuration files from its required set. A repository could therefore lose files such as the workflow, experiment scripts, manifest, or dependency configuration while still reporting `Repository structure OK`.
 
-The required set now includes the landing page, citation/dependency/Python configuration, validation workflow, E1–E5 executable scripts, manifest, theorem-illustration CSV, and all principal validation scripts in addition to the documentation/theory/figure surfaces already checked.
+The required set now includes the landing page, citation/dependency/Python configuration, validation workflow, E1–E5 executable scripts, manifest, theorem-illustration CSV, this execution-audit record, and all principal validation scripts in addition to the documentation/theory/figure surfaces already checked.
 
 ## Rendering checks
 
@@ -144,13 +163,25 @@ This audit did not replace locked historical summaries with current reruns. In p
 - Figure 7 remains based on the locked historical E2 summary;
 - current E2 and E4 rerun outputs remain separate provenance classes.
 
-No T1–T5 theorem statement, S2-family theorem/certificate statement, or Everett-bridge status was changed by this execution audit.
+No T1–T5 theorem statement, S2-family theorem/certificate statement, or Everett-bridge status was changed by this execution audit. The only current-output data-file edit is the E5 rho-sweep column-name correction described above; its numerical series is unchanged.
+
+## Final source-diff boundary
+
+Relative to the audit baseline, the correction series changes CI/configuration, validators, experiment regression guards, the current E5 rho-sweep schema name, figure-generator field references, and public audit/reproduction documentation.
+
+It does **not** modify:
+
+- `theory/` theorem Markdown or TeX;
+- supplementary S2 theorem/certificate sources;
+- manuscript theorem/proof content;
+- locked historical experiment CSVs;
+- the seven committed SVG files.
 
 ## Remaining release gates
 
 The repository is **not declared ready for broad announcement by this audit alone**. Two external execution/presentation checks remain:
 
-1. confirm the GitHub Actions result for the final corrected `main` commit, including the pinned-environment output checks, GFM structure check, SVG validation, and LaTeX preflight/build;
+1. confirm the GitHub Actions result for the final corrected `main` commit, including manifest validation, scientific invariant execution, pinned-environment output checks, GFM structure conversion, SVG validation, and LaTeX preflight/build;
 2. perform direct human browser inspection of the rendered GitHub UI on representative root/theory/experiment/canonical-doc/supplementary/audit pages, including MathJax, Mermaid, SVGs, tables, and mobile layout.
 
 Until both are confirmed, source-level/local execution PASS and public-rendering PASS remain separate states.

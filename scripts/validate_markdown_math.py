@@ -11,6 +11,9 @@ REPOSITORY_DISALLOWED_MATH_MACROS = {
 LEGACY_MATH_DELIMITERS = (r"\(", r"\)", r"\[", r"\]")
 FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
+SPECIAL_FENCE_CANDIDATE_RE = re.compile(
+    r"^(?P<indent>[ \t]*)(?P<marker>`{3,}|~{3,})(?P<info>.*)$"
+)
 BEGIN_END_RE = re.compile(r"\\(begin|end)\{([^{}]+)\}")
 errors = []
 
@@ -42,6 +45,39 @@ def closes_fence(line: str, marker: str) -> bool:
 def valid_fence_opener(marker: str, info: str) -> bool:
     # CommonMark forbids backticks inside a backtick-fence info string.
     return marker[0] != "`" or "`" not in info
+
+
+def check_special_render_fence_contract(path: Path, line_no: int, line: str) -> None:
+    """Reject fence lookalikes that GitHub would not treat as repository special blocks."""
+    match = SPECIAL_FENCE_CANDIDATE_RE.match(line)
+    if not match:
+        return
+
+    indent = match.group("indent")
+    marker = match.group("marker")
+    info = match.group("info").strip()
+    if not info:
+        return
+    info_name = info.split(None, 1)[0].lower()
+    if info_name not in {"math", "mermaid"}:
+        return
+
+    relative = path.relative_to(ROOT)
+    if "\t" in indent or len(indent) > 3:
+        errors.append(
+            f"{relative}:{line_no}: {info_name} fence is indented beyond the "
+            "CommonMark 0-3-space fence boundary and would render as code"
+        )
+    if marker[0] != "`":
+        errors.append(
+            f"{relative}:{line_no}: repository {info_name} render blocks must use "
+            "backtick fences, not tilde fences"
+        )
+    if info != info_name:
+        errors.append(
+            f"{relative}:{line_no}: repository {info_name} fence info string must be "
+            f"exactly {info_name!r}, got {info!r}"
+        )
 
 
 def check_math_structure(path: Path, start_line: int, lines: list[str]) -> None:
@@ -148,6 +184,8 @@ for path in ROOT.rglob("*.md"):
                 check_disallowed_math_macros(path, line_no, line)
             continue
 
+        check_special_render_fence_contract(path, line_no, line)
+
         fence_match = FENCE_RE.match(line)
         if fence_match:
             marker = fence_match.group(1)
@@ -155,7 +193,7 @@ for path in ROOT.rglob("*.md"):
             if valid_fence_opener(marker, raw_info):
                 info = raw_info.strip()
                 fence_marker = marker
-                fence_kind = "math" if info == "math" else "code"
+                fence_kind = "math" if marker[0] == "`" and info == "math" else "code"
                 fence_start = line_no
                 math_fence_has_content = False
                 math_lines = []
@@ -201,7 +239,8 @@ if errors:
     sys.exit(1)
 
 print(
-    "Markdown math validation passed: repository display math uses fenced GitHub "
-    "math blocks; CommonMark fences and TeX grouping/environments are balanced; "
-    "repository math-macro conventions are satisfied."
+    "Markdown math validation passed: repository display math uses backtick-fenced "
+    "GitHub math blocks; special math/Mermaid fence indentation and info strings satisfy "
+    "the repository rendering contract; CommonMark fences and TeX grouping/environments "
+    "are balanced; repository math-macro conventions are satisfied."
 )

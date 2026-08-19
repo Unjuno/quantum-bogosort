@@ -1,7 +1,9 @@
 """Render every repository Markdown file through GitHub's own GFM API.
 
 This complements local syntax checks. It catches page-level parser regressions where
-valid-looking source swallows headings, tables, or images when GitHub renders it.
+valid-looking source swallows headings, tables, images, or fenced math/Mermaid/code
+blocks when GitHub performs its server-side GFM conversion. Browser-side MathJax and
+Mermaid execution still require direct UI inspection.
 """
 from __future__ import annotations
 
@@ -35,6 +37,7 @@ class RenderedStructure(HTMLParser):
         self.headings = 0
         self.tables = 0
         self.images = 0
+        self.pre_blocks = 0
 
     def handle_starttag(self, tag: str, attrs) -> None:  # type: ignore[override]
         if tag in {"h1", "h2", "h3", "h4", "h5", "h6"}:
@@ -43,6 +46,8 @@ class RenderedStructure(HTMLParser):
             self.tables += 1
         elif tag == "img":
             self.images += 1
+        elif tag == "pre":
+            self.pre_blocks += 1
 
 
 def closes_fence(line: str, marker: str) -> bool:
@@ -57,11 +62,12 @@ def valid_fence_opener(marker: str, info: str) -> bool:
     return marker[0] != "`" or "`" not in info
 
 
-def source_structure(text: str) -> tuple[int, int, int]:
-    """Count render-critical structures outside valid CommonMark fenced blocks."""
+def source_structure(text: str) -> tuple[int, int, int, int]:
+    """Count render-critical structures outside/at valid CommonMark fenced blocks."""
     headings = 0
     tables = 0
     images = 0
+    fences = 0
     fence_marker: str | None = None
 
     for line in text.splitlines():
@@ -76,6 +82,7 @@ def source_structure(text: str) -> tuple[int, int, int]:
             info = match.group(2)
             if valid_fence_opener(marker, info):
                 fence_marker = marker
+                fences += 1
                 continue
 
         if HEADING_RE.match(line):
@@ -84,7 +91,7 @@ def source_structure(text: str) -> tuple[int, int, int]:
             tables += 1
         images += len(IMAGE_RE.findall(line))
 
-    return headings, tables, images
+    return headings, tables, images, fences
 
 
 def render_with_github(text: str) -> str:
@@ -124,7 +131,7 @@ def main() -> None:
     for path in files:
         relative = path.relative_to(ROOT).as_posix()
         text = path.read_text(encoding="utf-8")
-        expected_headings, expected_tables, expected_images = source_structure(text)
+        expected_headings, expected_tables, expected_images, expected_fences = source_structure(text)
 
         try:
             rendered = render_with_github(text)
@@ -151,13 +158,17 @@ def main() -> None:
             errors.append(
                 f"{relative}: rendered images {parser.images} < source images {expected_images}"
             )
+        if parser.pre_blocks < expected_fences:
+            errors.append(
+                f"{relative}: rendered fenced/pre blocks {parser.pre_blocks} < source fences {expected_fences}"
+            )
 
     if errors:
         raise SystemExit("GitHub Markdown rendering validation failed:\n" + "\n".join(errors))
 
     print(
         f"GitHub Markdown rendering OK: {len(files)} files rendered through the "
-        "GitHub GFM API with expected headings, tables, and images preserved."
+        "GitHub GFM API with expected headings, tables, images, and fenced blocks preserved."
     )
 
 

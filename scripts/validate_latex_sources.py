@@ -7,6 +7,9 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 PAPER = ROOT / "paper"
 MAIN = PAPER / "main.tex"
+INTENTIONALLY_UNCOMPILED = {
+    (PAPER / "sections/robust_mom_summary.tex").resolve(),
+}
 
 INPUT_RE = re.compile(r"\\input\{([^}]+)\}")
 GRAPHICS_RE = re.compile(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}")
@@ -82,8 +85,14 @@ def check_environment_balance(path: Path, text: str, errors: list[str]) -> None:
 def main() -> None:
     errors: list[str] = []
 
-    if not MAIN.exists():
+    if not MAIN.is_file():
         raise SystemExit("Missing paper/main.tex")
+
+    for path in sorted(INTENTIONALLY_UNCOMPILED):
+        if not path.is_file():
+            errors.append(
+                f"missing intentionally uncompiled TeX source: {path.relative_to(ROOT)}"
+            )
 
     # Resolve the manuscript input graph and fail before TeX if an input is absent.
     try:
@@ -160,10 +169,25 @@ def main() -> None:
             if key not in compiled_labels:
                 errors.append(f"{path.relative_to(ROOT)}: unresolved compiled reference {key}")
 
-    # Non-reachable TeX remains linted for environments/citations above. Report the
-    # count explicitly so future source files are not silently confused with compiled
-    # manuscript content.
-    unreachable = [path for path in paper_tex if path.resolve() not in reachable_set]
+    # The non-reachable manuscript-source set is part of the publication structure.
+    # If a new section is accidentally omitted from main.tex, fail instead of merely
+    # reporting a larger unreachable count. The sole current exception is the retained
+    # standalone robust-MoM summary, superseded in the compiled sequence by its appendix.
+    unreachable = {path.resolve() for path in paper_tex if path.resolve() not in reachable_set}
+    if unreachable != INTENTIONALLY_UNCOMPILED:
+        unexpected = sorted(unreachable - INTENTIONALLY_UNCOMPILED)
+        accidentally_compiled = sorted(INTENTIONALLY_UNCOMPILED - unreachable)
+        if unexpected:
+            errors.append(
+                "unexpected TeX source(s) outside compiled graph: "
+                + ", ".join(path.relative_to(ROOT).as_posix() for path in unexpected)
+            )
+        if accidentally_compiled:
+            errors.append(
+                "intentionally uncompiled TeX source(s) are now reachable; update the "
+                "publication decision/allowlist deliberately: "
+                + ", ".join(path.relative_to(ROOT).as_posix() for path in accidentally_compiled)
+            )
 
     # Graphics resolve from paper/, matching `working-directory: paper` in CI. The
     # script runs after figures/generate_pdf_figures.py, so generated PDFs must exist.
@@ -181,7 +205,7 @@ def main() -> None:
         "LaTeX source validation passed: "
         f"{len(all_tex)} TeX files structurally checked; "
         f"{len(reachable)} files reachable from paper/main.tex; "
-        f"{len(unreachable)} paper TeX files intentionally outside the compiled graph; "
+        f"{len(INTENTIONALLY_UNCOMPILED)} explicitly retained source outside the compiled graph; "
         f"{len(bib_keys)} bibliography keys available; "
         f"{len(compiled_labels)} compiled labels resolved."
     )

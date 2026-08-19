@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 LINKED_IMAGE_OUTER_RE = re.compile(r"\[!\[[^\]]*\]\([^)]+\)\]\(([^)]+)\)")
-REFERENCE_DEF_RE = re.compile(r"^ {0,3}\[[^\]]+\]:\s*(?:<([^>]+)>|(\S+))", re.MULTILINE)
+REFERENCE_DEF_RE = re.compile(r"^ {0,3}\[(?!\^)[^\]]+\]:\s*(?:<([^>]+)>|(\S+))", re.MULTILINE)
 FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
 INLINE_CODE_RE = re.compile(r"(`+)(.*?)\1")
@@ -101,7 +101,8 @@ def iter_targets(text: str):
         yield match.group(1)
     # A reference-style usage resolves through its definition, so validating every local
     # definition target covers both normal and image reference forms without reimplementing
-    # GitHub's full reference-label matching algorithm.
+    # GitHub's full reference-label matching algorithm. GitHub footnotes use [^id]: and are
+    # intentionally excluded because their body is prose, not a link destination.
     for match in REFERENCE_DEF_RE.finditer(text):
         yield match.group(1) or match.group(2)
 

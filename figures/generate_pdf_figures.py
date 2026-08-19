@@ -2,15 +2,21 @@
 
 The committed SVGs remain the GitHub-readable canonical previews. These PDFs are
 build products generated from the same committed data and deterministic theorem
-illustrations for manuscript inclusion.
+illustrations for manuscript inclusion. Numerical series for Figures 2--6 are supplied by
+``figure_data.py``, shared with the SVG generator.
 """
 from pathlib import Path
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 
+from figure_data import (
+    adaptation_line_data,
+    branch_line_data,
+    fosd_curves,
+    interaction_bar_data,
+    recognition_bar_data,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data" / "processed"
 OUT = ROOT / "figures" / "generated_pdf"
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -49,17 +55,7 @@ def fig1_framework():
 
 
 def fig2_fosd():
-    x = np.linspace(-4, 4, 801)
-    phi = np.exp(-x * x / 2) / np.sqrt(2 * np.pi)
-
-    def wcdf(weight):
-        z = phi * weight
-        c = np.cumsum(z) * (x[1] - x[0])
-        return c / c[-1]
-
-    base = wcdf(np.ones_like(x))
-    mono = wcdf(0.1 + 0.9 / (1 + np.exp(-2 * x)))
-    nonmono = wcdf(0.1 + 0.9 * np.exp(-(x / 0.9) ** 2))
+    x, base, mono, nonmono = fosd_curves()
 
     fig, ax = plt.subplots(figsize=(6.8, 4.2))
     ax.plot(x, base, label="Base")
@@ -74,9 +70,7 @@ def fig2_fosd():
 
 
 def fig3_recognition():
-    d = pd.read_csv(DATA / "e3_recognition_decomposition_reproduction.csv").iloc[0]
-    labels = ["Policy", "QBS", "Total"]
-    vals = [d["policy_gain"], d["QBS_gain"], d["total_gain"]]
+    labels, vals = recognition_bar_data()
     fig, ax = plt.subplots(figsize=(6.0, 4.0))
     bars = ax.bar(labels, vals)
     ax.axhline(0, linewidth=0.8)
@@ -87,9 +81,9 @@ def fig3_recognition():
 
 
 def fig4_interaction():
-    d = pd.read_csv(DATA / "e4_fixed_selector_sign_reproduction.csv")
+    labels, vals = interaction_bar_data()
     fig, ax = plt.subplots(figsize=(6.5, 4.0))
-    bars = ax.bar(d["policy"], d["interaction"])
+    bars = ax.bar(labels, vals)
     ax.axhline(0, linewidth=0.8)
     ax.set_ylabel("Policy--QBS interaction")
     ax.set_title("Interaction sign under a fixed selector")
@@ -98,13 +92,10 @@ def fig4_interaction():
 
 
 def fig5_adaptation():
-    d = pd.read_csv(DATA / "qbs_adaptation_total_effect_summary.csv")
-    x = d["adaptation_accuracy_p"]
+    x, series = adaptation_line_data()
     fig, ax = plt.subplots(figsize=(7.0, 4.3))
-    ax.plot(x, d["policy_effect"], marker="o", label="Policy effect")
-    ax.plot(x, d["QBS_after"], marker="o", label="QBS marginal after policy")
-    ax.plot(x, d["interaction"], marker="o", label="Interaction")
-    ax.plot(x, d["total_FP_effect"], marker="o", label="Total FP effect")
+    for label, values in series:
+        ax.plot(x, values, marker="o", label=label)
     ax.axhline(0, linewidth=0.8)
     ax.set_xlabel("Adaptation targeting accuracy")
     ax.set_ylabel("Effect size")
@@ -115,12 +106,10 @@ def fig5_adaptation():
 
 
 def fig6_branch_coherence():
-    d = pd.read_csv(DATA / "e5_rho_paired_reproduction.csv")
-    x = d["rho_env"]
+    x, series = branch_line_data()
     fig, ax = plt.subplots(figsize=(7.0, 4.3))
-    ax.plot(x, d["action_corr_increment"], marker="o",
-            label="Action-correlation increment")
-    ax.plot(x, d["total_FP_gain"], marker="o", label="Total FP gain")
+    for label, values in series:
+        ax.plot(x, values, marker="o", label=label)
     ax.set_xlabel("Shared environmental correlation")
     ax.set_ylabel("Simulation quantity")
     ax.set_title("Branch coherence and marginal FP uplift are distinct")

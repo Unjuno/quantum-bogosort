@@ -4,7 +4,9 @@ The repository-validation job intentionally creates Python bytecode through the 
 ``py_compile experiments/*.py figures/*.py scripts/*.py`` step and six ignored manuscript
 figure PDFs. Derive the exact bytecode paths from those top-level source files rather than
 allowing arbitrary ``*.pyc`` names anywhere under a cache directory. Other ignored files
-must not be able to hide behind ``.gitignore`` and still produce a clean CI pass.
+must not be able to hide behind ``.gitignore`` and still produce a clean CI pass. Every
+allowed artifact must also be a nonsymlink regular file; matching an allowed pathname is
+not sufficient.
 """
 from __future__ import annotations
 
@@ -53,6 +55,17 @@ def ignored_untracked_files() -> set[str]:
     }
 
 
+def validate_artifact_types(expected: set[str]) -> list[str]:
+    errors: list[str] = []
+    for relative in sorted(expected):
+        path = ROOT / relative
+        if path.is_symlink():
+            errors.append(f"{relative} (symlink; nonsymlink regular file required)")
+        elif not path.is_file():
+            errors.append(f"{relative} (missing or not a regular file)")
+    return errors
+
+
 def main() -> None:
     ignored = ignored_untracked_files()
     expected_pycs = expected_bytecode_paths()
@@ -79,10 +92,17 @@ def main() -> None:
             + "\n".join(unexpected)
         )
 
+    invalid_types = validate_artifact_types(expected)
+    if invalid_types:
+        raise SystemExit(
+            "Ignored-artifact validation failed: allowed artifact path is not a nonsymlink "
+            "regular file:\n" + "\n".join(invalid_types)
+        )
+
     print(
         "Ignored-artifact validation passed: ignored/untracked files equal the exact "
         f"workflow-derived allowlist ({len(expected_pycs)} bytecode files and "
-        f"{len(EXPECTED_PDF_PATHS)} manuscript figure PDFs)."
+        f"{len(EXPECTED_PDF_PATHS)} manuscript figure PDFs), all as nonsymlink regular files."
     )
 
 

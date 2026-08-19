@@ -46,7 +46,7 @@ The required map now includes:
 - the pre-announcement audit records;
 - all principal validator scripts, including the runtime-contract, core-theorem-lock, and worktree-artifact validators.
 
-Required paths must be regular files, not merely existing paths, and duplicate declarations in the validator itself are rejected.
+Required paths must be regular files, not merely existing paths, and duplicate declarations in the validator itself are rejected. A later symlink audit strengthened “regular file” to mean a nonsymlink regular file; see Finding 21.
 
 ### 4. Three Markdown validators disagreed with CommonMark fence semantics
 
@@ -71,6 +71,8 @@ It now:
 - excludes GitHub footnote definitions (`[^id]: ...`), whose body is prose rather than a link target.
 
 A later pass found that local fragment/query suffixes were still stripped before filesystem resolution. Because the repository currently has no local fragment/query links and no GitHub-heading-slug validator, local `#fragment` and `?query` targets are now rejected rather than silently checking only the file component. This closes the `file.md#nonexistent-heading` false-PASS path without pretending to validate GitHub slug semantics.
+
+A still later pass found that raw HTML `<a>` and `<img>` elements were outside the Markdown-link parser altogether. The repository does not use those forms, so the validated link contract is now explicitly Markdown-only: visible raw-HTML anchor/image routes are rejected rather than silently bypassing local-target validation. See Finding 20.
 
 ### 6. LaTeX reference preflight could resolve a compiled reference from an uncompiled file
 
@@ -170,6 +172,8 @@ The manifest validator had begun locking the canonical E1–E5 CSV mappings and 
 
 The validator now parses the exact `## Linked theory` section of every E1–E5 card and checks both theorem/corollary tokens and routed Markdown source paths against the canonical experiment mapping. It also verifies that every routed source exists. A function-level negative test confirmed that an E1 `T1 -> T99` mutation and an E5 theory-route mutation are rejected. Because the audit runtime still cannot perform a normal network clone, this is a negative test of the new routing logic rather than a substitute for the final Actions execution.
 
+A later rendered-surface audit found that the first implementation still selected that section from raw Markdown and could therefore be deceived by a correct fake `## Linked theory` inside an earlier code fence. Finding 18 records the additional correction.
+
 ### 16. `LOCK` status fixed historical filenames but not historical content
 
 The manifest previously locked the identities/names of the 16 historical E1–E5 CSVs but not their bytes. If a historical CSV were modified and that modification itself committed to `HEAD`, the later clean-worktree checks could still pass because there would be no runtime diff.
@@ -200,6 +204,55 @@ The audit then found a cross-surface consistency gap: the canonical theory sourc
 
 The frozen v0.3 snapshot and its historical manuscript appendix remain untouched. Current `main`'s manuscript appendix is intentionally no longer byte-identical to v0.3 because the domain assumptions are now explicit; the proof algebra is unchanged.
 
+### 18. Manifest/card theory routing could be satisfied by a fenced-code decoy
+
+`validate_experiment_cards.py` had already moved its card-schema parser to a fence-filtered rendered Markdown surface, but `validate_manifest.py` still searched raw Markdown for the first literal `## Linked theory`. This created a combined-validator false-PASS route: a correct fake section inside a fenced code block could appear before a wrong real rendered section. The card-schema validator ignored the fenced fake, while the manifest validator validated it and never reached the visible wrong route.
+
+`validate_manifest.py` now uses the same CommonMark 0–3-space fence semantics before both card CSV extraction and `## Linked theory` parsing. The rendered surface must contain exactly one ATX `## Linked theory` section. A function-level adversarial test with a correct fenced fake followed by visible `T99`/wrong-path content now exposes only the visible wrong route to theorem/path validation. Tilde fences, longer backtick fences, four-space-indented pseudo-headings, and duplicate real `Linked theory` sections were also checked against the parser behavior.
+
+### 19. Experiment-card schema could ignore visible non-ATX H1/H2 headings
+
+The canonical card validator counted only ATX `#`/`##` headings. A Setext H1/H2 or raw HTML `<h1>/<h2>` could therefore add a visible GitHub heading while leaving the canonical seven-H2 ATX list unchanged. The general GFM validator only required at least the source ATX heading count and therefore did not close this schema-specific route.
+
+Experiment cards now explicitly standardize on ATX headings. After fenced literal code is removed, `validate_experiment_cards.py` rejects Setext H1/H2 forms and raw-HTML H1/H2 tags. The current E1–E5 cards use neither form, so this closes the bypass without changing their rendered content.
+
+### 20. Raw HTML anchors/images bypassed repository-relative link validation
+
+The Markdown link validator covers inline links/images, linked-image outer targets, and reference-style definitions/uses. It did not inspect raw HTML `<a href>` or `<img src>`, so a future local link or image could bypass the path-escape, existence, and fragment/query rules simply by switching syntax.
+
+Repository Markdown currently contains no raw HTML anchor/image route. The validated link contract is therefore now explicit: use Markdown link/image syntax. `validate_markdown_links.py` rejects visible raw HTML `<a>`/`<img>` after fenced/inline code removal rather than silently accepting an unvalidated route.
+
+### 21. `Path.is_file()` allowed symlink-based false-PASS paths
+
+Several validators described required artifacts as regular files but used `Path.is_file()`, which follows symlinks. The most important consequence was in current reproduction outputs: a tracked `data/processed/eN_...csv` symlink could receive experiment output through its target while the Git blob representing the symlink itself remained unchanged, undermining a diff-only byte-reproduction check.
+
+The behavior was reproduced independently: `Path.is_file()` returned true for a file symlink, writing through the symlink changed the target, and the path remained a symlink.
+
+The repository now closes this class at multiple layers:
+
+- `validate_repository_structure.py` requires every declared critical path and manuscript section to be a nonsymlink regular file;
+- `validate_reproduction_outputs.py` requires all current output CSVs to be nonsymlink regular files and rejects any symlink anywhere under `data/processed/`;
+- `validate_figure_set.py` requires the generated SVG/PDF directories to be real directories and all expected figure outputs to be nonsymlink regular files;
+- `validate_license_map.py`, which already enumerates every tracked path, now rejects tracked symlinks repository-wide before license classification.
+
+The recursive current repository tree was checked for Git symlink mode `120000`; none was present before enabling the global guard.
+
+### 22. Public SVG and manuscript PDF figures duplicated numerical-series logic
+
+Figures 2–6 were implemented independently in `figures/generate_figures.py` and `figures/generate_pdf_figures.py`. Both read the same intended sources, but CI only byte-locked the public SVG outputs while requiring manuscript PDFs merely to exist and compile. A one-sided change to a plotted data series could therefore make the public preview and manuscript figure disagree while both jobs still passed.
+
+The numerical-series layer for Figures 2–6 is now centralized in `figures/figure_data.py`:
+
+- `fosd_curves`;
+- `recognition_bar_data`;
+- `interaction_bar_data`;
+- `adaptation_line_data`;
+- `branch_line_data`.
+
+The SVG and PDF renderers remain intentionally different presentation backends, but both consume those shared data/label functions. `validate_figure_set.py` parses the three figure-source modules with Python AST and requires each Fig2–6 renderer function to import and call its corresponding shared numerical-data function exactly once. `figures/README.md` records this provenance boundary, and the repository structure map now requires `figures/figure_data.py`.
+
+This refactor does not edit any committed SVG file or any research CSV. The final pinned-environment Actions regeneration remains the authoritative byte-level check that the unchanged committed SVG set is reproduced after the source refactor.
+
 ## Checks that remained valid
 
 The second pass also rechecked several earlier decisions and did not find a correction requirement:
@@ -208,7 +261,7 @@ The second pass also rechecked several earlier decisions and did not find a corr
 - the pinned Python 3.11.15 / NumPy 2.4.6 / pandas 3.0.5 / Matplotlib 3.11.1 primary runtime contract remains internally coherent;
 - the four current Markdown issue templates contain the expected chooser front matter;
 - the split Creative Commons files are intentionally concise licensing notices pointing to canonical legal codes rather than truncated copies presented as full legal text;
-- the split-license validator classifies every tracked file into exactly one path-explicit license class, so an unclassified tracked extension/path fails rather than silently falling outside the map;
+- the split-license validator classifies every tracked nonsymlink file into exactly one path-explicit license class, so an unclassified tracked extension/path or tracked symlink fails rather than silently falling outside the map;
 - `CITATION.cff` contains the required root CFF 1.2.0 fields and intentionally tracks the frozen v0.3 public-review snapshot;
 - Figure 7 is intentionally a repository-review SVG, while Figures 1–6 constitute the manuscript PDF set; generator, figure-set validator, and figure provenance documentation agree on that asymmetry;
 - no current `release/v0.*` development-branch routing remains in the repository search surface;
@@ -236,7 +289,7 @@ Release-tag commits were re-resolved successfully, but the rendered GitHub Relea
 
 ## Scientific/provenance boundary
 
-This pass changes validator logic, E3 null test plumbing, workflow configuration, current-review issue rendering syntax, contribution/reproduction instructions, bibliography metadata, explicit theorem-domain assumptions on current `main`, and repository QA documentation.
+This pass changes validator logic, E3 null test plumbing, workflow configuration, current-review issue rendering syntax, contribution/reproduction instructions, bibliography metadata, explicit theorem-domain assumptions on current `main`, figure-rendering data plumbing, and repository QA documentation.
 
 It does not change:
 
@@ -248,7 +301,7 @@ It does not change:
 - the numerical E1–E5 conclusions;
 - the seven committed SVG figure files.
 
-The canonical theorem lock and frozen-data blob locks make the first and fourth bullets executable regression boundaries where a suitable canonical byte representation exists.
+The canonical theorem lock and frozen-data blob locks make the first and fourth bullets executable regression boundaries where a suitable canonical byte representation exists. The shared figure-data contract reduces cross-renderer semantic drift, while the existing SVG byte diff remains the executable output gate for the committed public figures.
 
 ## Remaining release gates
 

@@ -44,9 +44,31 @@ def main() -> None:
     paths = [(DATA_RELATIVE / name).as_posix() for name in names]
     manifest_paths = set(paths)
 
-    missing = [path for path in paths if not (ROOT / path).is_file()]
-    if missing:
-        raise SystemExit("Missing reproduction outputs:\n" + "\n".join(missing))
+    invalid_outputs: list[str] = []
+    for relative in paths:
+        path = ROOT / relative
+        if path.is_symlink():
+            invalid_outputs.append(f"{relative} (symlink; regular CSV required)")
+        elif not path.is_file():
+            invalid_outputs.append(f"{relative} (missing or not a regular file)")
+    if invalid_outputs:
+        raise SystemExit(
+            "Missing/invalid reproduction outputs:\n" + "\n".join(invalid_outputs)
+        )
+
+    # Symlinks are outside the processed-data provenance contract. In particular, a
+    # tracked CSV symlink could redirect an experiment write while leaving the Git blob
+    # for the link itself unchanged, defeating a diff-only byte-reproduction check.
+    symlinks = sorted(
+        path.relative_to(ROOT).as_posix()
+        for path in DATA.rglob("*")
+        if path.is_symlink()
+    )
+    if symlinks:
+        raise SystemExit(
+            "Processed-data tree contains symlink(s); regular in-repository files are required:\n"
+            + "\n".join(symlinks)
+        )
 
     tracked_data = set(git_output("ls-files", "--", DATA_RELATIVE.as_posix()))
     tracked_current = {
@@ -110,11 +132,11 @@ def main() -> None:
 
     # Compare the actual filesystem with Git's tracked set rather than asking Git only
     # for non-ignored files; an ignored debug/log artifact in data/processed is still
-    # an undeclared side effect of an experiment run.
+    # an undeclared side effect of an experiment run. Symlinks were rejected above.
     present_data = {
         path.relative_to(ROOT).as_posix()
         for path in DATA.rglob("*")
-        if path.is_file()
+        if path.is_file() and not path.is_symlink()
     }
     extra_files = sorted(present_data - tracked_data)
     if extra_files:
@@ -125,9 +147,9 @@ def main() -> None:
 
     print(
         f"Reproduction output validation passed: {len(paths)} manifest-declared "
-        "current CSVs exactly cover the tracked E1-E5 output set, are byte-identical "
-        "to HEAD, tracked repository content is unchanged, and data/processed has no "
-        "undeclared files."
+        "current CSVs exactly cover the tracked E1-E5 output set, are nonsymlink regular "
+        "files byte-identical to HEAD, tracked repository content is unchanged, and "
+        "data/processed has no symlinks or undeclared files."
     )
 
 

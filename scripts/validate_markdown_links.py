@@ -5,6 +5,8 @@ from urllib.parse import unquote
 ROOT = Path(__file__).resolve().parents[1]
 
 LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
+LINKED_IMAGE_OUTER_RE = re.compile(r"\[!\[[^\]]*\]\([^)]+\)\]\(([^)]+)\)")
+REFERENCE_DEF_RE = re.compile(r"^ {0,3}\[[^\]]+\]:\s*(?:<([^>]+)>|(\S+))", re.MULTILINE)
 FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
 INLINE_CODE_RE = re.compile(r"(`+)(.*?)\1")
@@ -89,6 +91,21 @@ def rendered_prose(text: str) -> str:
     return "\n".join(output)
 
 
+def iter_targets(text: str):
+    """Yield inline/image targets, linked-image outer targets, and reference definitions."""
+    for match in LINK_RE.finditer(text):
+        yield match.group(1)
+    # LINK_RE sees the inner image in [![alt](image.svg)](page.md) but not the outer
+    # destination because the link label contains nested Markdown. Validate it separately.
+    for match in LINKED_IMAGE_OUTER_RE.finditer(text):
+        yield match.group(1)
+    # A reference-style usage resolves through its definition, so validating every local
+    # definition target covers both normal and image reference forms without reimplementing
+    # GitHub's full reference-label matching algorithm.
+    for match in REFERENCE_DEF_RE.finditer(text):
+        yield match.group(1) or match.group(2)
+
+
 missing: list[str] = []
 checked = 0
 
@@ -97,8 +114,8 @@ for markdown_file in sorted(ROOT.rglob("*.md")):
         continue
 
     text = rendered_prose(markdown_file.read_text(encoding="utf-8"))
-    for match in LINK_RE.finditer(text):
-        target = parse_target(match.group(1))
+    for raw_target in iter_targets(text):
+        target = parse_target(raw_target)
         if is_external_or_anchor(target):
             continue
 
@@ -119,4 +136,7 @@ if missing:
         "Broken repository-relative Markdown links:\n" + "\n".join(missing)
     )
 
-print(f"Markdown links OK: {checked} rendered repository-relative targets resolved.")
+print(
+    f"Markdown links OK: {checked} rendered repository-relative inline, linked-image, "
+    "and reference-definition targets resolved."
+)

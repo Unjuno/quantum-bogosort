@@ -1,13 +1,14 @@
 """Validate the repository's explicit runtime/reproduction contract.
 
 This checks the primary numerical package pins and their installed versions,
-consistency between `.python-version` and GitHub Actions, immutable reusable-action
-pins, checkout credential isolation, required validation/manuscript jobs and commands,
+consistency between `.python-version` and GitHub Actions, audited reusable-action
+SHAs, checkout credential isolation, required validation/manuscript jobs and commands,
 and a small read-only workflow security contract. It does not claim that every
 transitive wheel is cryptographically locked.
 """
 from __future__ import annotations
 
+from collections import Counter
 from pathlib import Path
 import importlib
 import re
@@ -20,6 +21,18 @@ WORKFLOW = ROOT / ".github/workflows/validate.yml"
 
 EXPECTED_PRIMARY_PACKAGES = {"numpy", "pandas", "matplotlib"}
 REQUIRED_JOBS = {"repository-validation", "manuscript-build"}
+EXPECTED_ACTION_PINS = {
+    "actions/checkout": "3d3c42e5aac5ba805825da76410c181273ba90b1",  # v7.0.1
+    "actions/setup-python": "5fda3b95a4ea91299a34e894583c3862153e4b97",  # v7
+    "actions/upload-artifact": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",  # v7
+}
+EXPECTED_ACTION_COUNTS = Counter(
+    {
+        "actions/checkout": 2,
+        "actions/setup-python": 2,
+        "actions/upload-artifact": 1,
+    }
+)
 REQUIRED_GLOBAL_WORKFLOW_SNIPPETS = [
     "  push:\n",
     "  pull_request:\n",
@@ -169,11 +182,28 @@ def main() -> None:
         )
 
     action_lines = [line for line in workflow_text.splitlines() if re.match(r"^\s*- uses:", line)]
+    action_counts: Counter[str] = Counter()
     if not action_lines:
         errors.append("validation workflow contains no reusable action steps")
     for line in action_lines:
-        if not FULL_SHA_ACTION_RE.fullmatch(line):
+        match = FULL_SHA_ACTION_RE.fullmatch(line)
+        if not match:
             errors.append(f"workflow reusable action is not pinned to a full commit SHA: {line.strip()}")
+            continue
+        action_name, sha = match.groups()
+        action_counts[action_name] += 1
+        expected_sha = EXPECTED_ACTION_PINS.get(action_name)
+        if expected_sha is None:
+            errors.append(f"workflow uses unapproved reusable action: {action_name}@{sha}")
+        elif sha != expected_sha:
+            errors.append(
+                f"workflow action pin drift: {action_name}@{sha} != audited {expected_sha}"
+            )
+    if action_counts != EXPECTED_ACTION_COUNTS:
+        errors.append(
+            f"workflow reusable-action multiplicities differ from contract: {dict(action_counts)!r} "
+            f"!= {dict(EXPECTED_ACTION_COUNTS)!r}"
+        )
 
     jobs = split_jobs(workflow_text)
     missing_jobs = sorted(REQUIRED_JOBS - set(jobs))
@@ -218,8 +248,8 @@ def main() -> None:
     print(
         "Runtime contract validation passed: "
         f"Python {expected_python}; {package_summary}; ubuntu-24.04; required jobs/commands present; "
-        "read-only workflow security contract; "
-        f"{len(action_lines)} reusable action steps full-SHA pinned."
+        "read-only workflow security contract; audited checkout/setup-python/upload-artifact "
+        "SHAs and multiplicities match exactly."
     )
 
 

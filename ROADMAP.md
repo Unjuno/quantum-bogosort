@@ -8,7 +8,7 @@ The project is in **v0.3 public review / preprint preparation**.
 
 The locked core remains T1–T5 and E1–E5. The supplementary line is complete through S2.13. The default next step is review quality, not theorem expansion.
 
-Source-level presentation QA now includes repository-wide GitHub rendering hardening: public Markdown display mathematics is standardized on fenced `math` blocks, repository math-macro conventions use roman forms such as `\mathrm{Cov}`, and CI rejects legacy delimiter regressions and structurally malformed math blocks. Broad announcement remains gated on direct human inspection of rendered GitHub pages and the final `main` validation state.
+Source-level presentation QA now includes repository-wide GitHub rendering hardening plus a second-pass audit of the validators themselves for false-PASS conditions. Broad announcement remains gated on the final `main` Actions result and direct human inspection of rendered GitHub pages.
 
 ## Immediate review gates
 
@@ -24,27 +24,40 @@ Source-level presentation QA now includes repository-wide GitHub rendering harde
 - [ ] Keep `main` CI-green after review-driven editorial or scientific corrections.
 - [ ] Keep README, research map, claim ledger, notation, status, and roadmap free of conflicting source-of-truth roles.
 - [x] Validate repository-relative Markdown links in CI.
+- [x] Reject repository-relative Markdown targets that escape the repository root; validate linked-image outer destinations and reference-style definitions in addition to ordinary inline links/images.
 - [x] Inspect the complete repository Markdown surface for rendering-critical structure rather than sampling representative pages only.
 - [x] Standardize repository Markdown display mathematics on balanced fenced `math` blocks; reject legacy display/inline delimiters outside literal code examples and enforce repository math-macro conventions.
+- [x] Align math, link, and GFM source scanners on CommonMark's zero-to-three-space fenced-code boundary.
 - [x] Validate brace balance, TeX environment balance, and common `\left`/`\right` pairing inside fenced Markdown math blocks.
 - [x] Add CI GFM conversion of every Markdown file through GitHub's Markdown REST renderer with source/render structure checks for headings, tables, and images.
-- [x] Validate all committed SVGs as XML/browser assets, including viewBox/size, explicit background, forbidden active elements/external hrefs, and non-finite attributes.
-- [x] Validate manuscript LaTeX input, bibliography/citation, label/reference, environment, and generated-graphic dependencies before PDF compilation.
+- [x] Validate all committed SVGs as static/self-contained XML/browser assets, including viewBox/size, full-viewBox explicit background, forbidden active/event/animation content, external/active references, malformed numeric attributes, and non-finite attributes.
+- [x] Validate manuscript LaTeX input, bibliography/citation, environment, generated-graphic dependencies, and resolve compiled references only within the graph reachable from `paper/main.tex`.
 - [x] Pin the byte-reproduction environment: Ubuntu 24.04, Python 3.11.15, NumPy 2.4.6, pandas 3.0.5, and Matplotlib 3.11.1.
+- [x] Pin reusable GitHub Actions to full commit SHAs rather than mutable major-version tags.
+- [x] Add `workflow_dispatch` so maintainers can run the complete `validate` workflow manually on `main` without a dummy commit.
+- [x] Expose the `main` validation workflow badge on the root README.
+- [x] Validate GitHub issue-template chooser front matter and nonempty bodies in CI.
 - [x] Add executable scientific regression guards to E1–E5 for the declared identities, nulls, controls, signs, and coherence/predictive-alignment behavior.
+- [x] Route the E3 inert recognition-label null through the general first-person weighted-value calculation while preserving its committed exact-zero result.
 - [x] Validate manifest ID/order, `LOCK` state, file existence, and separation of locked historical versus current reproduction provenance classes.
 - [x] Derive current reproduction byte validation from the manifest rather than maintaining a duplicate hard-coded CSV list in CI.
+- [x] Require E1–E5 execution to leave the complete `data/processed/` tree otherwise unchanged, including no locked-file mutation and no undeclared ignored files.
+- [x] Explicitly require core theory sources, split-license/configuration files, archived experiment provenance, pre-announcement audits, and principal validator scripts in repository-structure validation.
 - [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
 - [x] Provide a dedicated visual route for every locked experiment family E1–E5, including E2 predictive alignment.
 - [x] Require committed SVGs and the deterministic Figure 2 theorem-illustration CSV to match generator output byte-for-byte under the pinned environment.
 - [x] Keep deterministic theorem illustrations, current reproduction outputs, and locked historical summaries explicitly separated at figure level.
 - [x] Provide a static SVG fallback for the root Mermaid dependency diagram.
 - [x] Keep `main` as the only branch; preserve frozen v0.2/v0.3 snapshots as tags/GitHub Releases.
+- [ ] Confirm the final `main` `validate` workflow is green after the second-pass validator/Actions changes.
 - [ ] Confirm rendered GitHub pages display correctly in the web UI, including the root README plus representative theory, experiment, canonical-doc, supplementary, and audit pages.
 - [ ] Keep E1–E5 as the locked reproducibility suite unless a review identifies a concrete missing core test.
 - [ ] Preserve deterministic figure regeneration and manuscript PDF verification.
 
-The detailed commit-fixed execution audit is [`docs/pre_announcement_execution_audit_2026-08-19.md`](docs/pre_announcement_execution_audit_2026-08-19.md).
+Detailed audit records:
+
+- [`docs/pre_announcement_execution_audit_2026-08-19.md`](docs/pre_announcement_execution_audit_2026-08-19.md) — commit-fixed source/execution/reproduction pass;
+- [`docs/pre_announcement_validator_audit_2026-08-19.md`](docs/pre_announcement_validator_audit_2026-08-19.md) — second-pass false-PASS, validator, and Actions-supply-chain pass.
 
 ## Broad-announcement gate
 
@@ -54,7 +67,7 @@ Before directing broad external traffic to the repository:
 - [ ] verify in the rendered UI that the main conceptual diagram, mathematical definitions, theorem pages, and experiment figures are visible without opening raw source files;
 - [x] verify in repository source that every visual result links to its H/T/D/C/U experiment card and figure/data provenance;
 - [x] verify that the interpretation boundary and Everett bridge status are visible from the landing-page source;
-- [ ] confirm the final `main` validation state after the last presentation/status changes.
+- [ ] confirm both `repository-validation` and `manuscript-build` are successful on the final `main` workflow run after the last audit/status changes.
 
 The unchecked items in this section are presentation/release checks, not missing mathematical results.
 
@@ -102,4 +115,4 @@ Do not treat statistical success inside the abstract model as validation of this
 
 Do not add S2.14 or a sixth core experiment by default.
 
-The next high-value work is direct rendered-UI QA, external review, correction, compression, and publication readiness.
+The next high-value work is final Actions/UI confirmation, external review, correction, compression, and publication readiness.

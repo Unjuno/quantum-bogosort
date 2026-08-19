@@ -58,7 +58,7 @@ The pass found that byte-level output checks were being requested while numerica
 - pandas 3.0.5;
 - Matplotlib 3.11.1.
 
-The primary package pins are exact; the repository does **not** claim that every transitive wheel is cryptographically locked. Byte-level output identity remains the executable contract.
+The primary package pins are exact; the repository does **not** claim that every transitive wheel is cryptographically locked. Byte-level output identity remains the executable contract. A later audit considered a complete transitive lock, but deferred it until a successful final Actions run can provide the actual resolved environment rather than guessing a dependency set that might itself change committed bytes.
 
 The current E5 rho-sweep field formerly named `recognition_corr_increment` was corrected to `action_corr_increment`; the values and Figure 6 are unchanged. Locked historical schemas were not rewritten.
 
@@ -66,35 +66,42 @@ The current E5 rho-sweep field formerly named `recognition_corr_increment` was c
 
 The second pass audited the auditing machinery itself. It corrected or strengthened the following:
 
-- processed-data validation now rejects mutation of locked historical files and rejects undeclared generated files, including files hidden by `.gitignore`;
-- manifest validation enforces E1–E5 ID/order, `LOCK`, file existence, uniqueness, and locked/current provenance separation;
+- processed-data validation rejects mutation of tracked repository content during E1–E5 execution and rejects undeclared generated files under `data/processed/`, including ignored files;
+- manifest validation enforces exact E1–E5 ID/order, `LOCK`, canonical locked/current file mappings, uniqueness, provenance separation, and exact `linked_theorems` routing;
+- the manifest validator also parses each card's exact `## Linked theory` section and checks theorem/corollary tokens plus routed Markdown sources, closing a false-PASS where the card could drift to a nonexistent theorem while the manifest stayed unchanged;
+- all 16 locked historical E1–E5 CSVs are now **content-locked** to their frozen v0.3 Git blob identities, checking both committed `HEAD` blobs and actual working-tree hashes; this catches both committed historical-data rewrites and dirty local rewrites;
 - E1–E5 scripts contain executable regression guards for the identities, nulls, sign/counterexample controls, predictive-alignment behavior, and branch-coherence contrasts described by their experiment cards;
-- the E3 inert recognition-label null now evaluates identical trajectory/accessibility arrays through the general first-person weighted-value path while preserving the committed exact-zero result;
+- the E3 inert recognition-label null evaluates identical trajectory/accessibility arrays through the general first-person weighted-value path while preserving the committed exact-zero result;
 - issue-template front matter is validated for GitHub chooser compatibility;
 - the repository structure validator explicitly requires core theory, split-license/configuration, consolidated/archive provenance, audit, experiment, figure, and validator sources;
 - [`supplementary/research_notes.md`](supplementary/research_notes.md) is explicitly retained and linked as a historical consolidated note rather than a current source of truth;
 - the math, link, and GFM source scanners share CommonMark's zero-to-three-space fence boundary;
-- relative Markdown targets that escape the repository root fail validation; linked-image outer targets and reference-style definitions are also checked;
+- relative Markdown targets that escape the repository root fail validation; linked-image outer targets and reference-style definitions are checked; because the repository has no current local fragment/query links and no GitHub-slug validator, local `#fragment`/`?query` targets are rejected rather than silently validating only their file component;
 - all repository Markdown is submitted to GitHub's GFM REST renderer in CI and checked for heading/table/inline-image preservation;
 - SVG validation rejects DTD/entities, active/animation elements, event handlers, non-fragment hrefs, active/external CSS references, malformed/non-finite numeric attributes, and backgrounds that fail to cover the full viewBox;
-- the exact generated figure contract is now seven public SVGs plus six manuscript PDF figures; unexpected generated entries fail validation;
+- the exact generated figure contract is seven public SVGs plus six manuscript PDF figures; Figure 7 is intentionally repository-review-only and is not a manuscript PDF figure;
 - LaTeX preflight resolves compiled references only within the graph reachable from `paper/main.tex`;
 - `paper/sections/robust_mom_summary.tex` is explicitly locked as the sole intentionally uncompiled manuscript source, with `robust_mom_certificate_appendix.tex` providing the compiled robust-MoM treatment;
-- `scripts/validate_runtime_contract.py` cross-checks `.python-version`, the exact primary package pins/installed versions, runner choice, required workflow jobs/commands, manual dispatch, full-SHA Action pins, checkout credential isolation, and final clean-worktree checks;
-- a real self-failure in that runtime validator was caught during review: its `python-version` / `runs-on` regexes initially lacked `re.MULTILINE`, which could make a valid workflow appear to have no runtime declarations; the parser was corrected before treating the new contract as reliable;
+- standalone canonical `theory/core_theorems.tex` is now executable-locked to the frozen v0.3 theorem/proof/boundary body: its single intentional version-neutral title change is normalized before comparison to frozen blob `82986d7197e79446d6574aab538d1edaeff47eb6`; any other T1–T5 body change fails CI;
+- the manuscript's complete core-proof appendix remains byte-identical to the v0.3 snapshot, so no manuscript-side T1–T5 drift was found;
+- `scripts/validate_runtime_contract.py` cross-checks `.python-version`, exact primary package pins/installed versions, runner choice, required workflow jobs/commands, manual dispatch, full-SHA Action pins, checkout credential isolation, theorem-lock invocation, and final worktree checks;
+- a real self-failure in that runtime validator was caught during review: its `python-version` / `runs-on` regexes initially lacked `re.MULTILINE`; the parser was corrected before treating the new contract as reliable;
 - citation metadata validation checks the narrow CFF 1.2.0 contract against the frozen STATUS snapshot, rejects unknown nested author content, and requires exact `YYYY-MM-DD` release-date syntax;
 - bibliography syntax/structure validation rejects unsupported text outside records, malformed/multiline field syntax, duplicate keys/fields/DOIs/eprints, placeholder values, and malformed DOI/arXiv identifiers;
-- bibliography record classes are now explicit: journal `@article` records require journal/volume/pages/DOI, book-chapter `@incollection` records require booktitle/editor/publisher/pages/DOI, and arXiv-only `@misc` records retain a separate eprint/archive provenance contract;
-- `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` are pinned to full Node-24/v7 commit SHAs and their exact audited multiplicities are checked by the runtime contract;
+- bibliography record classes are explicit: journal `@article` records require journal/volume/pages/DOI, book-chapter `@incollection` records require booktitle/editor/publisher/pages/DOI, and arXiv-only `@misc` records retain a separate eprint/archive provenance contract;
+- the split-license validator classifies every tracked file into exactly one path-explicit license class, so an unclassified tracked file or overlapping class fails;
+- `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` are pinned to full Node-24/v7 commit SHAs and exact audited multiplicities;
 - checkout uses `persist-credentials: false` in both jobs; workflow permissions remain `contents: read`;
 - both `repository-validation` and `manuscript-build` run the runtime-contract validator;
 - `workflow_dispatch` allows a complete manual run from **Actions → validate → Run workflow** without a dummy commit;
 - the root README exposes the `main` validation badge;
-- the open S2 review Issue #14 was synchronized from stale `$$` / `\operatorname{Cov}` syntax to fenced `math` / `\mathrm{Cov}` without altering its scientific content;
+- open S2 review Issue #14 was synchronized from stale `$$` / `\operatorname{Cov}` syntax to fenced `math` / `\mathrm{Cov}` without altering scientific content;
 - a generic manuscript phrase `recognition-activated policy` was aligned to the repository's general `recognition-dependent policy` terminology; the separate evidence-threshold activation model remains intentionally named as such;
 - tracked diffs and nonignored untracked files anywhere in the repository-validation checkout are rejected;
-- ignored/untracked files are now separately validated against an explicit allowlist: Python bytecode under the three compiled source trees plus the exact six generated manuscript figure PDFs; unexpected ignored artifacts such as stray `*.log`/`*.out` files fail, and all six PDFs are required;
-- the ignored-artifact validator was independently negative-tested: the expected set passes, a synthetic `stray.log` fails, and a missing expected PDF fails.
+- ignored/untracked files are separately validated against an **exact workflow-derived allowlist**: the bytecode paths corresponding to the top-level Python files compiled by CI plus the exact six generated manuscript figure PDFs; arbitrary `*.pyc`, log, output, or other ignored artifacts fail;
+- ignored-artifact logic was negative-tested with stray bytecode/log artifacts and missing expected outputs;
+- locked historical blob checking was negative-tested in a temporary Git repository: a dirty edit changes the worktree blob identity and a committed edit changes the HEAD blob identity;
+- experiment-card theory routing was negative-tested at function level with a synthetic `T1 -> T99` mutation and an E5 route mutation.
 
 The newer Pass-2 validators were source-audited and wired into CI, but the literal network clone remains unavailable in this audit runtime. Therefore the first-pass local execution evidence does not automatically count as execution evidence for every later validator revision. The final GitHub Actions run remains required.
 
@@ -119,7 +126,7 @@ Corrections applied include:
 
 Earlier public preprints are still retained when they are themselves the relevant early prior-art record or when no definitive publication record was identified. Wallace's 2009 preprint remains distinct from the later revised-title book chapter; Tegmark's 1997 preprint remains the earlier public record despite a 1998 journal publication; Mallah, Armstrong, Price's 2006 comments, Cooper--Oesterheld--Conitzer, and Saunders's current physical-probability paper remain preprint/working-paper records where appropriate.
 
-The two same-title Saunders physical-probability deposits were also disambiguated through author archival provenance: the 2026 record is the latest version and links the 2025 deposit as an earlier version, so the current `2601.12159` citation is retained.
+The two same-title Saunders physical-probability deposits were disambiguated through author archival provenance: the 2026 record is the latest version and links the 2025 deposit as an earlier version, so the current `2601.12159` citation is retained.
 
 This pass also found semantic drift in all three `literature/` prior-art ledgers: older text described recognition as a **causal variable/policy input**. Those ledgers are now aligned with the authoritative project boundary: recognition/information state can change which policy is selected, but recognition is not assigned privileged physical causal power merely by being upstream in the model.
 
@@ -129,7 +136,7 @@ These bibliography and literature corrections affect provenance, chronology, and
 
 The current workflow is configured to run on push, pull request, and manual dispatch.
 
-`repository-validation` covers runtime/workflow consistency, Python compilation, Markdown math, repository structure, citation metadata, bibliography metadata, license/snapshot/issue-template checks, manifest, links, GitHub GFM conversion, E1–E5 scientific invariants, reproduction identity/data-tree cleanliness, figure generation, exact SVG/PDF figure-set validation, static SVG validation, committed SVG/Figure-2 data reproducibility, full tracked-tree cleanliness, rejection of nonignored untracked artifacts, and explicit allowlisting/rejection of ignored untracked artifacts.
+`repository-validation` covers runtime/workflow consistency, Python compilation, Markdown math, repository structure, the canonical T1–T5 theorem-body lock, citation/bibliography/license/snapshot/issue-template checks, manifest/card/provenance validation, links, GitHub GFM conversion, E1–E5 scientific invariants, current reproduction identity, frozen historical CSV blob identity, data-tree cleanliness, figure generation, exact SVG/PDF figure-set validation, static SVG validation, committed SVG/Figure-2 data reproducibility, full tracked-tree cleanliness, rejection of nonignored untracked artifacts, and exact allowlisting/rejection of ignored untracked artifacts.
 
 `manuscript-build` independently validates the runtime contract, generates manuscript PDF figures, preflights the compiled LaTeX graph and citation/reference relationships, installs the TeX toolchain, builds `paper/main.pdf`, verifies it, and uploads it as an artifact.
 

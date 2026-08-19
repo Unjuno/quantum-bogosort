@@ -205,6 +205,8 @@ python experiments/exp4_interaction.py
 python experiments/exp5_branch_map.py
 ```
 
+The dependency versions in `requirements.txt` are pinned because committed-output verification is byte-level; using a different NumPy/Pandas/Matplotlib stack can change serialization even when the numerical model is unchanged.
+
 Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/). Superseded experiment designs are kept under [`experiments/archive/`](experiments/archive/).
 
 ## Public review
@@ -233,14 +235,16 @@ The locked core theorem set T1–T5 and experiment set E1–E5 are unchanged in 
 
 GitHub Actions checks:
 
-- Python compilation;
-- GitHub Markdown math-block structure;
-- repository-relative Markdown links;
-- required repository structure;
-- E1–E5 reproduction;
-- deterministic SVG regeneration and byte-for-byte committed-output verification;
+- Python compilation under the pinned Python/dependency environment;
+- repository-wide fenced Markdown math syntax and structural TeX balance;
+- repository-relative Markdown links and required repository structure;
+- GFM structure conversion of every Markdown file through GitHub's Markdown API, with heading/table/image preservation checks;
+- E1–E5 reproduction plus byte-for-byte verification of all committed reproduction CSV outputs;
+- deterministic SVG regeneration, SVG XML/browser-structure validation, and byte-for-byte committed-output verification;
 - experiment-manifest references;
-- manuscript LaTeX build and PDF verification.
+- manuscript figure generation, LaTeX dependency/citation/reference preflight, LaTeX build, and PDF verification.
+
+The GitHub API GFM check is a structural parser check; direct browser inspection remains the release gate for MathJax, Mermaid, SVG sizing, and page layout.
 
 ## License
 

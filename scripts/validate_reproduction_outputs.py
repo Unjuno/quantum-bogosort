@@ -1,4 +1,4 @@
-"""Validate current reproduction outputs and the post-experiment data tree."""
+"""Validate current reproduction outputs and the post-experiment repository state."""
 from __future__ import annotations
 
 from pathlib import Path
@@ -82,15 +82,30 @@ def main() -> None:
     # Experiment scripts are not allowed to modify locked historical data or any
     # other tracked processed-data file. Figure-generation data is produced only
     # after this validator runs in CI.
-    full_diff = subprocess.run(
+    full_data_diff = subprocess.run(
         ["git", "diff", "--exit-code", "--", DATA_RELATIVE.as_posix()],
         cwd=ROOT,
         check=False,
     )
-    if full_diff.returncode != 0:
+    if full_data_diff.returncode != 0:
         raise SystemExit(
             "Experiment execution changed a processed-data file outside the accepted "
             "byte-identical reproduction contract; see git diff above."
+        )
+
+    # The experiment stage must not mutate any other tracked repository file either.
+    # This catches accidental writes to theory/docs/scripts/configuration that a
+    # data-directory-only diff would miss. Ignored interpreter caches are irrelevant
+    # here because `git diff` considers tracked content only.
+    full_repo_diff = subprocess.run(
+        ["git", "diff", "--exit-code"],
+        cwd=ROOT,
+        check=False,
+    )
+    if full_repo_diff.returncode != 0:
+        raise SystemExit(
+            "Experiment execution changed tracked repository content outside the "
+            "reproduction contract; see git diff above."
         )
 
     # Compare the actual filesystem with Git's tracked set rather than asking Git only
@@ -111,7 +126,8 @@ def main() -> None:
     print(
         f"Reproduction output validation passed: {len(paths)} manifest-declared "
         "current CSVs exactly cover the tracked E1-E5 output set, are byte-identical "
-        "to HEAD, and experiment execution left data/processed otherwise clean."
+        "to HEAD, tracked repository content is unchanged, and data/processed has no "
+        "undeclared files."
     )
 
 

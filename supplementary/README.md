@@ -48,7 +48,7 @@ These results require their stated sampling, moment, and selection assumptions. 
 - [`recognition_time.md`](recognition_time.md) — sequential recognition as a stopping time, with no general early-versus-late ordering theorem;
 - [`selectivity_frontier.md`](selectivity_frontier.md) — selectivity versus predictor precision and accessible measure.
 
-`research_notes.md` remains a historical consolidated note. Current work should update the topic-specific files first.
+[`research_notes.md`](research_notes.md) is a **historical consolidated note** retained for research provenance. Current statements, assumptions, and status should be updated in the topic-specific files above first.
 
 ## Status vocabulary
 

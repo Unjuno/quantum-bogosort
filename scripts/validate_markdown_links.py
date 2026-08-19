@@ -34,19 +34,17 @@ def parse_target(raw: str) -> str:
     return unquote(target.strip())
 
 
-def is_external_or_anchor(target: str) -> bool:
+def is_external_or_site_absolute(target: str) -> bool:
     lowered = target.lower()
     return (
         not target
-        or target.startswith("#")
         or target.startswith("/")
         or lowered.startswith(EXTERNAL_PREFIXES)
     )
 
 
 def normalize_repo_relative(markdown_file: Path, target: str) -> tuple[Path, str | None]:
-    path_part = target.split("#", 1)[0].split("?", 1)[0]
-    resolved = (markdown_file.parent / path_part).resolve()
+    resolved = (markdown_file.parent / target).resolve()
     try:
         relative = resolved.relative_to(ROOT).as_posix()
     except ValueError:
@@ -107,7 +105,7 @@ def iter_targets(text: str):
         yield match.group(1) or match.group(2)
 
 
-missing: list[str] = []
+errors: list[str] = []
 checked = 0
 
 for markdown_file in sorted(ROOT.rglob("*.md")):
@@ -117,27 +115,42 @@ for markdown_file in sorted(ROOT.rglob("*.md")):
     text = rendered_prose(markdown_file.read_text(encoding="utf-8"))
     for raw_target in iter_targets(text):
         target = parse_target(raw_target)
-        if is_external_or_anchor(target):
+        if is_external_or_site_absolute(target):
             continue
 
         source = markdown_file.relative_to(ROOT).as_posix()
+
+        # The repository currently has no local fragment/query links. Until a GitHub-slug
+        # validator is deliberately implemented, reject such targets rather than checking
+        # only the file portion and silently accepting a broken anchor/query suffix.
+        if target.startswith("#") or "#" in target:
+            errors.append(
+                f"{source}: local fragment target is outside the validated link contract: {target}"
+            )
+            continue
+        if target.startswith("?") or "?" in target:
+            errors.append(
+                f"{source}: local query target is outside the validated link contract: {target}"
+            )
+            continue
+
         resolved, relative = normalize_repo_relative(markdown_file, target)
         if relative is None:
-            missing.append(f"{source}: relative target escapes repository root: {target}")
+            errors.append(f"{source}: relative target escapes repository root: {target}")
             continue
         if relative in ALLOWED_GENERATED:
             continue
 
         checked += 1
         if not resolved.exists():
-            missing.append(f"{source}: {target}")
+            errors.append(f"{source}: {target}")
 
-if missing:
+if errors:
     raise SystemExit(
-        "Broken repository-relative Markdown links:\n" + "\n".join(missing)
+        "Broken or unsupported repository-relative Markdown links:\n" + "\n".join(errors)
     )
 
 print(
     f"Markdown links OK: {checked} rendered repository-relative inline, linked-image, "
-    "and reference-definition targets resolved."
+    "and reference-definition targets resolved; no unvalidated local fragments/queries present."
 )

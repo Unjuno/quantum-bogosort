@@ -1,6 +1,6 @@
 # S2.10 Robust Median-of-Means Certificate — Theorem Audit
 
-**Status:** post-v0.2 stacked theorem candidate
+**Status:** re-audited 2026-08-19; zero-variance boundary corrected on current `main`
 
 ## H — claim under review
 
@@ -20,15 +20,15 @@ Z_4=S^2,
 Z_5=(U-Y)^2.
 ```
 
-The theorem assumes explicit finite variance bounds:
+The theorem assumes explicit finite nonnegative variance bounds:
 
 ```math
-\mathrm{Var}(Z_j)\le v_j.
+0\le \mathrm{Var}(Z_j)\le v_j<\infty.
 ```
 
 ## T — proof audit
 
-### One-block control
+### One-block control and the zero-variance boundary
 
 For a block of size `m`:
 
@@ -38,7 +38,35 @@ For a block of size `m`:
 \frac{v_j}{m}.
 ```
 
-Chebyshev gives:
+The original proof immediately applied Chebyshev at radius:
+
+```math
+2\sqrt{\frac{v_j}{m}}.
+```
+
+That is valid when `v_j>0`, but the theorem also permits `v_j=0`. At `v_j=0`, the radius is zero and the ordinary Chebyshev division step cannot simply be invoked with a zero threshold.
+
+The boundary case is nevertheless exact. If:
+
+```math
+v_j=0,
+```
+
+then:
+
+```math
+0\le \mathrm{Var}(Z_j)\le0,
+```
+
+so:
+
+```math
+\mathrm{Var}(Z_j)=0.
+```
+
+Thus `Z_j=E[Z_j]` almost surely, every block mean equals the population mean almost surely, the MoM radius is zero, and the deviation probability is exactly zero.
+
+For `v_j>0`, Chebyshev gives:
 
 ```math
 P\!\left(
@@ -49,7 +77,7 @@ P\!\left(
 \frac14.
 ```
 
-**Audit:** PASS.
+**Audit:** original positive-variance argument PASS; zero-variance proof gap FOUND AND CORRECTED on 2026-08-19.
 
 ### Median amplification
 
@@ -59,9 +87,7 @@ Let `b` be an odd number of independent blocks. If the MoM estimator is outside 
 r_j=2\sqrt{\frac{v_j}{m}},
 ```
 
-at least half of the blocks must be bad.
-
-The bad-block indicators are independent across disjoint i.i.d. blocks and have expectations at most `1/4`. Hoeffding gives:
+at least half of the blocks must be bad. For `v_j>0`, the bad-block indicators are independent across disjoint i.i.d. blocks and have expectations at most `1/4`. Hoeffding gives:
 
 ```math
 P\!\left(
@@ -70,6 +96,8 @@ B_j\ge\frac{b}{2}
 \le
 \exp\left(-\frac{b}{8}\right).
 ```
+
+For `v_j=0`, the MoM deviation probability is already zero, so the same final upper bound is trivially valid.
 
 Thus choosing:
 
@@ -83,7 +111,7 @@ makes the failure probability for one target at most:
 \frac{\delta}{5}.
 ```
 
-**Audit:** PASS.
+**Audit:** PASS after the zero-variance split.
 
 ### Five-target simultaneous event
 
@@ -99,7 +127,15 @@ No independence across the five target variables is required.
 
 ### S2.8 composition
 
-The five robust intervals provide exactly the S2.8 inputs. Therefore:
+The five robust intervals provide exactly the S2.8 inputs. The numerical upper envelopes for the nonnegative target moments are clipped by:
+
+```math
+U_{S^2}^+=\max\{0,U_{S^2}\},
+\qquad
+U_M^+=\max\{0,U_M\},
+```
+
+so the reported certificate remains real-valued on the full sample space. Therefore:
 
 ```math
 \mathrm{Cov}(U,S)
@@ -192,11 +228,11 @@ This limitation is explicitly stated in the theorem.
 
 S2.10 establishes that the S2.8 QBS covariance-composition layer does not intrinsically require boundedness or exponential tails. It only requires a method that produces valid simultaneous confidence envelopes for the five target expectations.
 
-Median-of-means supplies such envelopes under finite variance of the target variables themselves.
+Median-of-means supplies such envelopes under finite variance of the target variables themselves, including the exact `v_j=0` boundary where the corresponding target is almost surely constant.
 
 ## ERROR CHECK
 
-1. The Chebyshev radius gives per-block bad probability at most `1/4`.
+1. For `v_j>0`, the Chebyshev radius gives per-block bad probability at most `1/4`; for `v_j=0`, the deviation probability is exactly zero because the target is almost surely constant.
 2. The block-level Hoeffding exponent is `exp(-b/8)`.
 3. `b >= 8 log(5/delta)` yields per-target failure at most `delta/5`.
 4. The five-target union bound yields family failure at most `delta`.
@@ -207,4 +243,4 @@ Median-of-means supplies such envelopes under finite variance of the target vari
 
 ## Audit conclusion
 
-**S2.10 IS MATHEMATICALLY SOUND UNDER ITS STATED FINITE-VARIANCE BOUNDS FOR THE FIVE S2.8 TARGET VARIABLES AND THE I.I.D. BLOCK CONSTRUCTION.**
+**S2.10 IS MATHEMATICALLY SOUND UNDER NONNEGATIVE FINITE-VARIANCE BOUNDS FOR THE FIVE S2.8 TARGET VARIABLES AFTER EXPLICITLY SEPARATING THE ZERO-VARIANCE BOUNDARY FROM THE POSITIVE-VARIANCE CHEBYSHEV ARGUMENT.**

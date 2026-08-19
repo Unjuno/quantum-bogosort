@@ -29,7 +29,8 @@ required = [
     "experiments/exp1_fosd_and_stress.py", "experiments/exp2_minimal_agent.py",
     "experiments/exp3_recognition_decomposition.py", "experiments/exp4_interaction.py",
     "experiments/exp5_branch_map.py", "experiments/manifest.csv",
-    "supplementary/README.md", "supplementary/multi_observer.md", "supplementary/binary_soft_qbs.md",
+    "supplementary/README.md", "supplementary/research_notes.md",
+    "supplementary/multi_observer.md", "supplementary/binary_soft_qbs.md",
     "supplementary/repeated_filtering.md", "supplementary/gaussian_model.md", "supplementary/adaptive_agent.md",
     "supplementary/finite_sample_certificate.md", "supplementary/selection_validity.md",
     "supplementary/confidence_envelope_certificate.md", "supplementary/light_tail_certificate.md",
@@ -74,6 +75,6 @@ if missing_sections:
 
 print(
     f"Repository structure OK: {len(required)} required files, all five core theory "
-    f"sources, archived experiment provenance, both pre-announcement audit records, "
+    f"sources, consolidated/archived research provenance, both pre-announcement audit records, "
     f"runtime/citation/bibliography/figure-set validators, and {len(section_refs)} manuscript sections found."
 )

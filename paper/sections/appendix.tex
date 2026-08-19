@@ -1,12 +1,18 @@
 \appendix
 \section{Proofs and Supplementary Derivations}
 
-This appendix collects the complete measure-theoretic proofs used by the manuscript. Throughout, $S\ge 0$, $0<\mathbb E[S]<\infty$, and all displayed expectations are assumed finite whenever required.
+This appendix collects the complete measure-theoretic proofs used by the manuscript. Integrability conditions needed to define each expectation or covariance are stated explicitly at the relevant result rather than being left to a blanket finiteness convention.
 
 \subsection{Covariance identity}
 
 \begin{theorem}[QBS covariance identity]
-For any random variable $X$ such that $\mathbb E[|X|S]<\infty$,
+Let $S\ge0$ with $0<\mathbb E[S]<\infty$. For any random variable $X$ such that
+\[
+\mathbb E[|X|]<\infty,
+\qquad
+\mathbb E[|X|S]<\infty,
+\]
+we have
 \[
 \mathbb E_{\mathrm{FP}}[X]-\mathbb E[X]
 =
@@ -62,7 +68,7 @@ Apply the covariance identity to the bounded random variable
 \[
 Z=\mathbf 1_{\{X\ge c\}}.
 \]
-Then $\mathbb E[Z]=P(X\ge c)$ and $\mathbb E_{\mathrm{FP}}[Z]=P_{\mathrm{FP}}(X\ge c)$.
+Then $\mathbb E[Z]=P(X\ge c)$ and $\mathbb E_{\mathrm{FP}}[Z]=P_{\mathrm{FP}}(X\ge c)$. Because $Z$ is bounded, $\mathbb E[|Z|]<\infty$ and $\mathbb E[|Z|S]\le\mathbb E[S]<\infty$.
 \end{proof}
 
 \subsection{Monotone accessibility and first-order stochastic dominance}
@@ -148,7 +154,15 @@ Positive Pearson correlation between $X$ and $S$ does not imply FOSD. The proof 
 
 \subsection{Recognition decomposition}
 
-Let recognition state $R\in\{0,1\}$ induce policy-dependent pairs $(U_R,S_R)$ and define
+Let recognition state $R\in\{0,1\}$ induce policy-dependent pairs $(U_R,S_R)$. For each $R$, assume
+\[
+0<\mathbb E[S_R]<\infty,
+\qquad
+\mathbb E[|U_R|]<\infty,
+\qquad
+\mathbb E[|U_R|S_R]<\infty.
+\]
+Define
 \[
 V_R
 =
@@ -204,7 +218,11 @@ almost surely, then $V_1-V_0=0$ exactly.
 
 \subsection{Policy--QBS interaction decomposition}
 
-Let
+For the general selector-changing identity, additionally assume
+\[
+\mathbb E[|U_1|S_0]<\infty,
+\]
+so that the intermediate term $Q(U_1,S_0)$ is defined. Let
 \[
 D=U_1-U_0,
 \qquad

@@ -19,8 +19,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      - name: Install Python dependencies
+          python-version: '3.11.15'
+      - name: Install pinned Python dependencies
         run: pip install -r requirements.txt
       - name: Compile experiment, figure, and validation scripts
         run: python -m py_compile experiments/*.py figures/*.py scripts/*.py
@@ -30,7 +30,7 @@ jobs:
         run: python scripts/validate_repository_structure.py
       - name: Validate repository-relative Markdown links
         run: python scripts/validate_markdown_links.py
-      - name: Render every Markdown file through GitHub GFM
+      - name: Validate Markdown GFM structure through GitHub API
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/validate_github_markdown_render.py
@@ -41,6 +41,21 @@ jobs:
           python experiments/exp3_recognition_decomposition.py
           python experiments/exp4_interaction.py
           python experiments/exp5_branch_map.py
+      - name: Verify committed reproduction outputs
+        run: |
+          git diff --exit-code -- \
+            data/processed/e1_fosd_reproduction.csv \
+            data/processed/e1_independence_null_reproduction.csv \
+            data/processed/e1_nonmonotone_counterexample_reproduction.csv \
+            data/processed/e2_minimal_agent_reproduction.csv \
+            data/processed/e3_recognition_decomposition_reproduction.csv \
+            data/processed/e3_recognition_null_reproduction.csv \
+            data/processed/e4_fixed_selector_sign_reproduction.csv \
+            data/processed/e4_general_interaction_reproduction.csv \
+            data/processed/e5_q_paired_reproduction.csv \
+            data/processed/e5_rho_paired_reproduction.csv \
+            data/processed/e5_shared_vs_independent_recognition.csv \
+            data/processed/e5_shared_recognition_contrasts.csv
       - name: Regenerate repository figures
         run: |
           python figures/generate_figures.py
@@ -62,7 +77,7 @@ jobs:
           test -s figures/generated_pdf/fig6_branch_coherence.pdf
       - name: Validate committed SVG browser structure
         run: python scripts/validate_svg_sources.py
-      - name: Verify committed SVG reproducibility
+      - name: Verify committed SVG and theorem-illustration reproducibility
         run: |
           git diff --exit-code -- \
             figures/generated/ \
@@ -77,8 +92,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      - name: Install Python dependencies
+          python-version: '3.11.15'
+      - name: Install pinned Python dependencies
         run: pip install -r requirements.txt
       - name: Generate manuscript figure PDFs
         run: python figures/generate_pdf_figures.py

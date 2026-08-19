@@ -1,9 +1,11 @@
 """Render every repository Markdown file through GitHub's own GFM API.
 
 This complements local syntax checks. It catches page-level parser regressions where
-valid-looking source swallows headings, tables, images, or fenced math/Mermaid/code
-blocks when GitHub performs its server-side GFM conversion. Browser-side MathJax and
-Mermaid execution still require direct UI inspection.
+valid-looking source swallows headings, tables, inline images, or ordinary fenced code
+blocks during GitHub's server-side GFM conversion. Fenced ``math`` and ``mermaid``
+blocks are counted for audit reporting but are not required to map to ``<pre>``: GitHub
+may route those special block types through rendering-specific HTML. Their actual
+MathJax/Mermaid presentation remains a direct browser-UI release gate.
 """
 from __future__ import annotations
 
@@ -29,6 +31,7 @@ TABLE_SEPARATOR_RE = re.compile(
 IMAGE_RE = re.compile(r"!\[[^\]]*\]\([^)]+\)")
 FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
+SPECIAL_RENDER_INFO = {"math", "mermaid"}
 
 
 class RenderedStructure(HTMLParser):
@@ -38,6 +41,7 @@ class RenderedStructure(HTMLParser):
         self.tables = 0
         self.images = 0
         self.pre_blocks = 0
+        self.math_renderers = 0
 
     def handle_starttag(self, tag: str, attrs) -> None:  # type: ignore[override]
         if tag in {"h1", "h2", "h3", "h4", "h5", "h6"}:
@@ -48,6 +52,10 @@ class RenderedStructure(HTMLParser):
             self.images += 1
         elif tag == "pre":
             self.pre_blocks += 1
+        elif tag == "math-renderer":
+            # Informational only. GitHub's HTML carrier for math is not part of the
+            # repository's stable validation contract.
+            self.math_renderers += 1
 
 
 def closes_fence(line: str, marker: str) -> bool:
@@ -62,12 +70,19 @@ def valid_fence_opener(marker: str, info: str) -> bool:
     return marker[0] != "`" or "`" not in info
 
 
-def source_structure(text: str) -> tuple[int, int, int, int]:
-    """Count render-critical structures outside/at valid CommonMark fenced blocks."""
+def fence_info_name(info: str) -> str:
+    stripped = info.strip()
+    return stripped.split(None, 1)[0].lower() if stripped else ""
+
+
+def source_structure(text: str) -> tuple[int, int, int, int, int, int]:
+    """Count render-critical structures and classify valid CommonMark fences."""
     headings = 0
     tables = 0
     images = 0
-    fences = 0
+    ordinary_fences = 0
+    math_fences = 0
+    mermaid_fences = 0
     fence_marker: str | None = None
 
     for line in text.splitlines():
@@ -82,7 +97,13 @@ def source_structure(text: str) -> tuple[int, int, int, int]:
             info = match.group(2)
             if valid_fence_opener(marker, info):
                 fence_marker = marker
-                fences += 1
+                info_name = fence_info_name(info)
+                if info_name == "math":
+                    math_fences += 1
+                elif info_name == "mermaid":
+                    mermaid_fences += 1
+                else:
+                    ordinary_fences += 1
                 continue
 
         if HEADING_RE.match(line):
@@ -91,7 +112,7 @@ def source_structure(text: str) -> tuple[int, int, int, int]:
             tables += 1
         images += len(IMAGE_RE.findall(line))
 
-    return headings, tables, images, fences
+    return headings, tables, images, ordinary_fences, math_fences, mermaid_fences
 
 
 def render_with_github(text: str) -> str:
@@ -127,11 +148,25 @@ def render_with_github(text: str) -> str:
 def main() -> None:
     errors: list[str] = []
     files = sorted(path for path in ROOT.rglob("*.md") if ".git" not in path.parts)
+    total_ordinary = 0
+    total_math = 0
+    total_mermaid = 0
+    observed_math_renderers = 0
 
     for path in files:
         relative = path.relative_to(ROOT).as_posix()
         text = path.read_text(encoding="utf-8")
-        expected_headings, expected_tables, expected_images, expected_fences = source_structure(text)
+        (
+            expected_headings,
+            expected_tables,
+            expected_images,
+            ordinary_fences,
+            math_fences,
+            mermaid_fences,
+        ) = source_structure(text)
+        total_ordinary += ordinary_fences
+        total_math += math_fences
+        total_mermaid += mermaid_fences
 
         try:
             rendered = render_with_github(text)
@@ -145,6 +180,7 @@ def main() -> None:
 
         parser = RenderedStructure()
         parser.feed(rendered)
+        observed_math_renderers += parser.math_renderers
 
         if parser.headings < expected_headings:
             errors.append(
@@ -158,17 +194,21 @@ def main() -> None:
             errors.append(
                 f"{relative}: rendered images {parser.images} < source images {expected_images}"
             )
-        if parser.pre_blocks < expected_fences:
+        if parser.pre_blocks < ordinary_fences:
             errors.append(
-                f"{relative}: rendered fenced/pre blocks {parser.pre_blocks} < source fences {expected_fences}"
+                f"{relative}: rendered <pre> blocks {parser.pre_blocks} < ordinary source fences {ordinary_fences}"
             )
 
     if errors:
         raise SystemExit("GitHub Markdown rendering validation failed:\n" + "\n".join(errors))
 
     print(
-        f"GitHub Markdown rendering OK: {len(files)} files rendered through the "
-        "GitHub GFM API with expected headings, tables, images, and fenced blocks preserved."
+        f"GitHub Markdown rendering OK: {len(files)} files rendered through the GitHub "
+        "GFM API; expected headings, tables, inline images, and ordinary fenced code "
+        f"blocks preserved. Source audit counted {total_ordinary} ordinary, {total_math} "
+        f"math, and {total_mermaid} Mermaid fences; GitHub returned "
+        f"{observed_math_renderers} <math-renderer> elements. MathJax/Mermaid visual "
+        "presentation remains a browser-UI gate."
     )
 
 

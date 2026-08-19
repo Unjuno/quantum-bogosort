@@ -78,7 +78,8 @@ def main() -> None:
         "source code: **MIT**",
         "theory, documentation, manuscript text, and figures: **CC BY 4.0**",
         "generated research datasets: **CC0 1.0**",
-        "GitHub's repository-level license badge may show MIT because it detects the root `LICENSE`; that does not override the file-type licensing map.",
+        "GitHub currently classifies the repository-level license as **Other / NOASSERTION**.",
+        "That repository-level classifier does not override the file-type licensing map.",
     ):
         require(README, readme, fragment, errors)
 

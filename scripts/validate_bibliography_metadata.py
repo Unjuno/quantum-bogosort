@@ -4,6 +4,11 @@ The manuscript intentionally uses the stock ``plain`` BibTeX style. Machine-read
 ``eprint``/``doi`` fields are therefore paired with standard printable fields:
 arXiv-only records are ``@misc`` entries with ``howpublished = {arXiv:<id>}``, while
 journal and book-chapter records carry a printable ``note = {doi:<doi>}``.
+
+A separate reviewed fact lock records the citation-key set, record type, year, canonical
+DOI/arXiv identifier, and provenance class. That lock prevents a later edit from silently
+reverting already-reviewed publication chronology. It does not replace external factual
+verification of the bibliography.
 """
 from __future__ import annotations
 
@@ -12,6 +17,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 BIB = ROOT / "paper/references.bib"
+FACT_LOCK = ROOT / "paper/bibliography_fact_lock.md"
 ENTRY_START_RE = re.compile(r"@(\w+)\s*\{\s*([^,\s]+)\s*,", re.IGNORECASE)
 FIELD_RE = re.compile(r"^\s*([A-Za-z][A-Za-z0-9]*)\s*=\s*\{(.*)\}\s*,?\s*$")
 ARXIV_NEW_RE = re.compile(r"^\d{4}\.\d{4,5}(?:v\d+)?$")
@@ -19,6 +25,14 @@ ARXIV_OLD_RE = re.compile(r"^[a-z-]+/\d{7}(?:v\d+)?$", re.IGNORECASE)
 ARXIV_CLASS_RE = re.compile(r"^[A-Za-z]+(?:[.-][A-Za-z]+)*$")
 DOI_RE = re.compile(r"^10\.\d{4,9}/\S+$")
 ALLOWED_TYPES = {"article", "incollection", "misc"}
+FACT_LOCK_HEADER = ["citation_key", "record_type", "year", "canonical_id", "provenance"]
+ALLOWED_PROVENANCE = {
+    "definitive-publication",
+    "retained-early-preprint",
+    "retained-preprint",
+    "retained-working-paper",
+    "latest-working-preprint",
+}
 
 
 def split_entries(text: str) -> list[tuple[str, str, str]]:
@@ -87,10 +101,86 @@ def require_fields(key: str, fields: dict[str, str], names: tuple[str, ...], err
             errors.append(f"{key}: missing/nonempty required field {name}")
 
 
+def parse_fact_lock(text: str, errors: list[str]) -> dict[str, dict[str, str]]:
+    """Parse the single Markdown fact-lock table into a citation-key mapping."""
+    table_lines = [line.strip() for line in text.splitlines() if line.strip().startswith("|")]
+    if len(table_lines) < 3:
+        errors.append("paper/bibliography_fact_lock.md: missing bibliography fact-lock table")
+        return {}
+
+    def cells(line: str) -> list[str]:
+        return [cell.strip() for cell in line.strip().strip("|").split("|")]
+
+    header = cells(table_lines[0])
+    if header != FACT_LOCK_HEADER:
+        errors.append(
+            "paper/bibliography_fact_lock.md: fact-lock header must be exactly "
+            f"{FACT_LOCK_HEADER!r}; got {header!r}"
+        )
+
+    separator = cells(table_lines[1])
+    if len(separator) != len(FACT_LOCK_HEADER) or any(
+        not re.fullmatch(r":?-{3,}:?", cell) for cell in separator
+    ):
+        errors.append("paper/bibliography_fact_lock.md: malformed Markdown table separator")
+
+    records: dict[str, dict[str, str]] = {}
+    for line_no, line in enumerate(table_lines[2:], start=3):
+        row = cells(line)
+        if len(row) != len(FACT_LOCK_HEADER):
+            errors.append(
+                f"paper/bibliography_fact_lock.md: table row {line_no} has {len(row)} cells; "
+                f"expected {len(FACT_LOCK_HEADER)}"
+            )
+            continue
+        record = dict(zip(FACT_LOCK_HEADER, row, strict=True))
+        key = record["citation_key"]
+        if not key:
+            errors.append(f"paper/bibliography_fact_lock.md: table row {line_no} has empty citation_key")
+            continue
+        if key in records:
+            errors.append(f"paper/bibliography_fact_lock.md: duplicate citation_key {key}")
+            continue
+        if record["record_type"] not in ALLOWED_TYPES:
+            errors.append(
+                f"paper/bibliography_fact_lock.md:{key}: unsupported record_type "
+                f"{record['record_type']!r}"
+            )
+        if not re.fullmatch(r"(?:19|20)\d{2}", record["year"]):
+            errors.append(
+                f"paper/bibliography_fact_lock.md:{key}: invalid four-digit year {record['year']!r}"
+            )
+        if record["provenance"] not in ALLOWED_PROVENANCE:
+            errors.append(
+                f"paper/bibliography_fact_lock.md:{key}: unsupported provenance "
+                f"{record['provenance']!r}"
+            )
+        canonical_id = record["canonical_id"]
+        if canonical_id.startswith("doi:"):
+            if not DOI_RE.fullmatch(canonical_id.removeprefix("doi:")):
+                errors.append(
+                    f"paper/bibliography_fact_lock.md:{key}: malformed DOI canonical_id {canonical_id!r}"
+                )
+        elif canonical_id.startswith("arxiv:"):
+            eprint = canonical_id.removeprefix("arxiv:")
+            if not (ARXIV_NEW_RE.fullmatch(eprint) or ARXIV_OLD_RE.fullmatch(eprint)):
+                errors.append(
+                    f"paper/bibliography_fact_lock.md:{key}: malformed arXiv canonical_id {canonical_id!r}"
+                )
+        else:
+            errors.append(
+                f"paper/bibliography_fact_lock.md:{key}: canonical_id must begin doi: or arxiv:"
+            )
+        records[key] = record
+    return records
+
+
 def main() -> None:
     errors: list[str] = []
     if not BIB.is_file():
         raise SystemExit("Missing paper/references.bib")
+    if not FACT_LOCK.is_file():
+        raise SystemExit("Missing paper/bibliography_fact_lock.md")
 
     try:
         entries = split_entries(BIB.read_text(encoding="utf-8"))
@@ -100,9 +190,12 @@ def main() -> None:
     if not entries:
         errors.append("paper/references.bib contains no entries")
 
+    fact_lock = parse_fact_lock(FACT_LOCK.read_text(encoding="utf-8"), errors)
+
     keys: set[str] = set()
     dois: dict[str, str] = {}
     eprints: dict[str, str] = {}
+    bib_records: dict[str, tuple[str, dict[str, str]]] = {}
     article_count = 0
     incollection_count = 0
     misc_count = 0
@@ -118,6 +211,7 @@ def main() -> None:
             )
 
         fields = parse_fields(key, body, errors)
+        bib_records[key] = (entry_type, fields)
         require_fields(key, fields, ("author", "title", "year"), errors)
 
         year = fields.get("year", "")
@@ -222,6 +316,52 @@ def main() -> None:
             if any(token in lowered for token in ("todo", "tbd", "placeholder", "example.com")):
                 errors.append(f"{key}: placeholder-like value in {field_name}: {value!r}")
 
+    if set(fact_lock) != keys:
+        missing_from_lock = sorted(keys - set(fact_lock))
+        missing_from_bib = sorted(set(fact_lock) - keys)
+        if missing_from_lock:
+            errors.append(
+                "bibliography fact lock is missing BibTeX key(s): " + ", ".join(missing_from_lock)
+            )
+        if missing_from_bib:
+            errors.append(
+                "bibliography fact lock names absent BibTeX key(s): " + ", ".join(missing_from_bib)
+            )
+
+    for key in sorted(keys & set(fact_lock)):
+        entry_type, fields = bib_records[key]
+        locked = fact_lock[key]
+        if entry_type != locked["record_type"]:
+            errors.append(
+                f"{key}: BibTeX record type @{entry_type} != reviewed fact lock @{locked['record_type']}"
+            )
+        if fields.get("year", "") != locked["year"]:
+            errors.append(
+                f"{key}: BibTeX year {fields.get('year')!r} != reviewed fact lock {locked['year']!r}"
+            )
+
+        canonical_id = locked["canonical_id"]
+        if canonical_id.startswith("doi:"):
+            locked_doi = canonical_id.removeprefix("doi:")
+            if fields.get("doi", "") != locked_doi:
+                errors.append(
+                    f"{key}: BibTeX DOI {fields.get('doi')!r} != reviewed fact lock {locked_doi!r}"
+                )
+            if locked["provenance"] != "definitive-publication":
+                errors.append(
+                    f"{key}: DOI-backed fact lock must use definitive-publication provenance"
+                )
+        elif canonical_id.startswith("arxiv:"):
+            locked_eprint = canonical_id.removeprefix("arxiv:")
+            if fields.get("eprint", "") != locked_eprint:
+                errors.append(
+                    f"{key}: BibTeX eprint {fields.get('eprint')!r} != reviewed fact lock {locked_eprint!r}"
+                )
+            if locked["provenance"] == "definitive-publication":
+                errors.append(
+                    f"{key}: arXiv-backed fact lock cannot use definitive-publication provenance"
+                )
+
     if errors:
         raise SystemExit("Bibliography metadata validation failed:\n" + "\n".join(errors))
 
@@ -230,7 +370,8 @@ def main() -> None:
         f"{len(entries)} unique records ({article_count} journal @article, "
         f"{incollection_count} book-chapter @incollection, {misc_count} arXiv @misc); "
         f"{len(dois)} unique printable DOI records and {len(eprints)} unique printable arXiv "
-        "identifiers/classes validated for stock plain.bst."
+        f"identifiers/classes validated for stock plain.bst; {len(fact_lock)} reviewed fact-lock "
+        "records match citation key, class, year, and canonical identifier exactly."
     )
 
 

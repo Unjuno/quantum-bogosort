@@ -85,7 +85,7 @@ jobs:
         run: python scripts/validate_figure_set.py
       - name: Validate committed SVG browser structure
         run: python scripts/validate_svg_sources.py
-      - name: Verify committed outputs and clean worktree
+      - name: Verify committed outputs and clean tracked worktree
         run: |
           git diff --exit-code -- \
             figures/generated/ \
@@ -93,10 +93,12 @@ jobs:
           git diff --exit-code
           untracked="$(git ls-files --others --exclude-standard)"
           if [ -n "$untracked" ]; then
-            echo "Unexpected untracked validation artifacts:"
+            echo "Unexpected nonignored validation artifacts:"
             printf '%s\n' "$untracked"
             exit 1
           fi
+      - name: Validate ignored worktree artifacts
+        run: python scripts/validate_worktree_artifacts.py
 
   manuscript-build:
     runs-on: ubuntu-24.04

@@ -1,7 +1,7 @@
 # S2.8 Confidence-Envelope Certificate — Audit
 
-**Date:** 2026-08-17  
-**Status:** post-v0.2 stacked theorem candidate
+**Date:** 2026-08-17; re-audited 2026-08-19  
+**Status:** historical derivation audit with current-main total-definedness correction
 
 ## H — target
 
@@ -103,20 +103,60 @@ is a valid reported upper envelope on the simultaneous event.
 
 **Audit:** PASS.
 
-## T — S2.4 composition
+## T — MSE envelope and total-definedness correction
 
-If:
+The original audit wrote the certificate as:
 
 ```math
-E[(U-Y)^2]\le U_M,
+D_{\mathrm{env}}
+=
+C_L-\sqrt{U_MV_U}.
 ```
 
-then S2.4 gives:
+On the simultaneous confidence event this is valid because:
+
+```math
+E[(U-Y)^2]\le U_M
+```
+
+and the nonnegative left-hand side forces `U_M>=0` on that event.
+
+However, S2.8 defines `D_env` as a random statistic on the full sample space. Outside the simultaneous-validity event, the theorem did not require the statistical procedure to return a nonnegative numerical `U_M`. A negative off-event `U_M` would make the displayed square root non-real even though the coverage proof never relies on that sample.
+
+Current `main` therefore defines:
+
+```math
+U_M^+
+=
+\max\{0,U_M\},
+```
+
+and:
+
+```math
+D_{\mathrm{env}}
+=
+C_L-\sqrt{U_M^+V_U}.
+```
+
+On the simultaneous event `U_M^+=U_M`, so this correction changes neither the lower bound nor its coverage there. It only makes the reported certificate real-valued on all samples.
+
+**Audit:** original on-event inequality PASS; full-sample total-definedness gap FOUND AND CORRECTED on 2026-08-19.
+
+## T — S2.4 composition
+
+On the simultaneous event:
+
+```math
+E[(U-Y)^2]\le U_M=U_M^+.
+```
+
+S2.4 therefore gives:
 
 ```math
 \mathrm{Cov}(U,S)
 \ge
-C_L-\sqrt{U_MV_U}
+C_L-\sqrt{U_M^+V_U}
 =
 D_{\mathrm{env}}.
 ```
@@ -136,7 +176,7 @@ P\!\left(
 \ge1-\delta.
 ```
 
-**Audit:** PASS.
+**Audit:** PASS after the total-definedness correction.
 
 ## T — first-person lower bound
 
@@ -204,7 +244,7 @@ This prevents the QBS theorem from inheriting unspoken distributional assumption
 
 ## U — role in theorem architecture
 
-The post-v0.2 stack now separates:
+The post-v0.2 stack separates:
 
 ```math
 \text{QBS covariance algebra}
@@ -216,7 +256,7 @@ from:
 \text{statistical concentration method}.
 ```
 
-S2.5 is a bounded Hoeffding instantiation. S2.8 is the generic composition layer. Future sub-Gaussian, empirical-Bernstein, robust, or sequential results should prove only that their own moment envelopes satisfy the S2.8 input event.
+S2.5 is a bounded Hoeffding instantiation. S2.8 is the generic composition layer. S2.9 and S2.10 supply light-tail and robust finite-moment instantiations.
 
 ## ERROR CHECK
 
@@ -225,12 +265,13 @@ S2.5 is a bounded Hoeffding instantiation. S2.8 is the generic composition layer
 3. The variance bound subtracts a **lower** bound on the squared mean.
 4. The five moment bounds must hold simultaneously.
 5. The theorem assumes valid input intervals; it does not validate the interval-construction method itself.
-6. The FP denominator substitution uses `U_S` only when the certified covariance lower bound is positive.
-7. `D_env<=0` remains inconclusive.
-8. Selection among interval methods or candidate rules requires S2.6–S2.7-style accounting.
-9. S2.8 is distribution-agnostic only at the composition layer; the upstream confidence method may impose strong distributional assumptions.
-10. No Everettian physical conclusion follows from passing the certificate.
+6. `U_M^+=max(0,U_M)` is required to make the random certificate total on samples outside the confidence event; on the confidence event it equals `U_M`.
+7. The FP denominator substitution uses `U_S` only when the certified covariance lower bound is positive.
+8. `D_env<=0` remains inconclusive.
+9. Selection among interval methods or candidate rules requires S2.6–S2.7-style accounting.
+10. S2.8 is distribution-agnostic only at the composition layer; the upstream confidence method may impose strong distributional assumptions.
+11. No Everettian physical conclusion follows from passing the certificate.
 
 ## Audit conclusion
 
-**S2.8 IS MATHEMATICALLY SOUND AS A GENERIC COMPOSITION THEOREM FROM A VALID SIMULTANEOUS MOMENT CONFIDENCE ENVELOPE TO A POPULATION COVARIANCE LOWER CERTIFICATE.**
+**S2.8 IS MATHEMATICALLY SOUND AS A GENERIC COMPOSITION THEOREM AFTER THE 2026-08-19 OFF-EVENT TOTAL-DEFINEDNESS CORRECTION `U_M^+=MAX(0,U_M)`. THE CORRECTION DOES NOT ALTER THE CERTIFICATE ON ITS SIMULTANEOUS VALIDITY EVENT.**

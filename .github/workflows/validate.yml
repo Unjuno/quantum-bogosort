@@ -33,6 +33,8 @@ jobs:
         run: python scripts/validate_markdown_math.py
       - name: Validate research repository structure
         run: python scripts/validate_repository_structure.py
+      - name: Validate locked T1-T5 canonical theorem body
+        run: python scripts/validate_core_theorem_lock.py
       - name: Validate citation metadata
         run: python scripts/validate_citation_metadata.py
       - name: Validate bibliography metadata

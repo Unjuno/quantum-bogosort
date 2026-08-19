@@ -47,6 +47,8 @@ jobs:
         run: python scripts/validate_snapshot_refs.py
       - name: Validate GitHub issue-template front matter
         run: python scripts/validate_issue_templates.py
+      - name: Validate canonical experiment cards
+        run: python scripts/validate_experiment_cards.py
       - name: Validate experiment manifest
         run: python scripts/validate_manifest.py
       - name: Validate repository-relative Markdown links

@@ -34,28 +34,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python scripts/validate_github_markdown_render.py
-      - name: Run reproduction scripts
+      - name: Run reproduction scripts and scientific invariants
         run: |
           python experiments/exp1_fosd_and_stress.py
           python experiments/exp2_minimal_agent.py
           python experiments/exp3_recognition_decomposition.py
           python experiments/exp4_interaction.py
           python experiments/exp5_branch_map.py
-      - name: Verify committed reproduction outputs
-        run: |
-          git diff --exit-code -- \
-            data/processed/e1_fosd_reproduction.csv \
-            data/processed/e1_independence_null_reproduction.csv \
-            data/processed/e1_nonmonotone_counterexample_reproduction.csv \
-            data/processed/e2_minimal_agent_reproduction.csv \
-            data/processed/e3_recognition_decomposition_reproduction.csv \
-            data/processed/e3_recognition_null_reproduction.csv \
-            data/processed/e4_fixed_selector_sign_reproduction.csv \
-            data/processed/e4_general_interaction_reproduction.csv \
-            data/processed/e5_q_paired_reproduction.csv \
-            data/processed/e5_rho_paired_reproduction.csv \
-            data/processed/e5_shared_vs_independent_recognition.csv \
-            data/processed/e5_shared_recognition_contrasts.csv
+      - name: Verify manifest-declared reproduction outputs
+        run: python scripts/validate_reproduction_outputs.py
       - name: Regenerate repository figures
         run: |
           python figures/generate_figures.py
@@ -82,7 +69,7 @@ jobs:
           git diff --exit-code -- \
             figures/generated/ \
             data/processed/fig2_fosd_theorem_illustration.csv
-      - name: Validate manifest references
+      - name: Validate experiment manifest
         run: python scripts/validate_manifest.py
 
   manuscript-build:

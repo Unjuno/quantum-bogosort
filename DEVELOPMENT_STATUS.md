@@ -92,7 +92,9 @@ The second pass audited the auditing machinery itself. It corrected or strengthe
 - the root README exposes the `main` validation badge;
 - the open S2 review Issue #14 was synchronized from stale `$$` / `\operatorname{Cov}` syntax to fenced `math` / `\mathrm{Cov}` without altering its scientific content;
 - a generic manuscript phrase `recognition-activated policy` was aligned to the repository's general `recognition-dependent policy` terminology; the separate evidence-threshold activation model remains intentionally named as such;
-- after repository validation, tracked diffs and nonignored untracked files anywhere in the checkout are rejected, closing the remaining side-effect gap that ordinary `git diff` alone would miss.
+- tracked diffs and nonignored untracked files anywhere in the repository-validation checkout are rejected;
+- ignored/untracked files are now separately validated against an explicit allowlist: Python bytecode under the three compiled source trees plus the exact six generated manuscript figure PDFs; unexpected ignored artifacts such as stray `*.log`/`*.out` files fail, and all six PDFs are required;
+- the ignored-artifact validator was independently negative-tested: the expected set passes, a synthetic `stray.log` fails, and a missing expected PDF fails.
 
 The newer Pass-2 validators were source-audited and wired into CI, but the literal network clone remains unavailable in this audit runtime. Therefore the first-pass local execution evidence does not automatically count as execution evidence for every later validator revision. The final GitHub Actions run remains required.
 
@@ -127,7 +129,7 @@ These bibliography and literature corrections affect provenance, chronology, and
 
 The current workflow is configured to run on push, pull request, and manual dispatch.
 
-`repository-validation` covers runtime/workflow consistency, Python compilation, Markdown math, repository structure, citation metadata, bibliography metadata, license/snapshot/issue-template checks, manifest, links, GitHub GFM conversion, E1–E5 scientific invariants, reproduction identity/data-tree cleanliness, figure generation, exact SVG/PDF figure-set validation, static SVG validation, committed SVG/Figure-2 data reproducibility, full tracked-tree cleanliness, and rejection of nonignored untracked artifacts.
+`repository-validation` covers runtime/workflow consistency, Python compilation, Markdown math, repository structure, citation metadata, bibliography metadata, license/snapshot/issue-template checks, manifest, links, GitHub GFM conversion, E1–E5 scientific invariants, reproduction identity/data-tree cleanliness, figure generation, exact SVG/PDF figure-set validation, static SVG validation, committed SVG/Figure-2 data reproducibility, full tracked-tree cleanliness, rejection of nonignored untracked artifacts, and explicit allowlisting/rejection of ignored untracked artifacts.
 
 `manuscript-build` independently validates the runtime contract, generates manuscript PDF figures, preflights the compiled LaTeX graph and citation/reference relationships, installs the TeX toolchain, builds `paper/main.pdf`, verifies it, and uploads it as an artifact.
 
@@ -167,5 +169,3 @@ Before broad announcement:
 4. optionally add a tag ruleset if platform-level update/deletion protection is desired for frozen release tags;
 5. normalize repository-header description/topics or explicitly defer that metadata cleanup;
 6. continue external proof/prior-art/Everett-bridge review as scientific/public-review work rather than repository QA.
-
-No new S2-numbered theorem or sixth core experiment should be added by default. New mathematical machinery should respond to a concrete modeling gap or review finding.

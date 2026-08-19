@@ -53,6 +53,7 @@ REQUIRED_REPOSITORY_COMMANDS = [
     "python scripts/validate_markdown_math.py",
     "python scripts/validate_repository_structure.py",
     "python scripts/validate_core_theorem_lock.py",
+    "python scripts/validate_supplementary_consistency.py",
     "python scripts/validate_citation_metadata.py",
     "python scripts/validate_bibliography_metadata.py",
     "python scripts/validate_license_map.py",
@@ -82,6 +83,7 @@ REPOSITORY_STAGE_ORDER = [
     "python -m py_compile experiments/*.py figures/*.py scripts/*.py",
     "python scripts/validate_repository_structure.py",
     "python scripts/validate_core_theorem_lock.py",
+    "python scripts/validate_supplementary_consistency.py",
     "python scripts/validate_experiment_cards.py",
     "python scripts/validate_manifest.py",
     "python experiments/exp1_fosd_and_stress.py",
@@ -315,7 +317,7 @@ def main() -> None:
         f"Python {expected_python}; {package_summary}; ubuntu-24.04; required jobs/commands and "
         "critical stage order present; read-only workflow security contract; audited "
         "checkout/setup-python/upload-artifact SHAs and multiplicities match exactly; "
-        "theorem/card/provenance and ignored/untracked artifact validation required."
+        "core/supplementary theorem, card/provenance, and ignored/untracked artifact validation required."
     )
 
 

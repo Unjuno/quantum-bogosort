@@ -134,7 +134,13 @@ P_{FP}(Z\in A)
 \frac{E[\mathbf 1_{\{Z\in A\}}S_T]}{E[S_T]}.
 ```
 
-For a discrete present state:
+For a discrete atom with positive base probability:
+
+```math
+P(Z=z)>0,
+```
+
+we may write:
 
 ```math
 P_{FP}(Z=z)
@@ -142,7 +148,7 @@ P_{FP}(Z=z)
 \frac{E[S_T\mid Z=z]P(Z=z)}{E[S_T]}.
 ```
 
-Therefore future accessibility can reweight present self-location whenever expected future accessibility differs across present states. This is a conditioning/change-of-measure statement, not backward causation: the base probability law for `Z` is not thereby changed.
+If `P(Z=z)=0`, absolute continuity of the weighted measure gives `P_FP(Z=z)=0`; a pointwise conditional-expectation value at that null atom is not required. Therefore future accessibility can reweight present self-location whenever expected future accessibility differs across positive-probability present states. This is a conditioning/change-of-measure statement, not backward causation: the base probability law for `Z` is not thereby changed.
 
 ## Informal interpretation only: effective or indexical luck
 

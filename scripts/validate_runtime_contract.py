@@ -4,6 +4,8 @@ This checks the primary numerical package pins and their installed versions,
 consistency between `.python-version` and GitHub Actions, audited reusable-action
 SHAs, checkout credential isolation, required validation/manuscript jobs and commands,
 critical stage ordering, and the read-only/clean-worktree workflow security contract.
+The complete audited workflow source is also Git-blob locked so comment/dead-text
+copies of required commands cannot turn the substring checks into a false PASS.
 It does not claim that every transitive wheel is cryptographically locked.
 """
 from __future__ import annotations
@@ -12,12 +14,14 @@ from collections import Counter
 from pathlib import Path
 import importlib
 import re
+import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 PYTHON_VERSION_FILE = ROOT / ".python-version"
 REQUIREMENTS = ROOT / "requirements.txt"
 WORKFLOW = ROOT / ".github/workflows/validate.yml"
+EXPECTED_WORKFLOW_BLOB = "35222797913aba83994c683079df185012e8cdc6"
 
 EXPECTED_PRIMARY_PACKAGES = {"numpy", "pandas", "matplotlib"}
 REQUIRED_JOBS = {"repository-validation", "manuscript-build"}
@@ -125,6 +129,17 @@ JOB_HEADER_RE = re.compile(r"^  ([A-Za-z0-9_-]+):\s*$", re.MULTILINE)
 TIMEOUT_RE = re.compile(r"^\s{4}timeout-minutes:\s*(\d+)\s*$", re.MULTILINE)
 
 
+def git_text(*args: str) -> str:
+    result = subprocess.run(
+        ["git", *args],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
 def split_jobs(workflow_text: str) -> dict[str, str]:
     """Return top-level `jobs:` entries without adding a YAML dependency."""
     jobs_pos = workflow_text.find("\njobs:\n")
@@ -154,6 +169,8 @@ def require_ordered_snippets(
     Presence checks alone can be defeated by moving a cleanup/verification command before
     the stage whose side effects it is meant to inspect. Relative-order checks keep those
     execution semantics part of the workflow contract without adding a YAML dependency.
+    The complete workflow blob lock separately prevents comments/dead text from satisfying
+    these human-readable substring checks without an explicit contract update.
     """
     previous_position = -1
     previous_snippet = "<start>"
@@ -219,6 +236,23 @@ def main() -> None:
             )
 
     workflow_text = WORKFLOW.read_text(encoding="utf-8")
+    try:
+        head_workflow_blob = git_text("rev-parse", "HEAD:.github/workflows/validate.yml")
+        worktree_workflow_blob = git_text("hash-object", ".github/workflows/validate.yml")
+    except subprocess.CalledProcessError as exc:
+        errors.append(f"unable to resolve validation-workflow Git blob identity: {exc}")
+    else:
+        if head_workflow_blob != EXPECTED_WORKFLOW_BLOB:
+            errors.append(
+                "committed validation-workflow drift: "
+                f"HEAD has {head_workflow_blob}, expected audited {EXPECTED_WORKFLOW_BLOB}"
+            )
+        if worktree_workflow_blob != EXPECTED_WORKFLOW_BLOB:
+            errors.append(
+                "working-tree validation-workflow drift: "
+                f"{worktree_workflow_blob}, expected audited {EXPECTED_WORKFLOW_BLOB}"
+            )
+
     require_snippets("workflow", workflow_text, REQUIRED_GLOBAL_WORKFLOW_SNIPPETS, errors)
     for snippet in FORBIDDEN_WORKFLOW_SNIPPETS:
         if snippet in workflow_text:
@@ -314,10 +348,11 @@ def main() -> None:
     )
     print(
         "Runtime contract validation passed: "
-        f"Python {expected_python}; {package_summary}; ubuntu-24.04; required jobs/commands and "
-        "critical stage order present; read-only workflow security contract; audited "
-        "checkout/setup-python/upload-artifact SHAs and multiplicities match exactly; "
-        "core/supplementary theorem, card/provenance, and ignored/untracked artifact validation required."
+        f"Python {expected_python}; {package_summary}; ubuntu-24.04; audited workflow blob; "
+        "required jobs/commands and critical stage order present; read-only workflow security "
+        "contract; audited checkout/setup-python/upload-artifact SHAs and multiplicities match "
+        "exactly; core/supplementary theorem, card/provenance, and ignored/untracked artifact "
+        "validation required."
     )
 
 

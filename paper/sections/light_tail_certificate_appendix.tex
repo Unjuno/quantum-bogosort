@@ -15,9 +15,9 @@ P\!\left(
 \sigma_X\sqrt{\frac{2t}{n}}
 \right)
 \le2e^{-t},
-\qquad X\in\{Y,S\}.
+\qquad X\in\{Y,S\},
 \]
-Suppose further that each of
+with $\sigma_X\ge0$. Suppose further that each of
 \[
 YS,\qquad S^2,\qquad R^2
 \]
@@ -28,8 +28,9 @@ P\!\left(
 \sqrt{\frac{2v_Wt}{n}}+
 \frac{b_Wt}{n}
 \right)
-\le2e^{-t}.
+\le2e^{-t},
 \]
+with $v_W\ge0$ and $b_W\ge0$.
 
 \begin{corollary}[Light-tail S2.8 instantiation]
 Let
@@ -67,6 +68,8 @@ U_{S^2}=\overline{S^2}+r_{S^2},
 \quad
 U_M=\overline{R^2}+r_{R^2}.
 \]
+The nonnegative parameter domain makes all radii nonnegative; hence $U_M\ge0$ for every sample and the generic S2.8 clipping $U_M^+=\max\{0,U_M\}$ equals $U_M$ identically in this instantiation.
+
 Let
 \[
 L_S^+=\max\{0,L_S\},
@@ -117,7 +120,7 @@ L_S\le\mathbb E[S]\le U_S,
 \qquad
 \mathbb E[(U-Y)^2]\le U_M.
 \]
-These are exactly the S2.8 inputs. Applying the deterministic S2.8 composition yields
+These are exactly the S2.8 inputs, with $U_M^+=U_M$ identically. Applying the deterministic S2.8 composition yields
 \[
 \operatorname{Cov}(U,S)
 \ge D_{\rm LT}

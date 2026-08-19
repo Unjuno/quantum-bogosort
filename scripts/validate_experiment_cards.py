@@ -4,7 +4,9 @@ The manifest fixes machine-readable experiment metadata and provenance. The Mark
 cards are the human review surface. This validator prevents either side from drifting
 while still looking superficially complete: titles/claims are locked, the seven rendered
 H2 sections and their order are fixed, and every manifest CSV must appear exactly once in
-``D — Data / Result`` and nowhere else in the rendered card surface.
+``D — Data / Result`` and nowhere else in the rendered card surface. Experiment cards
+standardize on ATX headings; Setext and raw-HTML H1/H2 forms are rejected so additional
+visible headings cannot evade the canonical schema parser.
 """
 from __future__ import annotations
 
@@ -61,6 +63,8 @@ H2_RE = re.compile(r"^ {0,3}##\s+(.+?)\s*$", re.MULTILINE)
 CSV_RE = re.compile(r"data/processed/([A-Za-z0-9_.-]+\.csv)")
 FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
+SETEXT_UNDERLINE_RE = re.compile(r"^ {0,3}(?:=+|-+)[ \t]*$")
+RAW_HTML_H1_H2_RE = re.compile(r"<\s*/?\s*h[12](?:\s|>)", re.IGNORECASE)
 
 
 def split_files(value: str) -> list[str]:
@@ -97,6 +101,28 @@ def rendered_markdown_surface(text: str) -> str:
         output.append(line)
 
     return "\n".join(output)
+
+
+def non_atx_heading_errors(relative: str, text: str) -> list[str]:
+    """Reject rendered H1/H2 forms outside the experiment-card ATX schema."""
+    errors: list[str] = []
+    lines = text.splitlines()
+
+    for index, line in enumerate(lines):
+        if RAW_HTML_H1_H2_RE.search(line):
+            errors.append(
+                f"{relative}:{index + 1}: raw-HTML H1/H2 is outside the canonical ATX card schema"
+            )
+
+        if index == 0 or not SETEXT_UNDERLINE_RE.match(line):
+            continue
+        previous = lines[index - 1]
+        if previous.strip():
+            errors.append(
+                f"{relative}:{index + 1}: Setext H1/H2 is outside the canonical ATX card schema"
+            )
+
+    return errors
 
 
 def sections(text: str) -> tuple[list[str], dict[str, str]]:
@@ -143,7 +169,9 @@ def main() -> None:
         if not card_path.is_file():
             errors.append(f"{experiment_id}: missing experiment card {expected['card']}")
             continue
+        relative = card_path.relative_to(ROOT).as_posix()
         text = rendered_markdown_surface(card_path.read_text(encoding="utf-8"))
+        errors.extend(non_atx_heading_errors(relative, text))
 
         h1 = H1_RE.findall(text)
         if h1 != [expected["heading"]]:
@@ -208,8 +236,8 @@ def main() -> None:
 
     print(
         "Experiment-card validation passed: E1-E5 canonical manifest titles/claims, rendered "
-        "H1 headings, ordered H/T/D/C/U + ERROR CHECK + Linked theory schema, and rendered "
-        "D-section-only CSV routing match exactly."
+        "ATX-only H1/H2 schema, ordered H/T/D/C/U + ERROR CHECK + Linked theory sections, and "
+        "rendered D-section-only CSV routing match exactly."
     )
 
 

@@ -40,6 +40,12 @@ Assume the five target variables have finite variances bounded by known constant
 j=1,\ldots,5.
 ```
 
+Since variances are nonnegative, a valid upper bound necessarily has:
+
+```math
+v_j\ge0.
+```
+
 Let:
 
 ```math
@@ -240,7 +246,15 @@ A block mean has variance at most:
 \frac{v_j}{m}.
 ```
 
-By Chebyshev:
+If `v_j=0`, then nonnegativity of variance and the assumed upper bound imply:
+
+```math
+\mathrm{Var}(Z_j)=0.
+```
+
+Hence `Z_j=E[Z_j]` almost surely, every block mean equals the population mean almost surely, `r_j=0`, and the desired MoM deviation event has probability zero. No Chebyshev division is needed in this boundary case.
+
+Now suppose `v_j>0`. By Chebyshev:
 
 ```math
 P\!\left(
@@ -275,7 +289,7 @@ B_j\ge\frac{b}{2}
 \exp\left(-\frac{b}{8}\right).
 ```
 
-Therefore:
+Therefore, for both `v_j=0` and `v_j>0`:
 
 ```math
 P\!\left(
@@ -398,7 +412,7 @@ The constants:
 v_1,\ldots,v_5
 ```
 
-must be valid population upper bounds, fixed independently of certification outcomes or themselves covered by additional confidence accounting.
+must be valid nonnegative population upper bounds, fixed independently of certification outcomes or themselves covered by additional confidence accounting.
 
 ### Small samples
 
@@ -439,7 +453,7 @@ The theorem still requires enough finite moments to estimate the five S2.8 targe
 ## ERROR CHECK
 
 1. The block count is chosen so `exp(-b/8) <= delta/5`.
-2. Chebyshev gives bad-block probability at most `1/4` at radius `2 sqrt(v_j/m)`.
+2. For `v_j>0`, Chebyshev gives bad-block probability at most `1/4` at radius `2 sqrt(v_j/m)`; for `v_j=0`, the target is almost surely constant and the deviation probability is exactly zero.
 3. Independence is required across blocks, not among `Y`, `S`, and `U` within one observation.
 4. The five MoM estimators may be statistically dependent; the union bound does not require independence across target variables.
 5. The theorem uses finite variance of all five target variables, not merely raw-variable finite variance.
@@ -451,4 +465,4 @@ The theorem still requires enough finite moments to estimate the five S2.8 targe
 
 ## Status
 
-**S2.10 MEDIAN-OF-MEANS INSTANTIATION PROVED UNDER FINITE VARIANCE BOUNDS FOR THE FIVE S2.8 TARGET VARIABLES.**
+**S2.10 MEDIAN-OF-MEANS INSTANTIATION PROVED UNDER NONNEGATIVE FINITE VARIANCE BOUNDS FOR THE FIVE S2.8 TARGET VARIABLES, INCLUDING THE ZERO-VARIANCE BOUNDARY CASE.**

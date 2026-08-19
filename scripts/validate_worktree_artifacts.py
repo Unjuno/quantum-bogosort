@@ -1,24 +1,42 @@
-"""Reject ignored/untracked artifacts outside the validation job's explicit allowlist.
+"""Reject ignored/untracked artifacts outside the validation job's exact allowlist.
 
-The repository-validation job intentionally creates Python bytecode caches through
-``py_compile`` and six ignored manuscript-figure PDFs. Other ignored files (for
-example an unexpected ``*.log`` or ``*.out`` written by a validator/experiment)
-should not be able to hide behind ``.gitignore`` and still produce a clean CI pass.
+The repository-validation job intentionally creates Python bytecode through the explicit
+``py_compile experiments/*.py figures/*.py scripts/*.py`` step and six ignored manuscript
+figure PDFs. Derive the exact bytecode paths from those top-level source files rather than
+allowing arbitrary ``*.pyc`` names anywhere under a cache directory. Other ignored files
+must not be able to hide behind ``.gitignore`` and still produce a clean CI pass.
 """
 from __future__ import annotations
 
+from importlib.util import cache_from_source
 from pathlib import Path
 import subprocess
 
 from validate_figure_set import EXPECTED_PDFS
 
 ROOT = Path(__file__).resolve().parents[1]
-BYTECODE_PREFIXES = (
-    "experiments/__pycache__/",
-    "figures/__pycache__/",
-    "scripts/__pycache__/",
+PYTHON_SOURCE_DIRS = (
+    ROOT / "experiments",
+    ROOT / "figures",
+    ROOT / "scripts",
 )
 EXPECTED_PDF_PATHS = {f"figures/generated_pdf/{name}" for name in EXPECTED_PDFS}
+
+
+def expected_bytecode_paths() -> set[str]:
+    """Mirror the workflow's top-level ``py_compile`` source globs exactly."""
+    paths: set[str] = set()
+    for directory in PYTHON_SOURCE_DIRS:
+        for source in sorted(directory.glob("*.py")):
+            cached = Path(cache_from_source(str(source))).resolve()
+            try:
+                paths.add(cached.relative_to(ROOT).as_posix())
+            except ValueError as exc:
+                raise SystemExit(
+                    "Ignored-artifact validation failed: derived bytecode path escapes repository: "
+                    f"{cached}"
+                ) from exc
+    return paths
 
 
 def ignored_untracked_files() -> set[str]:
@@ -35,15 +53,10 @@ def ignored_untracked_files() -> set[str]:
     }
 
 
-def allowed(path: str) -> bool:
-    if path in EXPECTED_PDF_PATHS:
-        return True
-    return path.endswith(".pyc") and path.startswith(BYTECODE_PREFIXES)
-
-
 def main() -> None:
     ignored = ignored_untracked_files()
-    unexpected = sorted(path for path in ignored if not allowed(path))
+    expected_pycs = expected_bytecode_paths()
+    expected = EXPECTED_PDF_PATHS | expected_pycs
 
     missing_pdfs = sorted(EXPECTED_PDF_PATHS - ignored)
     if missing_pdfs:
@@ -52,19 +65,24 @@ def main() -> None:
             "are not present as ignored/untracked outputs:\n" + "\n".join(missing_pdfs)
         )
 
+    missing_pycs = sorted(expected_pycs - ignored)
+    if missing_pycs:
+        raise SystemExit(
+            "Ignored-artifact validation failed: expected py_compile bytecode output(s) "
+            "are missing:\n" + "\n".join(missing_pycs)
+        )
+
+    unexpected = sorted(ignored - expected)
     if unexpected:
         raise SystemExit(
             "Ignored-artifact validation failed: unexpected ignored/untracked file(s):\n"
             + "\n".join(unexpected)
         )
 
-    bytecode_count = sum(
-        1 for path in ignored if path.endswith(".pyc") and path.startswith(BYTECODE_PREFIXES)
-    )
     print(
-        "Ignored-artifact validation passed: only expected Python bytecode caches and the "
-        f"{len(EXPECTED_PDF_PATHS)} manuscript figure PDFs are ignored/untracked "
-        f"({bytecode_count} bytecode files)."
+        "Ignored-artifact validation passed: ignored/untracked files equal the exact "
+        f"workflow-derived allowlist ({len(expected_pycs)} bytecode files and "
+        f"{len(EXPECTED_PDF_PATHS)} manuscript figure PDFs)."
     )
 
 

@@ -1,6 +1,6 @@
 # Contributing and Public Review
 
-QBS is currently in public technical review. The highest-value contributions are corrections, counterexamples, reproducibility failures, prior-art overlap, and precise criticism of the Everett bridge.
+QBS is currently in public technical review. The highest-value contributions are corrections, counterexamples, reproducibility failures, prior-art overlap, recursive-model stress tests, and precise criticism of the Everett bridge.
 
 ## Before opening an issue
 
@@ -11,34 +11,49 @@ Identify which layer the concern applies to:
 3. classical simulation or reproducibility;
 4. prior art or novelty positioning;
 5. observer/accessibility model;
-6. Everett physical bridge;
-7. documentation or repository structure.
+6. recursive observer-information / model-comparison extension;
+7. Everett physical bridge;
+8. documentation or repository structure.
 
-Do not collapse these layers. For example, failure of the Everett bridge is not by itself a counterexample to the abstract covariance identity.
+Do not collapse these layers. For example, failure of the Everett bridge is not by itself a counterexample to the abstract covariance identity, and failure of a particular recursive bridge-belief model is not by itself a counterexample to T1–T5.
 
 ## Current review targets
 
 - Current frozen public-review snapshot: tag/Release `v0.3-public-review`
-- Current review/development surface: `main`
+- Canonical current review/development surface: `main`
 - Snapshot ledger: `STATUS.md`
 - Current review/development status: `DEVELOPMENT_STATUS.md`
 - Previous archived snapshot: tag/Release `v0.2-public-review`
 - Historical derivation provenance: PRs #11–#21
 
-Review current mathematics against the v0.3 snapshot or `main`. Use historical PRs only when tracing derivation provenance or earlier formulations.
+The frozen v0.3 tag does not include the later unnumbered recursive observer-information extension. Review the v0.3 theorem/certificate line against the frozen snapshot; review current post-snapshot material against `main` and the canonical `docs/research_map.md` / `docs/claims_and_assumptions.md` ledgers.
 
 ## Proof or counterexample reports
 
 Please include:
 
-- exact theorem/corollary/proposition identifier;
+- exact theorem/corollary/proposition identifier or unnumbered supplementary section;
 - file and section;
 - assumptions being used;
 - the exact implication, equality, inequality, assumption, or boundary condition you dispute;
 - a derivation, counterexample, or smallest failing case when possible;
-- whether the issue affects the central result or only a boundary condition.
+- whether the issue affects the locked core, a supplementary result, or only a boundary/modeling condition.
 
-The compact standalone canonical T1–T5 body is `theory/core_theorems.tex`. Its theorem/proof/boundary content is locked to the frozen v0.3 snapshot except for the deliberate version-neutral document title. A substantive change requires explicit scientific review, not a repository-QA edit.
+The compact standalone canonical T1–T5 body is `theory/core_theorems.tex`. Its theorem/proof/boundary content is locked to the frozen v0.3 snapshot except for the deliberate audited domain/title corrections on current `main`. A substantive change requires explicit scientific review, not a repository-QA edit.
+
+## Recursive observer-information reports
+
+For criticism of the unnumbered recursive extension in `supplementary/evidence_activation.md`, please distinguish:
+
+- an error in the sequential change-of-measure algebra;
+- an error in the predictable/innovation decomposition;
+- dependence on an inappropriate information filtration;
+- misspecification of the candidate bridge/null observer models;
+- survivorship-only or ordinary Bayesian explanations that reproduce the same apparent evidence;
+- an implementation error in `supplementary/recursive_qbs_simulation.py`;
+- a physical objection to the accessibility bridge itself.
+
+`Innovation selection` is intentionally filtration-relative. Showing that a different information state changes the predictable/innovation split is therefore important model criticism, but not by itself a contradiction of the decomposition identity.
 
 ## Reproducibility reports
 
@@ -47,14 +62,22 @@ Please include:
 - operating system and Python version;
 - command run;
 - relevant traceback or output;
-- experiment ID;
+- experiment/script ID;
 - whether the failure reproduces on a clean environment.
 
 Core experiments E1–E5 are expected to run under GitHub Actions. The repository pins the primary Python package versions used for byte-level reproduction; install `requirements.txt` rather than substituting newer dependency versions when checking committed-output identity.
 
+The recursive QBS toy is supplementary exploratory code rather than part of the locked E1–E5 manifest. Run it separately with:
+
+```bash
+python supplementary/recursive_qbs_simulation.py
+```
+
 ## Prior-art reports
 
-Please provide a primary source where possible and explain the structural overlap. The useful question is not merely whether another work mentions Everett, anthropics, observer selection, or decision theory, but whether it duplicates a specific QBS construction or decomposition.
+Please provide a primary source where possible and explain the structural overlap. The useful question is not merely whether another work mentions Everett, anthropics, observer selection, Bayesian updating, martingales, or decision theory, but whether it duplicates a specific QBS construction or the combined recognition-dependent architecture.
+
+Standard change-of-measure, conditional-expectation, martingale/predictable decomposition, likelihood-ratio, and KL identities are not claimed as standalone novelty.
 
 ## Everett bridge criticism
 
@@ -66,7 +89,7 @@ Please distinguish:
 - lack of physical derivation;
 - empirical rejection of a concrete physical prediction.
 
-The repository does not treat the abstract weighted measure as a derivation of Everettian physics.
+The repository does not treat the abstract weighted measure, recursive belief updating, or classical toy simulations as a derivation of Everettian physics.
 
 ## Markdown mathematics and rendering
 

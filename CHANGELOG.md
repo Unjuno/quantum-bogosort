@@ -4,6 +4,13 @@
 
 ### Changed
 
+- formalized an unnumbered recursive observer-information extension in `supplementary/evidence_activation.md`, closing the feedback from experienced observer history to bridge belief, adoption/policy, accessibility, and later observer history without adding T6, S2.14, or E6;
+- introduced the filtration-relative `predictable selection` / `innovation selection` decomposition and standard likelihood-ratio/KL bridge-belief update as supplementary diagnostics, while explicitly retaining the boundary that objective/base chance is not causally changed;
+- added `supplementary/recursive_qbs_simulation.py` as exploratory classical code outside the locked E1–E5 suite, including aligned, anti-aligned, and policy-only controls;
+- synchronized the recursive extension across the canonical research map, claims/non-claims ledger, notation reference, root README, development status, roadmap, contribution guidance, supplementary index, and Issue #14 routing;
+- clarified that frozen `v0.3-public-review` predates the later recursive extension and that current post-snapshot development is read from `main`;
+- temporarily retained `research/recursive-qbs` as a noncanonical branch mirroring the current development line pending branch-deletion tooling; `main` remains the canonical source of truth;
+- clarified that repository-header metadata still uses stale `recognition-activated` wording until repository-settings write access is available;
 - clarified that recognition may include recognition of a QBS-type rule itself, while recognition has no privileged causal power beyond the policy and trajectory/accessibility changes it induces;
 - added a concise landing-page statement of the self-referential QBS question and clarified that the name labels the observer-selection intuition rather than a literal utility-sorting operation by quantum mechanics;
 - exposed present self-location under future accessibility in the root README, canonical claim ledger, research map, notation reference, and manuscript formal model;
@@ -55,7 +62,7 @@
 - made current research-map and core-theorem headings version-neutral where historical version labels could be mistaken for current scientific status;
 - removed public repository-process wording that depended on tool availability;
 - removed merged/superseded development branches;
-- migrated the frozen v0.2 and v0.3 review snapshots from `release/*` branches to named, commit-pinned `v0.2-public-review` and `v0.3-public-review` tags/GitHub Releases, leaving `main` as the only active branch; the repository no longer describes those tags as platform-immutable without a verified tag ruleset;
+- migrated the frozen v0.2 and v0.3 review snapshots from `release/*` branches to named, commit-pinned `v0.2-public-review` and `v0.3-public-review` tags/GitHub Releases, leaving `main` as the only active branch at that stage; the repository no longer describes those tags as platform-immutable without a verified tag ruleset;
 - added CI concurrency cancellation and runtime limits so stalled validation jobs cannot remain indefinitely in progress;
 - routed manuscript LaTeX installation through explicit Ubuntu archive/security sources so transient runner-mirror failures do not masquerade as manuscript build failures.
 
@@ -63,14 +70,15 @@
 
 - T1–T5 retain their identities, numbering, proof algebra, sign/FOSD conclusions, and physical-boundary content; current `main` explicitly closes audited integrability/domain gaps while the frozen v0.3 snapshot remains unchanged;
 - no numerical E1–E5 experiment result is changed by the execution/validator audits; the E5 rho current-output schema has one corrected column name and the E3 null test plumbing is stronger without changing its values;
-- no S2-family theorem or statistical certificate is changed;
+- no S2-family numbered theorem or statistical certificate is changed by the recursive extension;
+- the recursive observer-information work is unnumbered supplementary theory using existing T1/T4 plus standard filtration and likelihood-ratio identities; its classical simulation is exploratory and outside E1–E5;
 - the manuscript wording change from generic `recognition-activated` to `recognition-dependent` is terminological consistency, not a theorem or mechanism change;
 - the bibliography/prior-art metadata corrections change citation provenance and chronology, not the mathematical claims; they reduce the risk of making established prior art look artificially recent through later arXiv upload dates;
 - the visualization, GitHub-math compatibility, validation, reproducibility, and workflow-supply-chain changes do not add new physical or statistical evidence;
 - the present-self-location identities are direct consequences of the already-defined first-person weighted measure, not a new physical bridge claim;
 - locked historical Figure 5/E4 and Figure 7/E2 data provenance remains unchanged and separate from current reruns;
 - the Everett accessibility bridge remains physically open;
-- tag/Release `v0.3-public-review` remains the frozen v0.3 scientific snapshot at commit `58038763127258bd3e2f0d41708c4dfa01f81fd6`.
+- tag/Release `v0.3-public-review` remains the frozen v0.3 scientific snapshot at commit `58038763127258bd3e2f0d41708c4dfa01f81fd6` and does not include later unnumbered recursive work.
 
 ## v0.3 — Public Review — 2026-08-18
 

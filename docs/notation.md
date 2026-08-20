@@ -150,11 +150,71 @@ P_{FP}(Z=z)
 
 If `P(Z=z)=0`, absolute continuity of the weighted measure gives `P_FP(Z=z)=0`; a pointwise conditional-expectation value at that null atom is not required. Therefore future accessibility can reweight present self-location whenever expected future accessibility differs across positive-probability present states. This is a conditioning/change-of-measure statement, not backward causation: the base probability law for `Z` is not thereby changed.
 
+### Predictable selection
+
+In the recursive extension, let `H_t` be the information available when the decision for step `t+1` is made and define:
+
+```math
+m_{t+1}=E_\mu[X_{t+1}\mid H_t].
+```
+
+The cumulative predictable component is:
+
+```math
+A_T
+=
+\sum_{t=0}^{T-1}m_{t+1}.
+```
+
+**Predictable selection** is the first-person reweighting contribution associated with `A_T`:
+
+```math
+\frac{\mathrm{Cov}_\mu(A_T,S_T)}{E_\mu[S_T]}.
+```
+
+It captures first-person selection among trajectory value that was predictable from the information used at decision time.
+
+### Innovation selection
+
+Define the filtration-relative innovation:
+
+```math
+\varepsilon_{t+1}
+=
+X_{t+1}-E_\mu[X_{t+1}\mid H_t],
+```
+
+with cumulative innovation:
+
+```math
+M_T
+=
+\sum_{t=0}^{T-1}\varepsilon_{t+1}.
+```
+
+Under the stated integrability conditions:
+
+```math
+E_\mu[\varepsilon_{t+1}\mid H_t]=0,
+\qquad
+E_\mu[M_T]=0.
+```
+
+**Innovation selection** is the first-person reweighting contribution:
+
+```math
+\frac{\mathrm{Cov}_\mu(M_T,S_T)}{E_\mu[S_T]}.
+```
+
+Innovation selection is relative to the chosen information filtration. Enlarging the information state can move variation from the innovation component into the predictable component. It is therefore not a filtration-independent physical `luck` parameter and does not mean that objective chance has been causally changed.
+
 ## Informal interpretation only: effective or indexical luck
 
 `effective luck` and `indexical luck` are **not formal QBS variables or theorem names**. If used in explanatory prose, they are shorthand for a favorable first-person distributional shift: the observer-conditioned measure places greater weight on favorable accessible trajectories.
 
-Formal writing should prefer `first-person uplift`, `trajectory reweighting`, `first-person measure`, or `self-location` as appropriate.
+When discussion specifically concerns decision-time-unpredictable variation in the recursive extension, formal writing should use `innovation selection` rather than introducing a separate `luck` variable.
+
+Formal writing should otherwise prefer `first-person uplift`, `trajectory reweighting`, `first-person measure`, or `self-location` as appropriate.
 
 The informal language must not be read as a claim that the objective/base probability law or an external random-number generator is causally biased toward favorable outcomes.
 
@@ -244,12 +304,54 @@ When both explained fractions are positive:
 
 | Symbol | Meaning |
 |---|---|
-| `X_t` | environment/world state at time `t` |
+| `X_t` | environment/world state or outcome-relevant state at time `t` |
 | `B_t` | agent internal belief/world-model state |
 | `Y_t` | evaluation or recognition signal derived from the internal model |
 | `U_T` | future outcome at horizon `T` |
 
 Mutual information can quantify predictive dependence, but positive mutual information alone is not sufficient for positive outcome/accessibility covariance.
+
+## Recursive observer-information notation
+
+| Symbol | Meaning |
+|---|---|
+| `O_t` | current observer record/state used by the recursive model |
+| `H_t` | information available when the next decision is selected |
+| `b_t` | epistemic belief in a specified observer-selection bridge/model |
+| `q_t` | adoption or execution strength selected from current information |
+| `G_t` | nonnegative incremental accessibility factor |
+| `S_t` | cumulative accessibility through time `t` |
+| `m_{t+1}` | base conditional-mean/predictable outcome increment given `H_t` |
+| `epsilon_{t+1}` | filtration-relative innovation increment |
+| `A_T` | cumulative predictable component |
+| `M_T` | cumulative innovation component |
+| `ell_{t+1}` | one-step log likelihood ratio for specified competing observer models |
+
+Cumulative accessibility is:
+
+```math
+S_t
+=
+\prod_{j=1}^{t}G_j,
+\qquad
+S_0=1.
+```
+
+A generic recursive dependency is:
+
+```math
+O_t
+\longrightarrow
+H_t
+\longrightarrow
+(b_t,q_t,\pi_t)
+\longrightarrow
+(X_{t+1},G_{t+1})
+\longrightarrow
+O_{t+1}.
+```
+
+The likelihood-ratio update is a model-comparison device. It does not give `b_t` privileged physical causal power and does not establish the physical accessibility bridge.
 
 ## Repeated-filter notation
 

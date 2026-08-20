@@ -194,15 +194,23 @@ def main() -> None:
     aligned = simulate("recursive_full", p)
     anti_aligned = simulate(
         "recursive_full",
-        replace(p, k_innovation=-0.22, assumed_k_innovation=0.22),
+        replace(
+            p,
+            k_predictable=0.70,
+            k_innovation=-0.08,
+            assumed_k_innovation=0.22,
+        ),
     )
     null = simulate("policy_only", p)
 
     # Mechanism checks. Magnitudes are not treated as universal constants.
     assert abs(null["uplift"]) < 1e-12
     assert abs(aligned["decomposition_error"]) < 1e-10
+    assert abs(anti_aligned["decomposition_error"]) < 1e-10
     assert aligned["innovation_shift"] > 0
+    assert anti_aligned["predictable_shift"] > 0
     assert anti_aligned["innovation_shift"] < 0
+    assert anti_aligned["uplift"] < 0
 
     print_result("aligned recursive model", aligned)
     print()

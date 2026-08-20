@@ -1,63 +1,70 @@
 # QBS Current Research Status
 
-**Updated:** 2026-08-19
+**Updated:** 2026-08-20
 
-This file is the concise source of truth for the current review/development state. Frozen snapshot identity is recorded in [`STATUS.md`](STATUS.md); detailed audit history is recorded in the four pre-announcement audit files; future release work is tracked in [`ROADMAP.md`](ROADMAP.md).
+This file is the concise source of truth for the current review/development state. Frozen snapshot identity is recorded in [`STATUS.md`](STATUS.md); detailed audit history remains in the pre-announcement audit files; future work is tracked in [`ROADMAP.md`](ROADMAP.md).
 
 ## Public source of truth
 
-- current development/review branch: `main`;
+- canonical current development/review surface: `main`;
 - frozen v0.3 public-review snapshot: tag/Release `v0.3-public-review` at commit `58038763127258bd3e2f0d41708c4dfa01f81fd6`;
 - archived v0.2 snapshot: tag/Release `v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
 - canonical claim/theorem/evidence map: [`docs/research_map.md`](docs/research_map.md);
 - authoritative claim boundaries: [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md);
-- execution/reproduction audit: [`docs/pre_announcement_execution_audit_2026-08-19.md`](docs/pre_announcement_execution_audit_2026-08-19.md);
-- validator/Actions/governance audit: [`docs/pre_announcement_validator_audit_2026-08-19.md`](docs/pre_announcement_validator_audit_2026-08-19.md);
-- bibliography/prior-art truth audit: [`docs/pre_announcement_bibliography_audit_2026-08-19.md`](docs/pre_announcement_bibliography_audit_2026-08-19.md);
-- mathematical-domain audit: [`docs/pre_announcement_mathematical_domain_audit_2026-08-19.md`](docs/pre_announcement_mathematical_domain_audit_2026-08-19.md).
+- current supplementary index: [`supplementary/README.md`](supplementary/README.md).
 
-The frozen tags are treated as commit-pinned historical snapshots. They are not described as platform-immutable unless a GitHub tag ruleset is actually configured and verified.
+A temporary `research/recursive-qbs` branch currently remains and points along the same development line used to introduce the recursive extension. It is not a separate scientific source of truth. It should be removed when branch-deletion tooling is available.
+
+The frozen tags are commit-pinned historical snapshots. They are not described as platform-immutable unless a GitHub tag ruleset is actually configured and verified.
 
 ## Scientific state
 
-The core theorem family remains **T1–T5** and the core experiment family remains **E1–E5**. The supplementary numbered line remains complete through **S2.13**.
+The locked core theorem family remains **T1–T5** and the locked core experiment family remains **E1–E5**. The numbered supplementary line remains complete through **S2.13**.
 
-Recognition is an information/policy-selection state. It has no privileged physical causal power merely by being recognized. A recognition-dependent policy can causally change trajectories and can change the modeled accessibility map. The base probability law itself is not changed by QBS weighting.
+Recognition is an information/policy-selection state. It has no privileged physical causal power merely by being recognized. Recognition can matter by changing policy, and policy can change both downstream trajectory outcomes and the modeled accessibility map. The base probability law itself is not changed by QBS weighting.
 
-The first-person measure is a normalized change of measure. Future accessibility can reweight present self-location, but favorable/upward reweighting requires alignment with the favorability/utility statistic. The Everett accessibility bridge remains a separate unresolved physical assumption.
+The first-person measure is a normalized change of measure. Future accessibility can reweight present self-location, but favorable/upward reweighting requires alignment with the relevant favorability/utility statistic. The Everett accessibility bridge remains a separate unresolved physical assumption.
 
-### Current-main T1–T5 domain corrections
+### Current-main domain corrections
 
-The frozen v0.3 snapshot is untouched. Current `main` preserves T1–T5 identity, numbering, algebraic proof structure, sign/FOSD conclusions, support/extinction boundaries, and Everett-bridge statement while making the required domains explicit.
+Current `main` preserves T1–T5 identity, numbering, proof algebra, sign/FOSD conclusions, support/extinction boundaries, and Everett-bridge statement while making the audited finite-integrability domains explicit. The frozen v0.3 snapshot itself is unchanged.
 
-The compact canonical `theory/core_theorems.tex` differs from frozen v0.3 in exactly four audited textual locations:
+The detailed domain audit is [`docs/pre_announcement_mathematical_domain_audit_2026-08-19.md`](docs/pre_announcement_mathematical_domain_audit_2026-08-19.md). Existing theorem/supplementary validators retain the reviewed cross-surface contracts.
 
-1. a version-neutral document title;
-2. explicit base integrability `E_mu[|U_pi|] < infinity` in the policy setup;
-3. the complete generic T1 domain `S >= 0`, `0 < E[S] < infinity`, `E[|X|] < infinity`, and `E[|X|S] < infinity`;
-4. T5 cross-integrability `E[|U_1|S_0] < infinity`, required because the proof introduces `Q(U_1,S_0)`.
+### Recursive observer-information extension
 
-`scripts/validate_core_theorem_lock.py` normalizes exactly those four changes and then requires byte identity with the frozen v0.3 canonical TeX blob `82986d7197e79446d6574aab538d1edaeff47eb6`. It also requires the same T1/T4/T5 domain assumptions across nine theory, experiment-card, and manuscript surfaces. Those nine audited surfaces are now themselves HEAD/worktree Git-blob locked, so a later edit cannot satisfy the domain check only through a comment or literal-code decoy without an explicit scientific-review contract update.
+Current `main` now also contains an **unnumbered supplementary dynamic extension** in [`supplementary/evidence_activation.md`](supplementary/evidence_activation.md). It does not add `T6`, `S2.14`, or `E6`.
 
-### Supplementary-domain corrections
+The extension closes the feedback arrow:
 
-The deeper mathematical audit also corrected several boundary/domain defects without changing the intended on-domain conclusions:
+```math
+\text{experienced observer history}
+\longrightarrow
+\text{belief / recognition update}
+\longrightarrow
+\text{adoption and policy}
+\longrightarrow
+\text{trajectory and accessibility}
+\longrightarrow
+\text{next experienced observer history}.
+```
 
-- **S2.8:** the generic confidence certificate now uses `U_M^+ = max(0,U_M)` so the reported random statistic remains real-valued even outside the simultaneous confidence event; on the event, `U_M^+ = U_M`, so the bound and coverage are unchanged;
-- **S2.9:** sub-Gaussian/Bernstein concentration parameters are explicitly nonnegative, making all radii real/nonnegative by definition;
-- **S2.10:** the zero-variance case `v_j=0` is handled separately: the target is almost surely constant, so the MoM error is exactly zero; Chebyshev is used only for `v_j>0`;
-- **recognition time:** `C_t` is correctly typed as an adapted real random variable, continuous-time hitting is conditioned on standard path/measurability hypotheses, and FP stopping-rule values require the full T1 base/weighted integrability domain;
-- **repeated filtering:** the sensitivity derivative explicitly requires the weighted moments and dominated-differentiation regularity needed to interchange differentiation and expectation;
-- **binary soft-QBS:** `p`, `lambda`, `q`, and `alpha` domains are explicit and the zero-normalization corner `(p,lambda)=(0,0)` is excluded;
-- **Gaussian toy:** `rho`, `lambda`, `q`, and `alpha` domains are explicit and positive normalization/denominator is guaranteed.
+Its exact mathematical components are:
 
-`scripts/validate_supplementary_consistency.py` locks these corrections across the relevant supplementary, manuscript, and theorem-audit surfaces. The fourteen audited consistency surfaces are now also HEAD/worktree Git-blob locked before semantic snippet checks, closing the same comment/literal-code false-PASS class for the supplementary boundary line.
+- sequential application of the existing T1 change-of-measure identity;
+- a filtration-relative predictable/innovation decomposition of cumulative outcome;
+- exact separation of first-person uplift into predictable selection and innovation selection;
+- standard likelihood-ratio / KL-divergence identities for model-based bridge-belief updating under stated absolute-continuity and correct-specification conditions.
 
-The main S1, S2/S2.3/S2.4, S2.5–S2.7, and S2.11–S2.13 arguments were rechecked for the same class of domain/sign/coverage failure and no additional correction was identified in that pass.
+`Innovation selection` is a formal diagnostic for reweighting of decision-time-unpredictable variation relative to a chosen information filtration. It is not a claim that objective chance or an external RNG has been causally improved.
+
+The exploratory [`supplementary/recursive_qbs_simulation.py`](supplementary/recursive_qbs_simulation.py) is outside the locked E1–E5 suite. Its aligned, anti-aligned, and policy-only controls check that ordinary/predictable effects and innovation selection can be separated, including a counterexample where predictable selection is positive while innovation selection and total first-person uplift are negative.
+
+The recursive extension is now indexed in [`docs/research_map.md`](docs/research_map.md) and classified in [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md).
 
 ## Reproducibility state
 
-The primary byte-reproduction environment is fixed to:
+The primary byte-reproduction environment remains fixed to:
 
 - Ubuntu 24.04;
 - Python 3.11.15;
@@ -65,102 +72,57 @@ The primary byte-reproduction environment is fixed to:
 - pandas 3.0.5;
 - Matplotlib 3.11.1.
 
-The first execution audit locally reconstructed the commit-fixed executable subset because normal network cloning was unavailable in the audit runtime. Under that reconstruction:
+The locked E1–E5 suite and committed figure/data reproduction contracts remain unchanged by the recursive extension. The recursive toy simulation is deliberately supplementary and is not part of the byte-locked E1–E5 manifest.
 
-- E1–E5 executed successfully;
-- all twelve current reproduction CSVs matched their committed identities, except for the intentional E5 current-schema correction already committed to `main`;
-- all seven committed SVGs regenerated byte-for-byte;
-- manifest and reproduction negative tests rejected deliberate corruption.
+Detailed execution and validator audits remain in:
 
-The current E5 rho-sweep field is `action_corr_increment`; its numerical series and Figure 6 are unchanged. Locked historical schemas were not rewritten.
+- [`docs/pre_announcement_execution_audit_2026-08-19.md`](docs/pre_announcement_execution_audit_2026-08-19.md);
+- [`docs/pre_announcement_validator_audit_2026-08-19.md`](docs/pre_announcement_validator_audit_2026-08-19.md);
+- [`docs/pre_announcement_bibliography_audit_2026-08-19.md`](docs/pre_announcement_bibliography_audit_2026-08-19.md);
+- [`docs/pre_announcement_mathematical_domain_audit_2026-08-19.md`](docs/pre_announcement_mathematical_domain_audit_2026-08-19.md).
 
-The continued validator audit now also enforces several repository-surface invariants that were previously only implicit:
+## Bibliography and prior art
 
-- experiment-card CSV and `Linked theory` routing is parsed from the fence-filtered rendered Markdown surface rather than raw source, closing a fenced-code decoy route;
-- experiment cards use an ATX-only H1/H2 schema, including rejection of multiline/raw-HTML H1/H2 tag forms, so visible non-ATX headings cannot sit outside the card parser;
-- raw HTML `<a>`/`<img>` routes are rejected by the repository-link contract rather than bypassing Markdown link validation;
-- tracked symlinks are rejected repository-wide, and required files, current reproduction CSVs, and generated figure outputs must be nonsymlink regular files;
-- public SVG and manuscript PDF Figures 2–6 obtain their numerical series from shared `figures/figure_data.py`;
-- the Fig2–6 refactor was independently recalculated against the current CSVs and preserves the pre-refactor x arrays, labels, ordering, values, and relevant NumPy/pandas scalar/array types;
-- the figure-data module and both SVG/PDF renderer sources are fixed to audited Git blobs in addition to the AST shared-function checks, so a dead-code `shared_call()` cannot by itself satisfy the figure contract after an accidental renderer drift;
-- the complete validation workflow is fixed to its audited Git blob before its human-readable runtime/order/security checks, closing the possibility that a required command survives only as a YAML/shell comment;
-- issue-template front matter is restricted to the repository's supported one-line YAML scalar subset, rejecting malformed quoted scalars that the previous nonempty-string parser could accept;
-- `CITATION.cff` and `STATUS.md` are fixed to their audited snapshot-metadata blobs before the narrow CFF/ledger checks, so malformed YAML/source drift cannot be hidden by successful string extraction.
+The bibliography fact lock and prior-art ledgers remain the reviewed source for publication chronology and claim boundaries. The recursive extension has not yet received a separate targeted prior-art review, so no novelty claim is made for standard sequential weighting, martingale/predictable decompositions, Bayesian likelihood-ratio updating, or KL identities by themselves.
 
-Current CI additionally locks all sixteen historical E1–E5 CSVs to their frozen v0.3 Git blob identities, validates manifest/card/theorem routing, rejects experiment side effects outside the declared current outputs, and rejects undeclared ignored/nonignored worktree artifacts.
+The provisional novelty question remains about the combined recognition-dependent architecture and decompositions, not any standard mathematical component in isolation.
 
-## Bibliography and prior-art state
+## Everett bridge
 
-The bibliography audit separates syntactic BibTeX validity from factual publication chronology. Where the same work has a clearly verified definitive journal/book publication, the current bibliography uses that publication rather than a later arXiv upload that could make prior art appear artificially recent. Earlier preprints remain when they are themselves the relevant historical record or when no definitive same-work publication was established.
+The physical bridge remains open. A concrete accessibility rule must independently justify why observer persistence/self-location should induce the proposed first-person measure and must satisfy the structural constraints in [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md).
 
-[`paper/bibliography_fact_lock.md`](paper/bibliography_fact_lock.md) records, for all current bibliography entries:
+The repository does not claim quantum immortality, guaranteed survival, backward causation, objective RNG bias, or that a favorable observed history proves the bridge.
 
-- citation key;
-- record type;
-- year;
-- author;
-- title;
-- publication locator;
-- DOI or arXiv identifier;
-- provenance class.
+## Announcement readiness
 
-For journal records the locator fixes journal, volume/number, and pages/article number; for book chapters it fixes book title, editors, publisher, and pages. `scripts/validate_bibliography_metadata.py` requires exact agreement with that reviewed lock. This is a regression guard against later corruption of already-reviewed bibliography facts, not an automated proof of external bibliographic truth.
+### Completed source cleanup
 
-The three working prior-art ledgers are aligned with the current recognition boundary: recognition/information state can alter policy selection, but recognition is not described as a privileged physical causal variable.
+- [x] recursive extension indexed in the canonical research map;
+- [x] recursive claims/non-claims classified in the authoritative claim ledger;
+- [x] landing-page wording synchronized with the current recursive extension;
+- [x] frozen v0.3 versus current-main boundary made explicit;
+- [x] current development status refreshed;
+- [x] locked T1–T5 / E1–E5 identities left unchanged.
 
-## GitHub Actions validation contract
+### Remaining external/UI gates
 
-The workflow runs on push, pull request, and manual dispatch. Both jobs use Ubuntu 24.04 and Python 3.11.15. Reusable Actions are pinned to audited full commit SHAs, checkout credentials are not persisted, and workflow permissions remain read-only. `scripts/validate_runtime_contract.py` additionally fixes the complete audited workflow source to its current Git blob, so command-presence/order checks cannot be satisfied by commented/dead copies unless the workflow contract is explicitly reviewed and updated.
+- [ ] confirm the final settled `main` `validate` workflow is green for the exact announcement commit;
+- [ ] directly inspect the rendered GitHub README and representative math/SVG pages in the browser, especially MathJax, Mermaid, SVG sizing, tables, and mobile layout;
+- [ ] remove the temporary `research/recursive-qbs` branch when branch-deletion tooling is available;
+- [ ] normalize repository-header metadata from stale `recognition-activated` wording to `recognition-dependent` wording and add useful repository topics when repository-settings write access is available;
+- [ ] optionally configure a `main` branch ruleset/protection policy and tag ruleset after CI is stable.
 
-`repository-validation` currently checks, in enforced relative order where order matters:
+The remaining items are presentation, governance, or final-CI confirmation gates. They are not known missing core mathematical results.
 
-- runtime/workflow contract;
-- Python compilation;
-- Markdown math and repository structure;
-- frozen T1–T5 canonical theorem/body/domain lock plus audited cross-surface blob identities;
-- supplementary theorem/domain consistency plus audited cross-surface blob identities;
-- citation/snapshot metadata blobs and bibliography fact-lock metadata;
-- split licensing, repository-wide nonsymlink classification, and live frozen snapshot refs;
-- issue templates, rendered-surface experiment cards, and manifest/provenance/theory routing;
-- repository-relative links and GitHub GFM structural rendering;
-- E1–E5 scientific invariants and byte-identical current reproduction outputs;
-- frozen historical data identities;
-- deterministic figure regeneration, shared SVG/PDF numerical-data contract, audited figure-source blobs, exact nonsymlink figure sets, and SVG safety;
-- final tracked and untracked/ignored worktree cleanliness.
+## Current announcement position
 
-`manuscript-build` independently validates the runtime contract, generates PDF figures, preflights the reachable LaTeX/citation/reference graph, installs the TeX toolchain, compiles `paper/main.pdf`, verifies it, and uploads the PDF artifact.
+The repository is suitable for **public technical review** once the final `main` workflow and rendered-page checks above pass. Announcement copy should describe the current repository rather than imply that the frozen `v0.3-public-review` tag already contains the later recursive extension.
 
-## What is still unverified
+External criticism is specifically welcome on:
 
-**The latest final `main` GitHub Actions result is not yet recorded as PASS.** The connected GitHub interface available in this audit does not expose direct-push Actions check-run state, and the combined commit-status endpoint returning no statuses is not evidence of success. Because this audit is still committing fixes, prior runs may also be cancelled by workflow concurrency; only the final settled commit matters.
-
-The shared figure-data refactor has been checked at the numerical-object level in this audit, but the final pinned-environment Actions regeneration remains the authoritative post-refactor byte check for all seven committed SVGs and the deterministic Figure 2 CSV.
-
-Source-level GFM/SVG/math validators also do not replace direct browser inspection. The actual GitHub UI still needs representative desktop/mobile review for:
-
-- MathJax;
-- Mermaid;
-- SVG sizing/readability;
-- tables and navigation;
-- overall mobile/desktop layout.
-
-Accordingly, the repository is **not yet certified ready for broad announcement**.
-
-## Governance / presentation items
-
-The current public-source-of-truth branch should receive an appropriate branch/ruleset policy after CI stabilizes. A tag ruleset is optional if platform-level deletion/update protection is desired for frozen review tags.
-
-Repository-header description/topics are presentation metadata and remain separate from the scientific/source audit. They may be normalized before broad promotion, but are not a substitute for the Actions and browser gates.
-
-## Release gates
-
-Before broad announcement:
-
-1. stop source-changing audit commits long enough for the final `main` `validate` workflow to finish;
-2. confirm both `repository-validation` and `manuscript-build` are green for that exact final commit;
-3. inspect representative GitHub pages directly in the real browser UI on desktop and mobile;
-4. configure the desired `main` branch/ruleset policy after CI is stable;
-5. optionally normalize repository-header description/topics and add a tag ruleset;
-6. continue external proof/prior-art/Everett-bridge review as scientific review, not as a substitute for repository QA.
-
-No S2.14 or sixth core experiment is added by default. New mathematical machinery should respond to a concrete modeling gap or review finding.
+- proofs and counterexamples;
+- direct prior art / structural overlap;
+- the recursive observer-information model and its misspecification boundaries;
+- whether innovation selection is a useful filtration-relative diagnostic;
+- the Everett/multiverse accessibility bridge;
+- reproducibility and repository presentation.

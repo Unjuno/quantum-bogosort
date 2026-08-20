@@ -1,6 +1,6 @@
 # QBS Current Research Status
 
-**Updated:** 2026-08-20
+**Updated:** 2026-08-21
 
 This file is the concise source of truth for the current review/development state. Frozen snapshot identity is recorded in [`STATUS.md`](STATUS.md); detailed audit history remains in the pre-announcement audit files; future work is tracked in [`ROADMAP.md`](ROADMAP.md).
 
@@ -13,7 +13,7 @@ This file is the concise source of truth for the current review/development stat
 - authoritative claim boundaries: [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md);
 - current supplementary index: [`supplementary/README.md`](supplementary/README.md).
 
-A temporary `research/recursive-qbs` branch currently remains and points along the same development line used to introduce the recursive extension. It is not a separate scientific source of truth. It should be removed when branch-deletion tooling is available.
+A temporary `research/recursive-qbs` branch still exists, but it has been verified against `main` at commit `27cb425d49a760f06c057f5eeace37d0cc7d1b7c` with `ahead=0`, `behind=0`, no file differences, and no associated pull request. It contains no unmerged work and is not a separate scientific source of truth. Deleting that redundant ref is therefore branch housekeeping only.
 
 The frozen tags are commit-pinned historical snapshots. They are not described as platform-immutable unless a GitHub tag ruleset is actually configured and verified.
 
@@ -102,17 +102,18 @@ The repository does not claim quantum immortality, guaranteed survival, backward
 - [x] landing-page wording synchronized with the current recursive extension;
 - [x] frozen v0.3 versus current-main boundary made explicit;
 - [x] current development status refreshed;
-- [x] locked T1–T5 / E1–E5 identities left unchanged.
+- [x] locked T1–T5 / E1–E5 identities left unchanged;
+- [x] redundant `research/recursive-qbs` branch verified identical to `main`, with no unmerged commits, file differences, or associated pull request.
 
 ### Remaining external/UI gates
 
 - [ ] confirm the final settled `main` `validate` workflow is green for the exact announcement commit;
 - [ ] directly inspect the rendered GitHub README and representative math/SVG pages in the browser, especially MathJax, Mermaid, SVG sizing, tables, and mobile layout;
-- [ ] remove the temporary `research/recursive-qbs` branch when branch-deletion tooling is available;
+- [ ] delete the verified-redundant `research/recursive-qbs` branch ref when branch-ref deletion is available;
 - [ ] normalize repository-header metadata from stale `recognition-activated` wording to `recognition-dependent` wording and add useful repository topics when repository-settings write access is available;
 - [ ] optionally configure a `main` branch ruleset/protection policy and tag ruleset after CI is stable.
 
-The remaining items are presentation, governance, or final-CI confirmation gates. They are not known missing core mathematical results.
+The remaining items are presentation, governance, or final-CI confirmation gates. They are not known missing core mathematical results. The redundant branch has no unique content and is not a scientific or reproducibility blocker.
 
 ## Current announcement position
 

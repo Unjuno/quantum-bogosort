@@ -318,9 +318,69 @@ Since `0<A<=1`, the strict symmetric worst-case certificate is feasible only whe
 
 These are worst-case residual sufficient conditions inherited from S2.12, not necessary conditions.
 
+## Recursive observer-information extension
+
+The recursive extension in [`../supplementary/evidence_activation.md`](../supplementary/evidence_activation.md) is **unnumbered supplementary theory**. It does not add a sixth core theorem or an `S2.14`.
+
+Let `H_t` denote the information available when the decision for step `t+1` is chosen, and let `X_{t+1}` be the next outcome increment. Define the predictable component and filtration-relative innovation by:
+
+```math
+m_{t+1}=E_\mu[X_{t+1}\mid H_t],
+\qquad
+\varepsilon_{t+1}=X_{t+1}-m_{t+1}.
+```
+
+Then:
+
+```math
+E_\mu[\varepsilon_{t+1}\mid H_t]=0.
+```
+
+For:
+
+```math
+A_T=\sum_{t=0}^{T-1}m_{t+1},
+\qquad
+M_T=\sum_{t=0}^{T-1}\varepsilon_{t+1},
+\qquad
+U_T=A_T+M_T,
+```
+
+we have `E_mu[M_T]=0` under the stated integrability conditions. Applying the existing T1 identity to `A_T` and `M_T` gives:
+
+```math
+E_{FP}[U_T]-E_\mu[U_T]
+=
+\frac{\mathrm{Cov}_\mu(A_T,S_T)}{E_\mu[S_T]}
++
+\frac{\mathrm{Cov}_\mu(M_T,S_T)}{E_\mu[S_T]}.
+```
+
+The repository calls these terms **predictable selection** and **innovation selection** respectively. This is an exact decomposition under the chosen filtration and weighted-measure assumptions. Innovation selection is not an objective physical luck variable: changing the information filtration can change the split between `A_T` and `M_T`.
+
+For sequential accessibility factors `G_t` with cumulative accessibility `S_t=\prod_{j=1}^t G_j`, the one-step first-person update is a sequential use of T1:
+
+```math
+E_t^{FP}[Z]
+=
+\frac{E_{t-1}^{FP}[ZG_t]}{E_{t-1}^{FP}[G_t]}.
+```
+
+When a specified QBS observer model and a specified null observer model provide conditional next-record laws `P_{1,t}` and `P_{0,t}`, standard likelihood-ratio updating gives:
+
+```math
+\ell_{t+1}
+=
+\log\frac{dP_{1,t}}{dP_{0,t}}(O_{t+1}).
+```
+
+Under correctly specified conditional models, the expected one-step log likelihood ratio has the corresponding KL-divergence sign. These are standard Bayesian/information-theoretic identities used to formalize the feedback from experienced observer history to later belief/adoption. They do **not** establish that the QBS bridge is physically correct.
+
 ## Simulation-supported claims
 
-E1–E5 classically demonstrate the formal mechanisms: weighting/FOSD, learned predictive ordering, paired recognition decomposition, policy–QBS interaction, and cross-copy coherence. They do not establish Everettian physics or automatically satisfy any finite-sample certificate.
+E1–E5 classically demonstrate the locked formal mechanisms: weighting/FOSD, learned predictive ordering, paired recognition decomposition, policy–QBS interaction, and cross-copy coherence. They do not establish Everettian physics or automatically satisfy any finite-sample certificate.
+
+The exploratory [`../supplementary/recursive_qbs_simulation.py`](../supplementary/recursive_qbs_simulation.py) is separate from E1–E5. It demonstrates that the recursive mechanism can be instantiated in a classical toy model, that predictable and innovation selection can be measured separately, and that an anti-aligned control can produce positive predictable selection with negative innovation selection and negative total first-person uplift. These simulation results are model-internal mechanism checks, not empirical evidence for a physical accessibility law.
 
 ## Model and statistical assumptions
 
@@ -350,6 +410,8 @@ S2 assumes score-measurable accessibility. S2.11 relaxes that assumption but ret
 
 S2.5 assumes independent bounded held-out evaluation. S2.6 permits training-dependent rules only with independent certification data. S2.7 assumes a finite predeclared candidate family with multiplicity accounting. S2.8 assumes a valid simultaneous five-moment confidence envelope. S2.9 assumes valid light-tail parameters. S2.10 assumes valid target-variable variance bounds and an i.i.d. block construction.
 
+The recursive innovation decomposition depends on the selected filtration/information state and requires the conditional expectations and weighted horizon quantities to exist. Sequential likelihood-ratio bridge updates require specified competing observer models and the needed absolute-continuity conditions. Claims about expected KL drift require correct model specification; misspecification can reverse or otherwise distort practical belief dynamics.
+
 ## Everett bridge assumption
 
 A separate physical interpretation assumes:
@@ -368,6 +430,9 @@ This is not derived from unitary quantum mechanics, decoherence, observer dynami
 The repository does **not** claim that:
 
 - an external RNG becomes objectively biased toward favorable outcomes;
+- innovation selection is a causal increase in objective chance or a filtration-independent physical luck parameter;
+- observing a favorable history by itself proves the QBS bridge rather than competing null, survivorship, or misspecified models;
+- recursive bridge belief must increase monotonically on every realized path;
 - future accessibility by itself guarantees a favorable present self-location shift without an alignment between accessibility and the relevant favorability/utility statistic;
 - the present-self-location identity implies backward causation;
 - the weighting identities establish quantum immortality;
@@ -382,7 +447,7 @@ The repository does **not** claim that:
 - S2.13 is a necessary condition for positive covariance;
 - failure of a sufficient certificate implies negative covariance;
 - uncorrected model search preserves nominal confidence;
-- a statistical certificate establishes the Everett accessibility bridge.
+- a statistical certificate or recursive toy simulation establishes the Everett accessibility bridge.
 
 ## Failure conditions
 
@@ -391,6 +456,10 @@ The repository does **not** claim that:
 - nonmonotone conditional accessibility can break FOSD;
 - dependence without conditional-mean prediction can defeat S2;
 - a sufficiently negative S2.11 residual term can overturn score-level alignment;
+- positive predictable selection can coexist with negative innovation selection, and negative innovation selection can dominate total first-person uplift;
+- the predictable/innovation split changes when the information filtration changes;
+- a misspecified bridge model can produce misleading recursive belief dynamics;
+- if the competing conditional observer laws are identical at a step, that step supplies zero likelihood-ratio evidence for distinguishing them;
 - large unexplained variance can make S2.12/S2.13 inconclusive;
 - invalid concentration, tail, variance, or model-selection assumptions invalidate their corresponding statistical certificates;
 - zero expected accessibility makes the normalized FP measure undefined;

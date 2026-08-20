@@ -44,7 +44,8 @@ These results require their stated sampling, moment, and selection assumptions. 
 - [`binary_soft_qbs.md`](binary_soft_qbs.md) — minimal favorable/unfavorable weighting model;
 - [`repeated_filtering.md`](repeated_filtering.md) — repeated adverse-trigger weighting and sensitivity identities;
 - [`gaussian_model.md`](gaussian_model.md) — analytic Gaussian closed form;
-- [`evidence_activation.md`](evidence_activation.md) — recognition activated by statistical evidence;
+- [`evidence_activation.md`](evidence_activation.md) — evidence-driven recognition plus an unnumbered recursive observer-information extension: sequential weighting, predictable/innovation selection, and bridge-belief likelihood updates;
+- [`recursive_qbs_simulation.py`](recursive_qbs_simulation.py) — exploratory classical recursive simulation with aligned, anti-aligned, and policy-only controls; not part of locked E1–E5;
 - [`recognition_time.md`](recognition_time.md) — sequential recognition as a stopping time, with no general early-versus-late ordering theorem;
 - [`selectivity_frontier.md`](selectivity_frontier.md) — selectivity versus predictor precision and accessible measure.
 

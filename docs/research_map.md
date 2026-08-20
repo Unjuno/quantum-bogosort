@@ -126,6 +126,8 @@ Training/certification leakage, uncorrected model selection, or invalid moment a
 | S1 | hierarchical recognition can produce nonnegative cross-copy action covariance under the stated conditional-independence structure | [`supplementary/branch_recognition.md`](../supplementary/branch_recognition.md) |
 | recognition time | recognition as a stopping-time extension; no universal early-recognition ordering theorem | [`supplementary/recognition_time.md`](../supplementary/recognition_time.md) |
 | repeated filtering | repeated adverse-trigger accessibility identities | [`supplementary/repeated_filtering.md`](../supplementary/repeated_filtering.md) |
+| recursive observer-information loop | unnumbered dynamic extension closing the feedback from experienced observer history to bridge belief, adoption/policy, accessibility, and later observer history; includes sequential weighting and predictable/innovation selection | [`supplementary/evidence_activation.md`](../supplementary/evidence_activation.md) |
+| recursive simulation | exploratory classical implementation with aligned, anti-aligned, and policy-only controls; not part of locked E1–E5 | [`supplementary/recursive_qbs_simulation.py`](../supplementary/recursive_qbs_simulation.py) |
 | selectivity frontier | tradeoff between selectivity, prediction quality, and accessible measure | [`supplementary/selectivity_frontier.md`](../supplementary/selectivity_frontier.md) |
 
 The complete supplementary index is [`supplementary/README.md`](../supplementary/README.md).
@@ -170,6 +172,44 @@ Thus differential future accessibility can reweight present self-location toward
 
 A favorable first-person shift is therefore a statement about the observer-conditioned distribution, not a claim that an external random-number generator becomes causally biased.
 
+### Dynamic recursive extension
+
+The unnumbered recursive extension makes the previously implicit feedback step explicit:
+
+```math
+\text{experienced observer history}
+\longrightarrow
+\text{belief / recognition update}
+\longrightarrow
+\text{adoption and policy}
+\longrightarrow
+\text{trajectory and accessibility}
+\longrightarrow
+\text{next experienced observer history}.
+```
+
+On a filtered base probability space, outcome increments can be decomposed relative to the information available when the decision is made:
+
+```math
+m_{t+1}=E_\mu[X_{t+1}\mid H_t],
+\qquad
+\varepsilon_{t+1}=X_{t+1}-m_{t+1}.
+```
+
+For cumulative predictable and innovation components `A_T` and `M_T`, with `U_T=A_T+M_T` and `E_\mu[M_T]=0`, T1 gives the exact horizon decomposition:
+
+```math
+E_{FP}[U_T]-E_\mu[U_T]
+=
+\frac{\mathrm{Cov}_\mu(A_T,S_T)}{E_\mu[S_T]}
++
+\frac{\mathrm{Cov}_\mu(M_T,S_T)}{E_\mu[S_T]}.
+```
+
+The first term is called **predictable selection** and the second **innovation selection**. Innovation selection is filtration-relative: enlarging the information state can move variation from the innovation component into the predictable component. It is a formal diagnostic for first-person reweighting of decision-time-unpredictable variation, not a claim that objective chance has been causally improved.
+
+The same extension allows a specified bridge model to be compared with a null observer model through sequential likelihood-ratio updates. Under correctly specified conditional models, the expected one-step log likelihood ratio has KL-divergence sign under the corresponding model. These are standard Bayesian/information-theoretic identities used to close the feedback arrow; they do not validate the physical bridge.
+
 Canonical terminology is maintained in [`docs/notation.md`](notation.md).
 
 ## 8. Everett bridge
@@ -200,21 +240,25 @@ Important boundaries include:
 - zero expected accessibility makes the normalized FP measure undefined;
 - mutual information alone does not imply positive QBS covariance;
 - S2.11 requires the residual conditional-covariance term outside score-measurable accessibility;
-- statistical certification does not establish the Everett bridge.
+- innovation selection depends on the chosen information filtration and is not synonymous with objective luck;
+- recursive bridge-belief updates are model-comparison statements and can be misleading under misspecification;
+- statistical or recursive-simulation success does not establish the Everett bridge.
 
 ## 10. Manuscript and proof-review path
 
-The manuscript is in [`paper/`](../paper/). The current main-text S2 presentation is intentionally compressed to the conceptual spine, while S2.3–S2.10 are Appendix-first.
+The manuscript is in [`paper/`](../paper/). The current main-text S2 presentation is intentionally compressed to the conceptual spine, while S2.3–S2.10 are Appendix-first. The recursive observer-information extension currently remains repository supplementary material and has not been promoted into the locked core or manuscript claim set.
 
 The dedicated post-v0.2 proof review is [`docs/post_v02_core_s2_proof_review.md`](post_v02_core_s2_proof_review.md). The editorial dependency map is [`docs/s2_stack_review_map.md`](s2_stack_review_map.md).
 
 ## 11. Current open research questions
 
-The current review gate is external proof, novelty, and physical-bridge scrutiny rather than automatic theorem expansion.
+The current review gate is external proof, novelty, physical-bridge scrutiny, and recursive-model stress testing rather than automatic theorem expansion.
 
 Open questions include:
 
 - what physical mechanism, if any, induces the Everett accessibility map;
+- whether the recursive bridge-belief loop remains informative under realistic model misspecification, survivorship-only controls, and alternative observer models;
+- whether innovation selection is a useful stable diagnostic under motivated information filtrations;
 - whether the current S2.13 explained-variance summary should remain in the manuscript main text after review;
 - whether some S2.5–S2.10 material belongs only in repository supplementary material;
 - whether reviewers identify a concrete need for stronger finite-sample or model-selection theory;

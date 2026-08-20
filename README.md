@@ -146,6 +146,28 @@ The current supplementary argument is organized around one conceptual spine:
 
 Its principal results are S2, S2.11, S2.12, and S2.13. S2.3–S2.10 provide calibration, finite-sample, selection-validity, light-tail, and robust statistical-certification machinery. See [`supplementary/README.md`](supplementary/README.md).
 
+### Recursive observer-information extension
+
+An unnumbered supplementary extension closes the dynamic feedback step:
+
+```math
+\text{experienced observer history}
+\longrightarrow
+\text{belief / recognition update}
+\longrightarrow
+\text{adoption and policy}
+\longrightarrow
+\text{trajectory and accessibility}
+\longrightarrow
+\text{next experienced observer history}.
+```
+
+Relative to the information available when each decision is made, cumulative outcome is separated into a predictable component and a zero-base-conditional-mean innovation component. Applying the existing weighted-measure identity then separates **predictable selection** from **innovation selection**. The latter is a filtration-relative diagnostic for first-person reweighting of decision-time-unpredictable variation; it is not an objective physical luck parameter.
+
+The same extension permits a specified QBS observer model and a specified null observer model to update bridge belief through ordinary likelihood ratios. Under correctly specified conditional models, the expected one-step log likelihood ratio has the corresponding KL-divergence sign. These are standard probability/information-theoretic facts used to close the feedback arrow, not evidence that the physical bridge is correct.
+
+See [`supplementary/evidence_activation.md`](supplementary/evidence_activation.md). The exploratory [`supplementary/recursive_qbs_simulation.py`](supplementary/recursive_qbs_simulation.py) includes aligned, anti-aligned, and policy-only controls and remains outside the locked E1–E5 suite.
+
 ### Reproducible simulations
 
 The locked core experiment suite is E1–E5:
@@ -192,7 +214,7 @@ d\mu^{FP}_\pi(\omega)
 
 A concrete physical account must explain why an Everettian observer should be described by the proposed accessibility map. Structural and empirical review criteria are in [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md).
 
-The repository does not claim that statistical covariance certification establishes Everettian observer selection, that positive correlation alone implies FOSD, or that external random generators become objectively lucky. The complete claim boundary is maintained in [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md).
+The repository does not claim that statistical covariance certification or recursive toy simulations establish Everettian observer selection, that positive correlation alone implies FOSD, that observing a favorable history proves the bridge, or that external random generators become objectively lucky. The complete claim boundary is maintained in [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md).
 
 ## Where to read next
 
@@ -200,6 +222,7 @@ The repository does not claim that statistical covariance certification establis
 |---|---|
 | Understand the complete claim structure | [`docs/research_map.md`](docs/research_map.md) |
 | Check theorem statements and assumptions | [`theory/core_theorems.md`](theory/core_theorems.md) and [`supplementary/README.md`](supplementary/README.md) |
+| Check the recursive observer-information extension | [`supplementary/evidence_activation.md`](supplementary/evidence_activation.md) and [`supplementary/recursive_qbs_simulation.py`](supplementary/recursive_qbs_simulation.py) |
 | Check claim strength and non-claims | [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md) |
 | Check notation and terminology | [`docs/notation.md`](docs/notation.md) |
 | Inspect experiments visually | [`experiments/README.md`](experiments/README.md) and [`figures/README.md`](figures/README.md) |
@@ -230,19 +253,29 @@ The primary numerical/plotting package versions in `requirements.txt` are pinned
 
 Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/). Superseded experiment designs are kept under [`experiments/archive/`](experiments/archive/).
 
+The recursive supplementary toy can be run separately with:
+
+```bash
+python supplementary/recursive_qbs_simulation.py
+```
+
+It is exploratory research code and is intentionally not part of the byte-locked E1–E5 reproduction contract.
+
 ## Public review
 
 Use [`CONTRIBUTING.md`](CONTRIBUTING.md) and the issue templates for proof/counterexample reports, prior-art overlap, reproducibility failures, and Everett-bridge criticism.
 
-The focused v0.3 S2 technical-review thread is [Issue #14](https://github.com/Unjuno/quantum-bogosort/issues/14).
+The focused v0.3 S2 technical-review thread is [Issue #14](https://github.com/Unjuno/quantum-bogosort/issues/14). The frozen v0.3 tag predates the current unnumbered recursive extension; current development and review statements should therefore be read from `main` and the canonical research map.
 
-The current review priority is external proof, novelty, manuscript, statistical-assumption, and Everett-bridge scrutiny rather than automatic theorem expansion.
+The current review priority is external proof, novelty, manuscript, statistical-assumption, recursive-model stress testing, and Everett-bridge scrutiny rather than automatic theorem expansion.
 
 ## Repository state
 
-The repository has a single active branch: `main`. Frozen scientific snapshots are preserved as named, commit-pinned tags/GitHub Releases rather than as active branches, so they remain distinct from pending development work. Their commit targets are recorded explicitly below and rechecked during pre-announcement audit; platform-level tag immutability is not assumed without an active tag ruleset.
+`main` is the canonical public source of truth. Frozen scientific snapshots are preserved as named, commit-pinned tags/GitHub Releases so they remain distinct from current development work. Their commit targets are recorded explicitly below and rechecked during pre-announcement audit; platform-level tag immutability is not assumed without an active tag ruleset.
 
-- current review/development surface: `main`;
+A temporary `research/recursive-qbs` branch currently points at the same development line used to introduce the recursive extension. It is not a separate scientific source of truth and should be removed when branch-cleanup tooling is available.
+
+- current review/development source of truth: `main`;
 - current frozen snapshot: tag/Release `v0.3-public-review` at commit `58038763127258bd3e2f0d41708c4dfa01f81fd6`;
 - previous frozen snapshot: tag/Release `v0.2-public-review` at commit `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
 - current snapshot ledger: [`STATUS.md`](STATUS.md);
@@ -250,7 +283,7 @@ The repository has a single active branch: `main`. Frozen scientific snapshots a
 - historical derivation provenance: PRs #11–#21;
 - post-snapshot rendering/visualization/reproducibility QA provenance: PRs #27–#29.
 
-The locked core theorem set T1–T5 and experiment set E1–E5 remain the same set as v0.3. Current `main` contains an audited domain correction that explicitly requires both base and weighted outcome integrability for finite covariance decompositions, plus the T5 cross-integrability needed by `Q(U_1,S_0)`; the frozen v0.3 tag itself is unchanged.
+The locked core theorem set T1–T5 and experiment set E1–E5 remain the same set as v0.3. Current `main` contains audited domain corrections and the unnumbered recursive observer-information extension; the frozen v0.3 tag itself is unchanged.
 
 ## Validation
 

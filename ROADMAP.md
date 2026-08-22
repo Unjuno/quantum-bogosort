@@ -57,7 +57,7 @@ Broad announcement remains gated on the final settled `main` Actions result, dir
 - [x] Explicitly require core theory sources, split-license/configuration files, archived experiment provenance, the pre-announcement audits, and principal validator scripts in repository-structure validation.
 - [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
 - [x] Provide a dedicated visual route for every locked experiment family E1–E5, including E2 predictive alignment.
-- [x] Require committed SVGs and the deterministic Figure 2 theorem-illustration CSV to match generator output byte-for-byte under the pinned primary runtime contract.
+- [x] Require committed SVGs to match generator output byte-for-byte; require the deterministic Figure 2 theorem-illustration CSV to match exact structure/non-numeric cells plus the tight numeric-equivalence contract and restore its committed canonical bytes before the final exact worktree check.
 - [x] Keep deterministic theorem illustrations, current reproduction outputs, and locked historical summaries explicitly separated at figure level.
 - [x] Provide a static SVG fallback for the root Mermaid dependency diagram.
 - [ ] Confirm the final settled `main` `validate` workflow is green after the announcement-cleanup commits.

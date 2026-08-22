@@ -65,7 +65,7 @@ Please include:
 - experiment/script ID;
 - whether the failure reproduces on a clean environment.
 
-Core experiments E1–E5 are expected to run under GitHub Actions. The repository pins the primary Python package versions used for byte-level reproduction; install `requirements.txt` rather than substituting newer dependency versions when checking committed-output identity.
+Core experiments E1–E5 are expected to run under GitHub Actions. The repository pins the primary Python package versions to reduce execution-environment drift; install `requirements.txt` rather than substituting newer dependency versions when checking committed reproduction outputs. Current numeric CSV cells are compared to committed `HEAD` with a tight `rtol=1e-12`, `atol=1e-14` contract, while schema, row order, and non-numeric cells must match exactly and the experiment scripts retain independent scientific regression assertions.
 
 The recursive QBS toy is supplementary exploratory code rather than part of the locked E1–E5 manifest. Run it separately with:
 
@@ -137,7 +137,7 @@ python figures/generate_pdf_figures.py
 python scripts/validate_latex_sources.py
 ```
 
-For experiment changes, run the locked suite and then verify declared output identity plus repository cleanliness:
+For experiment changes, run the locked suite and then verify declared output equivalence plus repository cleanliness:
 
 ```bash
 python experiments/exp1_fosd_and_stress.py
@@ -148,7 +148,7 @@ python experiments/exp5_branch_map.py
 python scripts/validate_reproduction_outputs.py
 ```
 
-The manifest validator fixes the canonical E1–E5 locked/current file mappings, experiment-card theory routing, and all 16 frozen historical CSV Git blob identities. The reproduction validator is manifest-driven: it requires the tracked E1–E5 current CSV set to match the manifest, requires current outputs to remain byte-identical to `HEAD`, rejects changes to tracked repository content during experiment execution, and rejects undeclared generated files under `data/processed/`, including ignored files.
+The manifest validator fixes the canonical E1–E5 locked/current file mappings, experiment-card theory routing, and all 16 frozen historical CSV Git blob identities. The reproduction validator is manifest-driven: it requires the tracked E1–E5 current CSV set to match the manifest; requires exact schema, row order, and non-numeric cells; requires numeric cells to match committed `HEAD` within `rtol=1e-12`, `atol=1e-14`; rejects changes to tracked repository content outside the declared current outputs during experiment execution; and rejects undeclared generated files under `data/processed/`, including ignored files. After a successful comparison, it restores the committed canonical current-output bytes before later clean-worktree checks.
 
 For figure changes, regenerate both the public SVGs and the gitignored manuscript PDF figures before validating the exact output sets:
 

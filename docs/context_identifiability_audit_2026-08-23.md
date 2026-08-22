@@ -27,7 +27,7 @@ r_c=\frac{dQ_c}{d\mu_c}.
 Then a classical record process with
 
 ```math
-N_c\mid(\omega,c)\sim\operatorname{Poisson}(r_c(\omega))
+N_c\mid(\omega,c)\sim\mathrm{Poisson}(r_c(\omega))
 ```
 
 has record-size-biased law exactly equal to `Q_c`.

@@ -1,6 +1,6 @@
 # QBS Current Research Status
 
-**Updated:** 2026-08-21
+**Updated:** 2026-08-23
 
 This file is the concise source of truth for the current review/development state. Frozen snapshot identity is recorded in [`STATUS.md`](STATUS.md); detailed audit history remains in the pre-announcement audit files; future work is tracked in [`ROADMAP.md`](ROADMAP.md).
 
@@ -58,13 +58,13 @@ Its exact mathematical components are:
 
 `Innovation selection` is a formal diagnostic for reweighting of decision-time-unpredictable variation relative to a chosen information filtration. It is not a claim that objective chance or an external RNG has been causally improved.
 
-The exploratory [`supplementary/recursive_qbs_simulation.py`](supplementary/recursive_qbs_simulation.py) is outside the locked E1–E5 suite. Its aligned, anti-aligned, and policy-only controls check that ordinary/predictable effects and innovation selection can be separated, including a counterexample where predictable selection is positive while innovation selection and total first-person uplift are negative.
+The exploratory [`supplementary/recursive_qbs_simulation.py`](supplementary/recursive_qbs_simulation.py) is outside the locked E1–E5 suite. Its aligned, anti-aligned, and policy-only controls check that ordinary/predictable effects and innovation selection can be separated, including a counterexample where predictable selection is positive while innovation selection and total first-person uplift are negative. The current validation branch also requires this file in the repository inventory and executes the aligned, anti-aligned, decomposition, and policy-only-null mechanism checks independently of the script's own assertions.
 
 The recursive extension is now indexed in [`docs/research_map.md`](docs/research_map.md) and classified in [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md).
 
 ## Reproducibility state
 
-The primary byte-reproduction environment remains fixed to:
+The primary execution environment remains pinned to:
 
 - Ubuntu 24.04;
 - Python 3.11.15;
@@ -72,7 +72,9 @@ The primary byte-reproduction environment remains fixed to:
 - pandas 3.0.5;
 - Matplotlib 3.11.1.
 
-The locked E1–E5 suite and committed figure/data reproduction contracts remain unchanged by the recursive extension. The recursive toy simulation is deliberately supplementary and is not part of the byte-locked E1–E5 manifest.
+The 16 locked historical E1–E5 CSVs remain Git-blob locked. Current reproduction CSVs retain exact schema, row order, and non-numeric cells and are numerically compared to committed `HEAD` with `rtol=1e-12`, `atol=1e-14`; this avoids treating host-dependent last-bit floating-point decimal serialization as scientific drift. E1–E5 continue to execute independent scientific regression assertions before that comparison. After a successful current-output check, committed canonical CSV bytes are restored before the final clean-worktree gate. Deterministic committed SVGs and the Figure 2 theorem-illustration CSV retain their byte-for-byte regeneration checks.
+
+The recursive toy simulation remains deliberately supplementary and is not part of the manifest-locked E1–E5 reproduction set.
 
 Detailed execution and validator audits remain in:
 
@@ -103,6 +105,8 @@ The repository does not claim quantum immortality, guaranteed survival, backward
 - [x] frozen v0.3 versus current-main boundary made explicit;
 - [x] current development status refreshed;
 - [x] locked T1–T5 / E1–E5 identities left unchanged;
+- [x] recursive simulation brought under repository/executable CI coverage;
+- [x] CI false positives found by PR execution corrected without changing theorem or locked-data content;
 - [x] redundant `research/recursive-qbs` branch verified identical to `main`, with no unmerged commits, file differences, or associated pull request.
 
 ### Remaining external/UI gates

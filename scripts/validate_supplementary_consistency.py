@@ -178,7 +178,7 @@ PAIRWISE_FORMULAS: tuple[tuple[Path, Path, tuple[str, ...]], ...] = (
     (
         ROOT / "supplementary/robust_mom_certificate.md",
         ROOT / "paper/sections/robust_mom_certificate_appendix.tex",
-        (r"\mathrm{Var}(Z_j)=0",),
+        (r"v_j=0",),
     ),
     (
         ROOT / "supplementary/gaussian_model.md",

@@ -32,6 +32,8 @@ N_c\mid(\omega,c)\sim\mathrm{Poisson}(r_c(\omega))
 
 has record-size-biased law exactly equal to `Q_c`.
 
+This is a **contextwise** existence claim: for each fixed `c`, the representing conditional record law exists. If contexts themselves are placed in a measurable probability space and one requires a single joint kernel `P(N\in\cdot\mid\omega,c)`, then joint measurability of the chosen version `(omega,c) -> r_c(omega)` is an additional requirement. The no-go does not infer that joint regularity from separate absolute-continuity statements.
+
 ### H2: shared-selection restriction
 
 If one nonnegative measurable selection function `a(omega)` is used in every context,
@@ -303,6 +305,7 @@ A cross-context density-ratio theorem is a structural identification result, not
 6. **Asymmetric model comparison:** allowing arbitrary policy dependence for QBS while forbidding it for the classical null creates a straw null.
 7. **Estimation error:** even when `r_c` is identifiable in principle, finite-sample density-ratio estimation requires a separate statistical validity analysis.
 8. **Support mismatch:** pairwise density-ratio comparisons require common support or an explicitly handled partial-overlap formulation.
+9. **Joint-kernel regularity:** separate contextwise representations do not by themselves supply joint measurability in an arbitrary measurable context variable; a single joint generative kernel requires that extra regularity.
 
 ## Prior-art cross-check
 
@@ -316,17 +319,17 @@ These works do not prove the QBS-specific propositions; the propositions above a
 
 ## D — audit decision
 
-**PASS — exact mathematical boundary, with an important operational qualification.**
+**PASS — exact mathematical boundary, with important operational and joint-regularity qualifications.**
 
 The following survived proof review and finite-state stress testing:
 
-- arbitrary context-specific absolutely continuous observer laws have exact classical record-size-biased representations;
+- arbitrary context-specific absolutely continuous observer laws have exact classical record-size-biased representations, context by context;
 - a shared context-invariant selection function implies proportional cross-context Radon--Nikodym densities;
 - the converse holds under the stated common-function representation;
 - with a common base law, proportionality strengthens to equality of normalized density ratios;
 - multiple contexts alone do not identify the mechanism when context-specific selection is unrestricted.
 
-The phrase **testable restricted null** is acceptable only when accompanied by the operational requirements above. Without identified base/selected laws on a common observable state space, the density-ratio condition is not yet an empirical test.
+The phrase **testable restricted null** is acceptable only when accompanied by the operational requirements above. Without identified base/selected laws on a common observable state space, the density-ratio condition is not yet an empirical test. If the contexts themselves are random and a single joint record kernel is required, joint measurability must also be supplied rather than inferred from the contextwise result.
 
 ## U — remaining uncertainty
 
@@ -347,9 +350,11 @@ Until such a model exists, the context-indexed result should be treated primaril
 
 1. The Poisson construction uses the Radon--Nikodym density itself as a dimensionless conditional mean; it is finite almost surely because it is integrable with mean one.
 2. The Bernoulli construction additionally requires essential boundedness.
-3. The shared-selector necessity and converse concern laws on the same aligned measurable state space.
-4. The same-base strengthening concerns latent/base-state density ratios, not necessarily observed outcome distributions after policy-dependent maps.
-5. Projection can both hide latent violations and create observed differences unrelated to selection changes.
-6. Failure of one restricted classical null does not identify Everett; more flexible classical selection models may remain observationally equivalent.
-7. The prior-art comparison is methodological, not a novelty claim for generic selection-model identifiability.
-8. T1–T5, E1–E5, and the numbered S2 family are untouched by this audit.
+3. The context-indexed representability theorem is contextwise. A single joint kernel over a measurable context variable requires a jointly measurable choice of density version.
+4. In the context-indexed extension, `c` denotes the context index. This is logically distinct from the positive proportionality constant also denoted `c` in the earlier single-context Poisson construction; the latter is an arbitrary scale that cancels from the normalized record law and should not be confused with the context index.
+5. The shared-selector necessity and converse concern laws on the same aligned measurable state space.
+6. The same-base strengthening concerns latent/base-state density ratios, not necessarily observed outcome distributions after policy-dependent maps.
+7. Projection can both hide latent violations and create observed differences unrelated to selection changes.
+8. Failure of one restricted classical null does not identify Everett; more flexible classical selection models may remain observationally equivalent.
+9. The prior-art comparison is methodological, not a novelty claim for generic selection-model identifiability.
+10. T1–T5, E1–E5, and the numbered S2 family are untouched by this audit.

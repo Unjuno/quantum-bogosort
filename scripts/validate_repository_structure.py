@@ -14,6 +14,7 @@ required = [
     "docs/pre_announcement_validator_audit_2026-08-19.md",
     "docs/pre_announcement_bibliography_audit_2026-08-19.md",
     "docs/pre_announcement_mathematical_domain_audit_2026-08-19.md",
+    "docs/context_identifiability_audit_2026-08-23.md",
     "docs/s2_stack_review_map.md", "docs/s2_stack_semantic_audit.md",
     "docs/post_v02_manuscript_compression_audit.md", "docs/post_v02_core_s2_proof_review.md",
     "docs/s2_adaptive_alignment_audit.md", "docs/s2_finite_sample_certificate_audit.md",
@@ -39,8 +40,9 @@ required = [
     "supplementary/robust_mom_certificate.md", "supplementary/residual_covariance_extension.md",
     "supplementary/residual_variance_certificate.md", "supplementary/explained_variance_certificate.md",
     "supplementary/evidence_activation.md", "supplementary/selection_equivalence.md",
-    "supplementary/recursive_qbs_simulation.py", "supplementary/recognition_time.md",
-    "supplementary/selectivity_frontier.md", "supplementary/branch_recognition.md",
+    "supplementary/context_identifiability_stress.py", "supplementary/recursive_qbs_simulation.py",
+    "supplementary/recognition_time.md", "supplementary/selectivity_frontier.md",
+    "supplementary/branch_recognition.md",
     "literature/prior_art.md", "literature/extended_prior_art.md", "literature/post_v02_targeted_prior_art.md",
     "paper/README.md", "paper/bibliography_fact_lock.md", "paper/main.tex", "paper/references.bib",
     "figures/README.md", "figures/figure_data.py", "figures/generate_figures.py", "figures/generate_pdf_figures.py",
@@ -114,7 +116,8 @@ if missing_sections:
 print(
     f"Repository structure OK: {len(required)} required nonsymlink regular files; complete "
     f"{len(actual_markdown)}-file Markdown inventory declared; all five core theory sources; "
-    f"consolidated/archived research provenance; four pre-announcement audit records; runtime/"
-    f"core-theorem/supplementary/experiment-card/citation/bibliography/license/figure-set/"
-    f"snapshot-ref/worktree-artifact validators; and {len(section_refs)} manuscript sections found."
+    f"consolidated/archived research provenance; pre-announcement and context-identifiability "
+    f"audit records; runtime/core-theorem/supplementary/experiment-card/citation/bibliography/"
+    f"license/figure-set/snapshot-ref/worktree-artifact validators; and {len(section_refs)} "
+    f"manuscript sections found."
 )

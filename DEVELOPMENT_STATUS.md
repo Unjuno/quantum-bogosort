@@ -31,17 +31,41 @@ Current `main` preserves T1–T5 identity, numbering, proof algebra, sign/FOSD c
 
 The detailed domain audit is [`docs/pre_announcement_mathematical_domain_audit_2026-08-19.md`](docs/pre_announcement_mathematical_domain_audit_2026-08-19.md). Existing theorem/supplementary validators retain the reviewed cross-surface contracts.
 
-### Selection-equivalence / identifiability boundary
+### Selection-equivalence / context-identifiability boundary
 
-The current development line now makes the strongest classical null explicit in [`supplementary/selection_equivalence.md`](supplementary/selection_equivalence.md).
+The current development line makes the strongest classical selection null explicit in [`supplementary/selection_equivalence.md`](supplementary/selection_equivalence.md).
 
 For bounded nonnegative accessibility `S`, the normalized first-person law is exactly the conditional law obtained by recording a base trajectory with probability proportional to `S`. For general integrable nonnegative `S`, the same law is exactly representable as a classical record-size-biased distribution whose conditional expected record multiplicity is proportional to `S`; bounded truncations converge to the general law in total variation.
 
-This yields a direct identifiability boundary: if a proposed Everett accessibility model and a classical ascertainment/recording model induce the same relevant joint law of observables and accessibility, observer-conditioned data from that weighted law cannot distinguish them. The probability-law equivalence does not prove that the underlying physical mechanisms are identical or classical.
+This yields a direct single-context identifiability boundary: if a proposed Everett accessibility model and a classical ascertainment/recording model induce the same relevant joint law of observables and accessibility, observer-conditioned data from that weighted law cannot distinguish them. The probability-law equivalence does not prove that the underlying physical mechanisms are identical or classical.
 
-The practical consequence is that a physical QBS/Everett bridge must do more than reproduce a normalized weighted observer law. It must independently derive or constrain `S`, or generate additional observable, interventional, or sequential predictions that differ from a behavior-matched classical selection null.
+The boundary is now extended across policies/interventions. For each context `c`, any observer-conditioned law `Q_c` satisfying `Q_c << mu_c` can be reproduced exactly by a classical record-size-biased model using conditional expected record multiplicity
 
-The prior-art ledgers now explicitly connect this boundary to Fisher (1934), Rao (1965), and Patil--Rao (1978) ascertainment / weighted-distribution theory. The manuscript Related Work and Discussion sections include the same limitation, and the reviewed bibliography fact lock includes the DOI-backed Fisher and Patil--Rao publications.
+```math
+r_c
+=
+\frac{dQ_c}{d\mu_c}.
+```
+
+Therefore observing several contexts does not identify the mechanism if the classical null may retune its selection channel independently in every context.
+
+A restricted context-invariant selector creates a structural test: if one `a(omega)` is shared across contexts, then
+
+```math
+\frac{dQ_c}{d\mu_c}
+=
+\frac{a}{Z_c},
+```
+
+so pairwise density-ratio ratios must be constant on the common support. With one common base law this strengthens to equality of the normalized density ratios.
+
+The audit also identified an important operational qualification. This structural restriction is not automatically an empirical test: the base and selected laws must be identifiable on a common observable state space. Latent violations can disappear under projection, while policy-dependent outcome/observation maps can create observed distribution changes even with shared latent selection.
+
+The dedicated proof/stress audit is [`docs/context_identifiability_audit_2026-08-23.md`](docs/context_identifiability_audit_2026-08-23.md). A 20,000-case finite-state property test reproduced the context-specific representation to floating-point error, verified the shared-selection ratio condition, and found no false shared-null fits among tested nonproportional cases. Explicit projection counterexamples are recorded in the audit.
+
+The practical consequence is that a physical QBS/Everett bridge must do more than reproduce one or many normalized weighted observer laws. It must independently derive or constrain `S_pi` across contexts, expose identifiable base/selected quantities, and generate held-out/interventional/sequential predictions that differ from comparably constrained classical selection nulls.
+
+The prior-art ledgers connect the single-context boundary to Fisher (1934), Rao (1965), and Patil--Rao (1978) ascertainment / weighted-distribution theory. The context-identifiability audit additionally connects the methodological burden to Heckman-style sample selection and modern missing-not-at-random identification work. The latter references are currently recorded in the research ledger/audit; promoting them into the manuscript bibliography fact lock is a separate bibliography-governance change rather than a prerequisite for the mathematical result.
 
 ### Recursive observer-information extension
 
@@ -91,21 +115,24 @@ Detailed execution and validator audits remain in:
 - [`docs/pre_announcement_execution_audit_2026-08-19.md`](docs/pre_announcement_execution_audit_2026-08-19.md);
 - [`docs/pre_announcement_validator_audit_2026-08-19.md`](docs/pre_announcement_validator_audit_2026-08-19.md);
 - [`docs/pre_announcement_bibliography_audit_2026-08-19.md`](docs/pre_announcement_bibliography_audit_2026-08-19.md);
-- [`docs/pre_announcement_mathematical_domain_audit_2026-08-19.md`](docs/pre_announcement_mathematical_domain_audit_2026-08-19.md).
+- [`docs/pre_announcement_mathematical_domain_audit_2026-08-19.md`](docs/pre_announcement_mathematical_domain_audit_2026-08-19.md);
+- [`docs/context_identifiability_audit_2026-08-23.md`](docs/context_identifiability_audit_2026-08-23.md).
 
 ## Bibliography and novelty position
 
 The bibliography fact lock and prior-art ledgers remain the reviewed source for publication chronology and claim boundaries. The selection-equivalence pass adds classical ascertainment/weighted-distribution prior art and narrows the novelty hypothesis further.
 
-No novelty claim is made for normalized weighting, size-biased/ascertainment distributions, standard sequential weighting, martingale/predictable decompositions, Bayesian likelihood-ratio updating, or KL identities by themselves.
+No novelty claim is made for normalized weighting, size-biased/ascertainment distributions, generic sample-selection/MNAR identifiability, standard sequential weighting, martingale/predictable decompositions, Bayesian likelihood-ratio updating, or KL identities by themselves.
 
-The provisional novelty question remains about the combined recognition-dependent policy/trajectory/accessibility architecture and its decompositions, not any standard mathematical component in isolation.
+The provisional novelty question remains about the combined recognition-dependent policy/trajectory/accessibility architecture and its decompositions, plus whether an independently motivated physical accessibility model supplies cross-context restrictions that survive classical selection alternatives.
 
 ## Everett bridge
 
 The physical bridge remains open. A concrete accessibility rule must independently justify why observer persistence/self-location should induce the proposed first-person measure and must satisfy the structural constraints in [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md).
 
-The selection-equivalence result strengthens this requirement: matching the weighted first-person law is insufficient because a classical behavior-matched selection mechanism can reproduce the same law.
+The selection-equivalence result strengthens this requirement: matching the weighted first-person law is insufficient because a classical behavior-matched selection mechanism can reproduce the same law. The context-indexed extension further rules out context-by-context refitting as mechanism evidence.
+
+The next bridge gate is therefore a **predeclared, low-dimensional cross-policy law for `S_pi` plus an operationally identifiable held-out test**. A restriction stated only on inaccessible latent branch variables is not yet an empirical bridge test.
 
 The repository does not claim quantum immortality, guaranteed survival, backward causation, objective RNG bias, or that a favorable observed history proves the bridge.
 
@@ -117,8 +144,12 @@ The repository does not claim quantum immortality, guaranteed survival, backward
 - [x] recursive claims/non-claims classified in the authoritative claim ledger;
 - [x] recursive simulation brought under repository/executable CI coverage;
 - [x] selection-equivalence / ascertainment boundary proved and indexed;
-- [x] classical ascertainment prior art added to the research ledgers and manuscript;
-- [x] weighted-law observational non-identifiability classified as a bridge limitation;
+- [x] arbitrary context-specific observer-law representability proved and indexed;
+- [x] shared-selection density-ratio restriction proved with same-base strengthening;
+- [x] operational/projection limits of the cross-context restriction audited;
+- [x] dedicated context-identifiability proof/stress audit added to the repository inventory;
+- [x] classical ascertainment and selection-identifiability prior art added to the research ledgers;
+- [x] weighted-law and context-indexed observational non-identifiability classified as bridge limitations;
 - [x] landing-page scientific wording remains bounded by the unresolved physical bridge;
 - [x] frozen v0.3 versus current-main boundary made explicit;
 - [x] locked T1–T5 / E1–E5 identities left unchanged;
@@ -137,14 +168,15 @@ The remaining items are hosting-layer presentation/governance checks, not known 
 
 ## Current announcement position
 
-The repository is suitable for **public technical review** on scientific-content grounds. Broad promotion should retain the explicit statement that the Everett accessibility bridge is unresolved and should not present the normalized weighting itself as novel or as evidence for a physical observer-selection mechanism.
+The repository is suitable for **public technical review** on scientific-content grounds. Broad promotion should retain the explicit statement that the Everett accessibility bridge is unresolved and should not present normalized weighting, repeated context-specific weighted laws, or favorable recursive histories as evidence for a physical observer-selection mechanism.
 
 External criticism is specifically welcome on:
 
 - proofs and counterexamples;
 - direct prior art / structural overlap;
-- whether the selection-equivalence null is formulated broadly enough;
-- what observation or intervention could identify a physical accessibility mechanism beyond that null;
+- whether the context-specific classical null is formulated broadly enough;
+- whether any independently justified cross-context restriction survives projection to observable records;
+- what held-out observation or intervention could identify a physical accessibility mechanism beyond comparably constrained classical selection nulls;
 - the recursive observer-information model and its misspecification boundaries;
 - whether innovation selection is a useful filtration-relative diagnostic;
 - the Everett/multiverse accessibility bridge;

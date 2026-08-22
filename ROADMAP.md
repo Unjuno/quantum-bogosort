@@ -4,9 +4,9 @@ This file tracks future work. Completed theorem details belong in [`docs/researc
 
 ## Current phase
 
-The project is in **v0.3 public review / preprint preparation**, with later unnumbered recursive observer-information and selection-equivalence work on current development.
+The project is in **v0.3 public review / preprint preparation**, with later unnumbered recursive observer-information and selection/context-identifiability work on current development.
 
-The locked core remains T1–T5 and E1–E5. The numbered supplementary line is complete through S2.13. The recursive and selection-equivalence extensions are intentionally unnumbered and do not create T6, S2.14, or E6. The default next step remains review quality rather than automatic theorem expansion.
+The locked core remains T1–T5 and E1–E5. The numbered supplementary line is complete through S2.13. The recursive and selection/context-identifiability extensions are intentionally unnumbered and do not create T6, S2.14, or E6. The default next step remains review quality rather than automatic theorem expansion.
 
 Broad announcement remains gated on final settled Actions results, direct inspection of rendered GitHub pages when available, and explicit handling or deferral of the remaining repository-governance/presentation items.
 
@@ -16,21 +16,30 @@ Broad announcement remains gated on final settled Actions results, direct inspec
 - [ ] Collect concrete counterexamples, assumption objections, or boundary-condition corrections if reviewers identify them.
 - [ ] Obtain focused prior-art review of the combined recognition-dependent architecture.
 - [x] Formalize the classical selection-equivalence null for the normalized first-person law, including bounded ascertainment conditioning, general record-size bias, total-variation truncation, and the observable non-identifiability corollary.
+- [x] Extend the selection-equivalence null across arbitrary policy/intervention contexts: any `Q_c << mu_c` is exactly reproducible by context-specific classical record-size bias.
+- [x] Prove the context-invariant shared-selection restriction: cross-context Radon--Nikodym density ratios must be proportional on common support, with equality under one common base law.
+- [x] Audit the operational limitation of that restriction: base/selected laws must be identifiable on a common observable state space, and latent violations can disappear under projection.
+- [x] Add a dedicated H/T/D/C/U proof/stress audit with 20,000 random finite-state property tests and explicit projection counterexamples.
 - [x] Add classical ascertainment / weighted-distribution prior art (Fisher 1934; Rao 1965; Patil--Rao 1978) and narrow novelty claims accordingly.
-- [ ] Identify a concrete physical, interventional, or sequential prediction that could distinguish an Everett accessibility mechanism from a behavior-matched classical selection null.
+- [x] Add sample-selection/MNAR identifiability prior art to the research ledger/audit as a methodological comparison (Heckman; Miao--Ding--Geng; Miao--Tchetgen Tchetgen).
+- [ ] Decide whether those additional selection-identifiability references should enter the manuscript bibliography fact lock in a separate bibliography-governance pass.
+- [ ] Specify a concrete low-dimensional/predeclared cross-policy law for `S_pi` that is motivated independently of observed favorable outcomes.
+- [ ] Specify which base and observer-conditioned quantities are operationally observable/identifiable under that candidate law.
+- [ ] Design a held-out context/intervention test that compares the candidate Everett bridge against classical structural nulls with comparable degrees of freedom and no context-by-context retuning.
 - [ ] Stress-test the recursive observer-information extension against model misspecification, survivorship-only controls, and alternative null observer models.
 - [ ] Review whether innovation selection is a useful stable filtration-relative diagnostic rather than merely a model-dependent decomposition label.
 - [x] Cross-check current manuscript bibliography chronology/provenance against publisher, journal, author, or archival records where available; prefer verified publication records when a later preprint upload would obscure established prior-art chronology, while retaining genuinely earlier public preprints and current working papers deliberately.
 - [x] Align the working `literature/` ledgers with the authoritative recognition boundary so they do not describe recognition as having privileged physical causal power.
 - [ ] Review whether S2.13 should remain in the manuscript main text.
 - [ ] Decide whether all S2.5–S2.10 material belongs in the paper Appendix or partly in repository-only supplementary material.
-- [ ] Review the Everett accessibility bridge independently from the abstract covariance mathematics and independently from the selection-equivalence null.
+- [ ] Review the Everett accessibility bridge independently from the abstract covariance mathematics and independently from the selection/context-identifiability nulls.
 
 ## Repository and reproducibility gates
 
 - [ ] Keep `main` CI-green after review-driven editorial or scientific corrections.
 - [x] Synchronize README, research map, claim ledger, supplementary index, and development status after the recursive extension.
-- [x] Index the selection-equivalence boundary in the supplementary index, research map, claim ledger, prior-art ledgers, manuscript, and development status.
+- [x] Index the single-context selection-equivalence boundary in the supplementary index, research map, claim ledger, prior-art ledgers, manuscript, and development status.
+- [x] Index the context-identifiability extension in the supplementary index, research map, claim ledger, Everett bridge tests, manuscript Discussion, development status, roadmap, and dedicated audit record.
 - [x] Keep `main` as the canonical public source of truth and preserve frozen v0.2/v0.3 snapshots as named, commit-pinned tags/GitHub Releases.
 - [ ] Remove redundant `fix/recursive-qbs-validation` and `research/recursive-qbs` branches; both contain no commits ahead of `main` and no file differences.
 - [x] Validate repository-relative Markdown links in CI.
@@ -59,7 +68,7 @@ Broad announcement remains gated on final settled Actions results, direct inspec
 - [x] Derive current reproduction validation from the manifest rather than maintaining a duplicate hard-coded CSV list in CI; require exact schema/order/non-numeric cells, tight numeric equivalence, and restoration of committed canonical bytes after successful comparison.
 - [x] Require E1–E5 execution to leave the complete `data/processed/` tree otherwise unchanged, including no locked-file mutation and no undeclared ignored files.
 - [x] Require `supplementary/recursive_qbs_simulation.py` in the repository inventory and execute its aligned, anti-aligned, decomposition, and policy-only-null mechanism checks from CI independently of the script's own assertions.
-- [x] Explicitly require core theory sources, split-license/configuration files, archived experiment provenance, the pre-announcement audits, principal validator scripts, and the selection-equivalence supplementary note in repository-structure validation.
+- [x] Explicitly require core theory sources, split-license/configuration files, archived experiment provenance, pre-announcement/context-identifiability audits, principal validator scripts, and the selection-equivalence supplementary note in repository-structure validation.
 - [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
 - [x] Provide a dedicated visual route for every locked experiment family E1–E5, including E2 predictive alignment.
 - [x] Require committed SVGs to match generator output byte-for-byte; validate the deterministic Figure 2 theorem-illustration CSV by exact structure plus tight numerical equivalence and restore canonical bytes before the final worktree check.
@@ -78,17 +87,18 @@ Detailed audit records:
 - [`docs/pre_announcement_execution_audit_2026-08-19.md`](docs/pre_announcement_execution_audit_2026-08-19.md) — commit-fixed source/execution/reproduction pass;
 - [`docs/pre_announcement_validator_audit_2026-08-19.md`](docs/pre_announcement_validator_audit_2026-08-19.md) — false-PASS, validator, Actions-supply-chain, and public-routing pass;
 - [`docs/pre_announcement_bibliography_audit_2026-08-19.md`](docs/pre_announcement_bibliography_audit_2026-08-19.md) — external bibliography/publication chronology and prior-art semantic-boundary pass;
-- [`docs/pre_announcement_mathematical_domain_audit_2026-08-19.md`](docs/pre_announcement_mathematical_domain_audit_2026-08-19.md) — mathematical-domain and boundary audit.
+- [`docs/pre_announcement_mathematical_domain_audit_2026-08-19.md`](docs/pre_announcement_mathematical_domain_audit_2026-08-19.md) — mathematical-domain and boundary audit;
+- [`docs/context_identifiability_audit_2026-08-23.md`](docs/context_identifiability_audit_2026-08-23.md) — context-specific representability, shared-selection restriction, finite-state property test, projection counterexamples, and operational-identifiability audit.
 
 ## Broad-announcement gate
 
 Before directing broad external traffic to the repository:
 
 - [ ] complete a visual pass of the root README and representative linked research pages in GitHub desktop and mobile layouts when a browser-capable environment is available;
-- [ ] verify in the rendered UI that the main conceptual diagram, mathematical definitions, theorem pages, experiment figures, recursive supplementary page, selection-equivalence page, and literature/audit pages are visible without opening raw source files;
+- [ ] verify in the rendered UI that the main conceptual diagram, mathematical definitions, theorem pages, experiment figures, recursive supplementary page, selection/context-identifiability page, and literature/audit pages are visible without opening raw source files;
 - [x] verify in repository source that every locked visual result links to its H/T/D/C/U experiment card and figure/data provenance;
 - [x] verify that the interpretation boundary and Everett bridge status are visible from the landing-page source;
-- [x] verify that the recursive and selection-equivalence extensions are explicitly separated from frozen v0.3 and from the locked T1–T5/E1–E5 sets;
+- [x] verify that the recursive and selection/context-identifiability extensions are explicitly separated from frozen v0.3 and from the locked T1–T5/E1–E5 sets;
 - [ ] confirm both `repository-validation` and `manuscript-build` are successful on the final settled review branch and merge result;
 - [ ] either finish repository-header / redundant-branch / ruleset governance items above or explicitly defer them with rationale before broad promotion.
 
@@ -99,6 +109,8 @@ The unchecked items in this section are presentation, execution-observability, g
 - [ ] Resolve review-driven mathematical or citation corrections.
 - [x] Replace chronology-distorting later preprint-only bibliography records with verified publication metadata where source identity is clear, while preserving earlier public preprints and unresolved working papers deliberately.
 - [x] Add the classical selection-equivalence limitation and its ascertainment prior art to manuscript Related Work and Discussion before freezing a preprint candidate.
+- [x] Add the context-indexed no-go and operational-identifiability qualification to manuscript Discussion before freezing a preprint candidate.
+- [ ] Decide whether the additional sample-selection/MNAR references belong in the locked manuscript bibliography or remain repository prior-art support.
 - [ ] Freeze the manuscript candidate after substantive review stabilizes.
 - [ ] Finalize author/citation metadata for the preprint version.
 - [ ] Decide whether the recursive observer-information extension belongs in the manuscript, remains repository supplementary material, or is deferred to a later version after targeted review.
@@ -117,15 +129,16 @@ The following are not automatic next steps:
 - an additional held-out certificate experiment;
 - a stronger recognition-time ordering theorem;
 - a numbered theorem family for the recursive extension;
-- strengthening the selection-equivalence result merely by adding more representations without gaining an identifiable physical prediction.
+- adding still more selection representations without gaining a physically motivated identifying restriction;
+- treating the current shared-selection density-ratio condition as a finished experiment before the observable-state identification problem is solved.
 
 Pursue one of these only if it removes a material modeling assumption, answers a concrete review objection, introduces a genuinely useful operational quantity, or materially sharpens an existing result under motivated assumptions.
 
 ## Novelty gate
 
-The project should continue to avoid novelty claims for standard components by themselves, including normalized weighting, ascertainment/weighted distributions, size-biased sampling, covariance identities, total covariance, martingale/predictable decompositions, likelihood-ratio/KL identities, standard concentration inequalities, observer selection, or self-location.
+The project should continue to avoid novelty claims for standard components by themselves, including normalized weighting, ascertainment/weighted distributions, size-biased sampling, generic sample-selection/MNAR identifiability, covariance identities, total covariance, martingale/predictable decompositions, likelihood-ratio/KL identities, standard concentration inequalities, observer selection, or self-location.
 
-The novelty hypothesis remains provisional and concerns the combined recognition-dependent architecture and its decompositions. The bibliography truth pass and selection-equivalence audit reduce novelty overclaim risk; they do not establish novelty. A limited prior-art search is not evidence that no structural duplicate exists.
+The novelty hypothesis remains provisional and concerns the combined recognition-dependent architecture and its decompositions. The bibliography truth pass and selection/context-identifiability audits reduce novelty overclaim risk; they do not establish novelty. A limited prior-art search is not evidence that no structural duplicate exists.
 
 ## Everett bridge gate
 
@@ -135,12 +148,14 @@ The physical bridge remains open. Future work on it should ask whether a concret
 - respects relabeling and coarse-graining requirements;
 - is sequentially coherent;
 - is compatible with established operational quantum statistics unless explicit new physics is proposed;
-- yields empirical, interventional, or structural consequences that distinguish it from a behavior-matched classical ascertainment / record-size-bias model.
+- supplies a predeclared cross-policy/context law rather than one fitted selector per context;
+- exposes base and observer-conditioned quantities that are identifiable on a common observable state space;
+- yields held-out empirical, interventional, temporal, or structural consequences that distinguish it from comparably constrained classical ascertainment / record-size-bias models.
 
-Do not treat statistical success, recursive toy-simulation success, or reproduction of the weighted observer law as validation of this physical bridge.
+Do not treat statistical success, recursive toy-simulation success, reproduction of one weighted observer law, or reproduction of a family of separately fitted weighted laws as validation of this physical bridge.
 
 ## Stop rule
 
 Do not add S2.14, T6, or a sixth core experiment by default.
 
-The next high-value scientific work is to find an **identifiable bridge consequence** that survives the classical selection-equivalence null, alongside external review, recursive-model stress testing, correction, compression, and publication readiness.
+The next high-value scientific work is to specify an **operationally identifiable, predeclared cross-context bridge consequence** that survives classical selection alternatives with comparable freedom, alongside external review, recursive-model stress testing, correction, compression, and publication readiness.

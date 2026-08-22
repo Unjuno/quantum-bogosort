@@ -58,7 +58,7 @@ Its exact mathematical components are:
 
 `Innovation selection` is a formal diagnostic for reweighting of decision-time-unpredictable variation relative to a chosen information filtration. It is not a claim that objective chance or an external RNG has been causally improved.
 
-The exploratory [`supplementary/recursive_qbs_simulation.py`](supplementary/recursive_qbs_simulation.py) is outside the locked E1–E5 suite. Its aligned, anti-aligned, and policy-only controls check that ordinary/predictable effects and innovation selection can be separated, including a counterexample where predictable selection is positive while innovation selection and total first-person uplift are negative. The current validation branch also requires this file in the repository inventory and executes the aligned, anti-aligned, decomposition, and policy-only-null mechanism checks independently of the script's own assertions.
+The exploratory [`supplementary/recursive_qbs_simulation.py`](supplementary/recursive_qbs_simulation.py) is outside the locked E1–E5 suite. Its aligned, anti-aligned, and policy-only controls check that ordinary/predictable effects and innovation selection can be separated, including a counterexample where predictable selection is positive while innovation selection and total first-person uplift are negative. Current validation also requires this file in the repository inventory and executes the aligned, anti-aligned, decomposition, and policy-only-null mechanism checks independently of the script's own assertions.
 
 The recursive extension is now indexed in [`docs/research_map.md`](docs/research_map.md) and classified in [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md).
 

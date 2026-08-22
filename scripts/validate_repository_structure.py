@@ -40,7 +40,8 @@ required = [
     "supplementary/robust_mom_certificate.md", "supplementary/residual_covariance_extension.md",
     "supplementary/residual_variance_certificate.md", "supplementary/explained_variance_certificate.md",
     "supplementary/evidence_activation.md", "supplementary/selection_equivalence.md",
-    "supplementary/context_identifiability_stress.py", "supplementary/recursive_qbs_simulation.py",
+    "supplementary/context_identifiability_stress.py", "supplementary/randomized_context_diagnostic.md",
+    "supplementary/randomized_context_diagnostic.py", "supplementary/recursive_qbs_simulation.py",
     "supplementary/recognition_time.md", "supplementary/selectivity_frontier.md",
     "supplementary/branch_recognition.md",
     "literature/prior_art.md", "literature/extended_prior_art.md", "literature/post_v02_targeted_prior_art.md",
@@ -116,8 +117,8 @@ if missing_sections:
 print(
     f"Repository structure OK: {len(required)} required nonsymlink regular files; complete "
     f"{len(actual_markdown)}-file Markdown inventory declared; all five core theory sources; "
-    f"consolidated/archived research provenance; pre-announcement and context-identifiability "
-    f"audit records; runtime/core-theorem/supplementary/experiment-card/citation/bibliography/"
-    f"license/figure-set/snapshot-ref/worktree-artifact validators; and {len(section_refs)} "
-    f"manuscript sections found."
+    f"consolidated/archived research provenance; pre-announcement/context-identifiability and "
+    f"randomized-context diagnostic surfaces; runtime/core-theorem/supplementary/experiment-card/"
+    f"citation/bibliography/license/figure-set/snapshot-ref/worktree-artifact validators; and "
+    f"{len(section_refs)} manuscript sections found."
 )

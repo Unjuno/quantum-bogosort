@@ -249,7 +249,7 @@ python experiments/exp5_branch_map.py
 python scripts/validate_reproduction_outputs.py
 ```
 
-The primary numerical/plotting package versions in `requirements.txt` are pinned because committed-output verification is byte-level; using a different NumPy/Pandas/Matplotlib stack can change serialization even when the numerical model is unchanged. The reproduction validator derives the current output set from `experiments/manifest.csv`, compares those outputs byte-for-byte with `HEAD`, rejects changes to any tracked repository content during experiment execution, and rejects undeclared files under `data/processed/`, including ignored files.
+The primary numerical/plotting package versions in `requirements.txt` are pinned to reduce execution-environment drift. Current reproduction CSVs are compared to committed `HEAD` with exact schema, row order, and non-numeric cells plus a tight floating-point contract (`rtol=1e-12`, `atol=1e-14`) for numeric cells; this absorbs only last-bit runner/hardware variation while the experiment scripts retain their independent scientific regression assertions. After a successful comparison, the validator restores the committed canonical CSV bytes before the later clean-worktree gate. It also rejects any tracked change outside the manifest-declared current outputs and any undeclared file under `data/processed/`, including ignored files.
 
 Historical locked summaries and current reproduction outputs are stored in [`data/processed/`](data/processed/). Superseded experiment designs are kept under [`experiments/archive/`](experiments/archive/).
 
@@ -259,7 +259,7 @@ The recursive supplementary toy can be run separately with:
 python supplementary/recursive_qbs_simulation.py
 ```
 
-It is exploratory research code and is intentionally not part of the byte-locked E1–E5 reproduction contract.
+It is exploratory research code and is intentionally not part of the manifest-locked E1–E5 reproduction contract.
 
 ## Public review
 
@@ -300,7 +300,7 @@ The current `main` validation state is visible in the badge at the top of this R
 - repository-relative Markdown links, including rejection of root escapes and currently unvalidated local fragment/query suffixes;
 - GFM structure conversion of every Markdown file through GitHub's Markdown API, with heading/table/inline-image and ordinary fenced-code preservation checks;
 - E1–E5 scientific regression invariants;
-- manifest ID/order/LOCK/provenance validation, frozen historical CSV blob identities, and byte-for-byte verification of all manifest-declared current reproduction CSVs;
+- manifest ID/order/LOCK/provenance validation, frozen historical CSV blob identities, and tight numeric-equivalence verification of all manifest-declared current reproduction CSVs with exact schema/order/non-numeric cells;
 - post-experiment cleanliness of tracked repository content plus rejection of undeclared files under `data/processed/`, including ignored files;
 - deterministic SVG/PDF-figure generation, exact expected figure-output sets, static/self-contained SVG browser-safety validation, and byte-for-byte committed-output verification;
 - final tracked-worktree and nonignored-untracked cleanliness after repository validation;

@@ -189,9 +189,9 @@ This concerns the selected law on the common latent/base state. Policy-dependent
 
 ## Numerical property tests
 
-A private audit script generated 20,000 random finite-state pairs with 2–11 states.
+The tracked supplementary script [`../supplementary/context_identifiability_stress.py`](../supplementary/context_identifiability_stress.py) deterministically runs 20,000 random finite-state trials with NumPy seed `20260823` and 2–11 states per trial.
 
-For arbitrary positive `mu_c` and `Q_c`, it checked the exact record-size identity numerically by reconstructing
+For arbitrary positive `mu_c` and `Q_c`, it checks the exact record-size identity numerically by reconstructing
 
 ```math
 \widetilde Q_c(i)
@@ -199,33 +199,20 @@ For arbitrary positive `mu_c` and `Q_c`, it checked the exact record-size identi
 \mu_c(i)r_c(i).
 ```
 
-Result:
+The current deterministic output is:
 
 ```text
-maximum absolute representation error = 3.3306690738754696e-16
+seed=20260823 trials=20000
+max representation error=2.2204460492503131e-16
+max shared-ratio deviation=4.4408920985006262e-16
+nonconstant arbitrary pairs=20000
+false shared-null fits=0
+projection checks=pass
 ```
 
-For random shared selectors `a`, it checked constancy of
+The shared-ratio test generates an independent positive common selector `a` and verifies that `r_0/r_1` is constant to floating-point precision. The arbitrary-pair test reconstructs the second context from candidate `a=r_0` and checks that no tested nonconstant density-ratio pair is falsely accepted as a shared-selector fit.
 
-```math
-r_0(i)/r_1(i).
-```
-
-Result:
-
-```text
-maximum numerical deviation from constancy = 7.105427357601002e-15
-```
-
-For arbitrary nonproportional density-ratio pairs it reconstructed the second context from `a=r_0` and checked for accidental shared-null fits.
-
-Result:
-
-```text
-false shared-null fits among tested nonconstant ratios = 0
-```
-
-These tests are implementation/sanity checks only; the exact claims are established by the proofs above.
+These are implementation/sanity checks only; the exact claims are established by the proofs above.
 
 ## Projection stress tests
 
@@ -321,7 +308,7 @@ These works do not prove the QBS-specific propositions; the propositions above a
 
 **PASS — exact mathematical boundary, with important operational and joint-regularity qualifications.**
 
-The following survived proof review and finite-state stress testing:
+The following survived proof review and reproducible finite-state stress testing:
 
 - arbitrary context-specific absolutely continuous observer laws have exact classical record-size-biased representations, context by context;
 - a shared context-invariant selection function implies proportional cross-context Radon--Nikodym densities;
@@ -357,4 +344,5 @@ Until such a model exists, the context-indexed result should be treated primaril
 7. Projection can both hide latent violations and create observed differences unrelated to selection changes.
 8. Failure of one restricted classical null does not identify Everett; more flexible classical selection models may remain observationally equivalent.
 9. The prior-art comparison is methodological, not a novelty claim for generic selection-model identifiability.
-10. T1–T5, E1–E5, and the numbered S2 family are untouched by this audit.
+10. The numerical stress script is a deterministic implementation check under the pinned NumPy runtime; its floating-point maxima are not theorem constants.
+11. T1–T5, E1–E5, and the numbered S2 family are untouched by this audit.

@@ -108,6 +108,66 @@ This is an exact change-of-measure consequence once the weighted first-person me
 
 A favorable or upward self-location shift requires an additional alignment between the relevant favorability/utility statistic and expected future accessibility. Future accessibility that varies across present states is sufficient for reweighting, but not by itself for a favorable direction.
 
+## Classical selection-equivalence and identifiability boundary
+
+The normalized accessibility law has a classical selection representation. Assume
+
+```math
+S\ge0,
+\qquad
+0<m:=E[S]<\infty.
+```
+
+If additionally
+
+```math
+S\le M<\infty
+```
+
+almost surely, augment the model by an independent `U~Uniform(0,1)` and define
+
+```math
+A=\left\{U\le\frac{S}{M}\right\}.
+```
+
+Then for every measurable `B`,
+
+```math
+P(\omega\in B\mid A)
+=
+\frac{E[\mathbf 1_BS]}{E[S]}
+=
+\mu^{FP}(B).
+```
+
+Thus bounded accessibility weighting is exactly representable as ordinary state-dependent ascertainment conditioning on an augmented classical probability space.
+
+For a general integrable nonnegative `S`, let a classical record count satisfy
+
+```math
+N\mid\omega\sim\mathrm{Poisson}(cS(\omega)),
+```
+
+for any positive scaling constant `c` making the Poisson mean dimensionless. The record-size-biased law
+
+```math
+\mu^{record}(B)
+=
+\frac{E[N\mathbf 1_B]}{E[N]}
+```
+
+then satisfies exactly
+
+```math
+\mu^{record}(B)=\mu^{FP}(B).
+```
+
+Moreover, bounded truncations `S_n=min(S,n)` generate binary-ascertainment laws converging to `mu^FP` in total variation. The complete proofs are in [`../supplementary/selection_equivalence.md`](../supplementary/selection_equivalence.md).
+
+This is a probability-law equivalence, not a universal physical or causal equivalence. It has an important identifiability consequence: if an Everett accessibility mechanism and a classical ascertainment/recording mechanism induce the same relevant base joint law of `(X,S)`, they induce the same first-person observable law of `X`. The weighted observable law alone cannot distinguish those mechanisms.
+
+Therefore a specifically Everettian bridge requires more than reproduction of the normalized weighted distribution. It needs an independent physical derivation or additional observable/interventional/sequential predictions that differ from a behavior-matched classical selection null.
+
 ## S2 predictive-alignment family
 
 For:
@@ -412,6 +472,8 @@ S2.5 assumes independent bounded held-out evaluation. S2.6 permits training-depe
 
 The recursive innovation decomposition depends on the selected filtration/information state and requires the conditional expectations and weighted horizon quantities to exist. Sequential likelihood-ratio bridge updates require specified competing observer models and the needed absolute-continuity conditions. Claims about expected KL drift require correct model specification; misspecification can reverse or otherwise distort practical belief dynamics.
 
+The bounded binary-selection representation additionally assumes an almost-sure finite upper bound on `S`. The general record-size-bias representation requires only nonnegative integrable `S`; the Poisson intensity must be dimensionless, which can always be arranged by positive rescaling because the normalized weighted law is scale invariant.
+
 ## Everett bridge assumption
 
 A separate physical interpretation assumes:
@@ -425,6 +487,8 @@ d\mu^{FP}_\pi(\omega)
 
 This is not derived from unitary quantum mechanics, decoherence, observer dynamics, or the Born rule.
 
+The selection-equivalence result shows that this same probability law can have classical ascertainment / record-size-bias representations. Consequently, fitting or reproducing the weighted law is not by itself evidence for the Everett interpretation of `S_pi`.
+
 ## Non-claims
 
 The repository does **not** claim that:
@@ -432,6 +496,8 @@ The repository does **not** claim that:
 - an external RNG becomes objectively biased toward favorable outcomes;
 - innovation selection is a causal increase in objective chance or a filtration-independent physical luck parameter;
 - observing a favorable history by itself proves the QBS bridge rather than competing null, survivorship, or misspecified models;
+- a weighted first-person distribution by itself identifies an Everettian rather than classical ascertainment/size-bias mechanism;
+- classical probability-law equivalence proves that the underlying physical mechanism is classical or refutes an Everett mechanism;
 - recursive bridge belief must increase monotonically on every realized path;
 - future accessibility by itself guarantees a favorable present self-location shift without an alignment between accessibility and the relevant favorability/utility statistic;
 - the present-self-location identity implies backward causation;
@@ -453,6 +519,7 @@ The repository does **not** claim that:
 
 - outcome/accessibility independence gives zero pure weighting uplift in expectation;
 - constant expected future accessibility across present states gives no present self-location reweighting from future accessibility;
+- any Everett bridge that predicts only a weighted law already matched by a classical selection null is observationally unidentified by that law alone;
 - nonmonotone conditional accessibility can break FOSD;
 - dependence without conditional-mean prediction can defeat S2;
 - a sufficiently negative S2.11 residual term can overturn score-level alignment;

@@ -29,6 +29,7 @@ TABLE_SEPARATOR_RE = re.compile(
     r"^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*$"
 )
 IMAGE_RE = re.compile(r"!\[[^\]]*\]\([^)]+\)")
+INLINE_CODE_RE = re.compile(r"(`+)(.*?)\1")
 FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 CLOSING_FENCE_RE = re.compile(r"^ {0,3}([`~]{3,})[ \t]*$")
 SPECIAL_FENCE_CANDIDATE_RE = re.compile(
@@ -76,6 +77,16 @@ def valid_fence_opener(marker: str, info: str) -> bool:
 def fence_info_name(info: str) -> str:
     stripped = info.strip()
     return stripped.split(None, 1)[0].lower() if stripped else ""
+
+
+def strip_inline_code_spans(line: str) -> str:
+    """Remove one-line inline-code spans before counting rendered image syntax.
+
+    A literal example such as ``[![...](image.svg)](page.md)`` is rendered as code, not as
+    an image. Counting its inner ``![...]`` token as a source image creates a false
+    mismatch against GitHub's rendered HTML. Fenced code is already excluded separately.
+    """
+    return INLINE_CODE_RE.sub("", line)
 
 
 def special_render_fence_errors(relative: str, text: str) -> list[str]:
@@ -161,7 +172,7 @@ def source_structure(text: str) -> tuple[int, int, int, int, int, int]:
             headings += 1
         if TABLE_SEPARATOR_RE.match(line):
             tables += 1
-        images += len(IMAGE_RE.findall(line))
+        images += len(IMAGE_RE.findall(strip_inline_code_spans(line)))
 
     return headings, tables, images, ordinary_fences, math_fences, mermaid_fences
 

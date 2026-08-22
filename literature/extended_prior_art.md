@@ -52,6 +52,31 @@ Importance sampling and related change-of-measure methods routinely represent ex
 
 **QBS relevance:** the generic fact that weighted expectations differ from unweighted expectations, and the use of normalized nonnegative weights, are not themselves novel. The covariance identity in QBS should be presented as a transparent mathematical identity within a larger recognition-dependent decision framework, not as a new theory of weighted probability.
 
+## Ascertainment and weighted-distribution theory
+
+### Fisher, Rao, and Patil--Rao
+
+**Sources:**
+- R. A. Fisher, "The effect of methods of ascertainment upon the estimation of frequencies," *Annals of Eugenics* 6(1), 13–25 (1934), DOI `10.1111/j.1469-1809.1934.tb02105.x`.
+- C. R. Rao, "On discrete distributions arising out of methods of ascertainment," *Sankhya: The Indian Journal of Statistics, Series A* 27, 311–324 (1965).
+- G. P. Patil and C. R. Rao, "Weighted Distributions and Size-Biased Sampling with Applications to Wildlife Populations and Human Families," *Biometrics* 34(2), 179–189 (1978), DOI `10.2307/2530008`.
+
+This literature directly studies the fact that the distribution of encountered or recorded observations differs from the source distribution when observation probabilities or record multiplicities depend on the underlying state. Patil and Rao formulate weighted distributions with general weight functions that need not be bounded by one.
+
+**Direct QBS consequence:** for bounded accessibility, the QBS law
+
+```math
+\mu^{FP}(B)
+=
+\frac{E[\mathbf 1_BS]}{E[S]}
+```
+
+is exactly the conditional law obtained by accepting a base trajectory with probability proportional to `S`. For a general integrable nonnegative `S`, the same law is exactly the size-biased record law generated when a state produces a random number of records with conditional mean proportional to `S`. The repository proves these representations in [`../supplementary/selection_equivalence.md`](../supplementary/selection_equivalence.md).
+
+This sharply narrows the novelty boundary. QBS cannot claim novelty merely because observer-conditioned experience follows a normalized weighted distribution, or because unequal accessibility changes the encountered distribution. Those are classical ascertainment/weighted-distribution phenomena.
+
+**Remaining QBS distinction:** any distinctive content must come from the combined recognition-dependent architecture, the policy/trajectory/accessibility decompositions, or an independently justified physical rule for `S`. In particular, a first-person weighted law by itself is observationally compatible with a behavior-matched classical selection mechanism.
+
 ## Direct overlap: self-location and policy optimization
 
 ### Cooper, Oesterheld, and Conitzer (2024)
@@ -90,11 +115,13 @@ After the targeted overlap search, the novelty hypothesis should be stated more 
 4. policy-QBS interaction admits a separate exact decomposition;
 5. adaptation can endogenously generate predictor/outcome alignment in toy agents;
 6. marginal first-person uplift is separated from branch-wide policy coherence;
-7. shared-latent branch-policy coherence has an explicit supplementary theorem under hierarchical assumptions.
+7. shared-latent branch-policy coherence has an explicit supplementary theorem under hierarchical assumptions;
+8. the framework now states explicitly when its first-person law is observationally equivalent to classical ascertainment / size-biased recording, so any physical Everett claim must exceed that null.
 
 The project should **not** claim novelty for:
 
 - weighted conditional expectation;
+- ascertainment-weighted or size-biased encountered distributions;
 - self-locating probability or de se belief;
 - observer selection in general;
 - decision theory in anthropic/copy settings;
@@ -109,6 +136,7 @@ The highest-value remaining search is now narrower:
 - work where an agent's recognition or information state changes policy selection and a self-location/selection rule;
 - work deriving an observer-indexed selection measure endogenously from adaptive policy or observer persistence;
 - direct decompositions separating ordinary causal policy effects from self-location-weighting effects;
-- causal-decision formulations where the weighting map itself changes with policy.
+- causal-decision formulations where the weighting map itself changes with policy;
+- physical or interventional predictions that could distinguish an Everett accessibility model from a behavior-matched classical ascertainment model.
 
-These are more specific than a general search for anthropic decision theory, which already has substantial prior art.
+These are more specific than a general search for anthropic decision theory or weighted distributions, both of which already have substantial prior art.

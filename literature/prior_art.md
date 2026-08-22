@@ -90,9 +90,24 @@ This file records the main literature families relevant to QBS and the current n
 
 **Difference:** QBS introduces a policy-dependent accessibility measure and exact decomposition between trajectory changes and conditioning changes.
 
-## 6. Current novelty hypothesis
+## 6. Classical ascertainment and weighted distributions
 
-The strongest novelty claim should not be that QBS invented observer selection, self-location, or Everettian decision theory. Those have substantial prior literatures.
+### Fisher, Rao, and Patil--Rao
+
+**Sources:**
+- R. A. Fisher, "The effect of methods of ascertainment upon the estimation of frequencies," *Annals of Eugenics* 6(1), 13–25 (1934), DOI `10.1111/j.1469-1809.1934.tb02105.x`.
+- C. R. Rao, "On discrete distributions arising out of methods of ascertainment," *Sankhya: The Indian Journal of Statistics, Series A* 27, 311–324 (1965).
+- G. P. Patil and C. R. Rao, "Weighted Distributions and Size-Biased Sampling with Applications to Wildlife Populations and Human Families," *Biometrics* 34(2), 179–189 (1978), DOI `10.2307/2530008`.
+
+**What this literature establishes:** unequal probabilities of being observed or recorded transform the encountered distribution into a weighted distribution. Patil and Rao explicitly study general weight functions and size-biased sampling.
+
+**Direct relation to QBS:** the normalized QBS first-person law is not merely analogous to this construction. Under bounded accessibility it can be represented exactly as ordinary state-dependent ascertainment conditioning, and for a general integrable nonnegative weight it has an exact classical record-size-bias representation. See [`../supplementary/selection_equivalence.md`](../supplementary/selection_equivalence.md).
+
+**Difference:** this classical equivalence concerns the weighted probability law, not the physical ontology or causal mechanism. QBS can retain distinctive content only through the recognition-dependent policy/trajectory/accessibility architecture or through additional physical/interventional predictions that distinguish an Everett bridge from a behavior-matched classical selection mechanism.
+
+## 7. Current novelty hypothesis
+
+The strongest novelty claim should not be that QBS invented observer selection, self-location, Everettian decision theory, or weighted encountered distributions. Those have substantial prior literatures.
 
 The current candidate novelty is the combined formal structure:
 
@@ -101,14 +116,16 @@ The current candidate novelty is the combined formal structure:
 3. policy may also change observer-indexed accessibility;
 4. the resulting first-person value admits an exact trajectory-versus-conditioning decomposition;
 5. the marginal QBS contribution has an exact interaction decomposition with ordinary adaptive policy;
-6. shared recognition and shared world structure can be analyzed separately from single-observer marginal first-person uplift.
+6. shared recognition and shared world structure can be analyzed separately from single-observer marginal first-person uplift;
+7. the framework explicitly exposes the classical selection-equivalence null, so a specifically Everettian claim must add a physical derivation or distinguishable predictions beyond the weighted law itself.
 
 This novelty claim remains provisional until the literature review is broader.
 
-## 7. Literature tasks still open
+## 8. Literature tasks still open
 
 - Search for prior work explicitly combining endogenous policy changes with self-locating branch weighting.
-- Search for observer-indexed change-of-measure models outside quantum foundations.
+- Search for observer-indexed change-of-measure models outside quantum foundations that also make the weighting map policy-dependent.
 - Compare QBS with anthropic utility and updateless/functional decision-theory treatments of copies.
 - Review Born-rule and branch-counting objections relevant to any accessibility interpretation.
 - Identify recent post-2021 Everett probability work relevant to the bridge assumption.
+- Search for physical or interventional tests that would distinguish a proposed observer-accessibility mechanism from a behavior-matched ascertainment/size-bias null.

@@ -124,6 +124,7 @@ Training/certification leakage, uncorrected model selection, or invalid moment a
 | ID/topic | Role | Source |
 |---|---|---|
 | S1 | hierarchical recognition can produce nonnegative cross-copy action covariance under the stated conditional-independence structure | [`supplementary/branch_recognition.md`](../supplementary/branch_recognition.md) |
+| selection-equivalence boundary | bounded normalized accessibility is exactly ordinary ascertainment conditioning; every integrable nonnegative weight has an exact classical record-size-bias representation; weighted observables alone do not identify a physical bridge | [`supplementary/selection_equivalence.md`](../supplementary/selection_equivalence.md) |
 | recognition time | recognition as a stopping-time extension; no universal early-recognition ordering theorem | [`supplementary/recognition_time.md`](../supplementary/recognition_time.md) |
 | repeated filtering | repeated adverse-trigger accessibility identities | [`supplementary/repeated_filtering.md`](../supplementary/repeated_filtering.md) |
 | recursive observer-information loop | unnumbered dynamic extension closing the feedback from experienced observer history to bridge belief, adoption/policy, accessibility, and later observer history; includes sequential weighting and predictable/innovation selection | [`supplementary/evidence_activation.md`](../supplementary/evidence_activation.md) |
@@ -143,6 +144,20 @@ A convenient summary is:
 \qquad\text{while}\qquad
 \text{first-person trajectory weight changes}.
 ```
+
+### Classical selection-equivalence boundary
+
+The same normalized weighted law has classical selection representations. If `0<=S<=M<infinity`, augment the base model by an independent uniform randomizer and record a trajectory with conditional probability `S/M`. Then conditioning on being recorded gives exactly
+
+```math
+\mu^{FP}(B)
+=
+\frac{E[\mathbf 1_BS]}{E[S]}.
+```
+
+For general integrable nonnegative `S`, the same law is exactly the record-size-biased distribution when the expected number of records conditional on a trajectory is proportional to `S`. Bounded truncations additionally converge to the full weighted law in total variation.
+
+Therefore a weighted first-person distribution, by itself, is not evidence for a specifically Everettian mechanism. A physical bridge must constrain or derive `S`, or make observable/interventional predictions that differ from a behavior-matched classical ascertainment model. The complete proof and error checks are in [`supplementary/selection_equivalence.md`](../supplementary/selection_equivalence.md).
 
 The same change of measure can be applied to a present state when accessibility is determined over a future continuation. Let `Z` denote a present state and `S_T` future accessibility. Then:
 
@@ -225,6 +240,8 @@ d\mu^{FP}_\pi(\omega)
 
 The abstract change-of-measure mathematics is exact after the model is defined. A physical Everett interpretation additionally requires an independent account of why observer persistence or self-location induces the proposed `S_pi`.
 
+The classical selection-equivalence result makes this bridge requirement stricter: reproducing the normalized weighted law is insufficient because a behavior-matched classical ascertainment / record-size-bias mechanism can reproduce that law as well.
+
 See [`docs/everett_bridge_tests.md`](everett_bridge_tests.md) for support, constraint, and rejection criteria.
 
 ## 9. Claim boundaries
@@ -238,6 +255,7 @@ Important boundaries include:
 - positive covariance does not by itself imply FOSD;
 - pure reweighting does not create support absent from the fixed-policy base measure;
 - zero expected accessibility makes the normalized FP measure undefined;
+- the normalized weighted law can be represented by classical ascertainment / size-biased recording and therefore does not by itself identify an Everett mechanism;
 - mutual information alone does not imply positive QBS covariance;
 - S2.11 requires the residual conditional-covariance term outside score-measurable accessibility;
 - innovation selection depends on the chosen information filtration and is not synonymous with objective luck;
@@ -252,11 +270,12 @@ The dedicated post-v0.2 proof review is [`docs/post_v02_core_s2_proof_review.md`
 
 ## 11. Current open research questions
 
-The current review gate is external proof, novelty, physical-bridge scrutiny, and recursive-model stress testing rather than automatic theorem expansion.
+The current review gate is external proof, novelty, physical-bridge scrutiny, selection-identifiability scrutiny, and recursive-model stress testing rather than automatic theorem expansion.
 
 Open questions include:
 
 - what physical mechanism, if any, induces the Everett accessibility map;
+- what independently measurable or interventional prediction could distinguish an Everett accessibility mechanism from the behavior-matched classical selection null;
 - whether the recursive bridge-belief loop remains informative under realistic model misspecification, survivorship-only controls, and alternative observer models;
 - whether innovation selection is a useful stable diagnostic under motivated information filtrations;
 - whether the current S2.13 explained-variance summary should remain in the manuscript main text after review;

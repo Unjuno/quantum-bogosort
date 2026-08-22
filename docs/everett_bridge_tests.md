@@ -13,7 +13,7 @@ d\mu^{FP}_\pi(\omega)
 
 This document states what would count as progress toward a physically serious bridge and what would count against it.
 
-The bridge must not be described as an empirically confirmed physical law merely because the normalized weighting mathematics is internally consistent.
+The bridge must not be described as an empirically confirmed physical law merely because the normalized weighting mathematics is internally consistent. The selection-equivalence result in [`../supplementary/selection_equivalence.md`](../supplementary/selection_equivalence.md) further shows that the weighted law itself has classical ascertainment / record-size-bias representations, so reproducing that law is not sufficient evidence for an Everettian mechanism.
 
 ## 1. Three levels of status
 
@@ -31,7 +31,7 @@ This level is exact once the definitions are adopted.
 
 A stronger claim identifies `S_pi` with a quantity derived from a model of observers, records, persistence, or self-location in a branching theory.
 
-This requires more than choosing a weight that gives desirable first-person outcomes.
+This requires more than choosing a weight that gives desirable first-person outcomes and more than reproducing a distribution that can be matched by ordinary ascertainment.
 
 ### Level C — physical Everett bridge
 
@@ -109,13 +109,27 @@ is only a selection model, not an explanation of why Everettian self-location fo
 
 If first-person conditioning is applied at multiple times, one-shot and sequential conditioning should be compatible with the proposed observer dynamics. A physical bridge should explain how accessibility updates when records, observer states, and branch structure evolve.
 
-The stopping-time formulation in `supplementary/recognition_time.md` makes this requirement explicit but does not solve it physically.
+The stopping-time and recursive formulations in the supplementary material make this requirement explicit but do not solve it physically.
 
 ### 2.7 Compatibility with no-signaling and established quantum statistics
 
 A physical implementation must not permit operational signaling or third-person outcome-frequency changes that contradict standard quantum mechanics unless it explicitly proposes and tests new physics.
 
 The current abstract QBS framework changes policy trajectories and first-person weighting; it does not alter the external random generator or the base physical measure by definition.
+
+### 2.8 Distinguishability from a behavior-matched classical selection null
+
+For bounded `S_pi`, a classical ascertainment model can record a base trajectory with conditional probability proportional to `S_pi` and reproduce exactly the same normalized observer-conditioned law. For general integrable `S_pi`, a classical record-multiplicity model can reproduce the same law exactly through size bias.
+
+Therefore a physical bridge is not identified merely by matching:
+
+```math
+\mu^{FP}_\pi(B)
+=
+\frac{E_\mu[\mathbf 1_BS_\pi]}{E_\mu[S_\pi]}.
+```
+
+A candidate bridge should specify at least one additional constraint or prediction not freely reproducible by choosing a behavior-matched classical selection channel. Examples include a physically derived functional dependence of `S_pi` on independently measurable quantum variables, intervention responses fixed before outcome observation, or sequential transition restrictions that differ from the classical null.
 
 ## 3. What would support the bridge
 
@@ -145,6 +159,12 @@ These possibilities must not be conflated.
 If a concrete observer model fixes `S_pi` before outcomes are examined, it may generate quantitative predictions that can be compared with data or with established quantum statistics.
 
 Only at this stage does the bridge approach an independently testable physical hypothesis.
+
+### 3.5 Survival of the classical selection-equivalence challenge
+
+A stronger bridge supplies information that the behavior-matched classical selection null does not. This can occur if the physical theory constrains `S_pi` across multiple interventions, times, observables, or equivalent descriptions so that the competing classical null cannot independently retune its selection channel for each case without violating a predeclared model.
+
+Evidence counts for the bridge only to the extent that competing models are specified before the relevant observations and make different predictions.
 
 ## 4. What would constrain or reject a candidate bridge
 
@@ -184,13 +204,17 @@ If `S_pi` is chosen after observing outcomes or tuned directly to utility withou
 
 If repeated conditioning yields incompatible probabilities depending on arbitrary choice of temporal partition or bookkeeping, the proposed observer measure requires revision.
 
+### 4.7 No predictive content beyond behavior-matched ascertainment
+
+If every claimed bridge success consists only of reproducing an observer-conditioned law that a predeclared classical ascertainment/record-size-bias model also reproduces, then the evidence does not identify the physical bridge. The bridge may remain an interpretation, but it has not acquired distinct empirical support.
+
 ## 5. Empirical falsifiability versus interpretive underdetermination
 
 There is an important distinction between a bridge that predicts new physical observations and a bridge that only reinterprets first-person credence while preserving all standard Born statistics.
 
-If the bridge is constructed so that every operational prediction agrees with standard Everettian quantum mechanics, then the bridge may be empirically underdetermined by ordinary experiments. In that case it should be evaluated as an interpretive/self-location proposal using coherence, derivability, and explanatory criteria rather than advertised as independently falsifiable new physics.
+If the bridge is constructed so that every operational prediction agrees with standard Everettian quantum mechanics and with a behavior-matched classical selection account of the observer-conditioned data, then the bridge is empirically underdetermined by those observations. In that case it should be evaluated as an interpretive/self-location proposal using coherence, derivability, invariance, and explanatory criteria rather than advertised as independently falsifiable new physics.
 
-If a concrete physical `S_pi` predicts deviations from standard observer frequencies, record statistics, or other operational quantities, those deviations create genuine empirical tests.
+If a concrete physical `S_pi` predicts deviations from competing models in observer frequencies, intervention responses, sequential record statistics, or other operational quantities, those differences create genuine empirical tests.
 
 Therefore the statement:
 
@@ -199,12 +223,14 @@ Therefore the statement:
 must always specify **which layer** is meant:
 
 - theorem assumptions can be mathematically violated or experimentally instantiated in toy models;
-- a proposed observer model can fail structural consistency tests;
+- a proposed observer model can fail structural consistency or classical-null distinguishability tests;
 - a physical Everett bridge becomes empirically falsifiable only when it makes observations differ from competing physical accounts.
 
 ## 6. Relation to the existing literature
 
-Everettian probability has multiple competing foundations: decision-theoretic derivations, caring-measure accounts, self-locating uncertainty, branch/chance accounts, observer-selection mechanisms, and explicit critiques of those programs. The existence of this literature means QBS cannot treat a policy-dependent accessibility map as the default Everett probability rule.
+Everettian probability has multiple competing foundations: decision-theoretic derivations, caring-measure accounts, self-locating uncertainty, branch/chance accounts, observer-selection mechanisms, and explicit critiques of those programs. Classical statistics separately has a long ascertainment and weighted-distribution literature showing how unequal observation propensities create weighted encountered distributions.
+
+The existence of both literatures means QBS cannot treat a policy-dependent accessibility map as the default Everett probability rule or treat normalized observer weighting as uniquely quantum.
 
 The current bridge must instead be positioned as a conditional extension whose physical justification remains to be supplied.
 
@@ -212,13 +238,14 @@ See:
 
 - `literature/prior_art.md`
 - `literature/extended_prior_art.md`
+- `supplementary/selection_equivalence.md`
 - `paper/references.bib`
 
 ## 7. Current project status
 
 The Everett-QBS bridge is retained as:
 
-**A CLEARLY LABELED CONDITIONAL INTERPRETATION, NOT A DERIVED PHYSICAL RESULT.**
+**A CLEARLY LABELED CONDITIONAL INTERPRETATION, NOT A DERIVED PHYSICAL RESULT. THE NORMALIZED WEIGHTED LAW ALONE IS CLASSICALLY SELECTION-EQUIVALENT AND DOES NOT IDENTIFY THE BRIDGE.**
 
 A future revision may strengthen, replace, or reject the bridge without invalidating T1–T5 or the classical E1–E5 simulations.
 
@@ -226,6 +253,8 @@ A future revision may strengthen, replace, or reject the bridge without invalida
 
 1. Structural coherence is not the same as empirical confirmation.
 2. Agreement with Born statistics does not uniquely establish the QBS bridge.
-3. A physically derived accessibility map must be independent of post hoc utility fitting.
-4. The current bridge cannot create positive mass on base-null events.
-5. Physical rejection of the bridge does not refute the abstract weighted-measure theorems.
+3. Agreement with the normalized weighted observer law does not distinguish the bridge from a behavior-matched classical selection model.
+4. A physically derived accessibility map must be independent of post hoc utility fitting.
+5. The current bridge cannot create positive mass on base-null events.
+6. Probability-law equivalence does not imply physical or causal equivalence of mechanisms.
+7. Physical rejection of the bridge does not refute the abstract weighted-measure theorems.

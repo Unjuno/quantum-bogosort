@@ -40,7 +40,7 @@ Broad announcement remains gated on the final settled `main` Actions result, dir
 - [x] Validate manuscript LaTeX input, bibliography/citation, environment, generated-graphic dependencies, and resolve compiled references only within the graph reachable from `paper/main.tex`.
 - [x] Lock `paper/sections/robust_mom_summary.tex` as the sole intentionally uncompiled paper TeX source so accidental omission of any other section from `main.tex` fails preflight.
 - [x] Validate bibliography provenance classes structurally: journal records require journal/volume/pages/DOI, book chapters require booktitle/editor/publisher/pages/DOI, and arXiv-only records use a separate eprint/archive contract.
-- [x] Pin the primary byte-reproduction contract: Ubuntu 24.04, Python 3.11.15, NumPy 2.4.6, pandas 3.0.5, and Matplotlib 3.11.1.
+- [x] Pin the primary runtime/reproduction environment: Ubuntu 24.04, Python 3.11.15, NumPy 2.4.6, pandas 3.0.5, and Matplotlib 3.11.1; current floating-point reproduction CSVs use exact structure plus a tight numerical-equivalence contract rather than assuming last-bit decimal serialization is hardware invariant.
 - [x] Cross-check `.python-version`, primary package pins/installed versions, runner choice, required jobs/commands, manual dispatch, full-SHA action pins, and checkout credential isolation with `scripts/validate_runtime_contract.py` in both jobs.
 - [x] Pin reusable GitHub Actions to full commit SHAs rather than mutable major-version tags.
 - [x] Set `persist-credentials: false` for checkout in both jobs and keep workflow permissions at `contents: read`.
@@ -51,8 +51,9 @@ Broad announcement remains gated on the final settled `main` Actions result, dir
 - [x] Add executable scientific regression guards to E1–E5 for the declared identities, nulls, controls, signs, and coherence/predictive-alignment behavior.
 - [x] Route the E3 inert recognition-label null through the general first-person weighted-value calculation while preserving its committed exact-zero result.
 - [x] Validate manifest ID/order, `LOCK` state, file existence, and separation of locked historical versus current reproduction provenance classes.
-- [x] Derive current reproduction byte validation from the manifest rather than maintaining a duplicate hard-coded CSV list in CI.
+- [x] Derive current reproduction validation from the manifest rather than maintaining a duplicate hard-coded CSV list in CI; require exact schema/order/non-numeric cells, tight numeric equivalence, and restoration of committed canonical bytes after successful comparison.
 - [x] Require E1–E5 execution to leave the complete `data/processed/` tree otherwise unchanged, including no locked-file mutation and no undeclared ignored files.
+- [x] Require `supplementary/recursive_qbs_simulation.py` in the repository inventory and execute its aligned, anti-aligned, decomposition, and policy-only-null mechanism checks from CI independently of the script's own assertions.
 - [x] Explicitly require core theory sources, split-license/configuration files, archived experiment provenance, the pre-announcement audits, and principal validator scripts in repository-structure validation.
 - [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
 - [x] Provide a dedicated visual route for every locked experiment family E1–E5, including E2 predictive alignment.

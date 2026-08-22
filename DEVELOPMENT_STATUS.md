@@ -72,7 +72,7 @@ The primary execution environment remains pinned to:
 - pandas 3.0.5;
 - Matplotlib 3.11.1.
 
-The 16 locked historical E1–E5 CSVs remain Git-blob locked. Current reproduction CSVs retain exact schema, row order, and non-numeric cells and are numerically compared to committed `HEAD` with `rtol=1e-12`, `atol=1e-14`; this avoids treating host-dependent last-bit floating-point decimal serialization as scientific drift. E1–E5 continue to execute independent scientific regression assertions before that comparison. After a successful current-output check, committed canonical CSV bytes are restored before the final clean-worktree gate. Deterministic committed SVGs and the Figure 2 theorem-illustration CSV retain their byte-for-byte regeneration checks.
+The 16 locked historical E1–E5 CSVs remain Git-blob locked. Current reproduction CSVs retain exact schema, row order, and non-numeric cells and are numerically compared to committed `HEAD` with `rtol=1e-12`, `atol=1e-14`; this avoids treating host-dependent last-bit floating-point decimal serialization as scientific drift. E1–E5 continue to execute independent scientific regression assertions before that comparison. After a successful current-output check, committed canonical CSV bytes are restored before the final clean-worktree gate. Committed SVGs retain byte-for-byte regeneration checks. The deterministic Figure 2 theorem-illustration CSV uses the same exact-structure plus tight numeric-equivalence contract and is restored to committed canonical bytes before the exact worktree check.
 
 The recursive toy simulation remains deliberately supplementary and is not part of the manifest-locked E1–E5 reproduction set.
 

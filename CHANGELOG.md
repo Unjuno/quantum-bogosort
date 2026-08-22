@@ -4,6 +4,9 @@
 
 ### Changed
 
+- closed the recursive-extension CI coverage gap by requiring `supplementary/recursive_qbs_simulation.py` in repository structure validation and independently executing its aligned, anti-aligned, decomposition, and policy-only-null mechanism checks from `scripts/validate_supplementary_consistency.py`;
+- repaired three validator false positives exposed by pull-request CI: cross-surface robust-MoM `\mathrm{Var}`/`\operatorname{Var}` notation was incorrectly treated as semantic drift, the MIT validator incorrectly required quotation marks around `Software`, and the GFM source scanner incorrectly counted an inline-code linked-image example as a rendered image;
+- replaced raw byte equality for current floating-point E1–E5 reproduction CSVs with exact schema/row-order/non-numeric matching plus a tight numeric contract (`rtol=1e-12`, `atol=1e-14`) after GitHub-hosted runners exhibited only last-bit decimal drift under the same pinned primary runtime; E1–E5 scientific regression assertions remain independent, the 16 locked historical CSVs remain Git-blob locked, and verified current outputs are restored to committed canonical bytes before final worktree checks;
 - formalized an unnumbered recursive observer-information extension in `supplementary/evidence_activation.md`, closing the feedback from experienced observer history to bridge belief, adoption/policy, accessibility, and later observer history without adding T6, S2.14, or E6;
 - introduced the filtration-relative `predictable selection` / `innovation selection` decomposition and standard likelihood-ratio/KL bridge-belief update as supplementary diagnostics, while explicitly retaining the boundary that objective/base chance is not causally changed;
 - added `supplementary/recursive_qbs_simulation.py` as exploratory classical code outside the locked E1–E5 suite, including aligned, anti-aligned, and policy-only controls;

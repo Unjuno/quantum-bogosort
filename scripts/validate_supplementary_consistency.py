@@ -1,4 +1,4 @@
-"""Lock audited supplementary boundary corrections across public/manuscript surfaces.
+"""Lock audited supplementary boundaries and recursive-mechanism checks.
 
 These checks are deliberately narrow. They do not attempt to re-prove the supplementary
 results. They prevent concrete defects found during the pre-announcement audit from
@@ -16,20 +16,38 @@ silently reappearing:
   integrability before the derivative identity, which must retain its
   dominated-differentiation and weighted-moment regularity conditions;
 * binary/Gaussian toys: accessibility/execution parameters must remain in their stated
-  nonnegative domains and the binary model must exclude zero total accessibility.
+  nonnegative domains and the binary model must exclude zero total accessibility;
+* recursive QBS: the exploratory recursive simulation must remain present, parse as
+  Python, execute successfully, close its predictable/innovation decomposition, preserve
+  the aligned innovation-selection sign, preserve the anti-aligned countercontrol, and
+  retain the ordinary policy-only zero-selection null.
 
 The audited source/manuscript/audit surfaces are Git-blob locked in both HEAD and the
 working tree before semantic snippet checks. This prevents required formulas or boundary
 language from surviving only in comments/literal code while the actual reviewed surface
 drifts; any wording or mathematical change to these surfaces requires an explicit audit
-contract update.
+contract update. The recursive simulation remains exploratory rather than blob-frozen;
+its executable mechanism invariants are checked independently from its own assertions.
 """
 from __future__ import annotations
 
+import ast
+import math
 from pathlib import Path
+import re
 import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+RECURSIVE_SIMULATION = ROOT / "supplementary/recursive_qbs_simulation.py"
+RECURSIVE_LABELS = {
+    "aligned recursive model",
+    "anti-aligned innovation control",
+    "ordinary policy-only null",
+}
+RESULT_LINE_RE = re.compile(
+    r"^\s{2}(?P<key>[A-Za-z0-9_]+)\s+(?P<value>[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?)\s*$"
+)
 
 REQUIRED_SNIPPETS: dict[Path, tuple[str, ...]] = {
     ROOT / "supplementary/confidence_envelope_certificate.md": (
@@ -146,7 +164,6 @@ EXPECTED_SURFACE_BLOBS = {
     "paper/sections/appendix.tex": "f55de6faf4ce50edd5ba301670ce58810a9db49a",
 }
 
-# Guard the mathematical relationships, not only prose markers.
 PAIRWISE_FORMULAS: tuple[tuple[Path, Path, tuple[str, ...]], ...] = (
     (
         ROOT / "supplementary/confidence_envelope_certificate.md",
@@ -161,7 +178,7 @@ PAIRWISE_FORMULAS: tuple[tuple[Path, Path, tuple[str, ...]], ...] = (
     (
         ROOT / "supplementary/robust_mom_certificate.md",
         ROOT / "paper/sections/robust_mom_certificate_appendix.tex",
-        (r"\mathrm{Var}(Z_j)=0",),
+        (r"v_j=0",),
     ),
     (
         ROOT / "supplementary/gaussian_model.md",
@@ -180,6 +197,106 @@ def git_text(*args: str) -> str:
         text=True,
     )
     return result.stdout.strip()
+
+
+def validate_recursive_simulation(errors: list[str]) -> None:
+    relative = RECURSIVE_SIMULATION.relative_to(ROOT).as_posix()
+    if RECURSIVE_SIMULATION.is_symlink() or not RECURSIVE_SIMULATION.is_file():
+        errors.append(f"missing/invalid recursive QBS simulation: {relative}")
+        return
+
+    source = RECURSIVE_SIMULATION.read_text(encoding="utf-8")
+    try:
+        ast.parse(source, filename=relative)
+    except SyntaxError as exc:
+        errors.append(f"{relative}: Python syntax error: {exc}")
+        return
+
+    result = subprocess.run(
+        [sys.executable, str(RECURSIVE_SIMULATION)],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        detail = (result.stderr or result.stdout).strip()
+        errors.append(
+            f"{relative}: recursive mechanism execution failed with exit {result.returncode}: "
+            + (detail[-2000:] if detail else "<no output>")
+        )
+        return
+
+    parsed: dict[str, dict[str, float]] = {label: {} for label in RECURSIVE_LABELS}
+    current: str | None = None
+    for raw in result.stdout.splitlines():
+        stripped = raw.strip()
+        if stripped in RECURSIVE_LABELS:
+            current = stripped
+            continue
+        if current is None:
+            continue
+        match = RESULT_LINE_RE.match(raw)
+        if match:
+            parsed[current][match.group("key")] = float(match.group("value"))
+
+    required_metrics = {
+        "aligned recursive model": {"innovation_shift", "decomposition_error"},
+        "anti-aligned innovation control": {
+            "uplift",
+            "predictable_shift",
+            "innovation_shift",
+            "decomposition_error",
+        },
+        "ordinary policy-only null": {"uplift"},
+    }
+    for label, keys in required_metrics.items():
+        missing = sorted(keys - set(parsed[label]))
+        if missing:
+            errors.append(
+                f"{relative}: output for {label!r} is missing metric(s): " + ", ".join(missing)
+            )
+
+    if any(keys - set(parsed[label]) for label, keys in required_metrics.items()):
+        return
+
+    values = [value for metrics in parsed.values() for value in metrics.values()]
+    if not all(math.isfinite(value) for value in values):
+        errors.append(f"{relative}: recursive simulation emitted non-finite metric values")
+        return
+
+    aligned = parsed["aligned recursive model"]
+    anti = parsed["anti-aligned innovation control"]
+    policy_null = parsed["ordinary policy-only null"]
+
+    if abs(policy_null["uplift"]) >= 1e-12:
+        errors.append(
+            f"{relative}: policy-only null uplift {policy_null['uplift']} violates |uplift| < 1e-12"
+        )
+    if abs(aligned["decomposition_error"]) >= 1e-10:
+        errors.append(
+            f"{relative}: aligned decomposition error {aligned['decomposition_error']} violates 1e-10 tolerance"
+        )
+    if abs(anti["decomposition_error"]) >= 1e-10:
+        errors.append(
+            f"{relative}: anti-aligned decomposition error {anti['decomposition_error']} violates 1e-10 tolerance"
+        )
+    if aligned["innovation_shift"] <= 0:
+        errors.append(
+            f"{relative}: aligned innovation shift must remain positive; got {aligned['innovation_shift']}"
+        )
+    if anti["predictable_shift"] <= 0:
+        errors.append(
+            f"{relative}: anti-aligned predictable shift must remain positive; got {anti['predictable_shift']}"
+        )
+    if anti["innovation_shift"] >= 0:
+        errors.append(
+            f"{relative}: anti-aligned innovation shift must remain negative; got {anti['innovation_shift']}"
+        )
+    if anti["uplift"] >= 0:
+        errors.append(
+            f"{relative}: anti-aligned total FP uplift must remain negative; got {anti['uplift']}"
+        )
 
 
 def main() -> None:
@@ -237,6 +354,8 @@ def main() -> None:
                     f"{left.relative_to(ROOT)} <-> {right.relative_to(ROOT)}"
                 )
 
+    validate_recursive_simulation(errors)
+
     if errors:
         raise SystemExit(
             "Supplementary consistency validation failed:\n" + "\n".join(errors)
@@ -246,7 +365,8 @@ def main() -> None:
         "Supplementary consistency validation passed: audited S2.8--S2.10, recognition-time, "
         "repeated-filter, and binary/Gaussian domain/totality boundaries remain locked across "
         f"{len(REQUIRED_SNIPPETS)} source/manuscript/audit surfaces; all audited HEAD/worktree "
-        "blob identities and semantic invariants match."
+        "blob identities and semantic invariants match; recursive QBS aligned, anti-aligned, "
+        "decomposition, and policy-only-null mechanism checks pass independently."
     )
 
 

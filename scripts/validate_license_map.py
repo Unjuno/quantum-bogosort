@@ -89,7 +89,7 @@ def main() -> None:
         "LICENSES/README.md",
         "MIT License",
         "Permission is hereby granted, free of charge",
-        'copies or substantial portions of the "Software"',
+        "copies or substantial portions of the Software",
         'THE SOFTWARE IS PROVIDED "AS IS"',
     ):
         require(ROOT_LICENSE, root_license, fragment, errors)

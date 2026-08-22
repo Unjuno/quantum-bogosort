@@ -1,6 +1,16 @@
-"""Validate exact figure sets and the audited SVG/PDF numerical-data source contract."""
+"""Validate exact figure sets and the audited SVG/PDF numerical-data source contract.
+
+Committed SVGs remain byte-reproducible outputs. The deterministic Figure 2 numerical CSV
+is compared structurally and with a tight floating-point tolerance because GitHub-hosted
+runner hardware can differ in the last few serialized bits even under the same pinned
+Python/NumPy/pandas stack. After a successful comparison, the committed canonical CSV
+bytes are restored so the workflow's later clean-worktree check remains exact.
+"""
 from pathlib import Path
 import ast
+import csv
+import io
+import math
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -9,6 +19,11 @@ PDF_DIR = ROOT / "figures" / "generated_pdf"
 FIGURE_DATA = ROOT / "figures" / "figure_data.py"
 SVG_GENERATOR = ROOT / "figures" / "generate_figures.py"
 PDF_GENERATOR = ROOT / "figures" / "generate_pdf_figures.py"
+FIG2_DATA_RELATIVE = "data/processed/fig2_fosd_theorem_illustration.csv"
+FIG2_DATA = ROOT / FIG2_DATA_RELATIVE
+NUMERIC_REL_TOL = 1e-12
+NUMERIC_ABS_TOL = 1e-14
+MAX_REPORTED_CELL_ERRORS = 20
 EXPECTED_SOURCE_BLOBS = {
     "figures/figure_data.py": "6d765e7cf226bf538a2c967dabb6e565d652b3a4",
     "figures/generate_figures.py": "beae4597aa6f4e91ba0e6da29072a33e96619160",
@@ -65,6 +80,17 @@ def git_text(*args: str) -> str:
         text=True,
     )
     return result.stdout.strip()
+
+
+def git_raw_text(*args: str) -> str:
+    result = subprocess.run(
+        ["git", *args],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout
 
 
 def check_source_blob_contract(errors: list[str]) -> None:
@@ -208,12 +234,102 @@ def check_shared_data_contract(errors: list[str]) -> None:
                 )
 
 
+def csv_rows(text: str) -> list[list[str]]:
+    return list(csv.reader(io.StringIO(text)))
+
+
+def numeric_equivalent(expected: str, actual: str) -> bool:
+    if expected == actual:
+        return True
+    if expected == "" or actual == "":
+        return False
+    try:
+        expected_value = float(expected)
+        actual_value = float(actual)
+    except ValueError:
+        return False
+    if math.isnan(expected_value) or math.isnan(actual_value):
+        return math.isnan(expected_value) and math.isnan(actual_value)
+    if not math.isfinite(expected_value) or not math.isfinite(actual_value):
+        return expected_value == actual_value
+    return math.isclose(
+        expected_value,
+        actual_value,
+        rel_tol=NUMERIC_REL_TOL,
+        abs_tol=NUMERIC_ABS_TOL,
+    )
+
+
+def validate_and_restore_fig2_data(errors: list[str]) -> None:
+    """Validate generated Figure 2 data semantically, then restore canonical bytes."""
+    if FIG2_DATA.is_symlink() or not FIG2_DATA.is_file():
+        errors.append(
+            f"{FIG2_DATA_RELATIVE}: missing/invalid theorem-illustration CSV"
+        )
+        return
+
+    try:
+        expected_rows = csv_rows(git_raw_text("show", f"HEAD:{FIG2_DATA_RELATIVE}"))
+    except subprocess.CalledProcessError as exc:
+        errors.append(f"{FIG2_DATA_RELATIVE}: unable to read committed CSV: {exc}")
+        return
+    actual_rows = csv_rows(FIG2_DATA.read_text(encoding="utf-8"))
+
+    if len(actual_rows) != len(expected_rows):
+        errors.append(
+            f"{FIG2_DATA_RELATIVE}: row-count drift: generated {len(actual_rows)} "
+            f"!= committed {len(expected_rows)}"
+        )
+        return
+
+    cell_errors: list[str] = []
+    for row_index, (expected_row, actual_row) in enumerate(
+        zip(expected_rows, actual_rows), start=1
+    ):
+        if len(actual_row) != len(expected_row):
+            cell_errors.append(
+                f"row {row_index} column-count drift: generated {len(actual_row)} "
+                f"!= committed {len(expected_row)}"
+            )
+            if len(cell_errors) >= MAX_REPORTED_CELL_ERRORS:
+                break
+            continue
+        for column_index, (expected_cell, actual_cell) in enumerate(
+            zip(expected_row, actual_row), start=1
+        ):
+            if numeric_equivalent(expected_cell, actual_cell):
+                continue
+            cell_errors.append(
+                f"row {row_index}, column {column_index}: generated {actual_cell!r} "
+                f"!= committed {expected_cell!r} beyond numeric tolerance"
+            )
+            if len(cell_errors) >= MAX_REPORTED_CELL_ERRORS:
+                break
+        if len(cell_errors) >= MAX_REPORTED_CELL_ERRORS:
+            break
+
+    if cell_errors:
+        errors.append(
+            f"{FIG2_DATA_RELATIVE}: generated theorem-illustration data exceeds the tight "
+            f"numeric-equivalence contract (rtol={NUMERIC_REL_TOL:g}, "
+            f"atol={NUMERIC_ABS_TOL:g}):\n" + "\n".join(cell_errors)
+        )
+        return
+
+    subprocess.run(
+        ["git", "checkout", "--", FIG2_DATA_RELATIVE],
+        cwd=ROOT,
+        check=True,
+    )
+
+
 def main() -> None:
     errors: list[str] = []
     check_source_blob_contract(errors)
     check_exact(SVG_DIR, EXPECTED_SVGS, "public SVG set", errors)
     check_exact(PDF_DIR, EXPECTED_PDFS, "manuscript PDF figure set", errors)
     check_shared_data_contract(errors)
+    validate_and_restore_fig2_data(errors)
 
     if errors:
         raise SystemExit("Figure-set validation failed:\n" + "\n".join(errors))
@@ -223,7 +339,8 @@ def main() -> None:
         "working tree; exact nonsymlink regular-file "
         f"{len(EXPECTED_SVGS)}-SVG public set and {len(EXPECTED_PDFS)}-PDF manuscript set present; "
         "Figures 2-6 in both renderers each call the canonical shared numerical-data function "
-        "exactly once."
+        f"exactly once; Figure 2 theorem-illustration CSV matches committed HEAD within "
+        f"rtol={NUMERIC_REL_TOL:g}, atol={NUMERIC_ABS_TOL:g} and canonical bytes were restored."
     )
 
 

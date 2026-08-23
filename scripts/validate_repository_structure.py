@@ -169,6 +169,7 @@ required_regime_lines = (
     "regime_retuned 0.40 0.80 500 0.9998 1.0000",
     "projection_blind 0.40 0.50 500 0.0434 0.0514",
     "projection_blind 0.40 0.60 1000 0.9434 0.0502",
+    "composition_shift 0.40 0.80 500 1.0000 0.9854",
 )
 for line in required_regime_lines:
     if line not in regime_result.stdout:

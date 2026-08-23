@@ -125,6 +125,8 @@ Training/certification leakage, uncorrected model selection, or invalid moment a
 |---|---|---|
 | S1 | hierarchical recognition can produce nonnegative cross-copy action covariance under the stated conditional-independence structure | [`supplementary/branch_recognition.md`](../supplementary/branch_recognition.md) |
 | selection-equivalence / context-identifiability boundary | bounded normalized accessibility is exactly ordinary ascertainment conditioning; every integrable nonnegative weight has an exact classical record-size-bias representation; arbitrary context-specific observer laws remain classically representable if the null may retune by context; shared-selection restrictions require operationally identifiable base/selected laws before becoming empirical tests | [`supplementary/selection_equivalence.md`](../supplementary/selection_equivalence.md) |
+| randomized-context diagnostic | under exogenous binary context randomization and context-invariant Bernoulli inclusion, selected pre-treatment strata preserve the randomized assignment probability; exact binomial/Bonferroni tests can falsify observable shared-selection violations but remain blind to latent violations erased by projection | [`supplementary/randomized_context_diagnostic.md`](../supplementary/randomized_context_diagnostic.md) |
+| randomization-regime / proxy diagnostic | with known assignment odds `p_r`, a regime-invariant context selector induces one common selected log-odds offset across regimes; multiple regimes test retuning structure, while informative pre-treatment proxies can shrink—but not eliminate—the projection-blind equivalence class | [`supplementary/randomization_regime_proxy.md`](../supplementary/randomization_regime_proxy.md) |
 | recognition time | recognition as a stopping-time extension; no universal early-recognition ordering theorem | [`supplementary/recognition_time.md`](../supplementary/recognition_time.md) |
 | repeated filtering | repeated adverse-trigger accessibility identities | [`supplementary/repeated_filtering.md`](../supplementary/repeated_filtering.md) |
 | recursive observer-information loop | unnumbered dynamic extension closing the feedback from experienced observer history to bridge belief, adoption/policy, accessibility, and later observer history; includes sequential weighting and predictable/innovation selection | [`supplementary/evidence_activation.md`](../supplementary/evidence_activation.md) |
@@ -177,7 +179,19 @@ A restricted shared-selection null can create a falsifiable structural condition
 
 so pairwise density-ratio ratios must be constant on the common support. But that condition becomes an empirical test only when the relevant base and selected laws are identifiable on a common observable state space. Latent-state violations can disappear after projection, and observed changes can come from policy-dependent outcome maps even when latent selection is shared.
 
-Therefore a weighted first-person distribution, by itself or repeated context by context, is not evidence for a specifically Everettian mechanism. A physical bridge must constrain or derive `S_pi` across contexts and make an operationally identifiable prediction that differs from comparably constrained classical selection alternatives. The complete proof and error checks are in [`supplementary/selection_equivalence.md`](../supplementary/selection_equivalence.md) and [`docs/context_identifiability_audit_2026-08-23.md`](context_identifiability_audit_2026-08-23.md).
+The randomized diagnostics make one restricted part of that operational burden concrete. If a binary context is assigned with a known probability `p_r` in a predeclared randomization regime and Bernoulli inclusion is regime-invariant, then within any observed pre-treatment proxy stratum `Z=z` the selected context log-odds satisfy
+
+```math
+\mathrm{logit}\,P(C=1\mid A=1,Z=z,R=r)
+-
+\mathrm{logit}\,p_r
+=
+\log\frac{E[s_1(\Omega)\mid Z=z]}{E[s_0(\Omega)\mid Z=z]}.
+```
+
+The right-hand side is independent of `r`. Under a shared selector it is zero. Therefore known assignment probabilities can support finite-sample exact tests of the shared-selector null and cross-regime diagnostics of selector retuning. They do not recover latent violations whose conditional selector means are identical after projection. The regime/proxy stress test demonstrates that an informative pre-treatment proxy can restore power as it reveals latent heterogeneity, while an uninformative proxy leaves the violation observationally invisible.
+
+Therefore a weighted first-person distribution, by itself or repeated context by context, is not evidence for a specifically Everettian mechanism. A physical bridge must constrain or derive `S_pi` across contexts and make an operationally identifiable prediction that differs from comparably constrained classical selection alternatives. The complete proof and error checks are in [`supplementary/selection_equivalence.md`](../supplementary/selection_equivalence.md), [`supplementary/randomized_context_diagnostic.md`](../supplementary/randomized_context_diagnostic.md), [`supplementary/randomization_regime_proxy.md`](../supplementary/randomization_regime_proxy.md), and [`docs/context_identifiability_audit_2026-08-23.md`](context_identifiability_audit_2026-08-23.md).
 
 The same change of measure can be applied to a present state when accessibility is determined over a future continuation. Let `Z` denote a present state and `S_T` future accessibility. Then:
 
@@ -260,7 +274,7 @@ d\mu^{FP}_\pi(\omega)
 
 The abstract change-of-measure mathematics is exact after the model is defined. A physical Everett interpretation additionally requires an independent account of why observer persistence or self-location induces the proposed `S_pi`.
 
-The classical selection-equivalence result makes this bridge requirement stricter: reproducing the normalized weighted law is insufficient because a behavior-matched classical ascertainment / record-size-bias mechanism can reproduce that law as well. The context-indexed no-go further requires a predeclared cross-policy accessibility structure; context-by-context fitting is not mechanism evidence.
+The classical selection-equivalence result makes this bridge requirement stricter: reproducing the normalized weighted law is insufficient because a behavior-matched classical ascertainment / record-size-bias mechanism can reproduce that law as well. The context-indexed no-go further requires a predeclared cross-policy accessibility structure; context-by-context fitting is not mechanism evidence. Randomized-context and regime/proxy diagnostics provide ways to falsify restricted observable classical nulls, but rejection of those nulls does not identify an Everett mechanism.
 
 See [`docs/everett_bridge_tests.md`](everett_bridge_tests.md) for support, constraint, and rejection criteria.
 
@@ -278,6 +292,8 @@ Important boundaries include:
 - the normalized weighted law can be represented by classical ascertainment / size-biased recording and therefore does not by itself identify an Everett mechanism;
 - arbitrary context-specific observer-law families remain classically representable when the null can retune selection by context;
 - a shared-selection density-ratio restriction is only operational when the base and selected laws are identifiable on a common observable state space;
+- randomized assignment probabilities can make restricted shared-selector or regime-retuning nulls testable, but only under the stated independent-unit, pre-treatment-observable, binary-inclusion design;
+- changing randomization probabilities does not cure projection blindness, and proxy refinement only gains power to the extent that the proxy exposes selector-relevant latent heterogeneity;
 - mutual information alone does not imply positive QBS covariance;
 - S2.11 requires the residual conditional-covariance term outside score-measurable accessibility;
 - innovation selection depends on the chosen information filtration and is not synonymous with objective luck;
@@ -288,7 +304,7 @@ Important boundaries include:
 
 The manuscript is in [`paper/`](../paper/). The current main-text S2 presentation is intentionally compressed to the conceptual spine, while S2.3–S2.10 are Appendix-first. The recursive observer-information extension currently remains repository supplementary material and has not been promoted into the locked core or manuscript claim set.
 
-The selection/context-identifiability boundary is unnumbered supplementary theory and is summarized in manuscript Discussion. Its dedicated audit is [`docs/context_identifiability_audit_2026-08-23.md`](context_identifiability_audit_2026-08-23.md).
+The selection/context-identifiability boundary is unnumbered supplementary theory and is summarized in manuscript Discussion. Its dedicated audit is [`docs/context_identifiability_audit_2026-08-23.md`](context_identifiability_audit_2026-08-23.md). The randomized-context and regime/proxy diagnostics remain repository supplementary material rather than manuscript claims.
 
 The dedicated post-v0.2 proof review is [`docs/post_v02_core_s2_proof_review.md`](post_v02_core_s2_proof_review.md). The editorial dependency map is [`docs/s2_stack_review_map.md`](s2_stack_review_map.md).
 
@@ -302,6 +318,8 @@ Open questions include:
 - what predeclared cross-policy law constrains `S_pi` without context-by-context retuning;
 - which base and selected observer quantities are operationally identifiable on a common state space;
 - what independently measurable or held-out interventional prediction could distinguish an Everett accessibility mechanism from comparably constrained classical selection nulls;
+- which pre-treatment proxy families or randomized regimes provide enough information to test a physically motivated accessibility restriction without assuming recovery of the full latent state;
+- whether a proposed physical bridge predicts a nonzero but regime-invariant selected log-odds offset, a specific proxy-refinement pattern, or another held-out restriction not freely reproducible by a classical retuned selector;
 - whether the recursive bridge-belief loop remains informative under realistic model misspecification, survivorship-only controls, and alternative observer models;
 - whether innovation selection is a useful stable diagnostic under motivated information filtrations;
 - whether the current S2.13 explained-variance summary should remain in the manuscript main text after review;

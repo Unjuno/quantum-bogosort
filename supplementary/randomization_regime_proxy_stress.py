@@ -93,9 +93,15 @@ def selected_joint(mode: str, gamma: float, proxy_accuracy: float) -> np.ndarray
     """Return Q(C,Z,L | selected,R) for each randomization regime R."""
     out = np.zeros((3, 2, 2, 2), dtype=float)
     for regime, p_context in enumerate(P_REGIMES):
+        latent_probability = (
+            (0.2, 0.5, 0.8)[regime] if mode == "composition_shift" else 0.5
+        )
         for context in (0, 1):
             context_probability = p_context if context == 1 else 1.0 - p_context
             for latent in (0, 1):
+                latent_mass = (
+                    latent_probability if latent == 1 else 1.0 - latent_probability
+                )
                 for proxy in (0, 1):
                     proxy_probability = (
                         proxy_accuracy if proxy == latent else 1.0 - proxy_accuracy
@@ -109,10 +115,12 @@ def selected_joint(mode: str, gamma: float, proxy_accuracy: float) -> np.ndarray
                         selector = float(logistic((2 * context - 1) * shift))
                     elif mode == "projection_blind":
                         selector = ((0.8, 0.2), (0.2, 0.8))[context][latent]
+                    elif mode == "composition_shift":
+                        selector = ((0.8, 0.2), (0.3, 0.7))[context][latent]
                     else:
                         raise ValueError(f"unknown mode: {mode}")
                     out[regime, context, proxy, latent] = (
-                        context_probability * 0.5 * proxy_probability * selector
+                        context_probability * latent_mass * proxy_probability * selector
                     )
         out[regime] /= out[regime].sum()
     return out
@@ -133,7 +141,7 @@ def reject_shared_selector(counts: np.ndarray) -> bool:
 
 
 def reject_regime_invariance(counts: np.ndarray) -> bool:
-    """Asymptotic likelihood-ratio diagnostic for one common log-odds offset."""
+    """Asymptotic diagnostic for one common selected log-odds offset."""
     observed = counts.sum(axis=3)
     pvalues: list[float] = []
     for proxy in (0, 1):
@@ -177,6 +185,7 @@ def main() -> None:
         ("projection_blind", 0.4, 0.60, 1000),
         ("projection_blind", 0.4, 0.65, 500),
         ("projection_blind", 0.4, 0.70, 500),
+        ("composition_shift", 0.4, 0.80, 500),
     ]
     rows = []
     for case in cases:
@@ -201,9 +210,11 @@ def main() -> None:
         keyed[("projection_blind", 0.4, q, 500)][1]
         for q in (0.50, 0.55, 0.60, 0.65, 0.70)
     ) < 0.07
+    assert keyed[("composition_shift", 0.4, 0.80, 500)][0] > 0.99
+    assert keyed[("composition_shift", 0.4, 0.80, 500)][1] > 0.95
 
     print(f"seed={SEED} reps={REPS} alpha={ALPHA} regimes=0.2,0.5,0.8")
-    print("mode gamma proxy_accuracy n_per_regime shared_reject regime_retarget_reject")
+    print("mode gamma proxy_accuracy n_per_regime shared_reject common_offset_reject")
     for row in rows:
         mode, gamma, q, n, shared, hom = row
         print(f"{mode} {gamma:.2f} {q:.2f} {n} {shared:.4f} {hom:.4f}")

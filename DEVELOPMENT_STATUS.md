@@ -7,14 +7,13 @@ This file is the concise source of truth for current review/development state. H
 ## Public source of truth
 
 - canonical current development/review surface: `main`;
-- current `main` commit: `c3dafc6c07e4c36bdd7ff0c926e63434291dd2f8`;
 - frozen v0.3 public-review snapshot: tag/Release `v0.3-public-review` at `58038763127258bd3e2f0d41708c4dfa01f81fd6`;
 - archived v0.2 public-review snapshot: tag/Release `v0.2-public-review` at `7405f7408f74fa32b16d1cc9f624070cc14624ab`;
 - canonical claim/theorem/evidence map: [`docs/research_map.md`](docs/research_map.md);
 - authoritative claim boundaries: [`docs/claims_and_assumptions.md`](docs/claims_and_assumptions.md);
 - supplementary index: [`supplementary/README.md`](supplementary/README.md).
 
-All non-`main` development refs were audited on 2026-08-24. Before cleanup, each had `ahead_by=0` and no unique file differences versus `main`; all nine were then fast-forwarded without force to the current `main` commit and rechecked as identical:
+All non-`main` development refs were audited on 2026-08-24. Before cleanup, each had `ahead_by=0` and no unique file differences versus `main`; all nine were then fast-forwarded without force to `main` and rechecked as identical:
 
 - `fix/past-adapted-future-law`;
 - `fix/recursive-qbs-validation`;
@@ -145,6 +144,6 @@ These are repository-hosting or presentation tasks, not missing core mathematics
 - repository topics are empty;
 - `delete_branch_on_merge=false`;
 - `main` classic branch protection/ruleset is not configured;
-- nine merged development refs remain because branch deletion is unavailable through the current connector, although all are now identical to `main`;
+- nine merged development refs remain because branch deletion is unavailable through the current connector, although they were audited and synchronized to `main` before this maintenance pass;
 - direct desktop/mobile browser inspection of rendered GitHub pages remains unavailable in the current environment;
 - push-triggered `main` workflow runs are not directly enumerated by the connector, so green PR synthetic-tree equality with actual `main` remains the strongest observed fallback.

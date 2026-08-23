@@ -126,7 +126,7 @@ Training/certification leakage, uncorrected model selection, or invalid moment a
 | S1 | hierarchical recognition can produce nonnegative cross-copy action covariance under the stated conditional-independence structure | [`supplementary/branch_recognition.md`](../supplementary/branch_recognition.md) |
 | selection-equivalence / context-identifiability boundary | bounded normalized accessibility is exactly ordinary ascertainment conditioning; every integrable nonnegative weight has an exact classical record-size-bias representation; arbitrary context-specific observer laws remain classically representable if the null may retune by context; shared-selection restrictions require operationally identifiable base/selected laws before becoming empirical tests | [`supplementary/selection_equivalence.md`](../supplementary/selection_equivalence.md) |
 | randomized-context diagnostic | under exogenous binary context randomization and context-invariant Bernoulli inclusion, selected pre-treatment strata preserve the randomized assignment probability; exact binomial/Bonferroni tests can falsify observable shared-selection violations but remain blind to latent violations erased by projection | [`supplementary/randomized_context_diagnostic.md`](../supplementary/randomized_context_diagnostic.md) |
-| randomization-regime / proxy diagnostic | with known assignment odds `p_r`, a regime-invariant context selector induces one common selected log-odds offset across regimes; multiple regimes test retuning structure, while informative pre-treatment proxies can shrink—but not eliminate—the projection-blind equivalence class | [`supplementary/randomization_regime_proxy.md`](../supplementary/randomization_regime_proxy.md) |
+| randomization-regime / proxy diagnostic | known assignment odds support exact within-regime shared-selector tests; a common nonzero selected log-odds offset across regimes additionally requires stable proxy-level selector means, for example from regime assignment independent of the latent pre-treatment state; informative proxies can shrink—but not eliminate—the projection-blind equivalence class | [`supplementary/randomization_regime_proxy.md`](../supplementary/randomization_regime_proxy.md) |
 | recognition time | recognition as a stopping-time extension; no universal early-recognition ordering theorem | [`supplementary/recognition_time.md`](../supplementary/recognition_time.md) |
 | repeated filtering | repeated adverse-trigger accessibility identities | [`supplementary/repeated_filtering.md`](../supplementary/repeated_filtering.md) |
 | recursive observer-information loop | unnumbered dynamic extension closing the feedback from experienced observer history to bridge belief, adoption/policy, accessibility, and later observer history; includes sequential weighting and predictable/innovation selection | [`supplementary/evidence_activation.md`](../supplementary/evidence_activation.md) |
@@ -179,17 +179,35 @@ A restricted shared-selection null can create a falsifiable structural condition
 
 so pairwise density-ratio ratios must be constant on the common support. But that condition becomes an empirical test only when the relevant base and selected laws are identifiable on a common observable state space. Latent-state violations can disappear after projection, and observed changes can come from policy-dependent outcome maps even when latent selection is shared.
 
-The randomized diagnostics make one restricted part of that operational burden concrete. If a binary context is assigned with a known probability `p_r` in a predeclared randomization regime and Bernoulli inclusion is regime-invariant, then within any observed pre-treatment proxy stratum `Z=z` the selected context log-odds satisfy
+The randomized diagnostics make one restricted part of that operational burden concrete. If a binary context is assigned with a known probability `p_r` inside each predeclared randomization regime and inclusion does not distinguish the two contexts, then within any observed pre-treatment proxy stratum `Z=z`,
+
+```math
+P(C=1\mid A=1,Z=z,R=r)=p_r.
+```
+
+This zero-offset preservation requires within-regime randomization but does not require the latent population to be identical across regimes. It supports finite-sample exact tests of the shared-selector null.
+
+For the weaker null that selection may depend on context but the context-selector functions are fixed across regimes, define
+
+```math
+m_{c,r}(z)
+=
+E[s_c(\Omega)\mid Z=z,R=r].
+```
+
+Then
 
 ```math
 \mathrm{logit}\,P(C=1\mid A=1,Z=z,R=r)
 -
 \mathrm{logit}\,p_r
 =
-\log\frac{E[s_1(\Omega)\mid Z=z]}{E[s_0(\Omega)\mid Z=z]}.
+\log\frac{m_{1,r}(z)}{m_{0,r}(z)}.
 ```
 
-The right-hand side is independent of `r`. Under a shared selector it is zero. Therefore known assignment probabilities can support finite-sample exact tests of the shared-selector null and cross-regime diagnostics of selector retuning. They do not recover latent violations whose conditional selector means are identical after projection. The regime/proxy stress test demonstrates that an informative pre-treatment proxy can restore power as it reveals latent heterogeneity, while an uninformative proxy leaves the violation observationally invisible.
+A **common nonzero offset across regimes** follows only if this selector-mean ratio is itself regime-invariant. A sufficient experimental condition is that regime assignment is independent of the latent pre-treatment state, `R` independent of `Omega`, with `Z=T(Omega)`. The regime/proxy stress simulation uses the same latent law in all regimes and therefore satisfies this stronger condition. The diagnostic cannot distinguish selector retuning from an unmodeled regime shift in latent pre-treatment composition if that condition fails.
+
+Multiple assignment regimes still do not recover latent violations whose conditional selector means are identical after projection. The proxy-refinement stress test demonstrates that an informative pre-treatment proxy can restore power as it reveals latent heterogeneity, while an uninformative proxy leaves the violation observationally invisible.
 
 Therefore a weighted first-person distribution, by itself or repeated context by context, is not evidence for a specifically Everettian mechanism. A physical bridge must constrain or derive `S_pi` across contexts and make an operationally identifiable prediction that differs from comparably constrained classical selection alternatives. The complete proof and error checks are in [`supplementary/selection_equivalence.md`](../supplementary/selection_equivalence.md), [`supplementary/randomized_context_diagnostic.md`](../supplementary/randomized_context_diagnostic.md), [`supplementary/randomization_regime_proxy.md`](../supplementary/randomization_regime_proxy.md), and [`docs/context_identifiability_audit_2026-08-23.md`](context_identifiability_audit_2026-08-23.md).
 
@@ -292,7 +310,8 @@ Important boundaries include:
 - the normalized weighted law can be represented by classical ascertainment / size-biased recording and therefore does not by itself identify an Everett mechanism;
 - arbitrary context-specific observer-law families remain classically representable when the null can retune selection by context;
 - a shared-selection density-ratio restriction is only operational when the base and selected laws are identifiable on a common observable state space;
-- randomized assignment probabilities can make restricted shared-selector or regime-retuning nulls testable, but only under the stated independent-unit, pre-treatment-observable, binary-inclusion design;
+- randomized assignment probabilities can make restricted shared-selector nulls testable under the stated independent-unit, pre-treatment-observable, binary-inclusion design;
+- a common nonzero selected log-odds offset across randomization regimes additionally requires stable proxy-level selector means, such as from regime assignment independent of the latent pre-treatment state;
 - changing randomization probabilities does not cure projection blindness, and proxy refinement only gains power to the extent that the proxy exposes selector-relevant latent heterogeneity;
 - mutual information alone does not imply positive QBS covariance;
 - S2.11 requires the residual conditional-covariance term outside score-measurable accessibility;
@@ -319,7 +338,7 @@ Open questions include:
 - which base and selected observer quantities are operationally identifiable on a common state space;
 - what independently measurable or held-out interventional prediction could distinguish an Everett accessibility mechanism from comparably constrained classical selection nulls;
 - which pre-treatment proxy families or randomized regimes provide enough information to test a physically motivated accessibility restriction without assuming recovery of the full latent state;
-- whether a proposed physical bridge predicts a nonzero but regime-invariant selected log-odds offset, a specific proxy-refinement pattern, or another held-out restriction not freely reproducible by a classical retuned selector;
+- whether a proposed physical bridge predicts a nonzero selected log-odds pattern or proxy-refinement curve after independently controlling the pre-treatment distribution across regimes;
 - whether the recursive bridge-belief loop remains informative under realistic model misspecification, survivorship-only controls, and alternative observer models;
 - whether innovation selection is a useful stable diagnostic under motivated information filtrations;
 - whether the current S2.13 explained-variance summary should remain in the manuscript main text after review;

@@ -12,7 +12,7 @@ P(C=1\mid R=r)=p_r,
 0<p_r<1.
 ```
 
-Let `Omega` be the pre-treatment latent state, let `Z=T(Omega)` be an observed pre-treatment proxy, and assume
+Let `Omega` be the pre-treatment latent state and `Z=T(Omega)` an observed pre-treatment proxy. The within-regime assignment assumption is
 
 ```math
 C\perp\!\!\!\perp \Omega\mid R.
@@ -31,37 +31,77 @@ Two nested nulls are relevant.
 1. **shared selector**:
 
 ```math
-s_{0,r}(\omega)=s_{1,r}(\omega)=s(\omega)
+s_{0,r}(\omega)=s_{1,r}(\omega)=s_r(\omega)
 ```
 
 for every regime;
 2. **regime-invariant context selector**:
 
 ```math
-s_{c,r}(\omega)=s_c(\omega),
+s_{c,r}(\omega)=s_c(\omega).
 ```
 
-which allows context-dependent selection but forbids retuning the selector when the randomization probability changes.
+The first null may still allow the common selector to vary across regimes. The second forbids context-selector retuning when the randomization probability changes.
+
+For the stronger claim that a **nonzero selected log-odds offset is common across regimes**, the experiment additionally requires the pre-treatment latent distribution to be regime-invariant. A sufficient design condition is
+
+```math
+R\perp\!\!\!\perp \Omega.
+```
+
+More generally, it is enough that the conditional selector-mean ratio defined below is invariant in `r`.
 
 ## T — exact structural consequences
 
-Define, for an observed proxy value `z`,
+### Shared-selector preservation requires only within-regime randomization
+
+Under the shared-selector null and `C` randomized independently of `Omega` within each regime,
 
 ```math
-m_c(z)
-=
-E[s_c(\Omega)\mid Z=z].
+P(C=1\mid A=1,Z=z,R=r)=p_r.
 ```
 
-Under the regime-invariant context-selector null,
+The regime may have a different latent-state distribution or a different common selector; those factors cancel because inclusion does not distinguish `C=0` from `C=1` within the regime.
+
+### Common nonzero offset needs a regime-stable latent distribution
+
+Under the regime-invariant context-selector null, define the regime-specific proxy-level selector means
+
+```math
+m_{c,r}(z)
+=
+E[s_c(\Omega)\mid Z=z,R=r].
+```
+
+Then always
 
 ```math
 P(C=1\mid A=1,Z=z,R=r)
 =
-\frac{p_r m_1(z)}{p_r m_1(z)+(1-p_r)m_0(z)}.
+\frac{p_r m_{1,r}(z)}{p_r m_{1,r}(z)+(1-p_r)m_{0,r}(z)},
 ```
 
-Therefore
+and hence
+
+```math
+\mathrm{logit}\,P(C=1\mid A=1,Z=z,R=r)
+-
+\mathrm{logit}\,p_r
+=
+\log\frac{m_{1,r}(z)}{m_{0,r}(z)}.
+```
+
+Thus a regime-invariant selector alone does **not** guarantee a common nonzero offset if the pre-treatment population differs across regimes.
+
+If, in addition, `R` is independent of `Omega` and `Z=T(Omega)`, then
+
+```math
+m_{c,r}(z)=m_c(z)
+=
+E[s_c(\Omega)\mid Z=z],
+```
+
+so
 
 ```math
 \mathrm{logit}\,P(C=1\mid A=1,Z=z,R=r)
@@ -71,32 +111,48 @@ Therefore
 \log\frac{m_1(z)}{m_0(z)},
 ```
 
-which is independent of the regime `r`.
+which is independent of `r`.
 
-Under the stronger shared-selector null, `m_1(z)=m_0(z)`, so the offset is exactly zero:
+Therefore varying known assignment odds gives two distinct checks:
 
-```math
-P(C=1\mid A=1,Z=z,R=r)=p_r.
-```
-
-Thus varying the known assignment odds gives two distinct checks:
-
-- zero offset rejects the shared-selector null when violated;
-- regime invariance rejects selector retuning when the selected log-odds offset changes with `r`.
+- zero offset tests the shared-selector null using only within-regime randomization;
+- common nonzero offset tests the stronger combination of regime-invariant context selection **and** regime-stable pre-treatment composition.
 
 ### Projection limit
 
 Multiple randomization regimes do **not** eliminate the projection problem. If
 
 ```math
-E[s_1(\Omega)\mid Z=z]
+E[s_1(\Omega)\mid Z=z,R=r]
 =
-E[s_0(\Omega)\mid Z=z]
+E[s_0(\Omega)\mid Z=z,R=r]
 ```
 
-for every observed `z`, then the selected context probability equals the randomized probability in every regime even when `s_1` and `s_0` differ strongly on latent states.
+for every observed `(z,r)`, then the selected context probability equals the randomized probability in every regime even when `s_1` and `s_0` differ strongly on latent states.
 
 An informative proxy can refine the sigma-field and break that equality. This motivates the proxy-accuracy stress test below.
+
+For the projection-blind toy model used in the script, `L` is Bernoulli one-half, `P(Z=L)=q`, and the selectors are
+
+```math
+s_0(0)=0.8,
+\quad
+s_0(1)=0.2,
+\quad
+s_1(0)=0.2,
+\quad
+s_1(1)=0.8.
+```
+
+For `Z=1`, the exact selector-mean ratio is
+
+```math
+\frac{m_1(1)}{m_0(1)}
+=
+\frac{0.2+0.6q}{0.8-0.6q}.
+```
+
+It equals one at `q=1/2` and moves monotonically away from one as the proxy becomes informative, explaining the observed power recovery.
 
 ## D — diagnostics
 
@@ -106,7 +162,7 @@ The deterministic script [`randomization_regime_proxy_stress.py`](randomization_
 p_r in {0.2, 0.5, 0.8}
 ```
 
-and a binary latent state `L` with a noisy observed proxy `Z` satisfying
+with the same latent-state law in every regime, so the simulation satisfies the stronger `R`-independence condition above. It uses a binary latent state `L` with a noisy observed proxy `Z` satisfying
 
 ```math
 P(Z=L)=q.
@@ -133,15 +189,15 @@ The script uses exact two-sided binomial p-values and Bonferroni correction over
 
 ### Regime-invariance diagnostic
 
-For each `z`, the regime-invariant null has one common log-odds offset. The script fits that scalar offset and compares it with the saturated three-regime model by a likelihood-ratio deviance. With three regimes, the per-stratum reference distribution is asymptotic chi-square with two degrees of freedom; two proxy strata are Bonferroni corrected.
+For each `z`, under the **combined** null of regime-invariant context selection and regime-stable pre-treatment composition, the selected data have one common log-odds offset. The script fits that scalar offset and compares it with the saturated three-regime model by a likelihood-ratio deviance. With three regimes, the per-stratum reference distribution is asymptotic chi-square with two degrees of freedom; two proxy strata are Bonferroni corrected.
 
-This second test is an asymptotic stress diagnostic, not an exact finite-sample certificate.
+This second test is an asymptotic stress diagnostic, not an exact finite-sample certificate. Rejection can be caused either by selector retuning or by an unmodeled regime shift in the pre-treatment latent distribution.
 
 ## C — deterministic stress results
 
 Seed `20260823`, 5,000 Monte Carlo repetitions per cell:
 
-| mechanism | gamma | proxy accuracy | selected n / regime | shared-null reject | regime-retuning reject |
+| mechanism | gamma | proxy accuracy | selected n / regime | shared-null reject | regime-retuning/composition reject |
 |---|---:|---:|---:|---:|---:|
 | shared null | 0.00 | 0.80 | 500 | 0.0478 | 0.0518 |
 | stable context effect | 0.40 | 0.80 | 500 | 0.9906 | 0.0560 |
@@ -157,20 +213,23 @@ Seed `20260823`, 5,000 Monte Carlo repetitions per cell:
 Interpretation:
 
 1. the exact shared-selector test remains near nominal size under a nontrivial shared selector;
-2. a stable context effect is detected by the zero-offset test while the regime-retuning diagnostic remains near nominal size;
+2. a stable context effect is detected by the zero-offset test while the common-offset diagnostic remains near nominal size;
 3. explicit regime retuning is detected by both diagnostics and especially by the homogeneity test;
 4. changing assignment probabilities alone does not reveal a projection-blind latent violation;
 5. adding an informative pre-treatment proxy restores power continuously as the proxy becomes more informative;
 6. for a fixed imperfect proxy, increasing selected sample size increases power, but cannot solve a truly uninformative projection (`q=1/2`).
+
+A separate calibration pass at selected `n` per regime `100, 200, 500, 1000` gave common-offset diagnostic rejection rates approximately `4.7%–6.0%` under the tested nulls. This is only a Monte Carlo calibration check; the diagnostic remains classified as asymptotic.
 
 ## U — unresolved / non-claims
 
 - Rejection of either null does not identify Everett, observer selection, or a QBS physical bridge.
 - Failure to reject does not establish shared selection because latent context dependence can remain projection-blind.
 - The homogeneity diagnostic uses an asymptotic chi-square reference; its Monte Carlo calibration here is a stress check, not a universal finite-sample theorem.
+- The common-offset interpretation requires either `R` independent of the latent pre-treatment state or another justified condition making the proxy-level selector-mean ratio stable across regimes.
 - The exact binomial guarantee assumes independent experimental units, known randomization probabilities, pre-treatment proxy strata, and binary inclusion. It does not automatically transfer to dependent duplicate-record or Poisson multiplicity sampling.
 - Proxy refinement improves identifiability only to the extent that the proxy exposes latent heterogeneity relevant to the selector ratio.
 
 ## Error check
 
-The result is deliberately one-sided. Multiple assignment regimes identify a **regime-invariance restriction**, not an arbitrary latent selector. An informative proxy can shrink the observational equivalence class, but no finite proxy family is assumed to recover the full latent state.
+The result is deliberately one-sided. Multiple assignment regimes identify a **joint restriction on selector stability and pre-treatment composition**, not an arbitrary latent selector. An informative proxy can shrink the observational equivalence class, but no finite proxy family is assumed to recover the full latent state.

@@ -127,6 +127,8 @@ Training/certification leakage, uncorrected model selection, or invalid moment a
 | selection-equivalence / context-identifiability boundary | bounded normalized accessibility is exactly ordinary ascertainment conditioning; every integrable nonnegative weight has an exact classical record-size-bias representation; arbitrary context-specific observer laws remain classically representable if the null may retune by context; shared-selection restrictions require operationally identifiable base/selected laws before becoming empirical tests | [`supplementary/selection_equivalence.md`](../supplementary/selection_equivalence.md) |
 | randomized-context diagnostic | under exogenous binary context randomization and context-invariant Bernoulli inclusion, selected pre-treatment strata preserve the randomized assignment probability; exact binomial/Bonferroni tests can falsify observable shared-selection violations but remain blind to latent violations erased by projection | [`supplementary/randomized_context_diagnostic.md`](../supplementary/randomized_context_diagnostic.md) |
 | randomization-regime / proxy diagnostic | known assignment odds support exact within-regime shared-selector tests; a common nonzero selected log-odds offset across regimes additionally requires stable proxy-level selector means, for example from regime assignment independent of the latent pre-treatment state; informative proxies can shrink—but not eliminate—the projection-blind equivalence class | [`supplementary/randomization_regime_proxy.md`](../supplementary/randomization_regime_proxy.md) |
+| temporal interpretation boundary | separates retrospective future-weighted descriptions of a present state from past-adapted prospective model states; later outcomes may score earlier predictions but do not retroactively define earlier observer identity/self-location | [`docs/temporal_interpretation_boundary.md`](temporal_interpretation_boundary.md) |
+| prospective recognition-longitudinal protocol | externally assigned recognition exposure where feasible, intention-to-treat analysis, preregistered sequential prediction, policy-versus-innovation separation, and attrition/selection controls; latent continuity is tested only through prospective consequences rather than post hoc relabeling | [`supplementary/prospective_recognition_protocol.md`](../supplementary/prospective_recognition_protocol.md) |
 | recognition time | recognition as a stopping-time extension; no universal early-recognition ordering theorem | [`supplementary/recognition_time.md`](../supplementary/recognition_time.md) |
 | repeated filtering | repeated adverse-trigger accessibility identities | [`supplementary/repeated_filtering.md`](../supplementary/repeated_filtering.md) |
 | recursive observer-information loop | unnumbered dynamic extension closing the feedback from experienced observer history to bridge belief, adoption/policy, accessibility, and later observer history; includes sequential weighting and predictable/innovation selection | [`supplementary/evidence_activation.md`](../supplementary/evidence_activation.md) |
@@ -237,6 +239,8 @@ If `P(Z=z)=0`, absolute continuity of the weighted measure gives `P_FP(Z=z)=0`; 
 
 Thus differential future accessibility can reweight present self-location toward states associated with higher expected future accessibility. This is a conditioning/change-of-measure statement, not backward causation or a causal change in the base probability law.
 
+The temporal interpretation is narrower for prospective testing. A model state used at time `t` to choose a policy or issue the next prediction is required to be adapted to the declared history `H_t`. Later outcomes may score that prediction, but they are not used to retroactively redefine the earlier self-location or to certify an unobserved branch/observer transition. Periods without reportable conscious observation can leave multiple latent continuity descriptions observationally equivalent; that non-identification neither proves switching nor uniquely proves one continuity ontology. See [`docs/temporal_interpretation_boundary.md`](temporal_interpretation_boundary.md).
+
 A favorable first-person shift is therefore a statement about the observer-conditioned distribution, not a claim that an external random-number generator becomes causally biased.
 
 ### Dynamic recursive extension
@@ -277,6 +281,8 @@ The first term is called **predictable selection** and the second **innovation s
 
 The same extension allows a specified bridge model to be compared with a null observer model through sequential likelihood-ratio updates. Under correctly specified conditional models, the expected one-step log likelihood ratio has KL-divergence sign under the corresponding model. These are standard Bayesian/information-theoretic identities used to close the feedback arrow; they do not validate the physical bridge.
 
+The prospective recognition protocol turns that sequential machinery into an empirical design requirement: exposure/assignment, filtration, outcomes, null models, missing-data handling, and stopping/scoring rules should be fixed before the outcomes being evaluated. Favorable histories are informative only relative to those preregistered predictions and controls. See [`supplementary/prospective_recognition_protocol.md`](../supplementary/prospective_recognition_protocol.md).
+
 Canonical terminology is maintained in [`docs/notation.md`](notation.md).
 
 ## 8. Everett bridge
@@ -313,6 +319,9 @@ Important boundaries include:
 - randomized assignment probabilities can make restricted shared-selector nulls testable under the stated independent-unit, pre-treatment-observable, binary-inclusion design;
 - a common nonzero selected log-odds offset across randomization regimes additionally requires stable proxy-level selector means, such as from regime assignment independent of the latent pre-treatment state;
 - changing randomization probabilities does not cure projection blindness, and proxy refinement only gains power to the extent that the proxy exposes selector-relevant latent heterogeneity;
+- retrospective future-weighted self-location is a change-of-measure description and does not license future-dependent ontological relabeling in prospective tests;
+- observational equivalence across an unobserved continuity gap does not prove a switch and does not by itself identify one latent continuity ontology as uniquely correct;
+- a longitudinal recognition test must distinguish ordinary policy/expectancy effects and attrition/selection from any additional preregistered innovation or observer-model prediction;
 - mutual information alone does not imply positive QBS covariance;
 - S2.11 requires the residual conditional-covariance term outside score-measurable accessibility;
 - innovation selection depends on the chosen information filtration and is not synonymous with objective luck;
@@ -323,7 +332,7 @@ Important boundaries include:
 
 The manuscript is in [`paper/`](../paper/). The current main-text S2 presentation is intentionally compressed to the conceptual spine, while S2.3–S2.10 are Appendix-first. The recursive observer-information extension currently remains repository supplementary material and has not been promoted into the locked core or manuscript claim set.
 
-The selection/context-identifiability boundary is unnumbered supplementary theory and is summarized in manuscript Discussion. Its dedicated audit is [`docs/context_identifiability_audit_2026-08-23.md`](context_identifiability_audit_2026-08-23.md). The randomized-context and regime/proxy diagnostics remain repository supplementary material rather than manuscript claims.
+The selection/context-identifiability boundary is unnumbered supplementary theory and is summarized in manuscript Discussion. Its dedicated audit is [`docs/context_identifiability_audit_2026-08-23.md`](context_identifiability_audit_2026-08-23.md). The randomized-context, regime/proxy, temporal-boundary, and prospective-recognition materials remain repository supplementary/development material rather than manuscript claims.
 
 The dedicated post-v0.2 proof review is [`docs/post_v02_core_s2_proof_review.md`](post_v02_core_s2_proof_review.md). The editorial dependency map is [`docs/s2_stack_review_map.md`](s2_stack_review_map.md).
 
@@ -339,6 +348,9 @@ Open questions include:
 - what independently measurable or held-out interventional prediction could distinguish an Everett accessibility mechanism from comparably constrained classical selection nulls;
 - which pre-treatment proxy families or randomized regimes provide enough information to test a physically motivated accessibility restriction without assuming recovery of the full latent state;
 - whether a proposed physical bridge predicts a nonzero selected log-odds pattern or proxy-refinement curve after independently controlling the pre-treatment distribution across regimes;
+- what concrete longitudinal outcome family can be preregistered for recognition exposure while remaining sufficiently insulated from ordinary policy, expectancy, reporting, and attrition effects;
+- whether any candidate observer model predicts a held-out innovation/residual pattern after the information filtration and behavioral covariates are fixed in advance;
+- whether consciousness-gap continuity alternatives ever generate prospectively different observable predictions under a constrained transition/accessibility law rather than remaining purely underdetermined;
 - whether the recursive bridge-belief loop remains informative under realistic model misspecification, survivorship-only controls, and alternative observer models;
 - whether innovation selection is a useful stable diagnostic under motivated information filtrations;
 - whether the current S2.13 explained-variance summary should remain in the manuscript main text after review;

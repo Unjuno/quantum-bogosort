@@ -67,6 +67,20 @@ The practical consequence is that a physical QBS/Everett bridge must do more tha
 
 The prior-art ledgers connect the single-context boundary to Fisher (1934), Rao (1965), and Patil--Rao (1978) ascertainment / weighted-distribution theory. The context-identifiability audit additionally connects the methodological burden to Heckman-style sample selection and modern missing-not-at-random identification work. The latter references are currently recorded in the research ledger/audit; promoting them into the manuscript bibliography fact lock is a separate bibliography-governance change rather than a prerequisite for the mathematical result.
 
+### Temporal interpretation and prospective recognition testing
+
+Current development now separates the retrospective weighted-measure identity from the temporal rules of a prospective observer model.
+
+[`docs/temporal_interpretation_boundary.md`](docs/temporal_interpretation_boundary.md) treats restriction of a future-weighted measure to a present state as a retrospective/ensemble description. For prospective testing, any recognition, policy, self-location, or predictive model state used at time `t` must be adapted to the declared history `H_t`. Future observations may later score a prediction fixed at `t`; they are not used to retroactively redefine the earlier observer state.
+
+This blocks a major unfalsifiability route: a later favorable history cannot by itself certify that an unobserved branch/observer transition occurred earlier. Conversely, an interval without reportable conscious observation does not uniquely identify one latent continuity ontology merely because no transition was experienced. When competing continuity descriptions induce the same record, the current conclusion is observational underdetermination rather than proof for either ontology.
+
+[`supplementary/prospective_recognition_protocol.md`](supplementary/prospective_recognition_protocol.md) turns the recognition-follow-up idea into a prospective longitudinal design. The preferred design externally assigns recognition exposure against a matched control where feasible and keeps randomized assignment as the primary intention-to-treat contrast. The protocol preregisters the information filtration, outcome schedule, competing conditional predictive laws, stopping/scoring rules, and attrition/missing-data handling.
+
+Ordinary recognition-driven changes in behavior, effort, information acquisition, risk exposure, and expectancy remain ordinary causal channels. The protocol therefore uses the existing predictable/innovation decomposition to ask whether a candidate observer model makes an additional held-out residual prediction after those channels are controlled. Survivorship-only or post-treatment-selected recognition cohorts are not sufficient to identify an observer-selection mechanism.
+
+This is a **protocol/design result**, not completed empirical evidence. No human longitudinal recognition study has been run or registered by the repository at this stage.
+
 ### Recursive observer-information extension
 
 Current `main` also contains an **unnumbered supplementary dynamic extension** in [`supplementary/evidence_activation.md`](supplementary/evidence_activation.md). It does not add `T6`, `S2.14`, or `E6`.
@@ -122,19 +136,19 @@ Detailed execution and validator audits remain in:
 
 The bibliography fact lock and prior-art ledgers remain the reviewed source for publication chronology and claim boundaries. The selection-equivalence pass adds classical ascertainment/weighted-distribution prior art and narrows the novelty hypothesis further.
 
-No novelty claim is made for normalized weighting, size-biased/ascertainment distributions, generic sample-selection/MNAR identifiability, standard sequential weighting, martingale/predictable decompositions, Bayesian likelihood-ratio updating, or KL identities by themselves.
+No novelty claim is made for normalized weighting, size-biased/ascertainment distributions, generic sample-selection/MNAR identifiability, standard sequential weighting, martingale/predictable decompositions, Bayesian likelihood-ratio updating, KL identities, randomized assignment, intention-to-treat analysis, or preregistered sequential model scoring by themselves.
 
-The provisional novelty question remains about the combined recognition-dependent policy/trajectory/accessibility architecture and its decompositions, plus whether an independently motivated physical accessibility model supplies cross-context restrictions that survive classical selection alternatives.
+The provisional novelty question remains about the combined recognition-dependent policy/trajectory/accessibility architecture and its decompositions, plus whether an independently motivated physical accessibility model supplies cross-context or longitudinal restrictions that survive classical selection alternatives.
 
 ## Everett bridge
 
 The physical bridge remains open. A concrete accessibility rule must independently justify why observer persistence/self-location should induce the proposed first-person measure and must satisfy the structural constraints in [`docs/everett_bridge_tests.md`](docs/everett_bridge_tests.md).
 
-The selection-equivalence result strengthens this requirement: matching the weighted first-person law is insufficient because a classical behavior-matched selection mechanism can reproduce the same law. The context-indexed extension further rules out context-by-context refitting as mechanism evidence.
+The selection-equivalence result strengthens this requirement: matching the weighted first-person law is insufficient because a classical behavior-matched selection mechanism can reproduce the same law. The context-indexed extension further rules out context-by-context refitting as mechanism evidence. The temporal boundary additionally rules out retroactively defining earlier self-location from the favorable future history being explained.
 
-The next bridge gate is therefore a **predeclared, low-dimensional cross-policy law for `S_pi` plus an operationally identifiable held-out test**. A restriction stated only on inaccessible latent branch variables is not yet an empirical bridge test.
+The next bridge gate is therefore a **predeclared, low-dimensional cross-policy or longitudinal law for `S_pi` plus an operationally identifiable held-out test**. A restriction stated only on inaccessible latent branch variables is not yet an empirical bridge test.
 
-The repository does not claim quantum immortality, guaranteed survival, backward causation, objective RNG bias, or that a favorable observed history proves the bridge.
+The repository does not claim quantum immortality, guaranteed survival, backward causation, objective RNG bias, observer switching during sleep, or that a favorable observed history proves the bridge.
 
 ## Announcement readiness
 
@@ -150,6 +164,8 @@ The repository does not claim quantum immortality, guaranteed survival, backward
 - [x] dedicated context-identifiability proof/stress audit added to the repository inventory;
 - [x] classical ascertainment and selection-identifiability prior art added to the research ledgers;
 - [x] weighted-law and context-indexed observational non-identifiability classified as bridge limitations;
+- [x] temporal interpretation boundary separates retrospective weighting from past-adapted prospective model states;
+- [x] prospective recognition-longitudinal design specifies assignment, sequential scoring, policy/innovation separation, and attrition/selection controls;
 - [x] landing-page scientific wording remains bounded by the unresolved physical bridge;
 - [x] frozen v0.3 versus current-main boundary made explicit;
 - [x] locked T1–T5 / E1–E5 identities left unchanged;
@@ -168,7 +184,7 @@ The remaining items are hosting-layer presentation/governance checks, not known 
 
 ## Current announcement position
 
-The repository is suitable for **public technical review** on scientific-content grounds. Broad promotion should retain the explicit statement that the Everett accessibility bridge is unresolved and should not present normalized weighting, repeated context-specific weighted laws, or favorable recursive histories as evidence for a physical observer-selection mechanism.
+The repository is suitable for **public technical review** on scientific-content grounds. Broad promotion should retain the explicit statement that the Everett accessibility bridge is unresolved and should not present normalized weighting, repeated context-specific weighted laws, favorable recursive histories, or favorable post-recognition longitudinal histories as evidence for a physical observer-selection mechanism without the predeclared prospective controls above.
 
 External criticism is specifically welcome on:
 
@@ -177,6 +193,8 @@ External criticism is specifically welcome on:
 - whether the context-specific classical null is formulated broadly enough;
 - whether any independently justified cross-context restriction survives projection to observable records;
 - what held-out observation or intervention could identify a physical accessibility mechanism beyond comparably constrained classical selection nulls;
+- whether the past-adapted temporal boundary is the correct restriction for prospective testing;
+- what recognition exposure, longitudinal outcomes, information filtration, and null models could support a credible preregistered test;
 - the recursive observer-information model and its misspecification boundaries;
 - whether innovation selection is a useful filtration-relative diagnostic;
 - the Everett/multiverse accessibility bridge;

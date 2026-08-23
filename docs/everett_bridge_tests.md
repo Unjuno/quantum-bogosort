@@ -157,22 +157,6 @@ In particular, a proposed test should state:
 
 If only a context-dependent projection of a latent state is observed, a violation that exists on the latent branch space may disappear after projection. Conversely, observed distribution changes may come from policy-dependent trajectory maps or base-law changes even under a shared latent selection rule. Such cases do not falsify the shared-selection mechanism without additional identification arguments.
 
-### 2.11 Temporal adaptation and no retrospective relabeling
-
-A bridge may define a retrospective future-weighted distribution over present states, but a prospective observer model used to generate predictions at time `t` should depend only on the declared information/history available by `t`.
-
-Later observations may score an earlier prediction. They must not be used to redefine the earlier observer/self-location state after the fact or to certify an unobserved transition merely because the subsequent history was favorable.
-
-This distinction is formalized in [`temporal_interpretation_boundary.md`](temporal_interpretation_boundary.md). Without it, a model could become unfalsifiable by continually reclassifying earlier latent states in light of later outcomes.
-
-### 2.12 Recognition exposure and longitudinal identification
-
-If recognition itself is part of the proposed mechanism, a strong empirical design should distinguish the effect of exposure/recognition from ordinary baseline selection, expectancy, policy change, and follow-up selection.
-
-Where feasible, the recognition material should be assigned externally against a matched control and analyzed primarily by assignment rather than only among participants who later report successful recognition. Attrition, missingness, behavioral adaptation, risk exposure, and information acquisition should be handled explicitly.
-
-The companion design is [`../supplementary/prospective_recognition_protocol.md`](../supplementary/prospective_recognition_protocol.md).
-
 ## 3. What would support the bridge
 
 The following would strengthen the Everett interpretation without by themselves proving it.
@@ -213,14 +197,6 @@ Evidence counts for the bridge only to the extent that competing models are spec
 A particularly informative test would fit or specify a low-dimensional bridge law in one set of contexts and then predict observer-conditioned data in held-out contexts without retuning the accessibility mechanism.
 
 Such success would still not uniquely identify Everett unless competing classical structural models fail the same held-out test, but it would provide more information than post hoc context-by-context weighting.
-
-### 3.7 Prospective longitudinal prediction after recognition exposure
-
-A concrete recognition-dependent observer model can gain empirical content if it specifies, before follow-up, a conditional law for later observations that differs from matched ordinary-policy, expectancy, attrition, and classical-selection alternatives.
-
-A stronger design externally assigns recognition exposure where feasible, fixes the information filtration and primary outcome schedule, and scores the held-out sequence using a predeclared likelihood or other proper predictive criterion. The predictable component attributable to ordinary behavior should be separated from any additional residual/innovation prediction.
-
-Success in such a design would still be relative evidence against the tested nulls, not proof of Everett. Failure of the preregistered observer-model predictions relative to comparably constrained nulls would count against that candidate model.
 
 ## 4. What would constrain or reject a candidate bridge
 
@@ -272,14 +248,6 @@ If a purported cross-policy or cross-experiment success is obtained by fitting a
 
 If a claimed identifying restriction is formulated only on an unobserved latent branch state and no argument connects that restriction to identifiable base and selected observable laws, failure or success of the proposed statistic cannot be interpreted as a bridge test.
 
-### 4.10 Retrospective self-location relabeling masquerading as prediction
-
-If later favorable outcomes are used to redefine which earlier observer state, branch, or continuity class supposedly applied, the construction has not made a prospective prediction. Such relabeling cannot count as evidence for the bridge.
-
-### 4.11 Recognition-cohort selection masquerading as observer evidence
-
-If the claimed longitudinal effect is obtained only after selecting people who self-adopted, remained observable, reported favorable outcomes, or satisfied a post-treatment recognition criterion, ordinary selection and survivorship explanations remain live. The bridge interpretation is unsupported unless the design addresses those channels.
-
 ## 5. Empirical falsifiability versus interpretive underdetermination
 
 There is an important distinction between a bridge that predicts new physical observations and a bridge that only reinterprets first-person credence while preserving all standard Born statistics.
@@ -288,9 +256,7 @@ If the bridge is constructed so that every operational prediction agrees with st
 
 Multiple contexts do not remove this underdetermination when the competing null can retune its selection channel separately in every context. A genuine cross-context test needs a predeclared structural restriction shared across contexts, plus enough observable information to identify the quantities entering that restriction.
 
-Periods of observational continuity loss or unavailable first-person reporting do not by themselves resolve the underdetermination either. If competing latent continuity descriptions generate the same available record, neither a switch nor a unique continuity ontology is identified from that record alone. Empirical content must come from additional prospectively different consequences of a constrained model.
-
-If a concrete physical `S_pi` predicts deviations from competing models in observer frequencies, intervention responses, sequential record statistics, or other operational quantities, those differences create genuine empirical tests. A recognition-dependent model may likewise be tested through a preregistered longitudinal sequence if its predicted law differs from ordinary-policy, expectancy, attrition, and selection nulls.
+If a concrete physical `S_pi` predicts deviations from competing models in observer frequencies, intervention responses, sequential record statistics, or other operational quantities, those differences create genuine empirical tests.
 
 Therefore the statement:
 
@@ -301,7 +267,6 @@ must always specify **which layer** is meant:
 - theorem assumptions can be mathematically violated or experimentally instantiated in toy models;
 - a proposed observer model can fail structural consistency or classical-null distinguishability tests;
 - a cross-context structural model can fail held-out or density-ratio restrictions when those quantities are identifiable;
-- a prospective recognition-dependent model can fail preregistered held-out longitudinal predictions relative to specified nulls;
 - a physical Everett bridge becomes empirically falsifiable only when it makes observations differ from competing physical accounts.
 
 ## 6. Relation to the existing literature
@@ -319,15 +284,13 @@ See:
 - `literature/prior_art.md`
 - `literature/extended_prior_art.md`
 - `supplementary/selection_equivalence.md`
-- `supplementary/prospective_recognition_protocol.md`
-- `docs/temporal_interpretation_boundary.md`
 - `paper/references.bib`
 
 ## 7. Current project status
 
 The Everett-QBS bridge is retained as:
 
-**A CLEARLY LABELED CONDITIONAL INTERPRETATION, NOT A DERIVED PHYSICAL RESULT. THE NORMALIZED WEIGHTED LAW ALONE IS CLASSICALLY SELECTION-EQUIVALENT; ARBITRARY CONTEXT-SPECIFIC OBSERVER LAWS REMAIN CLASSICALLY REPRESENTABLE IF THE NULL MAY RETUNE BY CONTEXT. PHYSICAL IDENTIFICATION REQUIRES PREDECLARED CROSS-CONTEXT STRUCTURE, PAST-ADAPTED PROSPECTIVE PREDICTIONS, AND AN OPERATIONALLY IDENTIFIABLE TEST.**
+**A CLEARLY LABELED CONDITIONAL INTERPRETATION, NOT A DERIVED PHYSICAL RESULT. THE NORMALIZED WEIGHTED LAW ALONE IS CLASSICALLY SELECTION-EQUIVALENT; ARBITRARY CONTEXT-SPECIFIC OBSERVER LAWS REMAIN CLASSICALLY REPRESENTABLE IF THE NULL MAY RETUNE BY CONTEXT. PHYSICAL IDENTIFICATION REQUIRES PREDECLARED CROSS-CONTEXT STRUCTURE AND AN OPERATIONALLY IDENTIFIABLE TEST.**
 
 A future revision may strengthen, replace, or reject the bridge without invalidating T1–T5 or the classical E1–E5 simulations.
 
@@ -342,6 +305,4 @@ A future revision may strengthen, replace, or reject the bridge without invalida
 7. The current bridge cannot create positive mass on base-null events.
 8. Probability-law equivalence does not imply physical or causal equivalence of mechanisms.
 9. A restriction imposed only on an inaccessible latent representation may have no empirical content after projection.
-10. Future outcomes may score earlier predictions but may not be used to retroactively relabel the earlier observer state in a prospective test.
-11. Self-selected recognition, differential attrition, and post-treatment filtering are competing explanations that must be handled explicitly in longitudinal designs.
-12. Physical rejection of the bridge does not refute the abstract weighted-measure theorems.
+10. Physical rejection of the bridge does not refute the abstract weighted-measure theorems.

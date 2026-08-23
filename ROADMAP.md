@@ -1,161 +1,160 @@
 # QBS Research Roadmap
 
-This file tracks future work. Completed theorem details belong in [`docs/research_map.md`](docs/research_map.md), the frozen snapshot belongs in [`STATUS.md`](STATUS.md), and current review state belongs in [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md).
+This file tracks **open work and decision gates**. Completed scientific details belong in [`docs/research_map.md`](docs/research_map.md), current review state in [`DEVELOPMENT_STATUS.md`](DEVELOPMENT_STATUS.md), frozen snapshots in [`STATUS.md`](STATUS.md), and historical changes in [`CHANGELOG.md`](CHANGELOG.md) and the audit records under [`docs/`](docs/).
 
 ## Current phase
 
-The project is in **v0.3 public review / preprint preparation**, with later unnumbered recursive observer-information and selection/context-identifiability work on current development.
+The project is in **v0.3 public review / preprint preparation** with later unnumbered recursive, selection/context-identifiability, randomized-diagnostic, and temporal/longitudinal extensions on current `main`.
 
-The locked core remains T1–T5 and E1–E5. The numbered supplementary line is complete through S2.13. The recursive and selection/context-identifiability extensions are intentionally unnumbered and do not create T6, S2.14, or E6. The default next step remains review quality rather than automatic theorem expansion.
+The locked core remains T1–T5 and E1–E5. The numbered supplementary line remains complete through S2.13. Do not add T6, S2.14, or E6 by default.
 
-Broad announcement remains gated on final settled Actions results, direct inspection of rendered GitHub pages when available, and explicit handling or deferral of the remaining repository-governance/presentation items.
+## Highest-priority scientific gates
 
-## Immediate review gates
+### External review
 
 - [ ] Obtain external/public proof review of S2, S2.11, S2.12, and S2.13.
-- [ ] Collect concrete counterexamples, assumption objections, or boundary-condition corrections if reviewers identify them.
-- [ ] Obtain focused prior-art review of the combined recognition-dependent architecture.
-- [x] Formalize the classical selection-equivalence null for the normalized first-person law, including bounded ascertainment conditioning, general record-size bias, total-variation truncation, and the observable non-identifiability corollary.
-- [x] Extend the selection-equivalence null across arbitrary policy/intervention contexts: any `Q_c << mu_c` is exactly reproducible by context-specific classical record-size bias.
-- [x] Prove the context-invariant shared-selection restriction: cross-context Radon--Nikodym density ratios must be proportional on common support, with equality under one common base law.
-- [x] Audit the operational limitation of that restriction: base/selected laws must be identifiable on a common observable state space, and latent violations can disappear under projection.
-- [x] Add a dedicated H/T/D/C/U proof/stress audit with 20,000 random finite-state property tests and explicit projection counterexamples.
-- [x] Add classical ascertainment / weighted-distribution prior art (Fisher 1934; Rao 1965; Patil--Rao 1978) and narrow novelty claims accordingly.
-- [x] Add sample-selection/MNAR identifiability prior art to the research ledger/audit as a methodological comparison (Heckman; Miao--Ding--Geng; Miao--Tchetgen Tchetgen).
-- [ ] Decide whether those additional selection-identifiability references should enter the manuscript bibliography fact lock in a separate bibliography-governance pass.
-- [ ] Specify a concrete low-dimensional/predeclared cross-policy law for `S_pi` that is motivated independently of observed favorable outcomes.
-- [ ] Specify which base and observer-conditioned quantities are operationally observable/identifiable under that candidate law.
-- [ ] Design a held-out context/intervention test that compares the candidate Everett bridge against classical structural nulls with comparable degrees of freedom and no context-by-context retuning.
-- [ ] Stress-test the recursive observer-information extension against model misspecification, survivorship-only controls, and alternative null observer models.
-- [ ] Review whether innovation selection is a useful stable filtration-relative diagnostic rather than merely a model-dependent decomposition label.
-- [x] Cross-check current manuscript bibliography chronology/provenance against publisher, journal, author, or archival records where available; prefer verified publication records when a later preprint upload would obscure established prior-art chronology, while retaining genuinely earlier public preprints and current working papers deliberately.
-- [x] Align the working `literature/` ledgers with the authoritative recognition boundary so they do not describe recognition as having privileged physical causal power.
-- [ ] Review whether S2.13 should remain in the manuscript main text.
-- [ ] Decide whether all S2.5–S2.10 material belongs in the paper Appendix or partly in repository-only supplementary material.
-- [ ] Review the Everett accessibility bridge independently from the abstract covariance mathematics and independently from the selection/context-identifiability nulls.
+- [ ] Collect concrete counterexamples, assumption objections, and boundary corrections.
+- [ ] Obtain focused prior-art review of the combined recognition-dependent architecture and its decompositions.
+- [ ] Review whether the manuscript presentation still gives too much or too little prominence to S2.13 and the S2.5–S2.10 certification machinery.
+
+### Everett/accessibility bridge
+
+The abstract weighting mathematics is not the open problem. The open problem is whether a physical observer model supplies a constrained accessibility law with empirically distinguishable consequences.
+
+- [ ] Specify a low-dimensional cross-policy/context law for `S_pi` motivated independently of the observer-conditioned outcomes it is meant to explain.
+- [ ] State which base, observer, accessibility, and proxy quantities are operationally measurable or identifiable.
+- [ ] Require representation/coarse-graining/sequential consistency of the proposed bridge.
+- [ ] Compare the bridge against classical ascertainment/record-size-bias models with comparable freedom.
+- [ ] Design held-out context/intervention tests that do not allow either model to retune one unconstrained selector per context.
+- [ ] Determine whether any physically motivated bridge predicts an observable pattern after projection to realistic records rather than only on inaccessible latent branch states.
+
+### Selection/context-identifiability
+
+Completed foundations:
+
+- [x] exact bounded ascertainment representation;
+- [x] exact general record-size-biased representation;
+- [x] total-variation truncation boundary;
+- [x] context-by-context classical representability no-go;
+- [x] shared-selection density-ratio restriction and common-base strengthening;
+- [x] operational/projection caveat;
+- [x] deterministic finite-state stress audit;
+- [x] randomized-context finite-sample diagnostic;
+- [x] randomization-regime / proxy stress diagnostic;
+- [x] composition-shift countercontrol showing that regime homogeneity can fail without selector retuning.
+
+Next questions:
+
+- [ ] Identify proxy families that expose physically relevant latent heterogeneity without assuming full latent-state recovery.
+- [ ] Derive power/identifiability results beyond the current finite-state diagnostics for realistic longitudinal or repeated-measures settings.
+- [ ] Separate selector change from pre-treatment composition drift using independently measured or experimentally controlled variables.
+- [ ] Decide whether additional sample-selection/MNAR references belong in the locked manuscript bibliography or remain repository prior-art support.
+
+### Recognition / longitudinal sequence models
+
+The current temporal boundary is past-adapted:
+
+```math
+(H_t,I_t)
+\longrightarrow
+I_{t+1}
+\longrightarrow
+\mathcal L(Y_{t+1:T}\mid H_t,I_{t+1})
+\longrightarrow
+Y_{t+1:T}.
+```
+
+The future realization is not assumed to be fixed at the transition time. The empirical question is whether constrained recognition/history-dependent latent-transition models imply later sequence distributions that differ from suitable ordinary behavioral/selection/null models.
+
+- [ ] Specify a minimal latent transition/accessibility family with finite effective flexibility.
+- [ ] Define observable longitudinal quantities that are sensitive to that family while remaining robust to ordinary policy adaptation, expectancy, information acquisition, and risk-taking.
+- [ ] Model attrition, missingness, incapacitation, and selective reporting explicitly rather than treating observed survivorship as accessibility evidence.
+- [ ] Compare natural-recognition follow-up with optional randomized-exposure designs; keep causal exposure effects distinct from observer-ontology claims.
+- [ ] Determine which repeated/pooled sequence statistics can distinguish competing transition models even when a single hidden transition is locally unobservable.
+- [ ] Stress-test whether the same data can be matched by flexible hidden-state classical models; reject any formulation that becomes trajectory-by-trajectory post hoc relabeling.
+
+### Recursive observer-information model
+
+- [ ] Stress-test the recursive extension under bridge/null misspecification.
+- [ ] Compare against survivorship-only and alternative observer models.
+- [ ] Review whether `innovation selection` is stable enough across motivated filtrations to be a useful diagnostic rather than merely a decomposition label.
+- [ ] Keep the recursive simulation supplementary unless external review identifies a reason to promote it.
 
 ## Repository and reproducibility gates
 
-- [ ] Keep `main` CI-green after review-driven editorial or scientific corrections.
-- [x] Synchronize README, research map, claim ledger, supplementary index, and development status after the recursive extension.
-- [x] Index the single-context selection-equivalence boundary in the supplementary index, research map, claim ledger, prior-art ledgers, manuscript, and development status.
-- [x] Index the context-identifiability extension in the supplementary index, research map, claim ledger, Everett bridge tests, manuscript Discussion, development status, roadmap, and dedicated audit record.
-- [x] Keep `main` as the canonical public source of truth and preserve frozen v0.2/v0.3 snapshots as named, commit-pinned tags/GitHub Releases.
-- [ ] Remove redundant `fix/recursive-qbs-validation` and `research/recursive-qbs` branches; both contain no commits ahead of `main` and no file differences.
-- [x] Validate repository-relative Markdown links in CI.
-- [x] Reject repository-relative Markdown targets that escape the repository root; validate linked-image outer destinations and reference-style definitions in addition to ordinary inline links/images.
-- [x] Inspect the complete repository Markdown surface for rendering-critical structure rather than sampling representative pages only.
-- [x] Standardize repository Markdown display mathematics on balanced fenced `math` blocks; reject legacy display/inline delimiters outside literal code examples and enforce repository math-macro conventions.
-- [x] Align the math, link, and GFM source scanners on CommonMark's zero-to-three-space fenced-code boundary.
-- [x] Validate brace balance, TeX environment balance, and common `\left`/`\right` pairing inside fenced Markdown math blocks.
-- [x] Add CI GFM conversion of every Markdown file through GitHub's Markdown REST renderer with source/render structure checks for headings, tables, and images.
-- [x] Validate all committed SVGs as static/self-contained XML/browser assets, including viewBox/size, full-viewBox explicit background, forbidden active/event/animation content, external/active references, malformed numeric attributes, and non-finite attributes.
-- [x] Validate manuscript LaTeX input, bibliography/citation, environment, generated-graphic dependencies, and resolve compiled references only within the graph reachable from `paper/main.tex`.
-- [x] Lock `paper/sections/robust_mom_summary.tex` as the sole intentionally uncompiled paper TeX source so accidental omission of any other section from `main.tex` fails preflight.
-- [x] Validate bibliography provenance classes structurally: journal records require journal/volume/pages/DOI, book chapters require booktitle/editor/publisher/pages/DOI, and arXiv-only records use a separate eprint/archive contract.
-- [x] Extend the reviewed bibliography fact lock with DOI-verified Fisher and Patil--Rao ascertainment/weighted-distribution publications while retaining Rao 1965 in the repository prior-art ledger.
-- [x] Pin the primary runtime/reproduction environment: Ubuntu 24.04, Python 3.11.15, NumPy 2.4.6, pandas 3.0.5, and Matplotlib 3.11.1; current floating-point reproduction CSVs use exact structure plus a tight numerical-equivalence contract rather than assuming last-bit decimal serialization is hardware invariant.
-- [x] Cross-check `.python-version`, primary package pins/installed versions, runner choice, required jobs/commands, manual dispatch, full-SHA action pins, and checkout credential isolation with `scripts/validate_runtime_contract.py` in both jobs.
-- [x] Pin reusable GitHub Actions to full commit SHAs rather than mutable major-version tags.
-- [x] Set `persist-credentials: false` for checkout in both jobs and keep workflow permissions at `contents: read`.
-- [x] Add `workflow_dispatch` so maintainers can run the complete `validate` workflow manually on `main` without a dummy commit.
-- [x] Expose the `main` validation workflow badge on the root README.
-- [x] Validate GitHub issue-template chooser front matter and nonempty bodies in CI.
-- [x] Synchronize the open S2 review Issue #14 with current frozen-snapshot/current-main routing and keep the later recursive extension outside the frozen-v0.3 issue scope.
-- [x] Add executable scientific regression guards to E1–E5 for the declared identities, nulls, controls, signs, and coherence/predictive-alignment behavior.
-- [x] Route the E3 inert recognition-label null through the general first-person weighted-value calculation while preserving its committed exact-zero result.
-- [x] Validate manifest ID/order, `LOCK` state, file existence, and separation of locked historical versus current reproduction provenance classes.
-- [x] Derive current reproduction validation from the manifest rather than maintaining a duplicate hard-coded CSV list in CI; require exact schema/order/non-numeric cells, tight numeric equivalence, and restoration of committed canonical bytes after successful comparison.
-- [x] Require E1–E5 execution to leave the complete `data/processed/` tree otherwise unchanged, including no locked-file mutation and no undeclared ignored files.
-- [x] Require `supplementary/recursive_qbs_simulation.py` in the repository inventory and execute its aligned, anti-aligned, decomposition, and policy-only-null mechanism checks from CI independently of the script's own assertions.
-- [x] Explicitly require core theory sources, split-license/configuration files, archived experiment provenance, pre-announcement/context-identifiability audits, principal validator scripts, and the selection-equivalence supplementary note in repository-structure validation.
-- [x] Expose the committed SVG theorem/simulation figures through the README, experiment index, and figure-provenance page.
-- [x] Provide a dedicated visual route for every locked experiment family E1–E5, including E2 predictive alignment.
-- [x] Require committed SVGs to match generator output byte-for-byte; validate the deterministic Figure 2 theorem-illustration CSV by exact structure plus tight numerical equivalence and restore canonical bytes before the final worktree check.
-- [x] Keep deterministic theorem illustrations, current reproduction outputs, and locked historical summaries explicitly separated at figure level.
-- [x] Provide a static SVG fallback for the root Mermaid dependency diagram.
-- [ ] Directly observe a final push-triggered `main` `validate` run when connector tooling exposes push runs; final green PR synthetic merge and actual merged trees should be compared as a fallback audit.
-- [ ] Confirm rendered GitHub pages display correctly in the web UI, including desktop/mobile MathJax, Mermaid, SVG sizing, tables, and representative linked pages; current server-side GFM and SVG structural checks do not substitute for pixel-level UI inspection.
-- [ ] After final CI stabilizes, configure a `main` branch ruleset/protection policy appropriate for the public source-of-truth branch; classic protection is currently disabled.
-- [ ] Consider a tag ruleset restricting updates/deletions for frozen release tags if platform-level immutability is desired; current documentation relies on explicit commit pinning rather than assuming such protection.
-- [ ] Normalize repository-header metadata before broad promotion: replace stale `recognition-activated` description wording with recognition-dependent wording and add relevant topics when repository-settings write access is available.
-- [ ] Keep E1–E5 as the locked reproducibility suite unless a review identifies a concrete missing core test.
-- [ ] Preserve deterministic figure regeneration and manuscript PDF verification.
+Completed:
 
-Detailed audit records:
+- [x] main is the canonical current source of truth; frozen v0.2/v0.3 snapshots are named commit-pinned tags/Releases.
+- [x] repository-wide Markdown math, links, GFM rendering, SVG safety, bibliography provenance, runtime contract, issue-template structure, E1–E5 scientific invariants, reproduction outputs, and manuscript build are covered by CI.
+- [x] current floating-point reproduction outputs use exact structure plus tight numerical equivalence and canonical-byte restoration.
+- [x] recursive, selection/context-identifiability, randomized-diagnostic, and temporal/longitudinal supplementary surfaces are indexed and/or inventory-validated without changing the locked T1–T5/E1–E5 core.
+- [x] all nine non-`main` development refs were verified to contain no unique work, then fast-forwarded without force to current `main` and rechecked as identical on 2026-08-24.
+- [x] final PR #37 run #1093 passed repository-validation 27/27 and manuscript-build; its green synthetic merge tree matched actual merged `main`.
 
-- [`docs/pre_announcement_execution_audit_2026-08-19.md`](docs/pre_announcement_execution_audit_2026-08-19.md) — commit-fixed source/execution/reproduction pass;
-- [`docs/pre_announcement_validator_audit_2026-08-19.md`](docs/pre_announcement_validator_audit_2026-08-19.md) — false-PASS, validator, Actions-supply-chain, and public-routing pass;
-- [`docs/pre_announcement_bibliography_audit_2026-08-19.md`](docs/pre_announcement_bibliography_audit_2026-08-19.md) — external bibliography/publication chronology and prior-art semantic-boundary pass;
-- [`docs/pre_announcement_mathematical_domain_audit_2026-08-19.md`](docs/pre_announcement_mathematical_domain_audit_2026-08-19.md) — mathematical-domain and boundary audit;
-- [`docs/context_identifiability_audit_2026-08-23.md`](docs/context_identifiability_audit_2026-08-23.md) — context-specific representability, shared-selection restriction, finite-state property test, projection counterexamples, and operational-identifiability audit.
+Open repository tasks:
 
-## Broad-announcement gate
-
-Before directing broad external traffic to the repository:
-
-- [ ] complete a visual pass of the root README and representative linked research pages in GitHub desktop and mobile layouts when a browser-capable environment is available;
-- [ ] verify in the rendered UI that the main conceptual diagram, mathematical definitions, theorem pages, experiment figures, recursive supplementary page, selection/context-identifiability page, and literature/audit pages are visible without opening raw source files;
-- [x] verify in repository source that every locked visual result links to its H/T/D/C/U experiment card and figure/data provenance;
-- [x] verify that the interpretation boundary and Everett bridge status are visible from the landing-page source;
-- [x] verify that the recursive and selection/context-identifiability extensions are explicitly separated from frozen v0.3 and from the locked T1–T5/E1–E5 sets;
-- [ ] confirm both `repository-validation` and `manuscript-build` are successful on the final settled review branch and merge result;
-- [ ] either finish repository-header / redundant-branch / ruleset governance items above or explicitly defer them with rationale before broad promotion.
-
-The unchecked items in this section are presentation, execution-observability, governance, or external-review checks, not known missing mathematical results.
+- [ ] Delete the nine cleanup-only development refs when branch-ref deletion is available.
+- [ ] Change repository-header description from stale `recognition-activated` wording to `recognition-dependent` wording when repository-settings write access is available.
+- [ ] Add useful repository topics when settings write access is available.
+- [ ] Consider enabling `delete_branch_on_merge`.
+- [ ] Configure an appropriate `main` branch ruleset/protection policy after review workflow stabilizes.
+- [ ] Consider a tag ruleset if platform-level immutability is desired for frozen release tags.
+- [ ] Directly inspect representative GitHub pages in desktop/mobile layouts when browser access is available; server-side GFM and SVG checks do not substitute for pixel-level UI review.
+- [ ] Directly observe a push-triggered `main` validation run if connector tooling later exposes it; until then use green PR synthetic-tree equality with actual `main` as the fallback audit.
 
 ## Publication gates
 
-- [ ] Resolve review-driven mathematical or citation corrections.
-- [x] Replace chronology-distorting later preprint-only bibliography records with verified publication metadata where source identity is clear, while preserving earlier public preprints and unresolved working papers deliberately.
-- [x] Add the classical selection-equivalence limitation and its ascertainment prior art to manuscript Related Work and Discussion before freezing a preprint candidate.
-- [x] Add the context-indexed no-go and operational-identifiability qualification to manuscript Discussion before freezing a preprint candidate.
-- [ ] Decide whether the additional sample-selection/MNAR references belong in the locked manuscript bibliography or remain repository prior-art support.
-- [ ] Freeze the manuscript candidate after substantive review stabilizes.
+- [ ] Resolve review-driven mathematical/citation corrections.
+- [ ] Decide whether the additional selection-identifiability references enter the manuscript bibliography fact lock.
+- [ ] Decide whether the recursive observer-information extension remains repository-only or enters a later manuscript version.
+- [ ] Decide whether the randomized diagnostics and temporal/longitudinal boundary belong in the first preprint or remain repository supplementary material.
+- [ ] Freeze the manuscript candidate only after substantive review stabilizes.
 - [ ] Finalize author/citation metadata for the preprint version.
-- [ ] Decide whether the recursive observer-information extension belongs in the manuscript, remains repository supplementary material, or is deferred to a later version after targeted review.
-- [ ] Prepare `v1.0-preprint` only after review-driven revisions stabilize.
-- [ ] Add DOI/arXiv metadata only when an identifier actually exists.
-- [x] Preserve formal GitHub tags/Releases for frozen v0.2 and v0.3 public-review snapshots and record their exact target commits.
+- [ ] Prepare `v1.0-preprint` only after those gates are satisfied.
+- [ ] Add DOI/arXiv metadata only when identifiers actually exist.
+
+## Public-review / announcement gate
+
+The repository is already suitable for public technical review. Broad promotion should continue to state that the physical Everett bridge is unresolved.
+
+Before directing substantially broader traffic:
+
+- [ ] complete the browser/UI pass when possible;
+- [ ] either complete or explicitly defer repository-header metadata, branch deletion, and ruleset governance;
+- [ ] ensure the current settled review PR is fully green and its merged tree matches the validated tree;
+- [ ] keep the README and canonical claim map explicit that normalized weighting and randomized diagnostic success are not Everett confirmation.
+
+External criticism is especially valuable on:
+
+- proof/counterexample validity;
+- direct prior art and novelty overlap;
+- whether the classical nulls are broad enough;
+- projection and measurement limits;
+- longitudinal hidden-state identifiability;
+- recursive-model misspecification;
+- the physical Everett/accessibility bridge.
 
 ## Deferred mathematical work
 
-The following are not automatic next steps:
+Do not automatically expand theorem numbering or the locked experiment suite. Defer unless a concrete review objection or operational need appears:
 
-- finite-sample confidence bounds for the S2.13 explained-variance quantities;
-- more explicit Orlicz/mgf sufficient conditions for S2.9;
-- robust estimators that weaken S2.10 higher-moment requirements;
+- finite-sample confidence bounds for S2.13 explained-variance quantities;
+- more explicit Orlicz/mgf conditions for S2.9;
+- stronger robust estimators for S2.10;
 - infinite or certification-data-dependent candidate classes;
-- an additional held-out certificate experiment;
-- a stronger recognition-time ordering theorem;
-- a numbered theorem family for the recursive extension;
-- adding still more selection representations without gaining a physically motivated identifying restriction;
-- treating the current shared-selection density-ratio condition as a finished experiment before the observable-state identification problem is solved.
-
-Pursue one of these only if it removes a material modeling assumption, answers a concrete review objection, introduces a genuinely useful operational quantity, or materially sharpens an existing result under motivated assumptions.
-
-## Novelty gate
-
-The project should continue to avoid novelty claims for standard components by themselves, including normalized weighting, ascertainment/weighted distributions, size-biased sampling, generic sample-selection/MNAR identifiability, covariance identities, total covariance, martingale/predictable decompositions, likelihood-ratio/KL identities, standard concentration inequalities, observer selection, or self-location.
-
-The novelty hypothesis remains provisional and concerns the combined recognition-dependent architecture and its decompositions. The bibliography truth pass and selection/context-identifiability audits reduce novelty overclaim risk; they do not establish novelty. A limited prior-art search is not evidence that no structural duplicate exists.
-
-## Everett bridge gate
-
-The physical bridge remains open. Future work on it should ask whether a concrete accessibility rule:
-
-- has a defensible physical derivation;
-- respects relabeling and coarse-graining requirements;
-- is sequentially coherent;
-- is compatible with established operational quantum statistics unless explicit new physics is proposed;
-- supplies a predeclared cross-policy/context law rather than one fitted selector per context;
-- exposes base and observer-conditioned quantities that are identifiable on a common observable state space;
-- yields held-out empirical, interventional, temporal, or structural consequences that distinguish it from comparably constrained classical ascertainment / record-size-bias models.
-
-Do not treat statistical success, recursive toy-simulation success, reproduction of one weighted observer law, or reproduction of a family of separately fitted weighted laws as validation of this physical bridge.
+- a stronger universal recognition-time ordering theorem;
+- additional selection representations that do not improve identification;
+- a numbered recursive theorem family;
+- a sixth locked experiment merely to document supplementary diagnostics.
 
 ## Stop rule
 
-Do not add S2.14, T6, or a sixth core experiment by default.
+A new theorem, experiment family, or bridge mechanism should be added only if it does at least one of the following:
 
-The next high-value scientific work is to specify an **operationally identifiable, predeclared cross-context bridge consequence** that survives classical selection alternatives with comparable freedom, alongside external review, recursive-model stress testing, correction, compression, and publication readiness.
+1. removes a material modeling assumption;
+2. answers a concrete review objection;
+3. introduces an operationally measurable quantity;
+4. separates QBS from a comparably flexible classical null;
+5. materially improves reproducibility or public auditability.
+
+Otherwise prioritize external review, counterexamples, model compression, repository clarity, and publication readiness.

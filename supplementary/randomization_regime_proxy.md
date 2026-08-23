@@ -162,18 +162,19 @@ The deterministic script [`randomization_regime_proxy_stress.py`](randomization_
 p_r in {0.2, 0.5, 0.8}
 ```
 
-with the same latent-state law in every regime, so the simulation satisfies the stronger `R`-independence condition above. It uses a binary latent state `L` with a noisy observed proxy `Z` satisfying
+with the same latent-state law in every regime except for the explicit `composition_shift` countercontrol. The main stable-context simulations therefore satisfy the stronger `R`-independence condition above. A binary latent state `L` has a noisy observed proxy `Z` satisfying
 
 ```math
 P(Z=L)=q.
 ```
 
-It compares four mechanisms:
+The script compares five mechanisms:
 
 - `shared_null`: nontrivial latent-state selection shared across contexts and regimes;
-- `stable_context`: context-dependent selection with one regime-invariant odds offset;
+- `stable_context`: context-dependent selection with one regime-invariant odds offset and stable composition;
 - `regime_retuned`: context selection explicitly changes with the randomization regime;
-- `projection_blind`: strong context-dependent latent selection whose marginal effect vanishes when `q=1/2`.
+- `projection_blind`: strong context-dependent latent selection whose marginal effect vanishes when `q=1/2`;
+- `composition_shift`: selector functions are fixed across regimes but the latent-state prevalence changes from `0.2` to `0.5` to `0.8`, demonstrating that the common-offset diagnostic also reacts to composition drift.
 
 ### Shared-selector test
 
@@ -197,7 +198,7 @@ This second test is an asymptotic stress diagnostic, not an exact finite-sample 
 
 Seed `20260823`, 5,000 Monte Carlo repetitions per cell:
 
-| mechanism | gamma | proxy accuracy | selected n / regime | shared-null reject | regime-retuning/composition reject |
+| mechanism | gamma | proxy accuracy | selected n / regime | shared-null reject | common-offset reject |
 |---|---:|---:|---:|---:|---:|
 | shared null | 0.00 | 0.80 | 500 | 0.0478 | 0.0518 |
 | stable context effect | 0.40 | 0.80 | 500 | 0.9906 | 0.0560 |
@@ -209,17 +210,19 @@ Seed `20260823`, 5,000 Monte Carlo repetitions per cell:
 | projection blind | 0.40 | 0.60 | 1000 | 0.9434 | 0.0502 |
 | projection blind | 0.40 | 0.65 | 500 | 0.9648 | 0.0486 |
 | projection blind | 0.40 | 0.70 | 500 | 1.0000 | 0.0508 |
+| composition shift, fixed selector | 0.40 | 0.80 | 500 | 1.0000 | 0.9854 |
 
 Interpretation:
 
 1. the exact shared-selector test remains near nominal size under a nontrivial shared selector;
 2. a stable context effect is detected by the zero-offset test while the common-offset diagnostic remains near nominal size;
-3. explicit regime retuning is detected by both diagnostics and especially by the homogeneity test;
+3. explicit regime retuning is detected by both diagnostics and especially by the common-offset test;
 4. changing assignment probabilities alone does not reveal a projection-blind latent violation;
 5. adding an informative pre-treatment proxy restores power continuously as the proxy becomes more informative;
-6. for a fixed imperfect proxy, increasing selected sample size increases power, but cannot solve a truly uninformative projection (`q=1/2`).
+6. for a fixed imperfect proxy, increasing selected sample size increases power, but cannot solve a truly uninformative projection (`q=1/2`);
+7. the composition-shift countercontrol strongly rejects the common-offset restriction even though the selector functions themselves are fixed across regimes, confirming that composition stability is an essential identifying assumption rather than a cosmetic one.
 
-A separate calibration pass at selected `n` per regime `100, 200, 500, 1000` gave common-offset diagnostic rejection rates approximately `4.7%–6.0%` under the tested nulls. This is only a Monte Carlo calibration check; the diagnostic remains classified as asymptotic.
+A separate calibration pass at selected `n` per regime `100, 200, 500, 1000` gave common-offset diagnostic rejection rates approximately `4.7%–6.0%` under the tested stable-composition nulls. This is only a Monte Carlo calibration check; the diagnostic remains classified as asymptotic.
 
 ## U — unresolved / non-claims
 

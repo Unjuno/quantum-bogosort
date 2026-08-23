@@ -108,6 +108,16 @@ This is an exact change-of-measure consequence once the weighted first-person me
 
 A favorable or upward self-location shift requires an additional alignment between the relevant favorability/utility statistic and expected future accessibility. Future accessibility that varies across present states is sufficient for reweighting, but not by itself for a favorable direction.
 
+### Temporal interpretation boundary
+
+The preceding identity is a retrospective or ensemble-level change-of-measure statement. It does not require a prospective observer model to let realized future outcomes define the observer state at an earlier time.
+
+For prospective prediction, let `H_t` be the declared information/history available at time `t`. Any state used at time `t` to choose a policy, represent recognition/self-location, or issue the next predictive law is required to be `H_t`-measurable. Later observations may score predictions fixed at time `t`; they are not used to retroactively relabel the earlier state.
+
+This past-adapted restriction is recorded in [`temporal_interpretation_boundary.md`](temporal_interpretation_boundary.md). In particular, a later favorable history does not by itself certify that an unobserved observer switch, branch transition, or favorable self-location change occurred earlier.
+
+Intervals without reportable conscious observation, such as ordinary sleep, may leave multiple latent continuity descriptions observationally equivalent at the level of the available records. That non-identification neither proves that a switch occurred nor uniquely establishes one latent continuity ontology. Additional empirical leverage requires prospectively different consequences from a constrained model.
+
 ## Classical selection-equivalence and identifiability boundary
 
 The normalized accessibility law has a classical selection representation. Assume
@@ -507,6 +517,16 @@ When a specified QBS observer model and a specified null observer model provide 
 
 Under correctly specified conditional models, the expected one-step log likelihood ratio has the corresponding KL-divergence sign. These are standard Bayesian/information-theoretic identities used to formalize the feedback from experienced observer history to later belief/adoption. They do **not** establish that the QBS bridge is physically correct.
 
+## Prospective recognition-longitudinal protocol
+
+The repository now separates the existence of the preceding sequential identities from a stronger empirical protocol in [`../supplementary/prospective_recognition_protocol.md`](../supplementary/prospective_recognition_protocol.md).
+
+A strong recognition-follow-up design should, where feasible, externally assign exposure to the recognition material and use assignment as the primary intention-to-treat contrast rather than analyzing only participants who later report successful recognition. The design should record baseline state, behavior, information acquisition, and attrition prospectively; specify the outcome schedule and information filtration before follow-up; and compare predeclared conditional predictive models on later held-out observations.
+
+Ordinary recognition-driven changes in policy, effort, information, risk exposure, and expectancy are not observer-selection evidence by themselves. The protocol therefore distinguishes the predictable component under the declared filtration from the residual/innovation component and requires any stronger observer model to specify in advance what additional residual pattern, if any, it predicts.
+
+Sequential likelihood-ratio scoring is a model-comparison tool, not an automatic Everett test. Favorable post-recognition histories count only relative to predeclared competing laws and explicit survivorship, attrition, missing-data, expectancy, adaptive-policy, and classical-selection controls.
+
 ## Simulation-supported claims
 
 E1–E5 classically demonstrate the locked formal mechanisms: weighting/FOSD, learned predictive ordering, paired recognition decomposition, policy–QBS interaction, and cross-copy coherence. They do not establish Everettian physics or automatically satisfy any finite-sample certificate.
@@ -543,6 +563,8 @@ S2.5 assumes independent bounded held-out evaluation. S2.6 permits training-depe
 
 The recursive innovation decomposition depends on the selected filtration/information state and requires the conditional expectations and weighted horizon quantities to exist. Sequential likelihood-ratio bridge updates require specified competing observer models and the needed absolute-continuity conditions. Claims about expected KL drift require correct model specification; misspecification can reverse or otherwise distort practical belief dynamics.
 
+A prospective recognition test additionally requires that the model state and predictive law at time `t` be adapted to the preregistered history/information filtration at `t`. Future outcomes can score earlier predictions but cannot be used to redefine the earlier self-location/model state. Causal claims from recognition exposure additionally require a valid assignment/identification design; conditioning only on post-assignment successful recognition can reintroduce selection bias. Attrition and outcome observability require explicit treatment when they depend on post-assignment state.
+
 The bounded binary-selection representation additionally assumes an almost-sure finite upper bound on `S`. The general record-size-bias representation requires only nonnegative integrable `S`; the Poisson intensity must be dimensionless, which can always be arranged by positive rescaling because the normalized weighted law is scale invariant.
 
 The context-indexed record representation assumes only `Q_c << mu_c` for each context. The shared-selection density-ratio restriction additionally requires the relevant context laws to be comparable on a common support/reference measure. Treating that restriction as an empirical test further requires identifiable base and selected laws on an aligned observable state space; latent restrictions need not survive projection.
@@ -564,6 +586,8 @@ The selection-equivalence result shows that this same probability law can have c
 
 The context-indexed extension strengthens the burden: collecting multiple policy/intervention-specific observer laws also does not identify the bridge when a classical null may retune its selection channel independently by context. A physical bridge needs predeclared shared structure and an operationally identifiable comparison.
 
+A prospective longitudinal test can supply evidence only if a concrete bridge/observer model makes predeclared future predictions that differ from comparably constrained alternatives. The latent continuity ontology itself is not made observable merely by following a favorable sequence over time.
+
 ## Non-claims
 
 The repository does **not** claim that:
@@ -571,6 +595,10 @@ The repository does **not** claim that:
 - an external RNG becomes objectively biased toward favorable outcomes;
 - innovation selection is a causal increase in objective chance or a filtration-independent physical luck parameter;
 - observing a favorable history by itself proves the QBS bridge rather than competing null, survivorship, or misspecified models;
+- a favorable post-recognition longitudinal sequence by itself proves observer selection or an Everett mechanism;
+- later favorable outcomes can retroactively certify an earlier branch switch, observer reassignment, or favorable self-location state under the prospective protocol;
+- observational equivalence across sleep or another consciousness gap proves that a switch occurred;
+- inability to observe a switch uniquely establishes one latent continuity ontology as physically correct;
 - a weighted first-person distribution by itself identifies an Everettian rather than classical ascertainment/size-bias mechanism;
 - observing multiple contexts identifies the mechanism if the classical null is allowed arbitrary context-specific selection;
 - failure of a context-invariant classical selector identifies Everett rather than only rejecting that restricted null;
@@ -597,6 +625,10 @@ The repository does **not** claim that:
 
 - outcome/accessibility independence gives zero pure weighting uplift in expectation;
 - constant expected future accessibility across present states gives no present self-location reweighting from future accessibility;
+- retrospective relabeling of an earlier observer/self-location state using the later outcome being explained invalidates the prospective falsifiability claim;
+- self-selected recognition cohorts can confound recognition with baseline traits, expectancy, policy, reporting, and survivorship; without additional identification they cannot isolate a recognition-specific observer mechanism;
+- differential attrition or selective outcome observability can reproduce favorable longitudinal selection and must be modeled rather than interpreted automatically as accessibility evidence;
+- if a recognition effect disappears after predeclared ordinary-policy, expectancy, behavioral, and selection controls, the stronger observer-selection interpretation is not supported by that effect;
 - any Everett bridge that predicts only a weighted law already matched by a classical selection null is observationally unidentified by that law alone;
 - multiple contexts remain mechanism-unidentified when the competing classical null can choose separate selection channels context by context;
 - a shared-selection density-ratio violation cannot be used operationally when the needed base/selected laws are not identifiable on a common observable state space;

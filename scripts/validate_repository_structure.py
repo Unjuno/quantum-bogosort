@@ -11,7 +11,8 @@ required = [
     "LICENSE", "LICENSES/README.md", "LICENSES/CC-BY-4.0.txt", "LICENSES/CC0-1.0.txt",
     ".github/workflows/validate.yml",
     "docs/research_map.md", "docs/notation.md", "docs/claims_and_assumptions.md",
-    "docs/everett_bridge_tests.md", "docs/manuscript_claim_audit.md", "docs/v0.2_release_audit.md",
+    "docs/everett_bridge_tests.md", "docs/temporal_interpretation_boundary.md",
+    "docs/manuscript_claim_audit.md", "docs/v0.2_release_audit.md",
     "docs/pre_announcement_execution_audit_2026-08-19.md",
     "docs/pre_announcement_validator_audit_2026-08-19.md",
     "docs/pre_announcement_bibliography_audit_2026-08-19.md",
@@ -180,7 +181,7 @@ for line in required_regime_lines:
 print(
     f"Repository structure OK: {len(required)} required nonsymlink regular files; complete "
     f"{len(actual_markdown)}-file Markdown inventory declared; all five core theory sources; "
-    f"consolidated/archived research provenance; pre-announcement/context-identifiability and "
+    f"consolidated/archived research provenance; temporal/selection-identifiability and "
     f"randomized/prospective diagnostic surfaces; randomized-context and regime/proxy deterministic executions passed; "
     f"runtime/core-theorem/supplementary/experiment-card/citation/bibliography/license/figure-set/"
     f"snapshot-ref/worktree-artifact validators; and {len(section_refs)} manuscript sections found."

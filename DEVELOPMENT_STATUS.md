@@ -100,7 +100,7 @@ Y_{t+1:T}.
 
 The transition/accessibility rule may depend on recorded past/history; the realized future sequence is not assumed to be fixed in advance. An unobserved transition during a consciousness gap can remain locally unobservable while different latent continuations induce different later sequence laws.
 
-[`supplementary/prospective_recognition_protocol.md`](supplementary/prospective_recognition_protocol.md) is therefore a longitudinal distribution/model-identification protocol, not a requirement that a specific future path be preregistered or predetermined. Later favorable outcomes do not by themselves prove an individual hidden switch.
+[`supplementary/prospective_recognition_protocol.md`](supplementary/prospective_recognition_protocol.md) is therefore a longitudinal distribution/model-identification protocol. It does not assume that a specific future path is fixed in advance. Later favorable outcomes do not by themselves prove an individual hidden switch.
 
 ## Reproducibility state
 

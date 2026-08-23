@@ -43,7 +43,8 @@ required = [
     "supplementary/residual_variance_certificate.md", "supplementary/explained_variance_certificate.md",
     "supplementary/evidence_activation.md", "supplementary/selection_equivalence.md",
     "supplementary/context_identifiability_stress.py", "supplementary/randomized_context_diagnostic.md",
-    "supplementary/randomized_context_diagnostic.py", "supplementary/recursive_qbs_simulation.py",
+    "supplementary/randomized_context_diagnostic.py", "supplementary/randomization_regime_proxy.md",
+    "supplementary/randomization_regime_proxy_stress.py", "supplementary/recursive_qbs_simulation.py",
     "supplementary/recognition_time.md", "supplementary/selectivity_frontier.md",
     "supplementary/branch_recognition.md",
     "literature/prior_art.md", "literature/extended_prior_art.md", "literature/post_v02_targeted_prior_art.md",
@@ -145,11 +146,42 @@ for line in required_diagnostic_lines:
             "Randomized-context diagnostic output drift: missing " + repr(line)
         )
 
+regime_proxy_diagnostic = ROOT / "supplementary/randomization_regime_proxy_stress.py"
+regime_result = subprocess.run(
+    [sys.executable, str(regime_proxy_diagnostic)],
+    cwd=ROOT,
+    check=False,
+    capture_output=True,
+    text=True,
+    timeout=180,
+)
+if regime_result.returncode != 0:
+    detail = (regime_result.stderr or regime_result.stdout).strip()
+    raise SystemExit(
+        "Regime/proxy diagnostic execution failed: "
+        + (detail[-4000:] if detail else "<no output>")
+    )
+
+required_regime_lines = (
+    "seed=20260823 reps=5000 alpha=0.05 regimes=0.2,0.5,0.8",
+    "shared_null 0.00 0.80 500 0.0478 0.0518",
+    "stable_context 0.40 0.80 500 0.9906 0.0560",
+    "regime_retuned 0.40 0.80 500 0.9998 1.0000",
+    "projection_blind 0.40 0.50 500 0.0434 0.0514",
+    "projection_blind 0.40 0.60 1000 0.9434 0.0502",
+    "composition_shift 0.40 0.80 500 1.0000 0.9854",
+)
+for line in required_regime_lines:
+    if line not in regime_result.stdout:
+        raise SystemExit(
+            "Regime/proxy diagnostic output drift: missing " + repr(line)
+        )
+
 print(
     f"Repository structure OK: {len(required)} required nonsymlink regular files; complete "
     f"{len(actual_markdown)}-file Markdown inventory declared; all five core theory sources; "
     f"consolidated/archived research provenance; pre-announcement/context-identifiability and "
-    f"randomized-context diagnostic surfaces; randomized-context deterministic execution passed; "
+    f"randomized diagnostic surfaces; randomized-context and regime/proxy deterministic executions passed; "
     f"runtime/core-theorem/supplementary/experiment-card/citation/bibliography/license/figure-set/"
     f"snapshot-ref/worktree-artifact validators; and {len(section_refs)} manuscript sections found."
 )
